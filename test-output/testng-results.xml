@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="49" total="50" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="NavatarSuite" duration-ms="281828" started-at="2020-03-09T13:24:25 IST" finished-at="2020-03-09T13:29:07 IST">
+    <groups>
+    </groups>
+    <test name="Test" duration-ms="281828" started-at="2020-03-09T13:24:25 IST" finished-at="2020-03-09T13:29:07 IST">
+      <class name="com.navatar.scripts.SmokeTestCase">
+        <test-method status="PASS" signature="config(java.lang.String)[pri:0, instance:[unknown locator]]" name="config" is-config="true" duration-ms="12031" started-at="2020-03-09T13:24:25 IST" finished-at="2020-03-09T13:24:37 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- config -->
+        <test-method status="PASS" signature="Smoketc040_clearWorkSpace()[pri:0, instance:[unknown locator]]" name="Smoketc040_clearWorkSpace" duration-ms="264439" started-at="2020-03-09T13:24:37 IST" finished-at="2020-03-09T13:29:02 IST">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Smoketc040_clearWorkSpace -->
+        <test-method status="PASS" signature="closeBrowser(org.testng.ITestResult)[pri:0, instance:[unknown locator]]" name="closeBrowser" is-config="true" duration-ms="5252" started-at="2020-03-09T13:29:02 IST" finished-at="2020-03-09T13:29:07 IST">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=Smoketc040_clearWorkSpace on [unknown locator] status=SUCCESS method=SmokeTestCase.Smoketc040_clearWorkSpace()[pri:0, instance:[unknown locator]] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeBrowser -->
+      </class> <!-- com.navatar.scripts.SmokeTestCase -->
+    </test> <!-- Test -->
+  </suite> <!-- NavatarSuite -->
+</testng-results>
