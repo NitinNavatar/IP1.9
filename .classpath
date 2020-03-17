@@ -36,7 +36,7 @@
 	<classpathentry kind="lib" path="jarfiles/sikulixapi.jar"/>
 	<classpathentry kind="lib" path="jarfiles/snakeyaml.jar"/>
 	<classpathentry kind="lib" path="jarfiles/xmlbeans-2.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ankur Rana/git/investor_portal1.8/jarfiles/testng-7.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ankur Rana/git/investor_portal1.8/jarfiles/selenium-server-standalone-3.141.59.jar"/>
+	<classpathentry kind="lib" path="jarfiles/selenium-server-standalone-3.141.59.jar"/>
+	<classpathentry kind="lib" path="jarfiles/testng-7.0.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
