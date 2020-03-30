@@ -1020,16 +1020,15 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				}
 			}
 			if (CommonLib.traverseImport(driver, documentPath, fileName)) {
+				ThreadSleep(3000);
 				 ele= BaseLib.edriver.findElement(By.cssSelector("#lbtOnlinImportSave"));
-				 
 				try{
 					scrollDownThroughWebelement(driver, ele, "import button");
 					ele.click();
 					appLog.info("Clicked on Import Button successfully");
-				
 //				if (click(driver, getImportButton(60), "Online Import Button", action.BOOLEAN)) {
 					if (WorkSpaceAction.toString().equalsIgnoreCase(WorkSpaceAction.UPDATE.toString())) {
-						
+						ThreadSleep(5000);
 						 ele= BaseLib.edriver.findElement(By.cssSelector("#lnkReplaceAll"));
 						 try{
 							 scrollDownThroughWebelement(driver, ele, "Update All Button");

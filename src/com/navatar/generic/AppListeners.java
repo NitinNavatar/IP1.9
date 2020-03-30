@@ -34,7 +34,7 @@ import org.sikuli.guide.ClickableWindow;
  */
 
 public class AppListeners extends By implements ITestListener, IInvokedMethodListener, WebDriverEventListener, ExceptionListener,
-		ITestNGListener, IExecutionListener,SearchContext,FindsByXPath {
+		ITestNGListener, IExecutionListener,SearchContext {
 
 	public static int iPassCount;
 	public static int iFailCount;
@@ -171,6 +171,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	public void beforeAlertAccept(WebDriver driver) {
 		// TODO Auto-generated method stub
 		
+		
 
 	}
 
@@ -238,6 +239,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	public void afterNavigateRefresh(WebDriver driver) {
 		// TODO Auto-generated method stub
 		CommonLib.waitForPageLoad(driver);
+		CommonLib.checkForLoaderImage(driver, "//div[@id='Processingdiv']/img", 120);
 		CommonLib.checkForLoaderImage(driver, "//img[@src='/resource/1499340792000/DR_CRMFinal/DR_CRMFinal/images/processing-image.gif']", 120);
 //		CommonLib.checkForLoaderImage(driver, "//div[@id='blurred']", 120);
 		CommonLib.checkForLoaderImage(driver, "//div[@id='blurred_procss_imaz']", 120);
@@ -276,6 +278,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	public void beforeFindBy(By by, WebElement element, WebDriver driver) {
 		if(BaseLib.PublicFlag){
 			CommonLib.waitForPageLoad(driver);
+			CommonLib.checkForLoaderImage(driver, "//div[@id='Processingdiv']/img", 120);
 			CommonLib.checkForLoaderImage(driver, "//img[@src='/resource/1499340792000/DR_CRMFinal/DR_CRMFinal/images/processing-image.gif']", 120);
 //			CommonLib.checkForLoaderImage(driver, "//div[@id='blurred']", 120);
 			CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'processing-image.gif')]", 120);
@@ -312,6 +315,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	public void afterFindBy(By by, WebElement element, WebDriver driver) {
 		// TODO Auto-generated method stub
 		if(BaseLib.PublicFlag){
+			CommonLib.checkForLoaderImage(driver, "//div[@id='Processingdiv']/img", 120);
 			CommonLib.checkForLoaderImage(driver, "//img[@src='/resource/1499340792000/DR_CRMFinal/DR_CRMFinal/images/processing-image.gif']", 120);
 //			CommonLib.checkForLoaderImage(driver, null, 120);
 			CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'processing-image.gif')]", 120);
@@ -351,6 +355,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	public void beforeClickOn(WebElement element, WebDriver driver) {
 		// TODO Auto-generated method stub
 		if(BaseLib.PublicFlag){
+			CommonLib.checkForLoaderImage(driver, "//div[@id='Processingdiv']/img", 120);
 			CommonLib.checkForLoaderImage(driver, "//img[@src='/resource/1499340792000/DR_CRMFinal/DR_CRMFinal/images/processing-image.gif']", 120);
 //			CommonLib.checkForLoaderImage(driver, null, 120);
 			CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'processing-image.gif')]", 120);
@@ -441,6 +446,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	@Override
 	public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
 		// TODO Auto-generated method stub
+		CommonLib.checkForLoaderImage(driver, "//div[@id='Processingdiv']/img", 120);
 		CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'processing-image.gif')]", 120);
 		CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'images/processing-image.gif')]", 120);
 		CommonLib.checkForLoaderImage(driver, "//div[@id='blurredImg']/div/img", 120);
@@ -472,6 +478,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	@Override
 	public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
 		// TODO Auto-generated method stub
+		CommonLib.checkForLoaderImage(driver, "//div[@id='Processingdiv']/img", 120);
 		CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'processing-image.gif')]", 120);
 		CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'images/processing-image.gif')]", 120);
 		CommonLib.checkForLoaderImage(driver, "//div[@id='blurredImg']/div/img", 120);
@@ -563,13 +570,11 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 		return null;
 	}
 
-	@Override
 	public WebElement findElementByXPath(String using) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public List<WebElement> findElementsByXPath(String using) {
 		// TODO Auto-generated method stub
 		return null;

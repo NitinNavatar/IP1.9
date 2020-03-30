@@ -611,7 +611,6 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 							}
 							
 						} else {
-
 							ele = getUpdateMsg(20);
 							if (ele != null) {
 								msg = ele.getText().trim();
@@ -625,8 +624,9 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 								}
 
 							}
-
-							if (click(driver, getUpdateButton(20), "Update Button", action.BOOLEAN)) {
+							try {
+								getUpdateButton(20).click();
+//							if (click(driver, getUpdateButton(20), "Update Button", action.BOOLEAN)) {
 								if (isAlertPresent(driver)) {
 									msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -653,12 +653,15 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 													+ DocumentUploadSuccessMsg + " /tActual: " + msg);
 									
 								}
-
-							} else {
-							
+							}catch (Exception e) {
 								appLog.error("Not Able to Click Update Button");
 								BaseLib.sa.assertTrue(false, "Not Able to Update Close Button");
 							}
+//							} else {
+//							
+//								appLog.error("Not Able to Click Update Button");
+//								BaseLib.sa.assertTrue(false, "Not Able to Update Close Button");
+//							}
 						}
 					
 

@@ -3,11 +3,13 @@
  */
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
 
@@ -541,14 +543,15 @@ public WebElement getUpdateMsg(int timeOut) {
 	return isDisplayed(driver, updateMsg, "Visibility", timeOut, "Update Msg");
 }
 
-@FindBy(xpath="//a[@id='lnkUpdate']")
-private WebElement updateButton;
+//@FindBy(css ="")
+//private WebElement updateButton;
 
 /**
  * @return the updateButton
  */
 public WebElement getUpdateButton(int timeOut) {
-	return isDisplayed(driver, updateButton, "Visibility", timeOut, "Update Button");
+	WebElement ele= BaseLib.edriver.findElement(By.cssSelector("#lnkUpdate"));
+	return isDisplayed(driver, ele, "Visibility", timeOut, "Update Button");
 }
 @FindBy(xpath = "//a[@title='Ignore']")
 private WebElement ignoreBtn;

@@ -3,7 +3,6 @@
  */
 package com.navatar.pageObjects;
 
-import org.apache.poi.hssf.view.brush.PendingPaintings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
