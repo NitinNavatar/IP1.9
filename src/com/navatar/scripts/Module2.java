@@ -392,7 +392,7 @@ public class Module2 extends BaseLib{
 		M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
 		System.out.println("m2contact email "+M2Contact1EmailID);
 		try {
-			regLink = new EmailLib().getInvestorRegLink("InvitationMail",gmailUserName, adminPassword, CRMUser1EmailID, M2Contact1EmailID);
+			regLink = new EmailLib().getInvestorRegLink("InvitationMail",gmailUserName, gmailPassword, CRMUser1EmailID, M2Contact1EmailID);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -699,16 +699,20 @@ public class Module2 extends BaseLib{
 							
 							if (sendKeys(driver, bp.getTargetEmailId(60), "abc@gmail.com", "Email id textbox on investor registration page", action.BOOLEAN)) {
 								if (sendKeys(driver, bp.getTargetConfirmPassword(60), adminPassword, "Confirm password textbox on investor registration page", action.BOOLEAN)) {
-									if (click(driver, bp.getTargetSignUpBtn(60), "sign up button on investor registration page", action.BOOLEAN)) {
+									if(bp.clickUsingCssSelectorPath("a.GlobalButton[title='Sign up']", "sign up button")) {
+//									if (click(driver, bp.getTargetSignUpBtn(60), "sign up button on investor registration page", action.BOOLEAN)) {
 										ThreadSleep(5000);
 										if (isAlertPresent(driver)) {
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 											if (msg.contains("Access to Navatar Investor is by Invitation only. Please use the invited email address to register")) {
 												appLog.info("alert(that investor does not have access) is successfully verified");
-												sa.assertTrue(true);
+											}else {
+												appLog.info("alert(that investor does not have access) is not verified");
+												sa.assertTrue(false,"alert(that investor does not have access) is not verified");
 											}
 										}else {
+											appLog.error("Alert for unsuccessful investor registration is not present");
 											sa.assertTrue(false,"Alert for unsuccessful investor registration is not present");
 											
 										}
@@ -834,7 +838,8 @@ public class Module2 extends BaseLib{
 						if (sendKeys(driver, bp.getTargetFirmName(60),M2FirmName1, "Firm name textbox", action.BOOLEAN)) {
 							if (sendKeys(driver, bp.getTargetpassword(60), adminPassword, "target password textbox", action.BOOLEAN)) {
 								if (sendKeys(driver, bp.getTargetConfirmPassword(60), adminPassword, "Confirm password textbox", action.BOOLEAN)) {
-									if (click(driver, bp.getTargetSignUpBtn(60), "investor registration sign up button", action.BOOLEAN)) {
+									if(bp.clickUsingCssSelectorPath("a.GlobalButton[title='Sign up']", "sign up button")) {
+//									if (click(driver, bp.getTargetSignUpBtn(60), "investor registration sign up button", action.BOOLEAN)) {
 										ThreadSleep(5000);
 										if (isAlertPresent(driver)) {
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -890,7 +895,7 @@ public class Module2 extends BaseLib{
 		String M2Contact2EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact2", excelLabel.Contact_EmailId);
 		String regLink=null;
 		try {
-			regLink = new EmailLib().getInvestorRegLink("InvitationMail",gmailUserName, adminPassword, CRMUser1EmailID, M2Contact2EmailID);
+			regLink = new EmailLib().getInvestorRegLink("InvitationMail",gmailUserName, gmailPassword, CRMUser1EmailID, M2Contact2EmailID);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			appLog.error("registration link is null");
@@ -914,7 +919,8 @@ public class Module2 extends BaseLib{
 						if (sendKeys(driver, bp.getTargetFirmName(60),M2FirmName1, "Firm name textbox", action.BOOLEAN)) {
 							if (sendKeys(driver, bp.getTargetpassword(60), adminPassword, "target password textbox", action.BOOLEAN)) {
 								if (sendKeys(driver, bp.getTargetConfirmPassword(60), adminPassword, "Confirm password textbox", action.BOOLEAN)) {
-									if(click(driver, bp.getTargetSignUpBtn(60), "sign up button", action.BOOLEAN)) {
+									if(bp.clickUsingCssSelectorPath("a.GlobalButton[title='Sign up']", "sign up button")) {
+//									if(click(driver, bp.getTargetSignUpBtn(60), "sign up button", action.BOOLEAN)) {
 										ThreadSleep(5000);
 										if (isAlertPresent(driver)) {
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -1442,7 +1448,7 @@ public class Module2 extends BaseLib{
 		
 		String login_link=null;
 		try {
-			login_link = new EmailLib().getInvestorLoginLink("InvitationMail",gmailUserName, adminPassword,CRMUser1EmailID,M2Contact1EmailID );
+			login_link = new EmailLib().getInvestorLoginLink("InvitationMail",gmailUserName, gmailPassword,CRMUser1EmailID,M2Contact1EmailID );
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -1570,7 +1576,7 @@ public class Module2 extends BaseLib{
 		String M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
 		String Org2User1 = ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2User1", excelLabel.User_Email);
 		try {
-			loginURL=el.getInvestorLoginLink("InvitationMail",gmailUserName, adminPassword,Org2User1,M2Contact1EmailID );
+			loginURL=el.getInvestorLoginLink("InvitationMail",gmailUserName, gmailPassword,Org2User1,M2Contact1EmailID );
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -1627,12 +1633,14 @@ public class Module2 extends BaseLib{
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer ap = new AllFirmsPageBusinesslayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
 		String M2Contact2EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact2", excelLabel.Contact_EmailId);
 		driver.get(InvestorURL);
 		SoftAssert sa = new SoftAssert();
-		if (click(driver, lp.getInvestorLoginButton(60), "Investor page login button", action.BOOLEAN)) {
+		if(bp.clickUsingCssSelectorPath("input[title='Login']", "login button")) {
+//		if (click(driver, lp.getInvestorLoginButton(60), "Investor page login button", action.BOOLEAN)) {
 			ThreadSleep(5000);
 			if (isAlertPresent(driver)) {
 
@@ -1650,7 +1658,8 @@ public class Module2 extends BaseLib{
 			}
 		}
 		if (sendKeys(driver, lp.getInvestorUsernameTextbox(60), M2Contact1EmailID, "Investor page username textbox", action.BOOLEAN)) {
-			if (click(driver, lp.getInvestorLoginButton(60), "Investor page login button", action.BOOLEAN)) {
+			if(bp.clickUsingCssSelectorPath("input[title='Login']", "login button")) {
+//			if (click(driver, lp.getInvestorLoginButton(60), "Investor page login button", action.BOOLEAN)) {
 				ThreadSleep(5000);
 				if (isAlertPresent(driver)) {
 
@@ -1678,7 +1687,8 @@ public class Module2 extends BaseLib{
 		//Check alert when username is empty and password is filled
 		lp.getInvestorUsernameTextbox(60).clear();
 		if (sendKeys(driver, lp.getInvestorPasswordTextbox(60), "Testing", "Investor login page password textbox", action.BOOLEAN)) {
-			if (click(driver, lp.getInvestorLoginButton(60), "Investor page login button", action.BOOLEAN)) {
+			if(bp.clickUsingCssSelectorPath("input[title='Login']", "login button")) {
+//			if (click(driver, lp.getInvestorLoginButton(60), "Investor page login button", action.BOOLEAN)) {
 				ThreadSleep(5000);
 				if (isAlertPresent(driver)) {
 
@@ -1705,7 +1715,8 @@ public class Module2 extends BaseLib{
 
 		if (sendKeys(driver, lp.getInvestorUsernameTextbox(60), M2Contact1EmailID, "Investor username textbox on investor login page", action.BOOLEAN)) {
 			if (sendKeys(driver, lp.getInvestorPasswordTextbox(60), "Testing", "Investor password textbox on investor login page", action.BOOLEAN)) {
-				if (click(driver, lp.getInvestorLoginButton(60), "Investor login button", action.BOOLEAN)) {
+				if(bp.clickUsingCssSelectorPath("input[title='Login']", "login button")) {
+//				if (click(driver, lp.getInvestorLoginButton(60), "Investor login button", action.BOOLEAN)) {
 					ThreadSleep(5000);
 					if (isAlertPresent(driver)) {
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -2343,6 +2354,7 @@ public class Module2 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String parentID;
 		String M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
 		String cont_password_updated = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_password_updated);
@@ -2398,7 +2410,8 @@ public class Module2 extends BaseLib{
 						}
 						if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\lessthantwomb.png", "browse button change profile picture",action.BOOLEAN)) {
 							if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-								if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+								if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//								if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 									ThreadSleep(5000);
 									if (isAlertPresent(driver)) {
 										String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -2446,7 +2459,7 @@ public class Module2 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
-
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert sa = new SoftAssert();
 		String parentID;
 		String M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
@@ -2460,7 +2473,8 @@ public class Module2 extends BaseLib{
 				//uploading bmp image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\bmpimage.bmp", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -2504,7 +2518,8 @@ public class Module2 extends BaseLib{
 				//uploading jpg image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\jpgimage.jpg", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -2545,7 +2560,8 @@ public class Module2 extends BaseLib{
 				//uploading gif image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\gifimage.gif", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -2581,7 +2597,8 @@ public class Module2 extends BaseLib{
 				//uploading png image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\pngimage.png", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -2708,6 +2725,7 @@ public class Module2 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String cont_password_updated = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_password_updated);
 		String M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
 		driver.get(InvestorURL);
@@ -2923,7 +2941,8 @@ public class Module2 extends BaseLib{
 					if (sendKeys(driver, ip.getOldPasswordTextbox(60), cont_password_updated,"old password textbox", action.SCROLLANDBOOLEAN)) {
 						if (sendKeys(driver, ip.getNewPasswordTextbox(60), adminPassword+"UP", "new password textbox", action.SCROLLANDBOOLEAN)) {
 						if (sendKeys(driver, ip.getConfirmPasswordTextbox(60), adminPassword+"UP", "confirm password textbox", action.SCROLLANDBOOLEAN)) {
-							if (click(driver, ip.getSaveButtonChangePassword(60), "save button on confirm password window", action.SCROLLANDBOOLEAN)) {
+							if(bp.clickUsingCssSelectorPath("div.ChangePassword_fancybox.FancyboxContainer a[title='Save']", "change password save button")) {
+//							if (click(driver, ip.getSaveButtonChangePassword(60), "save button on confirm password window", action.SCROLLANDBOOLEAN)) {
 									ThreadSleep(5000);
 									ExcelUtils.writeData(adminPassword+"UP", "Contacts", excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_password_updated);
 									if (isAlertPresent(driver)) {
@@ -3348,6 +3367,7 @@ public class Module2 extends BaseLib{
 	public void M2tc023_ChangeFirmLogo() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SoftAssert sa = new SoftAssert();
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
 		String M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
@@ -3381,7 +3401,8 @@ public class Module2 extends BaseLib{
 					}
 					if (sendKeys(driver, ip.getBrowseButton(60),  System.getProperty("user.dir")+"//UploadFiles/lessthantwomb.png", "browse button on change firm logo window", action.BOOLEAN)) {
 						if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change firm logo window", action.BOOLEAN)) {
-							if (click(driver,ip.getChangeProfileSaveButton(60), "save button on change firm logo window", action.BOOLEAN)) {
+							if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//							if (click(driver,ip.getChangeProfileSaveButton(60), "save button on change firm logo window", action.BOOLEAN)) {
 								ThreadSleep(5000);
 								if (isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3437,7 +3458,8 @@ public class Module2 extends BaseLib{
 				//uploading bmp image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\bmpimage.bmp", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3475,7 +3497,8 @@ public class Module2 extends BaseLib{
 				//uploading jpg image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\jpgimage.jpg", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3516,7 +3539,8 @@ public class Module2 extends BaseLib{
 				//uploading gif image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\gifimage.gif", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3555,7 +3579,8 @@ public class Module2 extends BaseLib{
 				//uploading png image(successful)
 				if (sendKeys(driver, ip.getBrowseButton(60), System.getProperty("user.dir")+"\\UploadFiles\\logoSupportFormatImage\\pngimage.png", "browse button change profile picture",action.BOOLEAN)) {
 					if (click(driver, ip.getSubmitButtonChangePicture(60), "submit button on change picture window", action.BOOLEAN)) {
-						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
+						if(bp.clickUsingCssSelectorPath("a[title='Save']", "change profile save button")) {
+//						if (click(driver, ip.getChangeProfileSaveButton(100), "save button", action.BOOLEAN)) {
 							ThreadSleep(5000);
 							if (isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
