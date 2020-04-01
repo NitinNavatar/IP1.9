@@ -448,7 +448,8 @@ public class Module10 extends BaseLib {
 										+ " :Opiton is not available in the list.");
 							}
 						}
-						if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button", action.SCROLLANDBOOLEAN)) {
+						if ( fp.clickUsingCssSelectorPath("a[title=Send]", "send button")) {
+						//if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button", action.SCROLLANDBOOLEAN)) {
 							String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 							if (alertmessage.equalsIgnoreCase(
 									FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
@@ -466,8 +467,9 @@ public class Module10 extends BaseLib {
 								action.SCROLLANDBOOLEAN)) {
 							if (click(driver, fp.getManageEmailCustomTemplateCancelButton(60),
 									"Manage Email custom template cancel button", action.SCROLLANDBOOLEAN)) {
-								if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button",
-										action.SCROLLANDBOOLEAN)) {
+								if ( fp.clickUsingCssSelectorPath("a[title=Send]", "send button")) {
+								//if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button",
+								//		action.SCROLLANDBOOLEAN)) {
 									String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 									if (alertmessage.equalsIgnoreCase(
 											FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
@@ -482,8 +484,9 @@ public class Module10 extends BaseLib {
 									appLog.info("Not able to click on send button");
 									sa.assertTrue(false, "Not able to click on send button");
 								}
-								if (click(driver, fp.getManageEmailSearchBtn(60), "Search button",
-										action.SCROLLANDBOOLEAN)) {
+								if ( fp.clickUsingCssSelectorPath("div#searchIddiv > a", "search button")) {
+								//if (click(driver, fp.getManageEmailSearchBtn(60), "Search button",
+								//		action.SCROLLANDBOOLEAN)) {
 									String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 									if (alertmessage.equalsIgnoreCase(
 											FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails)) {
@@ -623,7 +626,7 @@ public class Module10 extends BaseLib {
 						if (fp.getManageEmailPreviewBottomText(60).getText().trim().contains(Org1FirmName)) {
 							appLog.info("Manage Email Invitation Email Preview Bottom Text is verified.");
 						} else {
-							appLog.info("Manage Email Invitation Email Preview Bottom Text is not verified.");
+							appLog.info("Manage Email Invitation Email Preview Bottom Text is not verified."+fp.getManageEmailPreviewBottomText(60).getText().trim()+" and "+Org1FirmName);
 							sa.assertTrue(false, "Manage Email Invitation Email Preview Bottom Text is not verified.");
 						}
 						if (isDisplayed(driver, fp.getManageEmailPreviewClosebtn(60), "Visibility", 30,
@@ -680,7 +683,7 @@ public class Module10 extends BaseLib {
 						}
 						if (click(driver, fp.getManageEmailPreviewCloseIcon(30), "Close Button",
 								action.SCROLLANDBOOLEAN)) {
-							if (fp.getManageEmailPreviewCloseIcon(30) == null) {
+							if (fp.getManageEmailPreviewCloseIcon(5) == null) {
 								appLog.info("Manage Emails preview Pop Up is closed");
 							} else {
 								appLog.info("Manage Emails preview Pop Up is not closed");
@@ -2256,8 +2259,10 @@ public class Module10 extends BaseLib {
 						if (click(driver, fp.getManageEMailContactAllCheckBox(30), "Manage Email All Contact Check Box",
 								action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(2000);
-							if (click(driver, fp.getmanageEmailsendBtn(30), "Manage Email Send Button",
-									action.SCROLLANDBOOLEAN)) {
+							if ( fp.clickUsingCssSelectorPath("a[title=Send]", "send button")) {
+								
+							//if (click(driver, fp.getmanageEmailsendBtn(30), "Manage Email Send Button",
+							//		action.SCROLLANDBOOLEAN)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 								if (msg.equalsIgnoreCase(
 										FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
@@ -2475,7 +2480,7 @@ public class Module10 extends BaseLib {
 										.contains(Org1FirmName)) {
 									appLog.info("Subject Text is  verified.");
 								} else {
-									appLog.info("Subject Text is not verified.");
+									appLog.info("Subject Text is not verified."+cp.getContactAcitivityAlertSubjectText(30).getText().trim()+" and "+Org1FirmName);
 									sa.assertTrue(false, "Subject Text is not verified.");
 								}
 								String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
@@ -2495,7 +2500,7 @@ public class Module10 extends BaseLib {
 										.contains("Invitation from " + Org1FirmName)) {
 									appLog.info("Comments subject Text is verified.");
 								} else {
-									appLog.info("Comments subject Text is not verified..");
+									appLog.info("Comments subject Text is not verified.."+cp.getContactAcitivityAlertCommentsText(30).getText().trim()+" and "+Org1FirmName);
 									sa.assertTrue(false, "Comments subject Text is not verified.");
 								}
 								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
@@ -2682,7 +2687,7 @@ public class Module10 extends BaseLib {
 							if (cp.getContactAcitivityAlertSubjectText(30).getText().trim().contains(Org1FirmName)) {
 								appLog.info("Subject Text is  verified.");
 							} else {
-								appLog.info("Subject Text is not verified.");
+								appLog.info("Subject Text is not verified."+cp.getContactAcitivityAlertSubjectText(30).getText().trim()+ " and " +Org1FirmName);
 								sa.assertTrue(false, "Subject Text is not verified.");
 							}
 							String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
@@ -2702,7 +2707,7 @@ public class Module10 extends BaseLib {
 									.contains("Invitation from " + Org1FirmName)) {
 								appLog.info("Comments subject Text is verified.");
 							} else {
-								appLog.info("Comments subject Text is not verified..");
+								appLog.info("Comments subject Text is not verified.."+Org1FirmName);
 								sa.assertTrue(false, "Comments subject Text is not verified.");
 							}
 							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
@@ -3959,8 +3964,9 @@ public class Module10 extends BaseLib {
 						if (click(driver, ele, "Contact2 checkbox", action.SCROLLANDBOOLEAN)) {
 							appLog.info("Clicked on contact2 checkbox");
 							if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button", action.SCROLLANDBOOLEAN)) {
-								if (click(driver, fp.getManageEmailSendInvitationConfirmationYesBtn(60),
-										"Confirmation poup yes button", action.SCROLLANDBOOLEAN)) {
+								if (fp.clickUsingCssSelectorPath("div#confirmationpopup_emailID_ME a[title=Yes]", "yes button")) {
+								//if (click(driver, fp.getManageEmailSendInvitationConfirmationYesBtn(60),
+								//		"Confirmation poup yes button", action.SCROLLANDBOOLEAN)) {
 									String alertText = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 									if (alertText.equalsIgnoreCase(
 											FundsPageErrorMessage.MnaageEmailCustomTemplateErrorMessage)) {
@@ -4886,8 +4892,9 @@ public class Module10 extends BaseLib {
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
 						action.SCROLLANDBOOLEAN)) {
-					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact2FirstName+" "+M10Contact2LastName+"']", "Contact2 name", action.SCROLLANDBOOLEAN, 60);
-					if(click(driver, ele, "Contact 2", action.SCROLLANDBOOLEAN)){
+					if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Contact2FirstName+" "+M10Contact2LastName+"']$)", "Contact2 name")) {
+					//WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact2FirstName+" "+M10Contact2LastName+"']", "Contact2 name", action.SCROLLANDBOOLEAN, 60);
+					//if(click(driver, ele, "Contact 2", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -4900,8 +4907,9 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact2 name");
 						sa.assertTrue(false, "Not able to click on contact2 name ");
 				}
-				ele=FindElement(driver,"//a[text()='"+M10Institution2+"']", "Contact2 firm name", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Contact 2 firm name", action.SCROLLANDBOOLEAN)){
+				if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Institution2+"']$)", "Contact2 firm name")) {
+				//	ele=FindElement(driver,"//a[text()='"+M10Institution2+"']", "Contact2 firm name", action.SCROLLANDBOOLEAN, 60);
+				//if(click(driver, ele, "Contact 2 firm name", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -4930,7 +4938,8 @@ public class Module10 extends BaseLib {
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			appLog.info("Clicked on COntact Tab");
 			if(cp.clickOnCreatedContact(M10Contact1FirstName, M10Contact1LastName, null)){
-	if(click(driver, cp.getDeleteButtonContactsPage(60), "Delete button	", action.SCROLLANDBOOLEAN)){
+				if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
+		//		if(click(driver, cp.getDeleteButtonContactsPage(60), "Delete button	", action.SCROLLANDBOOLEAN)){
 		switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 		if(cp.verifyDeletedContact(M10Contact1FirstName+" "+M10Contact1LastName)){
 			appLog.info("Contact get deleted successfully");
@@ -4957,8 +4966,10 @@ public class Module10 extends BaseLib {
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
 						action.SCROLLANDBOOLEAN)) {
-					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']", "Contact1 name", action.SCROLLANDBOOLEAN, 60);
-					if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
+					if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']$)", "Contact1 name")) {
+						
+					//WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']", "Contact1 name", action.SCROLLANDBOOLEAN, 60);
+					//if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
 						if(isAlertPresent(driver)){
 							String errorMessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 							if (errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)) {
@@ -4976,8 +4987,10 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact1 name");
 						sa.assertTrue(false, "Not able to click on contact1 name ");
 					}
-				ele=FindElement(driver,"//a[text()='"+M10Institution1+"RUP"+"']", "Contact1 firm name", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
+					if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Institution1+"RUP"+"']$)", "Contact1 firm name")) {
+						
+					//ele=FindElement(driver,"//a[text()='"+M10Institution1+"RUP"+"']", "Contact1 firm name", action.SCROLLANDBOOLEAN, 60);
+				//if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -5273,7 +5286,8 @@ public class Module10 extends BaseLib {
 										+ " :Opiton is not available in the list.");
 							}
 						}
-						if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button", action.SCROLLANDBOOLEAN)) {
+						if ( fp.clickUsingCssSelectorPath("a[title=Send]", "send button")) {
+						//if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button", action.SCROLLANDBOOLEAN)) {
 							String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 							if (alertmessage.equalsIgnoreCase(
 									FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
@@ -5291,8 +5305,10 @@ public class Module10 extends BaseLib {
 								action.SCROLLANDBOOLEAN)) {
 							if (click(driver, fp.getManageEmailCustomTemplateCancelButton(60),
 									"Manage Email custom template cancel button", action.SCROLLANDBOOLEAN)) {
-								if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button",
-										action.SCROLLANDBOOLEAN)) {
+								if ( fp.clickUsingCssSelectorPath("a[title=Send]", "send button")) {
+									
+								//if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button",
+								//		action.SCROLLANDBOOLEAN)) {
 									String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 									if (alertmessage.equalsIgnoreCase(
 											FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
@@ -5307,8 +5323,9 @@ public class Module10 extends BaseLib {
 									appLog.info("Not able to click on send button");
 									sa.assertTrue(false, "Not able to click on send button");
 								}
-								if (click(driver, fp.getManageEmailSearchBtn(60), "Search button",
-										action.SCROLLANDBOOLEAN)) {
+								if (fp.clickUsingCssSelectorPath("div#searchIddiv > a", "search")) {
+								//if (click(driver, fp.getManageEmailSearchBtn(60), "Search button",
+								//		action.SCROLLANDBOOLEAN)) {
 									String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 									if (alertmessage.equalsIgnoreCase(
 											FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails)) {
@@ -7271,8 +7288,10 @@ public class Module10 extends BaseLib {
 						if (click(driver, fp.getManageEMailContactAllCheckBox(30), "Manage Email All Contact Check Box",
 								action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(2000);
-							if (click(driver, fp.getmanageEmailsendBtn(30), "Manage Email Send Button",
-									action.SCROLLANDBOOLEAN)) {
+							if ( fp.clickUsingCssSelectorPath("a[title=Send]", "send button")) {
+								
+							//if (click(driver, fp.getmanageEmailsendBtn(30), "Manage Email Send Button",
+							//		action.SCROLLANDBOOLEAN)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 								if (msg.equalsIgnoreCase(
 										FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
@@ -8809,8 +8828,10 @@ public class Module10 extends BaseLib {
 						if (click(driver, ele, "Contact2 checkbox", action.SCROLLANDBOOLEAN)) {
 							appLog.info("Clicked on contact2 checkbox");
 							if (click(driver, fp.getmanageEmailsendBtn(60), "Send Button", action.SCROLLANDBOOLEAN)) {
-								if (click(driver, fp.getManageEmailSendInvitationConfirmationYesBtn(60),
-										"Confirmation poup yes button", action.SCROLLANDBOOLEAN)) {
+								if (fp.clickUsingCssSelectorPath("div#confirmationpopup_emailID_ME a[title=Yes]", "yes button")) {
+									
+								//if (click(driver, fp.getManageEmailSendInvitationConfirmationYesBtn(60),
+								//		"Confirmation poup yes button", action.SCROLLANDBOOLEAN)) {
 									String alertText = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 									if (alertText.equalsIgnoreCase(
 											FundsPageErrorMessage.MnaageEmailCustomTemplateErrorMessage)) {
@@ -9627,18 +9648,19 @@ public class Module10 extends BaseLib {
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			appLog.info("Clicked on COntact Tab");
 			if(cp.clickOnCreatedContact(M10Contact1FirstName, M10Contact1LastName, null)){
-	if(click(driver, cp.getDeleteButtonContactsPage(60), "Delete button	", action.SCROLLANDBOOLEAN)){
-		switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
-		if(cp.verifyDeletedContact(M10Contact1FirstName+" "+M10Contact1LastName)){
-			appLog.info("Contact get deleted successfully");
-		}else{
-			appLog.info("Contact does not get delete successfully");
-			sa.assertTrue(false, "Contact does not get deleted successfulluy");
-		}
-		}else{
-		appLog.info("Not able to click on delete button");
-		sa.assertTrue(false, "Not able to click on delete bvutton");
-	}
+				if (fp.clickUsingCssSelectorPath("input[value=Delete]",  "Delete button	")) {
+				//if(click(driver, cp.getDeleteButtonContactsPage(60), "Delete button	", action.SCROLLANDBOOLEAN)){
+					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
+					if(cp.verifyDeletedContact(M10Contact1FirstName+" "+M10Contact1LastName)){
+						appLog.info("Contact get deleted successfully");
+					}else{
+						appLog.info("Contact does not get delete successfully");
+						sa.assertTrue(false, "Contact does not get deleted successfulluy");
+					}
+				}else{
+					appLog.info("Not able to click on delete button");
+					sa.assertTrue(false, "Not able to click on delete bvutton");
+				}
 			}else{
 				appLog.info("Not able to click on created ocntact");
 				sa.assertTrue(false, "Not able to click on created contact");

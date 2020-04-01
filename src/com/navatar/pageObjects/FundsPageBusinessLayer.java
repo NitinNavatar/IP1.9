@@ -1020,16 +1020,15 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				}
 			}
 			if (CommonLib.traverseImport(driver, documentPath, fileName)) {
+				ThreadSleep(3000);
 				 ele= BaseLib.edriver.findElement(By.cssSelector("#lbtOnlinImportSave"));
-				 
 				try{
 					scrollDownThroughWebelement(driver, ele, "import button");
 					ele.click();
 					appLog.info("Clicked on Import Button successfully");
-				
 //				if (click(driver, getImportButton(60), "Online Import Button", action.BOOLEAN)) {
 					if (WorkSpaceAction.toString().equalsIgnoreCase(WorkSpaceAction.UPDATE.toString())) {
-						
+						ThreadSleep(5000);
 						 ele= BaseLib.edriver.findElement(By.cssSelector("#lnkReplaceAll"));
 						 try{
 							 scrollDownThroughWebelement(driver, ele, "Update All Button");
@@ -5592,7 +5591,17 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						}
 					}
 					if (updateIgnore == UpdateIgnore.Update) {
-						click(driver,getUpdateAllButton(30), "Update All Button", action.BOOLEAN);
+						WebElement ele= BaseLib.edriver.findElement(By.cssSelector("#lnkReplaceAll"));
+						try{
+							scrollDownThroughWebelement(driver, ele, "update all");
+							ele.click();
+							appLog.info("clicked on update all");
+						}catch(Exception e){
+							appLog.error("Not able to click on update all");
+							BaseLib.sa.assertTrue(false, "Not able to click on update all");
+						}
+
+						//click(driver,getUpdateAllButton(30), "Update All Button", action.BOOLEAN);
 						if(isAlertPresent(driver)){
 							String alertText = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
