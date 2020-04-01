@@ -1562,20 +1562,21 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String docNameXpath="";
 			
 			if (workspace.toString().equalsIgnoreCase(Workspace.InvestorWorkspace.toString())) {
-				docNameXpath = workSpaceXpath + "//span[contains(@id,'grid_Investor-cell-0')]/a";
+				docNameXpath = workSpaceXpath + "//span[contains(@id,'myGrid-cell-0')]//a";
 				
 			}
 			else if(workspace.toString().equalsIgnoreCase(Workspace.FundraisingWorkspace.toString())) {
-				docNameXpath = workSpaceXpath + "//span[contains(@id,'grid_Investor-cell-0')]/a";
+				docNameXpath = workSpaceXpath + "//span[contains(@id,'myGridfundr-cell-0')]//a";
 				
 			}else if(workspace.toString().equalsIgnoreCase(Workspace.Other.toString()) || 
 					workspace.toString().equalsIgnoreCase(PageName.PotentialInvestmentPage.toString())){
 					docNameXpath = workSpaceXpath + "//span[contains(@id,'grid_Investor-cell-0')]/a";	
 				}
 			
+			if (isDisplayed(driver, FindElement(driver, docNameXpath, "Document Name List", action.SCROLLANDBOOLEAN,
+					3), "visibility", 3, "Document Name List")!=null) {
 			List<WebElement> docList = FindElements(driver, docNameXpath, "Document Name List");
 			System.err.println("xpath for Files : "+docNameXpath);
-
 			if (!docList.isEmpty()) {
 				
 				for (WebElement ele1 : docList) {
@@ -1598,7 +1599,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				sa.assertTrue(false, "Document List is Empty " + pName.toString() + " : " + workspace.toString());
 				
 			}
-			
+			}
+			else {
+			appLog.error("not found documents");}
 			
 	}else{
 		appLog.info(" Xpath Not Found for Content Grid Verification having " + pName.toString() + " : "
@@ -4696,5 +4699,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return sa;
 	}
-	
+public boolean clickUsingCssSelectorPath(String cssSelectorPath,String buttonName) {
+		
+		boolean cssFlag=false;
+		appLog.info("Css Selector Path for "+buttonName+" is  >>>>   "+cssSelectorPath);
+		try {
+			cssFlag=false;
+			 WebElement ele = BaseLib.edriver.findElement(By.cssSelector(cssSelectorPath));
+			ele.click();
+			appLog.info("click on "+buttonName);
+			cssFlag = true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			appLog.info("Not able to click on "+buttonName);
+			BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
+			cssFlag=false;
+		
+		}
+		return cssFlag;
+		
+	}
 }
