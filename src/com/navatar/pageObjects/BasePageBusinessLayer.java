@@ -4697,4 +4697,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return sa;
 	}
 	
+	public boolean clickUsingCssSelectorPath(String cssSelectorPath,String buttonName) {
+		
+		boolean cssFlag=false;
+		appLog.info("Css Selector Path for "+buttonName+" is  >>>>   "+cssSelectorPath);
+		try {
+			cssFlag=false;
+			 WebElement ele = BaseLib.edriver.findElement(By.cssSelector(cssSelectorPath));
+			ele.click();
+			appLog.info("click on "+buttonName);
+			cssFlag = true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			appLog.info("Not able to click on "+buttonName);
+			BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
+			cssFlag=false;
+		
+		}
+		return cssFlag;
+		
+	}
+	
 }
