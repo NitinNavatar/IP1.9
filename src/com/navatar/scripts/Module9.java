@@ -1284,12 +1284,21 @@ public class Module9 extends BaseLib{
 			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 			if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30)!=null) {
 				appLog.info("manage approval icon is successfully present for user 1 in fundraising workspace");
-				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "fundraising workspace manage approval", action.SCROLLANDBOOLEAN)) {
+				WebElement ele= BaseLib.edriver.findElement(By.cssSelector("div#frworkspace a[title=\"Manage Approvals\"] > img"));
+				try{
+					scrollDownThroughWebelement(driver, ele, "Yes Button");
+					ele.click();
+					appLog.info("clicked on Yes Button");
+				}catch(Exception e){
+					appLog.error("Not able to click on Yes button so cannot clear fundraising workspace");
+					BaseLib.sa.assertTrue(false, "Not able to click on Yes button so cannot clear fundraising workspace");
+				}
+
 					ThreadSleep(5000);
 					if (isAlertPresent(driver)) {
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-						if (msg.equals(FundsPageErrorMessage.manageApprovalPermissionError)) {
+						if (msg.contains(FundsPageErrorMessage.manageApprovalPermissionError)) {
 							appLog.info("correct alert error is successfully present when manage approval access is not given to user 1");
 						}
 						else {
@@ -1301,11 +1310,7 @@ public class Module9 extends BaseLib{
 						appLog.error("no alert message is present when manage approval is clicked");
 						sa.assertTrue(false, "no alert message is present when manage approval is clicked");
 					}
-				}
-				else {
-					appLog.error("manage approval icon is not clickable");
-					sa.assertTrue(false, "manage approval icon is not clickable");
-				}
+				
 			}
 			else {
 				appLog.error("manage approval icon is not present on fundraising workspace");
@@ -1314,7 +1319,17 @@ public class Module9 extends BaseLib{
 			
 			if (fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30)!=null) {
 				appLog.info("manage approval icon is successfully present for user 1 in InvestorWorkspace");
-				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "InvestorWorkspace manage approval", action.SCROLLANDBOOLEAN)) {
+				
+				WebElement ele= BaseLib.edriver.findElement(By.cssSelector("div#invworkspace a[title=\"Manage Approvals\"] > img"));
+				try{
+					scrollDownThroughWebelement(driver, ele, "Yes Button");
+					ele.click();
+					appLog.info("clicked on Yes Button");
+				}catch(Exception e){
+					appLog.error("Not able to click on Yes button so cannot clear fundraising workspace");
+					BaseLib.sa.assertTrue(false, "Not able to click on Yes button so cannot clear fundraising workspace");
+				}
+			
 					ThreadSleep(5000);
 					if (isAlertPresent(driver)) {
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -1331,11 +1346,7 @@ public class Module9 extends BaseLib{
 						appLog.error("no alert message is present when manage approval is clicked");
 						sa.assertTrue(false, "no alert message is present when manage approval is clicked");
 					}
-				}
-				else {
-					appLog.error("manage approval icon is not clickable");
-					sa.assertTrue(false, "manage approval icon is not clickable");
-				}
+				
 			}
 			else {
 				appLog.error("manage approval icon is not present on InvestorWorkspace");
@@ -3005,7 +3016,15 @@ public class Module9 extends BaseLib{
 						appLog.error("cancel button not present on manage approvals window");
 						sa.assertTrue(false, "cancel button not present on manage approvals window");
 					}
-					if (click(driver, fp.getSearchIconManageApprovalsPopup(ManageApprovalTabs.PendingDocuments,60), "search icon manage approvals popup", action.SCROLLANDBOOLEAN)) {
+					WebElement ele= BaseLib.edriver.findElement(By.cssSelector(".SearchBasedOnAccountAndContacts .icon_btn_search"));
+					try{
+						scrollDownThroughWebelement(driver, ele, "search icon");
+						ele.click();
+						appLog.info("clicked on search icon");
+					}catch(Exception e){
+						appLog.error("Not able to click on search icon");
+						BaseLib.sa.assertTrue(false, "Not able to click on search icon");
+					}
 						ThreadSleep(3000);
 						if (isAlertPresent(driver)) {
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3022,14 +3041,19 @@ public class Module9 extends BaseLib{
 							appLog.error("no alert is present when search icon is clicked");
 							sa.assertTrue(false, "no alert is present when search icon is clicked");
 						}
-					}
-					else {
-						appLog.error("search icon is not clickable on manage approvals popup");
-						sa.assertTrue(false, "search icon is not clickable on manage approvals popup");
-					}
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "checkbox to select all documents in manage approvals", action.SCROLLANDBOOLEAN)) {
 						//added after bug found
-						click(driver, fp.getManageApprovalsApproveBtn(30), "approve btn", action.SCROLLANDBOOLEAN);
+						ele= BaseLib.edriver.findElement(By.cssSelector("#ApproveId"));
+						try{
+							scrollDownThroughWebelement(driver, ele, "Approve icon");
+							ele.click();
+							appLog.info("clicked on Approve icon");
+						}catch(Exception e){
+							appLog.error("Not able to click on Approve icon");
+							BaseLib.sa.assertTrue(false, "Not able to click on Approve icon");
+						}
+						
+						//click(driver, fp.getManageApprovalsApproveBtn(30), "approve btn", action.SCROLLANDBOOLEAN);
 						if (isAlertPresent(driver)) {
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 							switchToAlertAndAcceptOrDecline(driver, 30,action.ACCEPT);
@@ -3053,7 +3077,19 @@ public class Module9 extends BaseLib{
 						appLog.error("checkbox for selecting all documents is not clickable");
 						sa.assertTrue(false, "checkbox for selecting all documents is not clickable");
 					}
-					if (click(driver, fp.getdeleteBtnManageApprovals(60), "delete button manage approvals", action.SCROLLANDBOOLEAN)) {
+					boolean flag;
+					flag=true;
+					ele= BaseLib.edriver.findElement(By.cssSelector("#DeleteId"));
+					try{
+						scrollDownThroughWebelement(driver, ele, "Delete icon");
+						ele.click();
+						appLog.info("clicked on Delete icon");
+					}catch(Exception e){
+						flag=false;
+						appLog.error("Not able to click on Delete icon");
+						BaseLib.sa.assertTrue(false, "Not able to click on Delete icon");
+					}
+					if (flag) {
 						if (isAlertPresent(driver)) {
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4411,7 +4447,7 @@ public class Module9 extends BaseLib{
 										appLog.error("cross icon on approve confirmation popup is not clickable");
 										sa.assertTrue(false, "cross icon on approve confirmation popup is not clickable");
 									}
-									if (click(driver, fp.getApprovedDocsTab(60),"approved docs tab", action.SCROLLANDBOOLEAN)) {
+								if (click(driver, fp.getApprovedDocsTab(60),"approved docs tab", action.SCROLLANDBOOLEAN)) {
 										
 										if (getSelectedOptionOfDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.ApprovedDocuments, 30), "dropdown of approved documents","text").equals(cmnPath)) {
 											appLog.info("correct default selected option of dropdown is "+cmnPath);
@@ -4431,7 +4467,9 @@ public class Module9 extends BaseLib{
 										
 									}
 									//verifying documents in approved tab
-									if (fp.verifyFilesPresentInManageApprovals(Workspace.FundraisingWorkspace, ManageApprovalTabs.ApprovedDocuments, filesToDel, M9FundName1+" > "+ cmnPath, "approved", CRMUser1FirstName+" "+CRMUser1LastName, Org1FirmName, date)) {
+									
+						
+								if (fp.verifyFilesPresentInManageApprovals(Workspace.FundraisingWorkspace, ManageApprovalTabs.ApprovedDocuments, filesToDel, M9FundName1+" > "+ cmnPath, "approved", CRMUser1FirstName+" "+CRMUser1LastName, Org1FirmName, date)) {
 										appLog.info("files are successfully present in manage approvals approved tab");
 									}
 									else {
@@ -6554,7 +6592,18 @@ public class Module9 extends BaseLib{
 										//find not more than 10 error
 										if (click(driver, fp.getApproveBtnManageApprovals(60), "approve button manage approvals", action.SCROLLANDBOOLEAN)) {
 											if (click(driver, fp.getManageApprovalApproveYesOrNo(YesNo.Yes, 30), "yes button approve popup", action.BOOLEAN)) {
-												if (click(driver, fp.getManageApprovalsUpdateAllDocument(60), "update all button on approve duplicate docs", action.SCROLLANDBOOLEAN)) {
+												boolean flag=true;
+												WebElement ele= BaseLib.edriver.findElement(By.cssSelector("a[title=\"Update All\"]"));
+												try{
+													scrollDownThroughWebelement(driver, ele, "search icon");
+													ele.click();
+													appLog.info("clicked on search icon");
+												}catch(Exception e){
+													flag=false;
+													appLog.error("Not able to click on search icon");
+													BaseLib.sa.assertTrue(false, "Not able to click on search icon");
+												}
+												if (flag) {
 													if (isAlertPresent(driver)) {
 														String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 														switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
@@ -9093,7 +9142,16 @@ public class Module9 extends BaseLib{
 						appLog.error("cancel button not present on manage approvals window");
 						sa.assertTrue(false, "cancel button not present on manage approvals window");
 					}
-					if (click(driver, fp.getSearchIconManageApprovalsPopup(ManageApprovalTabs.PendingDocuments,60), "search icon manage approvals popup", action.SCROLLANDBOOLEAN)) {
+					WebElement ele= BaseLib.edriver.findElement(By.cssSelector(".SearchBasedOnAccountAndContacts .icon_btn_search"));
+					try{
+						scrollDownThroughWebelement(driver, ele, "search icon");
+						ele.click();
+						appLog.info("clicked on search icon");
+					}catch(Exception e){
+						appLog.error("Not able to click on search icon");
+						BaseLib.sa.assertTrue(false, "Not able to click on search icon");
+					}
+
 						ThreadSleep(3000);
 						if (isAlertPresent(driver)) {
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -9110,13 +9168,18 @@ public class Module9 extends BaseLib{
 							appLog.error("no alert is present when search icon is clicked");
 							sa.assertTrue(false, "no alert is present when search icon is clicked");
 						}
-					}
-					else {
-						appLog.error("search icon is not clickable on manage approvals popup");
-						sa.assertTrue(false, "search icon is not clickable on manage approvals popup");
-					}
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "checkbox to select all documents in manage approvals", action.SCROLLANDBOOLEAN)) {
-						click(driver, fp.getApproveBtnManageApprovals(30), "approve btn manage approvals", action.BOOLEAN);
+						ele= BaseLib.edriver.findElement(By.cssSelector("#ApproveId"));
+						try{
+							scrollDownThroughWebelement(driver, ele, "Approve icon");
+							ele.click();
+							appLog.info("clicked on Approve icon");
+						}catch(Exception e){
+							appLog.error("Not able to click on Approve icon");
+							BaseLib.sa.assertTrue(false, "Not able to click on Approve icon");
+						}
+						
+						//click(driver, fp.getApproveBtnManageApprovals(30), "approve btn manage approvals", action.BOOLEAN);
 						if (isAlertPresent(driver)) {
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 							switchToAlertAndAcceptOrDecline(driver, 30,action.ACCEPT);
@@ -9140,13 +9203,27 @@ public class Module9 extends BaseLib{
 						appLog.error("checkbox for selecting all documents is not clickable");
 						sa.assertTrue(false, "checkbox for selecting all documents is not clickable");
 					}
-					if (click(driver, fp.getdeleteBtnManageApprovals(60), "delete button manage approvals", action.SCROLLANDBOOLEAN)) {
+					ele= BaseLib.edriver.findElement(By.cssSelector("#DeleteId"));
+					try{
+						scrollDownThroughWebelement(driver, ele, "Delete icon");
+						ele.click();
+						appLog.info("clicked on Delete icon");
+					}catch(Exception e){
+						appLog.error("Not able to click on Delete icon");
+						BaseLib.sa.assertTrue(false, "Not able to click on Delete icon");
+					}
+					
+					//if (click(driver, fp.getdeleteBtnManageApprovals(60), "delete button manage approvals", action.SCROLLANDBOOLEAN)) {
 						if (isAlertPresent(driver)) {
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 							if (msg.trim().equals(FundsPageErrorMessage.manageApprovalDelError)) {
 								appLog.info("correct error mesage is verified when delete button is clicked with no document");
 							}
+						}
+						else {
+							appLog.error("delete error message could not be verified");
+							sa.assertTrue(false,"delete error message could not be verified");
 						}
 						if (isSelected(driver, fp.getCheckAllDocsManageApprovals(60), "checkbox for all documents manage approval")) {
 							appLog.info("checkbox for selecting all documents is selected");
@@ -9155,11 +9232,11 @@ public class Module9 extends BaseLib{
 							appLog.error("checkbox for selecting all documents is not selected");
 							sa.assertTrue(false, "checkbox for selecting all documents is not selected");
 						}
-					}
-					else {
-						appLog.error("delete button is not clickable on manage approvals window");
-						sa.assertTrue(false, "delete button is not clickable on manage approvals window");
-					}
+					//}
+					//else {
+					//	appLog.error("delete button is not clickable on manage approvals window");
+					//	sa.assertTrue(false, "delete button is not clickable on manage approvals window");
+					//}
 					
 					if (click(driver, fp.getManageAppCancelBtn(60), "cancel button manage approvals", action.SCROLLANDBOOLEAN)) {
 					}
@@ -13036,7 +13113,18 @@ public class Module9 extends BaseLib{
 										//find not more than 10 error
 										if (click(driver, fp.getApproveBtnManageApprovals(60), "approve button manage approvals", action.SCROLLANDBOOLEAN)) {
 											if (click(driver, fp.getManageApprovalApproveYesOrNo(YesNo.Yes, 30), "yes button approve popup", action.BOOLEAN)) {
-												if (click(driver, fp.getManageApprovalsUpdateAllDocument(60), "update all button on approve duplicate docs", action.SCROLLANDBOOLEAN)) {
+												WebElement ele= BaseLib.edriver.findElement(By.cssSelector("a[title=\"Update All\"]"));
+												boolean flag=true;
+												try{
+													scrollDownThroughWebelement(driver, ele, "Update All Button");
+													ele.click();
+													appLog.info("clicked on Update All Button");
+												}catch(Exception e){
+													flag=false;
+													appLog.error("Not able to click on Update All buttone");
+													BaseLib.sa.assertTrue(false, "Not able to click on Update All");
+												}
+												if (flag) {
 													if (isAlertPresent(driver)) {
 														String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 														switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
