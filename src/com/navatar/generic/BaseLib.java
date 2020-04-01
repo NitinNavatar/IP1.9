@@ -62,57 +62,22 @@ public class BaseLib extends AppListeners {
 		if (browserName.equalsIgnoreCase("Chrome")) {
 			System.setProperty("webdriver.chrome.driver",
 					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
-//			System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-//		    Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
-//			ChromeOptions options = new ChromeOptions();
-//			options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
-//			options.addArguments("--start-maximized");
-//			options.addArguments("disable-infobars");
-//			options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
-//			options.setExperimentalOption("useAutomationExtension", false);
-////			options.addArguments("start-maximized");
-			
 			ChromeOptions options = new ChromeOptions();
 			options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
 			options.addArguments("disable-infobars");
 			options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 			options.setExperimentalOption("useAutomationExtension", false);
 			options.addArguments("start-maximized");
-			
+
 			System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-		    Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
-			
-//		    options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-			
-			
-			
-//			Map<String, Object> prefs = new HashMap<String, Object>();
-//			prefs.put("credentials_enable_service", false);
-//			prefs.put("profile.default_content_settings.popups", 0);
-//			prefs.put("download.default_directory", downloadedFilePath);
-//			prefs.put("profile.password_manager_enabled", false);
-//			options.setExperimentalOption("prefs", prefs);
-//			DesiredCapabilities dp = DesiredCapabilities.chrome();
-//			
-//			
-//		
-//			dp.setCapability(ChromeOptions.CAPABILITY, options);
-//			dp.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-//			edriver = new ChromeDriver(dp);
-//			edriver.manage().window().maximize();
-		    
-			
+			Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
 			Map<String, Object> prefs = new HashMap<String, Object>();
 			prefs.put("credentials_enable_service", false);
 			prefs.put("profile.default_content_settings.popups", 0);
 			prefs.put("download.default_directory", downloadedFilePath);
 			prefs.put("profile.password_manager_enabled", false);
 			options.setExperimentalOption("prefs", prefs);
-			DesiredCapabilities dp = new DesiredCapabilities();
-			dp.setCapability(ChromeOptions.CAPABILITY, options);
-			dp.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-			edriver = new ChromeDriver(dp);
-			
+			edriver = new ChromeDriver(options);
 			
 			
 		} else if (browserName.equalsIgnoreCase("firefox")) {
@@ -127,14 +92,13 @@ public class BaseLib extends AppListeners {
 		} else if (browserName.equalsIgnoreCase("IE Edge")) {
 			 System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") +"\\exefiles\\MicrosoftWebDriver.exe");
 			 edriver = new EdgeDriver();
-		}
-		else {
+		}else {
 			System.setProperty("webdriver.chrome.driver",
 					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
 			edriver = new ChromeDriver();
 		}
-		testListner = new AppListeners();
 		driver = new EventFiringWebDriver(edriver);
+		testListner = new AppListeners();
 		driver.register(testListner);
 		//driver.get(ExcelUtils.readDataFromPropertyFile("URL"));
 		cv=new CommonVariables(this);

@@ -290,8 +290,9 @@ public class SmokeTestCase extends BaseLib {
 			appLog.info("Unused tabs not removed successfully");
 			saa.assertTrue(false, "Unused tabs not removed successfully");
 		}
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 3);
+		WebElement ele = FindElement(driver, "//a[contains(@title,'Partnerships')]",
+							  "Partnerships tab", action.SCROLLANDBOOLEAN, 3);
+							 
 		if(ele==null){
 		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
 			if(!lst.isEmpty()){
@@ -8566,11 +8567,25 @@ public class SmokeTestCase extends BaseLib {
 									appLog.error("Box Link is not open after click on box link");
 									sa.assertTrue(false, "Box Link is not open after click on box link");
 								}
-								WebElement ele= BaseLib.edriver.findElement(By.cssSelector("div#backup_savebtn>a[title=Yes]"));
 								try{
+									WebElement ele= BaseLib.edriver.findElement(By.cssSelector("div#backup_savebtn>a[title=Yes]"));
 									scrollDownThroughWebelement(driver, ele, "Yes Button");
 									ele.click();
 									appLog.info("clicked on Yes Button");
+//									if (isAlertPresent(BaseLib.edriver)) {
+										appLog.info(Workspace.FundraisingWorkspace.toString()+" has been successfully clear");
+										String msg = switchToAlertAndGetMessage(BaseLib.edriver, 30, action.GETTEXT);
+										switchToAlertAndAcceptOrDecline(BaseLib.edriver, 30, action.ACCEPT);
+										if(msg.contains(FundsPageErrorMessage.clearWorkSpaceMsg)) {
+											appLog.info(FundsPageErrorMessage.clearWorkSpaceMsg);
+										}else {
+											appLog.error("clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
+											sa.assertTrue(false, "clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
+										}
+//									} else {
+//										appLog.error(Workspace.FundraisingWorkspace.toString()+" clear Workspace alert message is not displayed");
+//										sa.assertTrue(false, Workspace.FundraisingWorkspace.toString()+" clear Workspace alert message is not displayed");
+//									}
 								}catch(Exception e){
 									appLog.error("Not able to click on Yes button so cannot clear fundraising workspace");
 									BaseLib.sa.assertTrue(false, "Not able to click on Yes button so cannot clear fundraising workspace");
@@ -8578,26 +8593,6 @@ public class SmokeTestCase extends BaseLib {
 									driver.close();
 									driver.switchTo().window(parentID);
 								}
-
-								
-								//if(click(driver, fp.getClearWorkSpaceYesOnBackUpPage(30), "clear workspace yes button", action.SCROLLANDBOOLEAN)) {
-									//appLog.info("clicked on clear workspce yes button");
-									ThreadSleep(5000);
-									if (isAlertPresent(driver)) {
-										appLog.info(Workspace.FundraisingWorkspace.toString()+" has been successfully clear");
-										String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-										switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-										if(msg.contains(FundsPageErrorMessage.clearWorkSpaceMsg)) {
-											appLog.info(FundsPageErrorMessage.clearWorkSpaceMsg);
-										}else {
-											appLog.error("clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
-											sa.assertTrue(false, "clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
-										}
-									} else {
-										appLog.error(Workspace.FundraisingWorkspace.toString()+" clear Workspace alert message is not displayed");
-										sa.assertTrue(false, Workspace.FundraisingWorkspace.toString()+" clear Workspace alert message is not displayed");
-									}
-								
 							}else {
 								appLog.error("Not able to click on box link so cannot verify box link and close workspace");
 								sa.assertTrue(false, "Not able to click on box link so cannot verify box link and close workspace");
@@ -8669,18 +8664,8 @@ public class SmokeTestCase extends BaseLib {
 									scrollDownThroughWebelement(driver, ele, "Yes Button");
 									ele.click();
 									appLog.info("clicked on Yes Button");
-								}catch(Exception e){
-									appLog.error("Not able to click on Yes button so cannot clear investor workspace");
-									BaseLib.sa.assertTrue(false, "Not able to click on Yes button so cannot clear investor workspace");
-									appLog.error(e.getMessage().toString());
-									driver.close();
-									driver.switchTo().window(parentID);
-								}
-
-								//if(click(driver, fp.getClearWorkSpaceYesOnBackUpPage(30), "clear workspace yes button", action.SCROLLANDBOOLEAN)) {
-									//appLog.info("clicked on clear workspce yes button");
 									ThreadSleep(5000);
-									if (isAlertPresent(driver)) {
+//									if (isAlertPresent(driver)) {
 										appLog.info(Workspace.InvestorWorkspace.toString()+" has been successfully clear");
 										String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 										switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -8690,12 +8675,17 @@ public class SmokeTestCase extends BaseLib {
 											appLog.error("clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
 											sa.assertTrue(false, "clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
 										}
-									} else {
-										appLog.error(Workspace.InvestorWorkspace.toString()+" clear Workspace alert message is not displayed");
-										sa.assertTrue(false, Workspace.InvestorWorkspace.toString()+" clear Workspace alert message is not displayed");
-									}
-								
-								
+//									} else {
+//										appLog.error(Workspace.InvestorWorkspace.toString()+" clear Workspace alert message is not displayed");
+//										sa.assertTrue(false, Workspace.InvestorWorkspace.toString()+" clear Workspace alert message is not displayed");
+//									}
+								}catch(Exception e){
+									appLog.error("Not able to click on Yes button so cannot clear investor workspace");
+									BaseLib.sa.assertTrue(false, "Not able to click on Yes button so cannot clear investor workspace");
+									appLog.error(e.getMessage().toString());
+									driver.close();
+									driver.switchTo().window(parentID);
+								}
 							}else {
 								appLog.error("Not able to click on box link so cannot verify box link and close workspace");
 								sa.assertTrue(false, "Not able to click on box link so cannot verify box link and close workspace");
