@@ -8866,7 +8866,7 @@ public class Module3 extends BaseLib {
 		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim= new NIMPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminOrg2UserName,adminPassword);
+		lp.CRMLogin(superAdminOrg2UserName,adminPasswordOrg2);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
 				if(ip.createInstitution(M3Org2Institution1)) {
 				
@@ -9607,6 +9607,7 @@ public class Module3 extends BaseLib {
 		FundsPageBusinessLayer fpb = new FundsPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);	
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		List<WebElement>fileName = new ArrayList<WebElement>();
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
 		if(allfp.selectFirmName(Org1FirmName)) {
@@ -9686,7 +9687,9 @@ public class Module3 extends BaseLib {
 				}
 				driver.navigate().refresh();
 				ThreadSleep(3000);
-				 if(click(driver, ivp.getAlldocumentSearchBtn(60), "all document search button", action.BOOLEAN)) {
+				
+				if(bp.clickUsingCssSelectorPath("a[title='Search']", "investor side search button")) {
+//				 if(click(driver, ivp.getAlldocumentSearchBtn(60), "all document search button", action.BOOLEAN)) {
 					 ThreadSleep(3000);
 					 if(isAlertPresent(driver)) {
 						 String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -10890,6 +10893,7 @@ public class Module3 extends BaseLib {
 	public void M3tc072_1_uploadLogoForAdmin1AtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim= new NIMPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
@@ -10903,7 +10907,8 @@ public class Module3 extends BaseLib {
 								if (sendKeys(driver, nim.getBrowseButton(60), imagePath, "Browser Button", action.BOOLEAN)) {
 									if (click(driver, nim.getSubmitButtonImageUpload(60), "Image Upload submit Button",
 											action.BOOLEAN)) {
-										if (click(driver,nim.getSaveButtonImageUpload(60), "save Button", action.BOOLEAN)) {
+										if(bp.clickUsingCssSelectorPath("a[title='Save']", "upload image save button")) {
+//										if (click(driver,nim.getSaveButtonImageUpload(60), "save Button", action.BOOLEAN)) {
 											if (isAlertPresent(driver)) {
 												if (!switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT)) {
 													appLog.error("Not able to upload Logo.");
@@ -10971,7 +10976,8 @@ public class Module3 extends BaseLib {
 	public void M3tc072_2_uploadLogoForAdmin2AtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim= new NIMPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminOrg2UserName, adminPassword);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminOrg2UserName, adminPasswordOrg2);
 		if(nim.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Profiles)) {
@@ -10984,7 +10990,8 @@ public class Module3 extends BaseLib {
 								if (sendKeys(driver, nim.getBrowseButton(60), imagePath, "Browser Button", action.BOOLEAN)) {
 									if (click(driver, nim.getSubmitButtonImageUpload(60), "Image Upload submit Button",
 											action.BOOLEAN)) {
-										if (click(driver,nim.getSaveButtonImageUpload(60), "save Button", action.BOOLEAN)) {
+										if(bp.clickUsingCssSelectorPath("a[title='Save']", "upload image save button")) {
+//										if (click(driver,nim.getSaveButtonImageUpload(60), "save Button", action.BOOLEAN)) {
 											if (isAlertPresent(driver)) {
 												if (!switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT)) {
 													appLog.error("Not able to upload Logo.");
