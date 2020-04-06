@@ -29,6 +29,9 @@ import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageErrorMessage;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
+
+import sun.misc.FpUtils;
+
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import java.util.List;
@@ -731,7 +734,8 @@ public class Module13 extends BaseLib {
 					if(click(driver, nim.getCustomLabelCheckBox(10), "custom check box", action.SCROLLANDBOOLEAN)) {
 						int count =1;
 						for(int i=0 ;i<8; i++) {
-							if(click(driver, nim.getCustomLabelAddRowLink(10), "add custom label link", action.SCROLLANDBOOLEAN)) {
+							if (nim.clickUsingCssSelectorPath("#btnAddMore", "add custom label")) {
+							//if(click(driver, nim.getCustomLabelAddRowLink(10), "add custom label link", action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on Add Row Link");
 								if(i!=7) {
 									if(nim.getWatermarkingCustomTextBoxList().size()==(i+2)) {
@@ -832,7 +836,8 @@ public class Module13 extends BaseLib {
 							}else {
 								appLog.info("None is alreadyed selected in drop down list");
 							}
-							if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+							if (nim.clickUsingCssSelectorPath("#savebtn", "save")) {
+							//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 								if(isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -890,7 +895,8 @@ public class Module13 extends BaseLib {
 							}
 						}	
 						lst = nim.getWaterMarkingCheckBoxList();
-						if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+						if (nim.clickUsingCssSelectorPath("#savebtn", "save button")) {
+						//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 							if(isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 								switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -943,7 +949,8 @@ public class Module13 extends BaseLib {
 								appLog.info("Top: Left is alreadyed selected in drop down list");
 							}
 						}	
-						if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+						if (nim.clickUsingCssSelectorPath("#savebtn", "save")) {
+						//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 							if(isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 								switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -967,7 +974,8 @@ public class Module13 extends BaseLib {
 						sa.assertTrue(false, "WaterMarking label check boxes are not available so cannot check location error message");
 					}
 					if(nim.resetWaterMarkingSetting().isEmpty()) {
-						if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+						if (nim.clickUsingCssSelectorPath("#savebtn", "save")) {
+						//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 							if(isAlertPresent(driver)) {
 								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 								switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -1010,7 +1018,8 @@ public class Module13 extends BaseLib {
 									appLog.info("Top: Left is alreadyed selected in drop down list");
 								}
 							}	
-							if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+							if (nim.clickUsingCssSelectorPath("#savebtn", "save")) {
+							//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 								if(isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -1050,7 +1059,8 @@ public class Module13 extends BaseLib {
 							}else {
 								appLog.info(" custom label check Box is already checked");
 							}
-							if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+							if (nim.clickUsingCssSelectorPath("#savebtn", "save")) {
+								//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 								if(isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -1069,7 +1079,8 @@ public class Module13 extends BaseLib {
 								sa.assertTrue(false, "Not able to click on watermarking save button so cannot check error message"+NIMPageErrorMessage.CustomLabelValueErrorMsg);
 							}
 							if(sendKeys(driver,nim.getWatermarkingCustomTextBoxList().get(0), "value1","custom label text box", action.SCROLLANDBOOLEAN)) {
-								if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+								if (nim.clickUsingCssSelectorPath("#savebtn", "save")) {
+								//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 									if(isAlertPresent(driver)) {
 										String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 										switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -1093,7 +1104,8 @@ public class Module13 extends BaseLib {
 								sa.assertTrue(false, "Not able to pass value in custom label text box so cannot check error message"+NIMPageErrorMessage.CustomLabelDropDownListErrorMsg);
 							}
 							if(sendKeys(driver,nim.getWatermarkingCustomTextBoxList().get(0), "value1;","custom label text box", action.SCROLLANDBOOLEAN)) {
-								if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
+								if (nim.clickUsingCssSelectorPath("#savebtn", "save")) {
+									//if(click(driver, nim.getWatermarkingSaveButton(10), "save button", action.SCROLLANDBOOLEAN)) {
 									if(isAlertPresent(driver)) {
 										String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 										switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);

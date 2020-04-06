@@ -102,7 +102,7 @@ public class Module11 extends BaseLib {
 			appLog.info("Install package is not done for PE User 2 succesfully");
 			saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
 		}
-		//**********provide NIM access to CRM User**********//
+		//**********provide NIM access to CRM User**********/
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 60, np.getNIMTabFrame(60));
 			if (np.clickOnEditIcon()) {
@@ -151,7 +151,7 @@ public class Module11 extends BaseLib {
 			appLog.info("Not able to click on NIM Tab so cannot verify different popups");
 			saa.assertTrue(false, "Not able to click on NIM Tab so cannot verify different popups");
 		}
-		//***********//
+		//***********/
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		driver.close();
@@ -2374,7 +2374,8 @@ public class Module11 extends BaseLib {
 										appLog.error("Save button is not displayed while updating Firm Logo for."+UploadImage[length-1]);
 										sa.assertTrue(false,"Save button is not displayed while updating Firm Logofor."+UploadImage[length-1]);
 									}
-									if(click(driver, nim.getSaveButtonImageUpload(20), "Save button", action.SCROLLANDBOOLEAN)){
+									if (nim.clickUsingCssSelectorPath("a[title=Save]", "save button")) {
+									//if(click(driver, nim.getSaveButtonImageUpload(20), "Save button", action.SCROLLANDBOOLEAN)){
 										appLog.info("Upload Logo Save button is clicked successfulyfor."+UploadImage[length-1]);
 
 										if(switchToAlertAndGetMessage(driver, 20, action.GETTEXT).equalsIgnoreCase(NIMPageErrorMessage.LogoUploadConfirmationMessage)){
