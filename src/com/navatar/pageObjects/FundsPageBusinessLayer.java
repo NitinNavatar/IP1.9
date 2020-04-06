@@ -712,31 +712,33 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 */
 	public boolean revokeContactAccess(String emailID, Workspace workspace) {
 		if (click(driver, getContactAccessIcon(workspace, 60), "contact access icon", action.SCROLLANDBOOLEAN)) {
-			WebElement remove = isDisplayed(driver, FindElement(driver, "//a[text()='"+emailID+"']/../../span/a[@title='Remove']", "remove link in front of contact email", action.BOOLEAN, 60), "Visibility", 60, "Remove link");
-			if (remove!=null) {
-				if(click(driver, remove, "remove link", action.SCROLLANDBOOLEAN)) {
-					appLog.info("clicked on remove link");
-					if (click(driver, getRemoveAccessClose(workspace, 30), "remove access close button", action.BOOLEAN)) {
+			if (verifyContactAccessExpandCollapse(workspace)){
+				WebElement remove = isDisplayed(driver, FindElement(driver, "//a[text()='"+emailID+"']/../../span/a[@title='Remove']", "remove link in front of contact email", action.BOOLEAN, 60), "Visibility", 60, "Remove link");
+				if (remove!=null) {
+					if(click(driver, remove, "remove link", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on remove link");
+						click(driver, getRemoveAccessClose(workspace, 30), "remove access close button", action.BOOLEAN);
 						if (click(driver, getCancelBtn(workspace, 30), "contact access cancel button", action.BOOLEAN)) {
 							return true;
 						}
+
+					}else {
+						appLog.error("Not able to click on remove link of contact: "+emailID);
 					}
-					else {
-						appLog.error("remove access close button is not clickable");
-					}
-				}else {
-					appLog.error("Not able to click on remove link of contact: "+emailID);
+				}
+				else {
+					appLog.error("remove button adjacent to "+emailID+" is not found");
 				}
 			}
 			else {
-				appLog.error("remove button adjacent to "+emailID+" is not found");
+				appLog.error("could not expand contact access window");
 			}
 		}
 		else {
 			appLog.error("contact access icon is not clickable");
 		}
 		return false;
-		
+
 	}
 /**
  	
@@ -3713,8 +3715,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		if(click(driver, getWorkSpaceClearBtn(workspace, timeOut), "workspace clear button", action.SCROLLANDBOOLEAN)) {
 			String parentID=switchOnWindow(driver);
 			if(parentID!=null) {
-				if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(5000);
+				if (clickUsingCssSelectorPath("#create_savebtn a[title=Yes]", "yes button")) {
+				//if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(8000);
 					if (isAlertPresent(driver)) {
 						appLog.info(workspace.toString()+" has been successfully clear");
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -8501,7 +8504,6 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 
 		}
-	
 			WebElement fund = getFundNameAtFundPage(fundName, 20);
 			if (fund != null) {
 				if (click(driver, fund, "Fund Name", action.SCROLLANDBOOLEAN)) {
@@ -8514,6 +8516,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				
 				while (true) {
 					appLog.error("Fund Name is not Displaying on "+i+ " Page:" + fundName);
+					
 					if (click(driver, getNextImageonPage(10), "Fund Page Next Button",
 							action.SCROLLANDBOOLEAN)) {
 
