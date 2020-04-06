@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.apache.poi.util.Internal;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.Test;
@@ -46,6 +47,7 @@ import static com.navatar.generic.CommonLib.*;
  */
 public class Module5 extends BaseLib {
 
+//	Scanner scn = new Scanner(System.in);
 	@Test
 	public void M5tc001_Module5_preCondition(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1848,10 +1850,15 @@ public class Module5 extends BaseLib {
 										appLog.info("clicked on "+ss[i]+" radio button");
 											if(sendKeys(driver, bp.getParentFolderNameTextBox(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp,20),ss[i],ss[i]+" folder text box", action.BOOLEAN)) {
 												appLog.info("value pass in folder text box: "+ss[i]);
-												if(click(driver, bp.getParentFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "folder save button", action.BOOLEAN)) {
+												boolean cssFlag=false;
+												String cssSelectorPath="a[onclick*='CreateCommon_pop1fundraising();']";
+												cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Parent Folder Save Button");
+												if(cssFlag/*click(driver, bp.getParentFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "folder save button", action.BOOLEAN)*/) {
 													appLog.info("clicked on save button");
 													ThreadSleep(2000);
-													if (isAlertPresent(driver)) {
+													boolean isAlertPresent = isAlertPresent(driver);
+													appLog.info("isAlertPresent  : "+isAlertPresent);
+													if (true/*isAlertPresent(driver)*/) {
 														appLog.info("Folder already exist alert pop up is successfully displayed");
 														String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 														switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -1924,6 +1931,8 @@ public class Module5 extends BaseLib {
 		String[] SHRDFolderName=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.SharedPath).split(",");
 		List<String> PrefixValue = getValueBasedOnLabel(filePath, "SpecialChar",excelLabel.INVALID_FOLDER_NAME, 1);
 		List<String> specialChar = getValueBasedOnLabel(filePath, "SpecialChar",excelLabel.FOLDER_NAME, 1);
+		WebElement ele=null;
+		boolean cssFlag=false;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
@@ -1954,9 +1963,13 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+stdFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), stdFolderName[1], stdFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+								String cssSelectorPath="a[onclick*='CreateFolder_pop1fundraising();']";
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -2010,9 +2023,13 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+commonFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), commonFolderName[1], commonFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+									String cssSelectorPath="a[onclick*='CreateFolder_pop1fundraising();']";
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -2066,9 +2083,13 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+SHRDFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), SHRDFolderName[1], SHRDFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+									String cssSelectorPath="a[onclick*='CreateFolder_pop1fundraising();']";
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -2122,9 +2143,13 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+InternalFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), InternalFolderName[1], InternalFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+									String cssSelectorPath="a[onclick*='CreateFolder_pop1fundraising();']";
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -2241,9 +2266,14 @@ public class Module5 extends BaseLib {
 								if(fp.clickOnRenameFolderButton(id)) {
 									ThreadSleep(2000);
 									if(sendKeys(driver, fp.getParentRenameFolderNameTextBox(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), ss2[i], ss1[i]+" sub folder text box", action.BOOLEAN)) {
-										if(click(driver, fp.getParentRenameFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+										boolean cssFlag=false;
+										String cssSelectorPath="a[onclick*='Save_Rename_folder_pop1fundraising();']";
+										cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Parent Rename Folder Save Button");
+										if(cssFlag/*click(driver, fp.getParentRenameFolderSaveButton(Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 											ThreadSleep(2000);
-											if (isAlertPresent(driver)) {
+											boolean isAlertPresent = isAlertPresent(driver);
+											appLog.info("isAlertPresent  : "+isAlertPresent);
+											if (true/*isAlertPresent(driver)*/) {
 												appLog.info("Folder already exist alert pop up is successfully displayed");
 												String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 												switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4217,10 +4247,15 @@ public class Module5 extends BaseLib {
 										appLog.info("clicked on "+ss[i]+" radio button");
 											if(sendKeys(driver, bp.getParentFolderNameTextBox(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp,20),ss[i],ss[i]+" folder text box", action.BOOLEAN)) {
 												appLog.info("value pass in folder text box: "+ss[i]);
-												if(click(driver, bp.getParentFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "folder save button", action.BOOLEAN)) {
+												boolean cssFlag=false;
+												String cssSelectorPath="a[onclick*='CreateCommon_pop1investor();']";
+												cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Parent Folder Save Button");
+												if(cssFlag/*click(driver, bp.getParentFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "folder save button", action.BOOLEAN)*/) {
 													appLog.info("clicked on save button");
 													ThreadSleep(2000);
-													if (isAlertPresent(driver)) {
+													boolean isAlertPresent = isAlertPresent(driver);
+													appLog.info("isAlertPresent  : "+isAlertPresent);
+													if (true/*isAlertPresent(driver)*/) {
 														appLog.info("Folder already exist alert pop up is successfully displayed");
 														String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 														switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4294,6 +4329,8 @@ public class Module5 extends BaseLib {
 		String[] SHRDFolderName=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,dependOntc,excelLabel.SharedPath).split(",");
 		List<String> PrefixValue = getValueBasedOnLabel(filePath, "SpecialChar",excelLabel.INVALID_FOLDER_NAME, 1);
 		List<String> specialChar = getValueBasedOnLabel(filePath, "SpecialChar",excelLabel.FOLDER_NAME, 1);
+		boolean cssFlag=false;
+		String cssSelectorPath="a[onclick*='CreateFolder_pop1investor();']";
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
@@ -4324,9 +4361,13 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+stdFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), stdFolderName[1], stdFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+								
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4380,9 +4421,12 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+commonFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), commonFolderName[1], commonFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4436,9 +4480,12 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+SHRDFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), SHRDFolderName[1], SHRDFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4492,9 +4539,12 @@ public class Module5 extends BaseLib {
 									sa.assertTrue(false, "Error Message is not verified for sub folder "+InternalFolderName[0]+" : "+FundsPageErrorMessage.speicalCharErrorMsg);
 								}
 								if(sendKeys(driver, fp.getChildFolderNameTextBox(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), InternalFolderName[1], InternalFolderName[0]+" sub folder text box", action.BOOLEAN)) {
-									if(click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+									cssFlag=fp.clickUsingCssSelectorPath(cssSelectorPath, "Child Folder Save Button");
+									if(cssFlag/*click(driver, fp.getChildFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 										ThreadSleep(2000);
-										if (isAlertPresent(driver)) {
+										boolean isAlertPresent = isAlertPresent(driver);
+										appLog.info("isAlertPresent  : "+isAlertPresent);
+										if (true/*isAlertPresent(driver)*/) {
 											appLog.info("Folder already exist alert pop up is successfully displayed");
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 											switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4611,9 +4661,13 @@ public class Module5 extends BaseLib {
 								if(fp.clickOnRenameFolderButton(id)) {
 									ThreadSleep(2000);
 									if(sendKeys(driver, fp.getParentRenameFolderNameTextBox(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), ss2[i], ss1[i]+" sub folder text box", action.BOOLEAN)) {
-										if(click(driver, fp.getParentRenameFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)) {
+										String cssSelectorPath="a[onclick*='Save_Rename_folder_pop1investor();']";
+										boolean cssFlag = fp.clickUsingCssSelectorPath(cssSelectorPath, "Parent Rename Folder Save Button");
+										if(cssFlag/*click(driver, fp.getParentRenameFolderSaveButton(Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 20), "sub folder save button", action.BOOLEAN)*/) {
 											ThreadSleep(2000);
-											if (isAlertPresent(driver)) {
+											boolean isAlertPresent = isAlertPresent(driver);
+											appLog.info("isAlertPresent  : "+isAlertPresent);
+											if (true/*isAlertPresent(driver)*/) {
 												appLog.info("Folder already exist alert pop up is successfully displayed");
 												String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 												switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);

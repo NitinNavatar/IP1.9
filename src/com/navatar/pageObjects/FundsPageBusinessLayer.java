@@ -3715,10 +3715,12 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		if(click(driver, getWorkSpaceClearBtn(workspace, timeOut), "workspace clear button", action.SCROLLANDBOOLEAN)) {
 			String parentID=switchOnWindow(driver);
 			if(parentID!=null) {
-				if (clickUsingCssSelectorPath("#create_savebtn a[title=Yes]", "yes button")) {
-				//if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(8000);
-					if (isAlertPresent(driver)) {
+
+				ThreadSleep(5000);
+				if(clickUsingCssSelectorPath("div#subFolderDiv > div >a[title='Yes']", "workspace clear Yes button")) {
+//				if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(5000);
+//					if (isAlertPresent(driver)) {
 						appLog.info(workspace.toString()+" has been successfully clear");
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -3730,11 +3732,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 							appLog.error("clear Workspace Error Message is not matched. Expected: "+closeWorkspaceMsg);
 						}
 						driver.switchTo().window(parentID);
-					} else {
-						driver.close();
-						appLog.error(workspace.toString()+" clear Workspace alert message is not displayed");
-						driver.switchTo().window(parentID);
-					}
+//					} else {
+//						driver.close();
+//						appLog.error(workspace.toString()+" clear Workspace alert message is not displayed");
+//						driver.switchTo().window(parentID);
+//					}
 				}else {
 					driver.close();
 					appLog.error("Not able to click on clear workspace Yes button so cannot clear workspace");
