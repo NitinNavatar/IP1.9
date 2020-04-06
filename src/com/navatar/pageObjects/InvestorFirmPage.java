@@ -197,6 +197,7 @@ public class InvestorFirmPage extends BasePageBusinessLayer {
 	public WebElement getAlldocumentSearchBtn(int timeOut) {
 		return isDisplayed(driver, alldocumentSearchBtn, "Visibility", timeOut, "all document search button");
 	}
+	
 
 	@FindBy(xpath = "//div[@id='recordscount_firmAllDoc']")
 	private WebElement allDocumentCount;
@@ -225,7 +226,7 @@ public class InvestorFirmPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, alldocumentsearchedPopUpCloseBtn, "Visibility", timeOut, "all document searched pop up close button");
 	}
 	
-	@FindBy(xpath="//div[@id='btndownloadClose']/a[@title='Close']/img")
+	@FindBy(xpath="//a[@id='closelink']")
 	private WebElement documentCloseBtn;
 
 	/**

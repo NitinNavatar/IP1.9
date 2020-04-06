@@ -1235,9 +1235,12 @@ public class Module6 extends BaseLib {
 								M6Institution1 + "Update&*", "Text Box ", action.SCROLLANDBOOLEAN)) {
 							switchToDefaultContent(driver);
 							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
-							if (click(driver,
+							boolean cssFlag=false;
+							String cssSelectorPath="div#instpopupMINFR a[title=Apply]";
+							cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Manage Investor Rename Popup Apply Button");
+							if (cssFlag/*click(driver,
 									fp.getManageInvestorRenamePopupApplyButton(Workspace.FundraisingWorkspace, 60),
-									"Apply button", action.SCROLLANDBOOLEAN)) {
+									"Apply button", action.SCROLLANDBOOLEAN)*/) {
 								String alerttext = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 								if (alerttext.equalsIgnoreCase(
 										FundsPageErrorMessage.manageInvestorRenameSpecialCharacterMessage)) {
@@ -1940,7 +1943,10 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M6Institution1 + "Renamed")) {
-				if (click(driver, bp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)) {
+				boolean cssFlag=false;
+				String cssSelectorPath="td#topButtonRow input[title=Delete]";
+				cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
+				if (cssFlag/*click(driver, bp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)*/) {
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					if (ip.verifyDeletedInstitution(M6Institution1 + "Renamed")) {
 						appLog.info("Institution get deleted successfully");
@@ -2012,7 +2018,10 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M6Institution3 + "Renamed")) {
-				if (click(driver, bp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)) {
+				boolean cssFlag=false;
+				String cssSelectorPath="td#topButtonRow input[title=Delete]";
+				cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
+				if (cssFlag/*click(driver, bp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)*/) {
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					if (ip.verifyDeletedInstitution(M6Institution3 + "Renamed")) {
 						appLog.info("Institution get deleted successfully");
@@ -3208,9 +3217,12 @@ public class Module6 extends BaseLib {
 					if (fp.clickOnRenameManageTargetLimitedPartner(M6Institution1, M6LimitedPartner1 + "Renamed")) {
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.InvestorWorkspace, 60),
 								M6LimitedPartner1 + "Update&*", "Text Box ", action.SCROLLANDBOOLEAN)) {
-							if (click(driver,
+							boolean cssFlag=false;
+							String cssSelectorPath="div#instpopupMININV a[title=Apply]";
+							cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Manage Investor Rename Popup Apply Button");
+							if (cssFlag/*click(driver,
 									fp.getManageInvestorRenamePopupApplyButton(Workspace.InvestorWorkspace, 60),
-									"Apply button", action.SCROLLANDBOOLEAN)) {
+									"Apply button", action.SCROLLANDBOOLEAN)*/) {
 								String alerttext = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 								if (alerttext.equalsIgnoreCase(
 										FundsPageErrorMessage.manageInvestorRenameSpecialCharacterMessage)) {
@@ -3861,15 +3873,21 @@ public class Module6 extends BaseLib {
 						"Commitment ID", action.SCROLLANDTHROWEXCEPTION, 60);
 				if (ele != null) {
 					if (click(driver, ele, "CommitmentId", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, cmp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)) {
+						boolean cssFlag=false;
+						String cssSelectorPath="td#topButtonRow input[title=Delete]";
+						cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
+					if (cssFlag/*click(driver, cmp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)*/) {
 							switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 						if(click(driver, cmp.getCommitmentDeletedOKButton(60), "OK button", action.SCROLLANDBOOLEAN)){	
 							if (cmp.verifyDeletedCommitmentID(M6commitmentID1)) {
 								appLog.info("Commitment get deleted successfully");
 								if (bp.clickOnTab(TabName.InstituitonsTab)) {
 									if (ip.clickOnCreatedLP(M6LimitedPartner1 + "Renamed")) {
-										if (click(driver, bp.getDeleteButton(60), "Delete Button",
-												action.SCROLLANDBOOLEAN)) {
+										 cssFlag=false;
+										 cssSelectorPath="td#topButtonRow input[title=Delete]";
+										cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
+										if (cssFlag/*click(driver, bp.getDeleteButton(60), "Delete Button",
+												action.SCROLLANDBOOLEAN)*/) {
 											switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 											if (ip.verifyDeletedLimitedPartner(M6LimitedPartner1 + "Renamed")) {
 												appLog.info("Limited Partner get deleted successfully");
@@ -4000,15 +4018,21 @@ public class Module6 extends BaseLib {
 						"Commitment ID", action.SCROLLANDTHROWEXCEPTION, 60);
 				if (ele != null) {
 					if (click(driver, ele, "CommitmentId", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, cmp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)) {
+						 boolean cssFlag = false;
+						 String cssSelectorPath = "td#topButtonRow input[title=Delete]";
+						cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
+					if (cssFlag/*click(driver, cmp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)*/) {
 							switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 						if(click(driver, cmp.getCommitmentDeletedOKButton(60), "OK button", action.SCROLLANDBOOLEAN)){	
 							if (cmp.verifyDeletedCommitmentID(M6commitmentID3)) {
 								appLog.info("Commitment get deleted successfully");
 								if (bp.clickOnTab(TabName.InstituitonsTab)) {
 									if (ip.clickOnCreatedLP(M6LimitedPartner3)) {
-										if (click(driver, bp.getDeleteButton(60), "Delete Button",
-												action.SCROLLANDBOOLEAN)) {
+										  cssFlag = false;
+										  cssSelectorPath = "td#topButtonRow input[title=Delete]";
+										cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
+										if (cssFlag/*click(driver, bp.getDeleteButton(60), "Delete Button",
+												action.SCROLLANDBOOLEAN)*/) {
 											switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 											if (ip.verifyDeletedLimitedPartner(M6LimitedPartner3)) {
 												appLog.info("Limited Partner get deleted successfully");
