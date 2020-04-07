@@ -2412,7 +2412,8 @@ public class CommonLib implements Comparator<String> {
 		}
 		appLog.info("Not Able to Click using JavaScript");
 		return false;
-		}
-	
+
+	}
+
 }
 

@@ -901,9 +901,10 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 		String[] folders = folderName.split("/");
 		
 		String xpath = "//a[text()='"+folders[folders.length-1]+"']/preceding-sibling::span[2]";
-		WebElement ele = FindElement(driver, xpath, "CheckBox for Folder : "+folderName, action.BOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath, "CheckBox for Folder : "+folderName, action.SCROLLANDBOOLEAN, 10);
 		
-		if (click(driver, ele, "Check Box", action.BOOLEAN)) {
+		if(clickUsingJavaScript(driver, ele, "Check Box")) {
+//		if (click(driver, ele, "Check Box", action.BOOLEAN)) {
 			return true;
 		}
 		

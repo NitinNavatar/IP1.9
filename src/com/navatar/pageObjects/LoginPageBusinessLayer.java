@@ -3,6 +3,7 @@
  */
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import com.navatar.generic.CommonLib.action;
@@ -30,31 +31,38 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	 * @return true/false
 	 */
 	public boolean CRMLogin(String username, String password) {
-		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		driver.get(URL);
 		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.THROWEXCEPTION);
 		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.THROWEXCEPTION);
 		click(driver, getLoginButton(20), "Login Button", action.THROWEXCEPTION);
-		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
-		ThreadSleep(1000);
-		if (bp.getSalesForceLightingIcon(20) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		/*if (matchTitle(driver, "Salesforce - Enterprise Edition", 20) || matchTitle(driver, "Salesforce - Developer Edition", 20)) {
-			appLog.info("User Successfully Logged In.");
+		if (matchTitle(driver, "Salesforce - Enterprise Edition", 20)  || matchTitle(driver, "Salesforce - Developer Edition", 20)) {
+			appLog.info("User Successfully Logged In Classic mode....");
+			click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 			return true;
-		} else {
+		} else if (matchTitle(driver, "navmnaI__NavatarQuickLink | Salesforce", 30) || matchTitle(driver, "Home | Salesforce", 20)  || matchTitle(driver, "Home Page ~ Salesforce - Developer Edition", 20)){
+			appLog.info("User Successfully Logged In Lightning mode....");
+			if (switchToClassic()) {
+				ThreadSleep(1000);
+				if (matchTitle(driver, "Salesforce - Enterprise Edition", 20) || matchTitle(driver, "Salesforce - Developer Edition", 20)) {
+					appLog.info("User Successfully Logged In Classic mode....");
+					click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
+					return true;
+				}
+				appLog.info("User not able to match title after switch to classic");
+				exit("User not able to match title after switch to classic");
+				return false;
+			}
+			else {
+				appLog.info("User not able to switch to classic mode");
+				exit("User not able to switch to classic mode");
+				return false;
+			}
+		}
+		else {
 			appLog.info("Kindly Check Username and Password.");
-			exit("User is not able to log in.");
+			exit("User is not able to log in classic or lightning mode");
 			return false;
-		}*/
-		return true;
+		}
 	}
 	
 	/**
@@ -139,4 +147,30 @@ public boolean investorLogout() {
 	}
 	return false;
 }
+
+public boolean switchToClassic() {
+	JavascriptExecutor jse = (JavascriptExecutor) driver;
+	jse.executeScript("window.scrollTo(0,0)");
+	ThreadSleep(1000);
+	if (getUserMenuTab(10) != null) {
+		appLog.info("Sales Force is Already open in classic mode.");
+		return true;
+	} else {
+		ThreadSleep(2000);
+		if (click(driver, getSalesForceLightingIcon(30), "sales force lighting icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(1000);
+			if (click(driver, getSwitchToClassic(30), "sales force switch to classic link",action.SCROLLANDBOOLEAN)) {
+				appLog.info("Sales Force is switched in classic mode successfully.");
+				return true;
+			} else {
+				appLog.error("Not able to switch Classic.");
+			}
+		} else {
+			appLog.error("Not able to click on Lighting Icon");
+		}
+
+	}
+	return false;
+}
+
 }
