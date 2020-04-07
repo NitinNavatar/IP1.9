@@ -290,7 +290,7 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 		if(clickOnTab(TabName.ContactTab)) {
 			if(clickOnCreatedContact(contactFirstName, contactLastName, null)) {
 				appLog.info("Clicked on Created Contact: "+contactFirstName+" "+contactLastName);
-				if(click(driver, getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)) {
+				if(clickUsingJavaScript(driver, getDeleteButton(60), "Delete Button")) {
 					if (isAlertPresent(driver)) {
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 						appLog.info(msg);

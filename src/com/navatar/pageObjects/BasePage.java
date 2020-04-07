@@ -3,6 +3,7 @@
  */
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -1997,16 +1998,16 @@ public abstract class BasePage {
 
 		String workSpaceXpath = null;
 		WebElement ele = null;
-		String searchIconXpath = "//a[@title='Search']";
+		String searchIconXpath = "a[title=Search]";//"//a[@title='Search']";
 		String fullXPath;
 
 		if (pName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
 
 			if (workspace.toString().equalsIgnoreCase(Workspace.InvestorWorkspace.toString())) {
-				workSpaceXpath = "//div[@id='invworkspace']";
+				workSpaceXpath = "div#invworkspace";//"//div[@id='invworkspace']";
 
 			} else {
-				workSpaceXpath = "//div[@id='frworkspace']";
+				workSpaceXpath = "div#frworkspace";//"//div[@id='frworkspace']";
 
 			}
 
@@ -2014,28 +2015,29 @@ public abstract class BasePage {
 				|| pName.toString().equalsIgnoreCase(PageName.ContactsPage.toString())) {
 
 			if (workspace.toString().equalsIgnoreCase(Workspace.InvestorWorkspace.toString())) {
-				workSpaceXpath = "//div[@id='Investorgrid_div']";
+				workSpaceXpath = "div#Investorgrid_div";//"//div[@id='Investorgrid_div']";
 
 			} else {
-				workSpaceXpath = "//div[@id='divFrWorkspace']";
+				workSpaceXpath = "div#divFrWorkspace";//"//div[@id='divFrWorkspace']";
 			}
 		} else if (pName.toString().equalsIgnoreCase(PageName.CommitmentsPage.toString())
 				|| pName.toString().equalsIgnoreCase(PageName.CurrentInvestmentPgae.toString())
 				|| pName.toString().equalsIgnoreCase(PageName.PotentialInvestmentPage.toString())) {
 
 			if (workspace.toString().equalsIgnoreCase(Workspace.InvestorWorkspace.toString())) {
-				workSpaceXpath = "//div[@class='content_div']";
+				workSpaceXpath ="div.content_div";// "//div[@class='content_div']";
 
 			} else {
-				workSpaceXpath = "//div[@class='content_div']";
+				workSpaceXpath = "div.content_div";//"//div[@class='content_div']";
 			}
 		}
 
 		if (workSpaceXpath != null) {
 
-			fullXPath = workSpaceXpath + searchIconXpath;
-
-			ele = FindElement(driver, fullXPath, "Search Icon", action.SCROLLANDBOOLEAN, timeOut);
+			fullXPath = workSpaceXpath +" "+ searchIconXpath;
+			appLog.info("Css FullXpath : "+fullXPath);
+		//	ele = FindElement(driver, fullXPath, "Search Icon", action.SCROLLANDBOOLEAN, timeOut);
+			 ele= BaseLib.edriver.findElement(By.cssSelector(fullXPath));
 
 		} else {
 			appLog.info(" Xpath Not Found for Seacrh Icon for " + pName.toString() + " : " + workspace.toString());
@@ -3001,5 +3003,14 @@ public abstract class BasePage {
 		return isDisplayed(driver, resetPasswordPasswordChangeMessage, "Visibility", timeOut, "Passowrd change message");
 	}
 	
+	@FindBy(xpath="//img[@title='Last Page']/..")
+	private WebElement LastImageonPage;
+
+	/**
+	 * @return the nextImageonPage
+	 */
+	public WebElement getLastImageonPage(int timeOut) {
+		return isDisplayed(driver, LastImageonPage, "Visibility", timeOut, "Last Page Image");
+	}
 	
 }

@@ -3,11 +3,13 @@
  */
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
 
@@ -66,7 +68,9 @@ public class ContactPage extends BasePageBusinessLayer{
 	 * @return the deleteButtonContactsPage
 	 */
 	public WebElement getDeleteButtonContactsPage(int timeOut) {
-		return isDisplayed(driver, deleteButtonContactsPage, "Visibility", timeOut, "delete button contacts page");
+	//	return isDisplayed(driver, deleteButtonContactsPage, "Visibility", timeOut, "delete button contacts page");
+		WebElement ele = BaseLib.edriver.findElement(By.cssSelector("input[value=Delete]"));
+		 return ele;
 	}
 
 	@FindBy(xpath="//div[@class='requiredInput']//span//input")
