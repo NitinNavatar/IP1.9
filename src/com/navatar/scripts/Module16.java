@@ -531,8 +531,8 @@ public class Module16 extends BaseLib{
 		
 		String reg_link = null;
 		try {
-			reg_link = new EmailLib().getInvestorRegLink("InvitationMail", gmailUserName, adminPassword, CRMUser1EmailID, M16Contact1EmailId);
-		} catch (InterruptedException e) {
+			reg_link = new EmailLib().getInvestorRegLink("InvitationMail", gmailUserName, gmailPassword, CRMUser1EmailID, M16Contact1EmailId);
+		} catch (Exception e) {
 			
 			e.printStackTrace();
 			appLog.error("investor registration url was not found on mail");
