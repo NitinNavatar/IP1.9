@@ -5820,9 +5820,9 @@ public class FundsPage extends BasePageBusinessLayer {
 	
 	public List<WebElement> getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace workSpace){
 		if(workSpace.toString().equalsIgnoreCase(Workspace.InvestorWorkspace.toString())){
-			return FindElements(driver, "//input[@type='checkbox'][contains(@onclick,'BWINV_MA(this);')]", "CheckBoxes ");	
+			return FindElements(driver, "//input[contains(@onclick,'BWINV_MA(this);')]", "CheckBoxes ");	
 		}else{
-			return FindElements(driver, "//input[@type='checkbox'][contains(@onclick,'BWFR_MA(this);')]", "CheckBoxes ");		
+			return FindElements(driver, "//input[contains(@onclick,'BWFR_MA(this);')]", "CheckBoxes ");		
 		}
 		
 	}

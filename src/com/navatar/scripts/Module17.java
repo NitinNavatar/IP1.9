@@ -2232,6 +2232,7 @@ public class Module17 extends BaseLib {
 							String [] ss= {FundsPageErrorMessage.ContactEmailblankErrorMsg,FundsPageErrorMessage.AllContactSelectErrorMsg};
 							for (int i=0; i<ss.length; i++) {
 								WebElement ele=null;
+								scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 								if(i==0) {
 									ele=fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20);
 									
@@ -2239,8 +2240,9 @@ public class Module17 extends BaseLib {
 									ele=fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, null, 20);
 								}
 								if(ele!=null) {
-									ThreadSleep(3000);
-									if(click(driver, ele, "check box", action.BOOLEAN)) {
+									ThreadSleep(5000);
+									if(!clickUsingJavaScript(driver, ele, "check box ")) {
+//									if(click(driver, ele, "check box", action.BOOLEAN)) {
 										appLog.info("clicked on contact check box : "+M17Contact1FirstName+" "+M17Contact1LastName);
 										ThreadSleep(2000);
 										if (isAlertPresent(driver)) {
@@ -2594,7 +2596,8 @@ public class Module17 extends BaseLib {
 								
 								if(ele!=null) {
 									ThreadSleep(3000);
-									if(click(driver, ele, "check box", action.BOOLEAN)) {
+									if(!clickUsingJavaScript(driver, ele, "check box")) {
+//									if(click(driver, ele, "check box", action.BOOLEAN)) {
 										appLog.info("clicked on check box ");
 										ThreadSleep(2000);
 										if (isAlertPresent(driver)) {
@@ -3091,7 +3094,8 @@ public class Module17 extends BaseLib {
 							ele=fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20);
 							if(ele!=null) {
 								ThreadSleep(3000);
-								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
+								if(!clickUsingJavaScript(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName)) {
+//								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
 									appLog.info("clicked on check box ");
 									ThreadSleep(2000);
 									if (isAlertPresent(driver)) {
@@ -3260,7 +3264,8 @@ public class Module17 extends BaseLib {
 										}
 										if(fp.verifyContactAccessExpandCollapse(Workspace.FundraisingWorkspace)) {
 											ThreadSleep(3000);
-											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
+											if(!clickUsingJavaScript(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box")) {
+//											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3667,7 +3672,6 @@ public class Module17 extends BaseLib {
 						appLog.error("could not find folder structure on Bulk DownLoad"+stdPath[2]);
 						sa.assertTrue(false, "could not find folder structure on Bulk DownLoad"+stdPath[2]);
 					}
-
 
 					if (ifp.clickCheckBoxForFolderonBulkDownloadWindow(stdPath[0], 10)) {
 						appLog.info("Clicked on CheckBox for Folder: "+stdPath[0]);	
@@ -4247,7 +4251,8 @@ public class Module17 extends BaseLib {
 					WebElement ele=fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20);
 					if(ele!=null) {
 						ThreadSleep(3000);
-						if(click(driver, ele, "check box", action.BOOLEAN)) {
+						if(!clickUsingJavaScript(driver, ele, "check box")) {
+//						if(click(driver, ele, "check box", action.BOOLEAN)) {
 							appLog.info("clicked on check box ");
 							ThreadSleep(2000);
 							if (isAlertPresent(driver)) {
@@ -5138,7 +5143,7 @@ public class Module17 extends BaseLib {
 							sa.assertTrue(false, "Upload check box is not available in case of Shared folder.");
 						}
 						
-						if(fp.getUploadColumn(500)==null){
+						if(fp.getUploadColumn(5)==null){
 							appLog.info("Upload column is not available in case of Shared folder.");
 						}else{
 							appLog.info("Upload column is available in case of Shared folder.");
@@ -5778,7 +5783,8 @@ public class Module17 extends BaseLib {
 										}
 										if(ele!=null) {
 											ThreadSleep(3000);
-											if(click(driver, ele, "check box", action.BOOLEAN)) {
+											if(!clickUsingJavaScript(driver, ele, "check  box")) {
+//											if(click(driver, ele, "check box", action.BOOLEAN)) {
 												appLog.info("clicked on contact check box : ");
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
@@ -5930,7 +5936,8 @@ public class Module17 extends BaseLib {
 										}
 										if(ele!=null) {
 											ThreadSleep(3000);
-											if(click(driver, ele, "check box", action.BOOLEAN)) {
+											if(!clickUsingJavaScript(driver, ele, "check box")) {
+//											if(click(driver, ele, "check box", action.BOOLEAN)) {
 												appLog.info("clicked on contact check box for iteratin : "+i);
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
@@ -6564,7 +6571,8 @@ public class Module17 extends BaseLib {
 							ele=fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20);
 							if(ele!=null) {
 								ThreadSleep(3000);
-								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
+								if(!clickUsingJavaScript(driver, ele, "check box : "+M17Contact1FirstName+" "+M17Contact1LastName)) {
+//								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
 									appLog.info("clicked on check box ");
 									ThreadSleep(2000);
 									if (isAlertPresent(driver)) {
@@ -6813,7 +6821,8 @@ public class Module17 extends BaseLib {
 										}
 										if(fp.verifyContactAccessExpandCollapse(Workspace.FundraisingWorkspace)) {
 											ThreadSleep(3000);
-											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
+											if(!clickUsingJavaScript(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "check box : "+M17Contact1FirstName+" "+M17Contact1LastName)) {
+//											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -7915,7 +7924,8 @@ public class Module17 extends BaseLib {
 
 									if(fp.verifyContactAccessExpandCollapse(Workspace.FundraisingWorkspace)) {
 										ThreadSleep(3000);
-										if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
+										if(!clickUsingJavaScript(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "check box : "+M17Contact1FirstName+" "+M17Contact1LastName)) {
+//										if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.FundraisingWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(2000);
 											if (isAlertPresent(driver)) {
 												String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -8889,7 +8899,8 @@ public class Module17 extends BaseLib {
 						appLog.info("Clicked on Contact Access Icon");
 						if(fp.verifyContactAccessExpandCollapse(Workspace.FundraisingWorkspace)) {
 							// 1st Assertion
-							if(click(driver, fp.getSearchBtn(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace+" search button", action.SCROLLANDBOOLEAN)) {
+							if(!clickUsingJavaScript(driver, fp.getSearchBtn(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace+" search button")) {
+//							if(click(driver, fp.getSearchBtn(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace+" search button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on  "+Workspace.FundraisingWorkspace+" search button");
 								ThreadSleep(2000);
 								if (isAlertPresent(driver)) {
@@ -11504,7 +11515,8 @@ public class Module17 extends BaseLib {
 								}
 								if(ele!=null) {
 									ThreadSleep(3000);
-									if(click(driver, ele, "check box", action.BOOLEAN)) {
+									if(!clickUsingJavaScript(driver, ele, "check box ")) {
+//									if(click(driver, ele, "check box", action.BOOLEAN)) {
 										appLog.info("clicked on contact check box : "+M17Contact1FirstName+" "+M17Contact1LastName);
 										ThreadSleep(2000);
 										if (isAlertPresent(driver)) {
@@ -11683,7 +11695,7 @@ public class Module17 extends BaseLib {
 										appLog.info(folders[0]+ " folder structure is created.");
 										ThreadSleep(2000);
 										String subCommonPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.KeyWord_For_Search);	
-										if(fp.createFolderStructure(subCommonPath, FolderType.Common, Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 30).isEmpty()){
+										if(fp.createFolderStructure(subCommonPath, FolderType.Common, Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 30).isEmpty()){
 											appLog.info(subCommonPath+ " folder structure is created.");
 										} else {
 											appLog.error(subCommonPath+ " folder structure is not created.");
@@ -11856,7 +11868,8 @@ public class Module17 extends BaseLib {
 								
 								if(ele!=null) {
 									ThreadSleep(3000);
-									if(click(driver, ele, "check box", action.BOOLEAN)) {
+									if(!clickUsingJavaScript(driver, ele, "check box")) {
+//									if(click(driver, ele, "check box", action.BOOLEAN)) {
 										appLog.info("clicked on check box ");
 										ThreadSleep(2000);
 										if (isAlertPresent(driver)) {
@@ -12381,7 +12394,8 @@ public class Module17 extends BaseLib {
 							ele=fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20);
 							if(ele!=null) {
 								ThreadSleep(3000);
-								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
+								if(!clickUsingJavaScript(driver, ele, "check box")) {
+//								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
 									appLog.info("clicked on check box ");
 									ThreadSleep(2000);
 									if (isAlertPresent(driver)) {
@@ -12551,7 +12565,8 @@ public class Module17 extends BaseLib {
 										}
 										if(fp.verifyContactAccessExpandCollapse(Workspace.InvestorWorkspace)) {
 											ThreadSleep(3000);
-											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
+											if(!clickUsingJavaScript(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "check box")) {
+//											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -13543,7 +13558,8 @@ public class Module17 extends BaseLib {
 					WebElement ele=fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20);
 					if(ele!=null) {
 						ThreadSleep(3000);
-						if(click(driver, ele, "check box", action.BOOLEAN)) {
+						if(!clickUsingJavaScript(driver, ele, "check box")) {
+//						if(click(driver, ele, "check box", action.BOOLEAN)) {
 							appLog.info("clicked on check box ");
 							ThreadSleep(2000);
 							if (isAlertPresent(driver)) {
@@ -15086,7 +15102,8 @@ public class Module17 extends BaseLib {
 										}
 										if(ele!=null) {
 											ThreadSleep(3000);
-											if(click(driver, ele, "check box", action.BOOLEAN)) {
+											if(!clickUsingJavaScript(driver, ele, "check box")) {
+//											if(click(driver, ele, "check box", action.BOOLEAN)) {
 												appLog.info("clicked on contact check box : ");
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
@@ -15238,7 +15255,8 @@ public class Module17 extends BaseLib {
 										}
 										if(ele!=null) {
 											ThreadSleep(3000);
-											if(click(driver, ele, "check box", action.BOOLEAN)) {
+											if(!clickUsingJavaScript(driver, ele, "check box")) {
+//											if(click(driver, ele, "check box", action.BOOLEAN)) {
 												appLog.info("clicked on contact check box for iteratin : "+i);
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
@@ -15873,7 +15891,8 @@ public class Module17 extends BaseLib {
 							ele=fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20);
 							if(ele!=null) {
 								ThreadSleep(3000);
-								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
+								if(!clickUsingJavaScript(driver, ele, "check box")) {
+//								if(click(driver, ele, "check box against : "+M17Contact1FirstName+" "+M17Contact1LastName, action.BOOLEAN)) {
 									appLog.info("clicked on check box ");
 									ThreadSleep(2000);
 									if (isAlertPresent(driver)) {
@@ -16122,7 +16141,8 @@ public class Module17 extends BaseLib {
 										}
 										if(fp.verifyContactAccessExpandCollapse(Workspace.InvestorWorkspace)) {
 											ThreadSleep(3000);
-											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
+											if(!clickUsingJavaScript(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "check box")) {
+//											if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
 												ThreadSleep(2000);
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -17224,7 +17244,8 @@ public class Module17 extends BaseLib {
 
 									if(fp.verifyContactAccessExpandCollapse(Workspace.InvestorWorkspace)) {
 										ThreadSleep(3000);
-										if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
+										if(!clickUsingJavaScript(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "check box")) {
+//										if(click(driver, fp.getContactNameOrAllContactCheckBox(Workspace.InvestorWorkspace, M17Contact1FirstName+" "+M17Contact1LastName, 20), "Check Box", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(2000);
 											if (isAlertPresent(driver)) {
 												String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -18061,7 +18082,9 @@ public class Module17 extends BaseLib {
 						appLog.info("Clicked on Contact Access Icon");
 						if(fp.verifyContactAccessExpandCollapse(Workspace.InvestorWorkspace)) {
 							// 1st Assertion
-							if(click(driver, fp.getSearchBtn(Workspace.InvestorWorkspace, 60), Workspace.InvestorWorkspace+" search button", action.SCROLLANDBOOLEAN)) {
+							
+							if(!clickUsingJavaScript(driver, fp.getSearchBtn(Workspace.InvestorWorkspace, 60), Workspace.InvestorWorkspace+" search button")) {
+//							if(click(driver, fp.getSearchBtn(Workspace.InvestorWorkspace, 60), Workspace.InvestorWorkspace+" search button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on  "+Workspace.InvestorWorkspace+" search button");
 								ThreadSleep(2000);
 								if (isAlertPresent(driver)) {
