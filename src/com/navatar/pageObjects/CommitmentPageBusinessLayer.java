@@ -438,7 +438,7 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 		if (click(driver, getGoButton(60), "go button", action.BOOLEAN)) {
 			WebElement commitment = FindElement(driver,
 					"//div[@class='x-panel-bwrap']//span[text()='" + commitmentID + "']", "Commitment ID",
-					action.BOOLEAN, 20);
+					action.BOOLEAN, 10);
 			if (commitment != null) {
 				if (click(driver, commitment, "Commitment Id", action.SCROLLANDBOOLEAN)) {
 					appLog.error("Clicked on Commitment ID successfully." + commitmentID);

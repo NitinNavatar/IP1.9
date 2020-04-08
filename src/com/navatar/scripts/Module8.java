@@ -10414,7 +10414,7 @@ public class Module8 extends BaseLib{
 		 String fundEmail=ExcelUtils.readData(filterPath,"Funds", 1, 7);
 		 String fundDesription=ExcelUtils.readData(filterPath,"Funds", 1, 8) ;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		String [] institutionname={ExcelUtils.readData(filterPath,"Institutions", 2, 0),ExcelUtils.readData(filterPath,"Institutions", 1, 0),ExcelUtils.readData(filterPath,"Institutions", 3, 0),ExcelUtils.readData(filterPath,"Institutions", 4, 0)};
+		String [] institutionname={ExcelUtils.readData(filterPath,"Institutions", 1, 0),ExcelUtils.readData(filterPath,"Institutions", 2, 0),ExcelUtils.readData(filterPath,"Institutions", 3, 0),ExcelUtils.readData(filterPath,"Institutions", 4, 0)};
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));				
