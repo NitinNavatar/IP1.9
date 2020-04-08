@@ -4892,8 +4892,9 @@ public class Module10 extends BaseLib {
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
 						action.SCROLLANDBOOLEAN)) {
-					if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Contact2FirstName+" "+M10Contact2LastName+"']$)", "Contact2 name")) {
-					//WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact2FirstName+" "+M10Contact2LastName+"']", "Contact2 name", action.SCROLLANDBOOLEAN, 60);
+					//if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Contact2FirstName+" "+M10Contact2LastName+"']$)", "Contact2 name")) {
+					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact2FirstName+" "+M10Contact2LastName+"']", "Contact2 name", action.SCROLLANDBOOLEAN, 60);
+					if (clickUsingJavaScript(driver, ele, "Contact 2")) {
 					//if(click(driver, ele, "Contact 2", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
@@ -4907,9 +4908,10 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact2 name");
 						sa.assertTrue(false, "Not able to click on contact2 name ");
 				}
-				if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Institution2+"']$)", "Contact2 firm name")) {
-				//	ele=FindElement(driver,"//a[text()='"+M10Institution2+"']", "Contact2 firm name", action.SCROLLANDBOOLEAN, 60);
-				//if(click(driver, ele, "Contact 2 firm name", action.SCROLLANDBOOLEAN)){
+				//if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Institution2+"']$)", "Contact2 firm name")) {
+					ele=FindElement(driver,"//a[text()='"+M10Institution2+"']", "Contact2 firm name", action.SCROLLANDBOOLEAN, 60);
+				if (clickUsingJavaScript(driver, ele, "Contact 2 firm name")) {
+					//if(click(driver, ele, "Contact 2 firm name", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -4966,9 +4968,10 @@ public class Module10 extends BaseLib {
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
 						action.SCROLLANDBOOLEAN)) {
-					if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']$)", "Contact1 name")) {
+					//if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']$)", "Contact1 name")) {
 						
-					//WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']", "Contact1 name", action.SCROLLANDBOOLEAN, 60);
+					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']", "Contact1 name", action.SCROLLANDBOOLEAN, 60);
+					if (clickUsingJavaScript(driver, ele,  "Contact 1")) {
 					//if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
 						if(isAlertPresent(driver)){
 							String errorMessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
@@ -4987,10 +4990,11 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact1 name");
 						sa.assertTrue(false, "Not able to click on contact1 name ");
 					}
-					if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Institution1+"RUP"+"']$)", "Contact1 firm name")) {
+					//if (fp.clickUsingCssSelectorPath("a:contains(^'"+M10Institution1+"RUP"+"']$)", "Contact1 firm name")) {
 						
-					//ele=FindElement(driver,"//a[text()='"+M10Institution1+"RUP"+"']", "Contact1 firm name", action.SCROLLANDBOOLEAN, 60);
-				//if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
+					ele=FindElement(driver,"//a[text()='"+M10Institution1+"RUP"+"']", "Contact1 firm name", action.SCROLLANDBOOLEAN, 60);
+					if (clickUsingJavaScript(driver, ele, "Contact1 firm name")) {
+					//if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -9605,7 +9609,8 @@ public class Module10 extends BaseLib {
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Manage Email icon",
 						action.SCROLLANDBOOLEAN)) {
 					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact2FirstName+" "+M10Contact2LastName+"']", "Contact2 name", action.SCROLLANDBOOLEAN, 60);
-					if(click(driver, ele, "Contact 2", action.SCROLLANDBOOLEAN)){
+					if (clickUsingJavaScript(driver, ele, "Contact 2")) {
+					//if(click(driver, ele, "Contact 2", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -9619,7 +9624,8 @@ public class Module10 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on contact2 name ");
 				}
 				ele=FindElement(driver,"//a[text()='"+M10Institution2+"']", "Contact2 firm name", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Contact 2 firm name", action.SCROLLANDBOOLEAN)){
+				if (clickUsingJavaScript(driver, ele, "Contact 2 firm name")) {
+				//if(click(driver, ele, "Contact 2 firm name", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -9677,7 +9683,8 @@ public class Module10 extends BaseLib {
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Manage Email icon",
 						action.SCROLLANDBOOLEAN)) {
 					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']", "Contact1 name", action.SCROLLANDBOOLEAN, 60);
-					if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
+					if (clickUsingJavaScript(driver, ele,  "Contact 1")) {
+					//if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");
@@ -9691,7 +9698,8 @@ public class Module10 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on contact2 name ");
 				}
 				ele=FindElement(driver,"//a[text()='"+M10Institution1+"RUP"+"']", "Contact1 firm name", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
+				if (clickUsingJavaScript(driver, ele, "Contact 1 firm name")) {
+				//if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
 				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 					appLog.info("Error Message is verified");

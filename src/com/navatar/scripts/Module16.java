@@ -531,8 +531,8 @@ public class Module16 extends BaseLib{
 		
 		String reg_link = null;
 		try {
-			reg_link = new EmailLib().getInvestorRegLink("InvitationMail", gmailUserName, adminPassword, CRMUser1EmailID, M16Contact1EmailId);
-		} catch (InterruptedException e) {
+			reg_link = new EmailLib().getInvestorRegLink("InvitationMail", gmailUserName, gmailPassword, CRMUser1EmailID, M16Contact1EmailId);
+		} catch (Exception e) {
 			
 			e.printStackTrace();
 			appLog.error("investor registration url was not found on mail");
@@ -605,7 +605,8 @@ public class Module16 extends BaseLib{
 							if (fp.dragDropFiles(folderpath1, dropImage)) {
 								ThreadSleep(3000);
 								if (click(driver, FindElement(driver, "//li[text()='All Folders']/ul/li[text()='"+stdPath+"']/input", "parent folder radio button", action.BOOLEAN, 10), "parent folder radio button", action.BOOLEAN)) {
-									if (click(driver, fp.getFileDistNextBtn(30), "file dist next button", action.BOOLEAN)) {
+									if (fp.clickUsingCssSelectorPath("div#BulkDocument_step_1of2 a[title=Next]", "next button")) {
+									//if (click(driver, fp.getFileDistNextBtn(30), "file dist next button", action.BOOLEAN)) {
 										ThreadSleep(5000);
 										if (isAlertPresent(driver)) {
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -663,7 +664,9 @@ public class Module16 extends BaseLib{
 									appLog.error("document info text is incorrect");
 									sa.assertTrue(false, "document info text is incorrect");
 								}
-								if (click(driver, fp.getFileDistNextBtn(30), "file distributor next button", action.SCROLLANDBOOLEAN)) {
+								if (fp.clickUsingCssSelectorPath("div#BulkDocument_step_1of2 a[title=Next]", "next button")) {
+									
+								//if (click(driver, fp.getFileDistNextBtn(30), "file distributor next button", action.SCROLLANDBOOLEAN)) {
 									ThreadSleep(5000);
 									if (isAlertPresent(driver)) {
 										String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -745,7 +748,8 @@ public class Module16 extends BaseLib{
 												appLog.error("apply button is not visible on file dist 2 of 2 window");
 												sa.assertTrue(false, "apply button is not visible on file dist 2 of 2 window");
 											}
-											if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn file distribution", action.BOOLEAN)) {
+											if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+											//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn file distribution", action.BOOLEAN)) {
 												ThreadSleep(3000);
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -1208,7 +1212,9 @@ public class Module16 extends BaseLib{
 													//clicking on remove link and accept
 													saa = fp.verifyFileDist2Of2SuccessfullyAppliedUI(M16Institution1, files[0], false, true, null, null, action.ACCEPT);
 													sa.combineAssertions(saa);
-													if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button", action.BOOLEAN)) {
+													ThreadSleep(4000);
+													if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+													//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button", action.BOOLEAN)) {
 														if (isAlertPresent(driver)) {
 															String msg = switchToAlertAndGetMessage(driver, 10, action.GETTEXT);
 															switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
@@ -1698,7 +1704,8 @@ public class Module16 extends BaseLib{
 														appLog.error("apply button 2 of 2 is not clickable");
 														sa.assertTrue(false, "apply button 2 of 2 is not clickable");
 													}
-													click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN);
+													fp.clickUsingCssSelectorPath("#lnkReplaceAll", "update all");
+													//click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN);
 													if (isAlertPresent(driver)) {
 														String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 														switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -1987,7 +1994,8 @@ public class Module16 extends BaseLib{
 																	}
 																	sa.assertTrue(false, "could not find files on duplicate doc window");
 																}
-																if (click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN)) {
+																if (fp.clickUsingCssSelectorPath("#lnkReplaceAll", "update all")) {
+																//if (click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN)) {
 																	if (isAlertPresent(driver)) {
 																		String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 																		switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -2422,7 +2430,9 @@ public class Module16 extends BaseLib{
 																			sa.assertTrue(false, "no issue file is not visible on issue ui");
 																		}
 																	}
-																	if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button 2 of 2", action.BOOLEAN)) {
+																	if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+																		
+																	//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button 2 of 2", action.BOOLEAN)) {
 																		if (isAlertPresent(driver)) {
 																			String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 																			switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -2989,7 +2999,9 @@ public class Module16 extends BaseLib{
 												appLog.error("could not verify "+files+" of "+M16Institution4+" on issue ui");
 												sa.assertTrue(false, "could not verify "+files+" of "+M16Institution4+" on issue ui");
 											}
-											if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn 2 of 2", action.BOOLEAN)) {
+											if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+												
+											//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn 2 of 2", action.BOOLEAN)) {
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 													switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -3505,7 +3517,8 @@ public class Module16 extends BaseLib{
 							if (fp.dragDropFiles(folderpath1, dropImage)) {
 								ThreadSleep(3000);
 								if (click(driver, FindElement(driver, "//li[text()='All Folders']/ul/li[text()='"+stdPath+"']/input", "parent folder radio button", action.BOOLEAN, 10), "parent folder radio button", action.BOOLEAN)) {
-									if (click(driver, fp.getFileDistNextBtn(30), "file dist next button", action.BOOLEAN)) {
+									if (fp.clickUsingCssSelectorPath("div#BulkDocument_step_1of2 a[title=Next]", "next button")) {
+										//if (click(driver, fp.getFileDistNextBtn(30), "file dist next button", action.BOOLEAN)) {
 										ThreadSleep(5000);
 										if (isAlertPresent(driver)) {
 											String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3563,7 +3576,8 @@ public class Module16 extends BaseLib{
 									appLog.error("document info text is incorrect");
 									sa.assertTrue(false, "document info text is incorrect");
 								}
-								if (click(driver, fp.getFileDistNextBtn(30), "file distributor next button", action.SCROLLANDBOOLEAN)) {
+								if (fp.clickUsingCssSelectorPath("div#BulkDocument_step_1of2 a[title=Next]", "next button")) {
+									//if (click(driver, fp.getFileDistNextBtn(30), "file distributor next button", action.SCROLLANDBOOLEAN)) {
 									ThreadSleep(5000);
 									if (isAlertPresent(driver)) {
 										String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -3645,7 +3659,8 @@ public class Module16 extends BaseLib{
 												appLog.error("apply button is not visible on file dist 2 of 2 window");
 												sa.assertTrue(false, "apply button is not visible on file dist 2 of 2 window");
 											}
-											if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn file distribution", action.BOOLEAN)) {
+											if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+												//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn file distribution", action.BOOLEAN)) {
 												ThreadSleep(3000);
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -4105,7 +4120,8 @@ public class Module16 extends BaseLib{
 													//clicking on remove link and accept
 													saa = fp.verifyFileDist2Of2SuccessfullyAppliedUI(M16LimitedPartner1, files[0], false, true, null, null, action.ACCEPT);
 													sa.combineAssertions(saa);
-													if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button", action.BOOLEAN)) {
+													if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+														//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button", action.BOOLEAN)) {
 														if (isAlertPresent(driver)) {
 															String msg = switchToAlertAndGetMessage(driver, 10, action.GETTEXT);
 															switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
@@ -4599,7 +4615,8 @@ public class Module16 extends BaseLib{
 														appLog.error("apply button 2 of 2 is not clickable");
 														sa.assertTrue(false, "apply button 2 of 2 is not clickable");
 													}
-													click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN);
+													fp.clickUsingCssSelectorPath("#lnkReplaceAll", "update all");
+													//click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN);
 													if (isAlertPresent(driver)) {
 														String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 														switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -4888,7 +4905,8 @@ public class Module16 extends BaseLib{
 																	}
 																	sa.assertTrue(false, "could not find files on duplicate doc window");
 																}
-																if (click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN)) {
+																if (fp.clickUsingCssSelectorPath("#lnkReplaceAll", "update all")) {
+																	//if (click(driver, fp.getUpdateAllButton(30), "update all button", action.BOOLEAN)) {
 																	if (isAlertPresent(driver)) {
 																		String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 																		switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -5438,7 +5456,8 @@ public class Module16 extends BaseLib{
 																		sa.assertTrue(false, "no issue file is not visible on issue ui");
 																		}
 																	}
-																	if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button 2 of 2", action.BOOLEAN)) {
+																	if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+																		//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button 2 of 2", action.BOOLEAN)) {
 																		if (isAlertPresent(driver)) {
 																			String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 																			switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -6116,7 +6135,8 @@ public class Module16 extends BaseLib{
 												appLog.error("could not verify "+files+" of "+M16Institution4+" on issue ui");
 												sa.assertTrue(false, "successfully verified "+files+" of "+M16LimitedPartner4+" on issue ui");
 											}
-											if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn 2 of 2", action.BOOLEAN)) {
+											if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+												//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply btn 2 of 2", action.BOOLEAN)) {
 												if (isAlertPresent(driver)) {
 													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 													switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);

@@ -1029,7 +1029,7 @@ public class Module18 extends BaseLib {
 	}	
 	if(sendKeys(driver, bp.getResetPasswordNewPasswordTextBox(60),adminPassword, "New password text box", action.SCROLLANDBOOLEAN)){
 		if(sendKeys(driver, bp.getResetPasswordConfirmPasswordTextBox(60),adminPassword, "Confirm password text box", action.SCROLLANDBOOLEAN)){
-		if(click(driver, bp.getResetPasswordButton(60), "Reset Password button", action.SCROLLANDBOOLEAN)){
+		if(clickUsingJavaScript(driver, bp.getResetPasswordButton(60), "Reset Password button")){
 			ThreadSleep(3000);
 			if(isAlertPresent(driver)){
 			String errorText=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
@@ -1107,7 +1107,7 @@ public class Module18 extends BaseLib {
 				sa.assertTrue(false, "Password change message is not displaying");
 			}
 		if(sendKeys(driver, lp.getInvestorPasswordTextbox(60), adminPassword, "Target passowrd text box", action.SCROLLANDBOOLEAN)){
-			if(click(driver, lp.getInvestorLoginButton(60), "Target login button", action.SCROLLANDBOOLEAN)){
+			if(clickUsingJavaScript(driver, lp.getInvestorLoginButton(60), "Target login button")){
 				ThreadSleep(3000);
 				if(isAlertPresent(driver)){
 					String AlertText=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
@@ -1351,7 +1351,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (!contact.deleteCreatedContact(M18Contact1FirstName, M18Contact1LastName)) {
 			appLog.error("Contact is not deleted : " + M18Contact1FirstName + " " + M18Contact1LastName);
-			sa.assertTrue(false, "Contact  is not Updated : " + M18Contact1FirstName + " " + M18Contact1LastName);
+			sa.assertTrue(false, "Contact  is not deleted : " + M18Contact1FirstName + " " + M18Contact1LastName);
 		} else {
 			appLog.info("Contact is  deleted : " + M18Contact1FirstName + " " + M18Contact1LastName);
 		}		
@@ -1833,7 +1833,7 @@ public class Module18 extends BaseLib {
 				sa.assertTrue(false, "Password change message is not displaying");
 			}
 			if(sendKeys(driver, lp.getInvestorPasswordTextbox(60), oldPassword, "Target passowrd text box", action.SCROLLANDBOOLEAN)){
-				if(click(driver, lp.getInvestorLoginButton(60), "Target login button", action.SCROLLANDBOOLEAN)){
+				if(clickUsingJavaScript(driver, lp.getInvestorLoginButton(60), "Target login button")){
 					ThreadSleep(3000);
 					if(isAlertPresent(driver)){
 						String AlertText=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
@@ -1854,7 +1854,7 @@ public class Module18 extends BaseLib {
 				sa.assertTrue(false, "Not able to send value in password tetx box");
 			}
 			if(sendKeys(driver, lp.getInvestorPasswordTextbox(60),newPassword, "Target passowrd text box", action.SCROLLANDBOOLEAN)){
-				if(click(driver, lp.getInvestorLoginButton(60), "Target login button", action.SCROLLANDBOOLEAN)){
+				if(clickUsingJavaScript(driver, lp.getInvestorLoginButton(60), "Target login button")){
 					ThreadSleep(5000);
 							if(isAlertPresent(driver)){
 							String alertText=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
@@ -2494,7 +2494,7 @@ public class Module18 extends BaseLib {
 						sa.assertTrue(false, "Password change message is not displaying");
 					}
 				if(sendKeys(driver, lp.getInvestorPasswordTextbox(60), oldPassword, "investor passowrd text box", action.SCROLLANDBOOLEAN)){
-					if(click(driver, lp.getInvestorLoginButton(60), "investor login button", action.SCROLLANDBOOLEAN)){
+					if(clickUsingJavaScript(driver, lp.getInvestorLoginButton(60), "investor login button")){
 						ThreadSleep(3000);
 						if(isAlertPresent(driver)){
 							String AlertText=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
@@ -2892,7 +2892,7 @@ public class Module18 extends BaseLib {
 						sa.assertTrue(false, "Password change message is not displaying");
 					}
 				if(sendKeys(driver, lp.getInvestorPasswordTextbox(60), oldPassword, "investor passowrd text box", action.SCROLLANDBOOLEAN)){
-					if(click(driver, lp.getInvestorLoginButton(60), "investor login button", action.SCROLLANDBOOLEAN)){
+					if(clickUsingJavaScript(driver, lp.getInvestorLoginButton(60), "investor login button")){
 						ThreadSleep(3000);
 						if(isAlertPresent(driver)){
 							String AlertText=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);

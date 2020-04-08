@@ -2221,14 +2221,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				
 				ele = getSearchIcon(driver, pageName, workspace, timeOut);
 				if (ele != null) {
-
-					if (click(driver, ele, "Search Icon", action.SCROLLANDBOOLEAN)) {
-						
+					try {
+						ele.click();
+						appLog.error("Clicked on Search Icon ");
 						return true;
-						
-					} else {
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
 						appLog.error(" Not Able to Click Search Icon " );
 						sa.assertTrue(false," Not Able to Click Search Icon " );
+						//e.printStackTrace();
 					}
 				} else {
 					appLog.error(" Search Icon Element is Null " );
@@ -4716,6 +4717,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		}
 		return cssFlag;
+	}
+	
+	public boolean elementClick(WebElement ele,String buttonName) {
+		boolean clickFlag=false;;
+		try {
+			clickFlag=false;
+			ele.click();
+			appLog.info("click on "+buttonName);
+			clickFlag = true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			appLog.info("Not able to click on "+buttonName);
+			BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
+			clickFlag=false;
+
+		}
+		return clickFlag;
 	}
 
 }

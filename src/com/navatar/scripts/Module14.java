@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
@@ -1967,13 +1969,15 @@ public class Module14 extends BaseLib {
 					String parentid=switchOnWindow(driver);
 					ThreadSleep(3000);
 					if (click(driver,fp.getIPAnalyticsnotViewedAnyDocumentLink(30),"Contact not viewed any document", action.SCROLLANDBOOLEAN)) {
+						//if (fp.clickUsingCssSelectorPath("span[title='"+M14Contact2FirstName+" "+M14Contact2LastName+"'] a", "contact link")) {
 						WebElement ele = isDisplayed(driver,
 								FindElement(driver,
 										"//span[contains(@id,'ContactNotViewedDocument_Grid-cell-0-')]/a[text()='"+M14Contact2FirstName+" "+M14Contact2LastName+"']","Contact Name Link in Contact not viewed any document pop up", action.BOOLEAN, 60),"visibility", 60, "Contact Name Link");
 						if (ele != null) {
-							if (click(driver, ele, "Contact Name Link in Contact not viewed any document",
-									action.BOOLEAN)) {
-								if (isAlertPresent(driver)) {
+							clickUsingJavaScript(driver, ele, "");
+							//if (click(driver, ele, "Contact Name Link in Contact not viewed any document",
+							//		action.BOOLEAN)) {
+								//if (isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 									if (msg.trim().contains(FundsPageErrorMessage.ContactNotFoundErrorMessage)) {
@@ -1985,7 +1989,7 @@ public class Module14 extends BaseLib {
 										sa.assertTrue(false,
 												"Error Message is not verified in Contact not viewed any document: "+FundsPageErrorMessage.ContactNotFoundErrorMessage);
 									}
-								} else {
+								/*} else {
 									appLog.error("Not able to Click on Contact Name Link: " + M14Contact2FirstName + " "
 											+ M14Contact2LastName
 											+ " so we cannot verify error message in Contact not viewed any document.");
@@ -1998,7 +2002,7 @@ public class Module14 extends BaseLib {
 								appLog.info("Not able to click on Contact Name Link in Contact not viewed any document");
 								sa.assertTrue(false,
 										"Not able to click on Contact Name Link in Contact not viewed any document");
-							}
+							}*/
 						} else {
 							appLog.error("Contact Name is not available in Contact not viewed any document pop up : "
 									+ M14Contact2FirstName + " " + M14Contact2LastName);
@@ -2025,8 +2029,9 @@ public class Module14 extends BaseLib {
 										"Contact Name Link in Contact not any document pop up", action.BOOLEAN, 60),
 								"visibility", 60, "Contact Name Link");
 						if (ele != null) {
-							if (click(driver, ele, "Contact Name Link in Contact not viewed any document", action.BOOLEAN)) {
-								if (isAlertPresent(driver)) {
+							clickUsingJavaScript(driver, ele, "updated contact name");
+							//if (click(driver, ele, "Contact Name Link in Contact not viewed any document", action.BOOLEAN)) {
+								//if (isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 									if (msg.trim().contains(FundsPageErrorMessage.ContactNotFoundErrorMessage)) {
@@ -2038,15 +2043,15 @@ public class Module14 extends BaseLib {
 										sa.assertTrue(false,
 												"Error Message is not verified in contact not viewed any document up: "+FundsPageErrorMessage.ContactNotFoundErrorMessage);
 									}
-								} else {
+								/*} else {
 									appLog.error("Not able to Click on Contact Name Link: "+updatedContactFName+" "+updatedContactLName+" so we cannot verify error message in contact not viewed any document up.");
 									sa.assertTrue(false, "Not able to Click on Contact Name Link: "+updatedContactFName+" "+updatedContactLName+" so we cannot verify error message in contact not viewed any document up.");
-								}
-							} else {
-								appLog.info("Not able to click on Contact Name Link in Contact not viewed any document");
-								sa.assertTrue(false,
-										"Not able to click on Contact Name Link in Contact not viewed any document");
-							}
+								}*/
+							//} else {
+							//	appLog.info("Not able to click on Contact Name Link in Contact not viewed any document");
+							//	sa.assertTrue(false,
+							//			"Not able to click on Contact Name Link in Contact not viewed any document");
+							//}
 						} else {
 							appLog.error("Contact Name is not available in Contact not viewed any document pop up : "+updatedContactFName+" "+updatedContactLName);
 							sa.assertTrue(false, "Contact Name is not available in Contact not viewed any document pop up : "+updatedContactFName+" "+updatedContactLName);
@@ -6843,9 +6848,10 @@ public class Module14 extends BaseLib {
 								FindElement(driver,
 										"//span[contains(@id,'ContactNotViewedDocument_Grid-cell-0-')]/a[text()='"+M14Contact1FirstName+" "+M14Contact2LastName+"']","Contact Name Link in Contact not viewed any document pop up", action.BOOLEAN, 60),"visibility", 60, "Contact Name Link");
 						if (ele != null) {
-							if (click(driver, ele, "Contact Name Link in Contact not viewed any document",
-									action.BOOLEAN)) {
-								if (isAlertPresent(driver)) {
+							clickUsingJavaScript(driver, ele, "");
+							//if (click(driver, ele, "Contact Name Link in Contact not viewed any document",
+							//		action.BOOLEAN)) {
+								//if (isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 									if (msg.trim().contains(FundsPageErrorMessage.ContactNotFoundErrorMessage)) {
@@ -6857,7 +6863,7 @@ public class Module14 extends BaseLib {
 										sa.assertTrue(false,
 												"Error Message is not verified in Contact not viewed any document: "+FundsPageErrorMessage.ContactNotFoundErrorMessage);
 									}
-								} else {
+								/*} else {
 									appLog.error("Not able to Click on Contact Name Link: " + M14Contact2FirstName + " "
 											+ M14Contact2LastName
 											+ " so we cannot verify error message in Contact not viewed any document.");
@@ -6870,7 +6876,7 @@ public class Module14 extends BaseLib {
 								appLog.info("Not able to click on Contact Name Link in Contact not viewed any document");
 								sa.assertTrue(false,
 										"Not able to click on Contact Name Link in Contact not viewed any document");
-							}
+							}*/
 						} else {
 							appLog.error("Contact Name is not available in Contact not viewed any document pop up : "
 									+ M14Contact2FirstName + " " + M14Contact2LastName);
@@ -6897,8 +6903,9 @@ public class Module14 extends BaseLib {
 										"Contact Name Link in Contact not any document pop up", action.BOOLEAN, 60),
 								"visibility", 60, "Contact Name Link");
 						if (ele != null) {
-							if (click(driver, ele, "Contact Name Link in Contact not viewed any document", action.BOOLEAN)) {
-								if (isAlertPresent(driver)) {
+							clickUsingJavaScript(driver, ele, "contact name");
+							//if (click(driver, ele, "Contact Name Link in Contact not viewed any document", action.BOOLEAN)) {
+								//if (isAlertPresent(driver)) {
 									String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 									switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 									if (msg.trim().contains(FundsPageErrorMessage.ContactNotFoundErrorMessage)) {
@@ -6910,7 +6917,7 @@ public class Module14 extends BaseLib {
 										sa.assertTrue(false,
 												"Error Message is not verified in contact not viewed any document up: "+FundsPageErrorMessage.ContactNotFoundErrorMessage);
 									}
-								} else {
+								/*} else {
 									appLog.error("Not able to Click on Contact Name Link: "+updatedContactFName+" "+updatedContactLName+" so we cannot verify error message in contact not viewed any document up.");
 									sa.assertTrue(false, "Not able to Click on Contact Name Link: "+updatedContactFName+" "+updatedContactLName+" so we cannot verify error message in contact not viewed any document up.");
 								}
@@ -6918,7 +6925,7 @@ public class Module14 extends BaseLib {
 								appLog.info("Not able to click on Contact Name Link in Contact not viewed any document");
 								sa.assertTrue(false,
 										"Not able to click on Contact Name Link in Contact not viewed any document");
-							}
+							}*/
 						} else {
 							appLog.error("Contact Name is not available in Contact not viewed any document pop up : "+updatedContactFName+" "+updatedContactLName);
 							sa.assertTrue(false, "Contact Name is not available in Contact not viewed any document pop up : "+updatedContactFName+" "+updatedContactLName);

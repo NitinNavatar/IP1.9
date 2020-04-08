@@ -7128,7 +7128,8 @@ public class Module12 extends BaseLib {
 	switchToDefaultContent(driver);
 	if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-		if(click(driver,cp.getDeleteButtonContactsPage(60), "Delete button", action.SCROLLANDBOOLEAN)){
+			if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
+			//if(click(driver,cp.getDeleteButtonContactsPage(60), "Delete button", action.SCROLLANDBOOLEAN)){
 			switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 			ThreadSleep(3000);
 			if(cp.verifyDeletedContact(M12Contact2FirstName+" "+M12Contact2LastName)){
@@ -7152,8 +7153,19 @@ public class Module12 extends BaseLib {
 	if(bp.clickOnTab(TabName.HomeTab)){
 		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
 		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
+		//List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
 		List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
-		if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
+		//if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
+		scrollDownThroughWebelement(driver, ele.get(0), "contact name");
+		boolean flag=true;
+		try {
+			clickUsingJavaScript(driver, ele.get(0), "contact name");
+		}
+		catch(Exception e) {
+			flag=false;
+			e.printStackTrace();
+		}
+		if(flag){
 			String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 			if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 				appLog.info("Error Message is verified");
@@ -7174,7 +7186,9 @@ public class Module12 extends BaseLib {
 		}	
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Firm Profile Updated")){
 			if(bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-		if(click(driver, hp.getGoToFirmButton(PageName.HomePage,null,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
+		//if (fp.clickUsingCssSelectorPath("div#InvestorAccountACTALT a[title='Go to Firm']", "go to firm")) {
+			if (clickUsingJavaScript(driver, hp.getGoToFirmButton(PageName.HomePage,null,60), "go to firm")) {
+			//	if(click(driver, hp.getGoToFirmButton(PageName.HomePage,null,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
 			String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 			if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 				appLog.info("Error Message is verified");
@@ -7209,7 +7223,9 @@ public class Module12 extends BaseLib {
 		}
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-		if(click(driver, hp.getGoToContactButton(PageName.HomePage,null,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
+		//if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALT a[title='Go to Contact']", "go to contact")) {
+				if (clickUsingJavaScript(driver, hp.getGoToContactButton(PageName.HomePage,null,60), "Go to Contact button")) {
+				//if(click(driver, hp.getGoToContactButton(PageName.HomePage,null,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
 			String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 			if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 				appLog.info("Error Message is verified");
@@ -7259,7 +7275,17 @@ public class Module12 extends BaseLib {
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
-					if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
+					//List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
+					scrollDownThroughWebelement(driver, ele.get(0), "contact name");
+					boolean flag=true;
+					try {
+					clickUsingJavaScript(driver, ele.get(0), "contact name");
+					}
+					catch(Exception e) {
+						flag=false;
+						e.printStackTrace();
+					}
+					if(flag){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -7280,7 +7306,9 @@ public class Module12 extends BaseLib {
 					}	
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-					if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
+							//if (fp.clickUsingCssSelectorPath("div#IDInvestorAccountACTALTFR a[title='Go to Firm']", "go to firm")) {
+							if (clickUsingJavaScript(driver,  fp.getGoToFirmButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "go to firm")) {
+							//if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -7315,7 +7343,9 @@ public class Module12 extends BaseLib {
 					}
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-					if(click(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
+							//if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALTFR a[title='Go to Contact']", "go to contact")) {
+							if (clickUsingJavaScript(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "go to contact")) {
+							//if(click(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -9780,8 +9810,9 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-				ele=FindElement(driver,"//label[text()='"+M12FundName1+"UP"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
+			//ele=FindElement(driver,"//label[text()='"+M12FundName1+"UP"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
+				//if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
 				String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
 					ThreadSleep(5000);
@@ -9992,9 +10023,11 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-				ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
-				String ParentID=switchOnWindow(driver);
+				//ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
+				//if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
+					
+			String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
 					ThreadSleep(5000);
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
@@ -10044,17 +10077,17 @@ public class Module12 extends BaseLib {
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace Section view");
-		if(fp.clickOnInstituionFolder(M12Institution1, Workspace.FundraisingWorkspace, 60)){
-				if(fp.revokeContactAccess(M12Contact1EmailId, Workspace.FundraisingWorkspace)){
-					appLog.info("Remove contact access of contact1 successfully");					
+				if(fp.clickOnInstituionFolder(M12Institution1, Workspace.FundraisingWorkspace, 60)){
+					if(fp.revokeContactAccess(M12Contact1EmailId, Workspace.FundraisingWorkspace)){
+						appLog.info("Remove contact access of contact1 successfully");					
+					}else{
+						appLog.error("Not able to remove contact access of contact1");
+						sa.assertTrue(false, "Not able to remove contact access of contact1");
+					}			
 				}else{
-					appLog.error("Not able to remove contact access of contact1");
-					sa.assertTrue(false, "Not able to remove contact access of contact1");
-				}			
-		}else{
-			appLog.error("Not able to cick on institution name so cannot remove contact access");
-			sa.assertTrue(false, "Not able to cick on institution name so cannot remove contact access");
-		}
+					appLog.error("Not able to cick on institution name so cannot remove contact access");
+					sa.assertTrue(false, "Not able to cick on institution name so cannot remove contact access");
+				}
 			}else{
 				appLog.error("Not ableto click on created fund");
 				sa.assertTrue(false, "Not able to click on created fund");
@@ -12028,7 +12061,34 @@ public class Module12 extends BaseLib {
 				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
 				ThreadSleep(5000);
-				if (fp.clearWorkSpace(Workspace.FundraisingWorkspace, 60)) {
+				click(driver, fp.getWorkSpaceClearBtn(Workspace.FundraisingWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
+					
+				String parentID=switchOnWindow(driver);
+				if(parentID!=null) {
+					if (fp.clickUsingCssSelectorPath("#create_savebtn a[title=Yes]", "yes button")) {
+					//if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(8000);
+						if (isAlertPresent(driver)) {
+							appLog.info("workspace has been successfully clear");
+							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
+							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+							if(msg.contains(FundsPageErrorMessage.clearWorkSpaceMsg)) {
+								appLog.info(FundsPageErrorMessage.clearWorkSpaceMsg);
+								driver.switchTo().window(parentID);
+							}else {
+								appLog.error("clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
+							}
+							driver.switchTo().window(parentID);
+						} else {
+							driver.close();
+							appLog.error(" clear Workspace alert message is not displayed");
+							driver.switchTo().window(parentID);
+						}
+					}else {
+						driver.close();
+						appLog.error("Not able to click on clear workspace Yes button so cannot clear workspace");
+						driver.switchTo().window(parentID);
+					}
 					driver.navigate().refresh();
 					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
 					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
@@ -12068,8 +12128,37 @@ public class Module12 extends BaseLib {
 				}
 				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
-				ThreadSleep(5000);
-				if (fp.clearWorkSpace(Workspace.FundraisingWorkspace, 60)) {
+				ThreadSleep(8000);
+				click(driver, fp.getWorkSpaceClearBtn(Workspace.FundraisingWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
+				
+				String parentID=switchOnWindow(driver);
+				if(parentID!=null) {
+					if (fp.clickUsingCssSelectorPath("#create_savebtn a[title=Yes]", "yes button")) {
+					//if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+						if (isAlertPresent(driver)) {
+							appLog.info("workspace has been successfully clear");
+							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
+							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+							if(msg.contains(FundsPageErrorMessage.clearWorkSpaceMsg)) {
+								appLog.info(FundsPageErrorMessage.clearWorkSpaceMsg);
+								driver.switchTo().window(parentID);
+							}else {
+								appLog.error("clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
+							}
+							driver.switchTo().window(parentID);
+						} else {
+							driver.close();
+							appLog.error(" clear Workspace alert message is not displayed");
+							driver.switchTo().window(parentID);
+						}
+					}else {
+						driver.close();
+						appLog.error("Not able to click on clear workspace Yes button so cannot clear workspace");
+						driver.switchTo().window(parentID);
+					}
+				
+				
 					driver.navigate().refresh();
 					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
 					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
@@ -16425,7 +16514,8 @@ public class Module12 extends BaseLib {
 	switchToDefaultContent(driver);
 	if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-		if(click(driver,cp.getDeleteButtonContactsPage(60), "Delete button", action.SCROLLANDBOOLEAN)){
+		if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
+			//if(click(driver,cp.getDeleteButtonContactsPage(60), "Delete button", action.SCROLLANDBOOLEAN)){
 			switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 			ThreadSleep(3000);
 			if(cp.verifyDeletedContact(M12Contact2FirstName+" "+M12Contact2LastName)){
@@ -16458,7 +16548,18 @@ public class Module12 extends BaseLib {
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
-					if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
+					//if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
+					//List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
+					scrollDownThroughWebelement(driver, ele.get(0), "contact name");
+					boolean flag=true;
+					try {
+					clickUsingJavaScript(driver, ele.get(0), "contact name");
+					}
+					catch(Exception e) {
+						flag=false;
+						e.printStackTrace();
+					}
+					if(flag){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -16479,7 +16580,9 @@ public class Module12 extends BaseLib {
 					}	
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-					if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
+						//	if (fp.clickUsingCssSelectorPath("div#IDInvestorAccountACTALTINV a[title=\"Go to Firm\"]", "go to firm")) {
+						if (clickUsingJavaScript(driver,  fp.getGoToFirmButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to firm button")) {
+						//if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -16514,7 +16617,9 @@ public class Module12 extends BaseLib {
 					}
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-					if(click(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
+						//if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALTINV a[title='Go to Contact]", "go to contact")) {
+						if (clickUsingJavaScript(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to Contact button")) {	
+						//if(click(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -18879,8 +18984,9 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-				ele=FindElement(driver,"//label[text()='"+M12FundName1+"UPINV"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
+			//	ele=FindElement(driver,"//label[text()='"+M12FundName1+"UPINV"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
+			//	if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
 				String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
 					ThreadSleep(5000);
@@ -19093,8 +19199,9 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-				ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
-				if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
+			//ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
+			//	if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
 				String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
 					ThreadSleep(5000);
@@ -19145,17 +19252,17 @@ public class Module12 extends BaseLib {
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspace Section view");
-		if(fp.clickOnInstituionFolder(M12Institution1+"NUP", Workspace.InvestorWorkspace, 60)){
-			if(fp.revokeContactAccess(M12Contact1EmailId, Workspace.InvestorWorkspace)){
-					appLog.info("Remove contact access of contact1 successfully");					
+				if(fp.clickOnInstituionFolder(M12Institution1+"NUP", Workspace.InvestorWorkspace, 60)){
+					if(fp.revokeContactAccess(M12Contact1EmailId, Workspace.InvestorWorkspace)){
+						appLog.info("Remove contact access of contact1 successfully");					
+					}else{
+						appLog.error("Not able to remove contact access of contact1");
+						sa.assertTrue(false, "Not able to remove contact access of contact1");
+					}			
 				}else{
-					appLog.error("Not able to remove contact access of contact1");
-					sa.assertTrue(false, "Not able to remove contact access of contact1");
-				}			
-		}else{
-			appLog.error("Not able to cick on institution name so cannot remove contact access");
-			sa.assertTrue(false, "Not able to cick on institution name so cannot remove contact access");
-		}
+					appLog.error("Not able to cick on institution name so cannot remove contact access");
+					sa.assertTrue(false, "Not able to cick on institution name so cannot remove contact access");
+				}
 			}else{
 				appLog.error("Not ableto click on created fund");
 				sa.assertTrue(false, "Not able to click on created fund");
@@ -21193,7 +21300,34 @@ public class Module12 extends BaseLib {
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace view");
 				ThreadSleep(5000);
-				if (fp.clearWorkSpace(Workspace.InvestorWorkspace, 60)) {
+				click(driver, fp.getWorkSpaceClearBtn(Workspace.InvestorWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
+				
+				String parentID=switchOnWindow(driver);
+				if(parentID!=null) {
+					if (fp.clickUsingCssSelectorPath("#create_savebtn a[title=Yes]", "yes button")) {
+					//if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(8000);
+						if (isAlertPresent(driver)) {
+							appLog.info("workspace has been successfully clear");
+							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
+							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+							if(msg.contains(FundsPageErrorMessage.clearWorkSpaceMsg)) {
+								appLog.info(FundsPageErrorMessage.clearWorkSpaceMsg);
+								driver.switchTo().window(parentID);
+							}else {
+								appLog.error("clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
+							}
+							driver.switchTo().window(parentID);
+						} else {
+							driver.close();
+							appLog.error(" clear Workspace alert message is not displayed");
+							driver.switchTo().window(parentID);
+						}
+					}else {
+						driver.close();
+						appLog.error("Not able to click on clear workspace Yes button so cannot clear workspace");
+						driver.switchTo().window(parentID);
+					}
 					driver.navigate().refresh();
 					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
 					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
@@ -21234,7 +21368,34 @@ public class Module12 extends BaseLib {
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 				ThreadSleep(5000);
-				if (fp.clearWorkSpace(Workspace.InvestorWorkspace, 60)) {
+				click(driver, fp.getWorkSpaceClearBtn(Workspace.InvestorWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
+				
+				String parentID=switchOnWindow(driver);
+				if(parentID!=null) {
+					if (fp.clickUsingCssSelectorPath("#create_savebtn a[title=Yes]", "yes button")) {
+					//if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(8000);
+						if (isAlertPresent(driver)) {
+							appLog.info("workspace has been successfully clear");
+							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
+							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+							if(msg.contains(FundsPageErrorMessage.clearWorkSpaceMsg)) {
+								appLog.info(FundsPageErrorMessage.clearWorkSpaceMsg);
+								driver.switchTo().window(parentID);
+							}else {
+								appLog.error("clear Workspace Error Message is not matched. Expected: "+FundsPageErrorMessage.closeWorkspaceMsg);
+							}
+							driver.switchTo().window(parentID);
+						} else {
+							driver.close();
+							appLog.error(" clear Workspace alert message is not displayed");
+							driver.switchTo().window(parentID);
+						}
+					}else {
+						driver.close();
+						appLog.error("Not able to click on clear workspace Yes button so cannot clear workspace");
+						driver.switchTo().window(parentID);
+					}
 					driver.navigate().refresh();
 					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
