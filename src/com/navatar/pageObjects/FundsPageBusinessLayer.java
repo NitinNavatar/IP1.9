@@ -3719,7 +3719,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				ThreadSleep(5000);
 				if(clickUsingCssSelectorPath("div#subFolderDiv > div >a[title='Yes']", "workspace clear Yes button")) {
 //				if(click(driver, getCloseAndClearWorkSpaceYesBtn(timeOut), "workspace clear pop up Yes button ", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(5000);
+					ThreadSleep(8000);
 //					if (isAlertPresent(driver)) {
 						appLog.info(workspace.toString()+" has been successfully clear");
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -6512,7 +6512,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 
 			}
 			if (remove) {
-				if (click(driver, allRemoveLinks.get(iter), "remove link", action.BOOLEAN)) {
+				List<WebElement> ele = BaseLib.edriver.findElements(By.cssSelector("ul.decimal a[title=Remove]"));
+				ele.get(iter).click();
+				//if (click(driver, ele.get(iter), "remove link", action.BOOLEAN)) {
 					ThreadSleep(4000);
 					if (isAlertPresent(driver)) {
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -6529,11 +6531,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						appLog.error("no alert is present after clicking remove link");
 						sa.assertTrue(false, "no alert is present after clicking remove link");
 					}
-				}
+				/*}
 				else {
 					appLog.error("could not clicking on remove link for "+iter);
 					sa.assertTrue(false, "could not clicking on remove link for "+iter);
-				}
+				}*/
 			}
 			if (flag == false) {
 				appLog.error("could not find "+fileName+" for "+inst+" in applied UI window");
@@ -7476,7 +7478,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 
 			}
 			if (remove) {
-				if (click(driver, allRemoveLinks.get(iter), "remove link", action.BOOLEAN)) {
+				List<WebElement> ele = BaseLib.edriver.findElements(By.cssSelector("ul.decimal a[title=Remove]"));
+				ele.get(iter).click();
+				//if (click(driver, allRemoveLinks.get(iter), "remove link", action.BOOLEAN)) {
 					ThreadSleep(4000);
 					if (isAlertPresent(driver)) {
 						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
@@ -7493,11 +7497,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						appLog.error("no alert is present after clicking remove link");
 						sa.assertTrue(false, "no alert is present after clicking remove link");
 					}
-				}
+				/*}
 				else {
 					appLog.error("could not clicking on remove link for "+iter);
 					sa.assertTrue(false, "could not clicking on remove link for "+iter);
-				}
+				}*/
 			}
 			if (flag == false) {
 				appLog.error("could not find "+fileName+" in applied UI window for "+inst1+" and "+inst2);
