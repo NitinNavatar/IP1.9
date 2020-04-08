@@ -7153,19 +7153,19 @@ public class Module12 extends BaseLib {
 	if(bp.clickOnTab(TabName.HomeTab)){
 		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
 		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
-		List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
+		//List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
+		List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
+		//if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
 		scrollDownThroughWebelement(driver, ele.get(0), "contact name");
 		boolean flag=true;
 		try {
-		ele.get(0).click();
+			clickUsingJavaScript(driver, ele.get(0), "contact name");
 		}
 		catch(Exception e) {
 			flag=false;
 			e.printStackTrace();
 		}
 		if(flag){
-		//List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
-		//if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
 			String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 			if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 				appLog.info("Error Message is verified");
@@ -7186,7 +7186,8 @@ public class Module12 extends BaseLib {
 		}	
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Firm Profile Updated")){
 			if(bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-		if (fp.clickUsingCssSelectorPath("div#InvestorAccountACTALT a[title='Go to Firm']", "go to firm")) {
+		//if (fp.clickUsingCssSelectorPath("div#InvestorAccountACTALT a[title='Go to Firm']", "go to firm")) {
+			if (clickUsingJavaScript(driver, hp.getGoToFirmButton(PageName.HomePage,null,60), "go to firm")) {
 			//	if(click(driver, hp.getGoToFirmButton(PageName.HomePage,null,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
 			String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 			if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
@@ -7222,7 +7223,8 @@ public class Module12 extends BaseLib {
 		}
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-		if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALT a[title='Go to Contact']", "go to contact")) {
+		//if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALT a[title='Go to Contact']", "go to contact")) {
+				if (clickUsingJavaScript(driver, hp.getGoToContactButton(PageName.HomePage,null,60), "Go to Contact button")) {
 				//if(click(driver, hp.getGoToContactButton(PageName.HomePage,null,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
 			String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 			if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
@@ -7272,12 +7274,12 @@ public class Module12 extends BaseLib {
 					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
-					//List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
-					List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
+					List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
+					//List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
 					scrollDownThroughWebelement(driver, ele.get(0), "contact name");
 					boolean flag=true;
 					try {
-					ele.get(0).click();
+					clickUsingJavaScript(driver, ele.get(0), "contact name");
 					}
 					catch(Exception e) {
 						flag=false;
@@ -7304,8 +7306,9 @@ public class Module12 extends BaseLib {
 					}	
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-							if (fp.clickUsingCssSelectorPath("div#IDInvestorAccountACTALTFR a[title='Go to Firm']", "go to firm")) {
-//							if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
+							//if (fp.clickUsingCssSelectorPath("div#IDInvestorAccountACTALTFR a[title='Go to Firm']", "go to firm")) {
+							if (clickUsingJavaScript(driver,  fp.getGoToFirmButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "go to firm")) {
+							//if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -7340,9 +7343,8 @@ public class Module12 extends BaseLib {
 					}
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-							if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALTFR a[title='Go to Contact']", "go to contact")) {
-								//	if (fp.clickUsingCssSelectorPath("div#IDInvestorAccountACTALTFR a[title=\"Go to Firm\"]", "go to firm")) {
-//								IDInvestorContactACTALTFR
+							//if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALTFR a[title='Go to Contact']", "go to contact")) {
+							if (clickUsingJavaScript(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "go to contact")) {
 							//if(click(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
@@ -16545,19 +16547,19 @@ public class Module12 extends BaseLib {
 					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
-					List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
+					List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
+					//if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
+					//List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
 					scrollDownThroughWebelement(driver, ele.get(0), "contact name");
 					boolean flag=true;
 					try {
-					ele.get(0).click();
+					clickUsingJavaScript(driver, ele.get(0), "contact name");
 					}
 					catch(Exception e) {
 						flag=false;
 						e.printStackTrace();
 					}
 					if(flag){
-					//List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
-					//if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -16578,8 +16580,9 @@ public class Module12 extends BaseLib {
 					}	
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-							if (fp.clickUsingCssSelectorPath("div#IDInvestorAccountACTALTINV a[title=\"Go to Firm\"]", "go to firm")) {
-		//				if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
+						//	if (fp.clickUsingCssSelectorPath("div#IDInvestorAccountACTALTINV a[title=\"Go to Firm\"]", "go to firm")) {
+						if (clickUsingJavaScript(driver,  fp.getGoToFirmButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to firm button")) {
+						//if(click(driver, fp.getGoToFirmButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to firm button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
 							appLog.info("Error Message is verified");
@@ -16614,8 +16617,8 @@ public class Module12 extends BaseLib {
 					}
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 						if(bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName)){
-						if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALTINV a[title='Go to Contact]", "go to contact")) {
-								
+						//if (fp.clickUsingCssSelectorPath("div#IDInvestorContactACTALTINV a[title='Go to Contact]", "go to contact")) {
+						if (clickUsingJavaScript(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to Contact button")) {	
 						//if(click(driver, fp.getGoToContactButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)){
 						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
 						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
