@@ -35,15 +35,15 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		sendKeys(driver, getUserNameTextBox(20), username, "Username Text Box", action.THROWEXCEPTION);
 		sendKeys(driver, getPasswordTextBox(20), password, "Password Text Box", action.THROWEXCEPTION);
 		click(driver, getLoginButton(20), "Login Button", action.THROWEXCEPTION);
-		if (matchTitle(driver, "Salesforce - Enterprise Edition", 20)  || matchTitle(driver, "Home Page ~ Salesforce - Developer Edition", 20)) {
+		if (matchTitle(driver, "Salesforce - Enterprise Edition", 20)  || matchTitle(driver, "Salesforce - Developer Edition", 20)) {
 			appLog.info("User Successfully Logged In Classic mode....");
 			click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 			return true;
-		} else if (matchTitle(driver, "navmnaI__NavatarQuickLink | Salesforce", 30)  || matchTitle(driver, "Home Page ~ Salesforce - Developer Edition", 20)){
+		} else if (matchTitle(driver, "navmnaI__NavatarQuickLink | Salesforce", 30) || matchTitle(driver, "Home | Salesforce", 20)  || matchTitle(driver, "Home Page ~ Salesforce - Developer Edition", 20)){
 			appLog.info("User Successfully Logged In Lightning mode....");
 			if (switchToClassic()) {
 				ThreadSleep(1000);
-				if (matchTitle(driver, "Salesforce - Enterprise Edition", 20) || matchTitle(driver, "Home Page ~ Salesforce - Developer Edition", 20)) {
+				if (matchTitle(driver, "Salesforce - Enterprise Edition", 20) || matchTitle(driver, "Salesforce - Developer Edition", 20)) {
 					appLog.info("User Successfully Logged In Classic mode....");
 					click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 					return true;

@@ -844,7 +844,7 @@ public class FundsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, FindElement(driver, "//div[@id='"+workSpaceSelector+"workspace']//a[@title='Clear Workspace']","workspace clear button", action.BOOLEAN,timeOut), "visibility", timeOut,"workspace close button");
 	}
 	
-	@FindBy(css="#LinkButton3")
+	@FindBy(xpath="//div[@id='create_savebtn']/a[@title='Yes']")
 	private WebElement CloseAndClearWorkSpaceYesBtn;
 	
 /**
@@ -5820,9 +5820,9 @@ public class FundsPage extends BasePageBusinessLayer {
 	
 	public List<WebElement> getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace workSpace){
 		if(workSpace.toString().equalsIgnoreCase(Workspace.InvestorWorkspace.toString())){
-			return FindElements(driver, "//input[@type='checkbox'][contains(@onclick,'BWINV_MA(this);')]", "CheckBoxes ");	
+			return FindElements(driver, "//input[contains(@onclick,'BWINV_MA(this);')]", "CheckBoxes ");	
 		}else{
-			return FindElements(driver, "//input[@type='checkbox'][contains(@onclick,'BWFR_MA(this);')]", "CheckBoxes ");		
+			return FindElements(driver, "//input[contains(@onclick,'BWFR_MA(this);')]", "CheckBoxes ");		
 		}
 		
 	}
