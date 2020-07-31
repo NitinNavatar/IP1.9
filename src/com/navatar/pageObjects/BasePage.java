@@ -3013,4 +3013,278 @@ public abstract class BasePage {
 		return isDisplayed(driver, LastImageonPage, "Visibility", timeOut, "Last Page Image");
 	}
 	
+	@FindBy(xpath = "//img[contains(@title,'Expand - Manage Users')]")
+	private WebElement expandManageUserIcon_Classic;
+	
+	@FindBy(xpath="//a[text()='Users']/../button")
+	private WebElement expandUserIcon_Lighting;
+	/**
+	 * @return the expandManageUserIcon
+	 */
+	public WebElement getExpandUserIcon(String environment, String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			return isDisplayed(driver, expandUserIcon_Lighting, "Visibility", timeOut, "Expand User Icon in "+mode);
+		}else {
+			return isDisplayed(driver, expandManageUserIcon_Classic, "Visibility", timeOut, "Expand Manage User Icon in "+mode);
+		}
+	}
+	
+	@FindBy(xpath = "//a[@id='ManageUsers_font']")
+	private WebElement userLink_Classic;
+	
+	@FindBy(xpath="//a[text()='Users'][contains(@href,'ManageUsers/home')]")
+	private WebElement userLink_Lighting;
+	/**
+	 * @return the usersLink
+	 */
+	public WebElement getUsersLink(String environment, String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			return isDisplayed(driver, userLink_Lighting, "Visibility", timeOut, "Users Link in "+mode);
+		}else {
+			return isDisplayed(driver, userLink_Classic, "Visibility", timeOut, "Users Link in "+mode);
+		}
+	}
+	
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement setupPageIframe;
+
+	/**
+	 * @return the userIframe
+	 */
+	public WebElement getSetUpPageIframe(int timeOut) {
+		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
+	}
+	
+	@FindBy(xpath="//td[@id='topButtonRow']//input[@name='save']")
+	private WebElement createUserSaveBtn_Lighting;
+
+	/**
+	 * @return the createUserSaveBtn
+	 */
+	public WebElement getCreateUserSaveBtn_Lighting(int timeOut) {
+		return isDisplayed(driver, createUserSaveBtn_Lighting, "Visibility", timeOut, "create user save button in lighting");
+	}
+	
+	@FindBy(xpath="//input[@name='save']")
+	private WebElement saveButtonClassic;
+	
+	@FindBy(xpath="//button[@title='Save']/span[text()='Save']")
+	private WebElement saveButtonLighting;
+
+	/**
+	 * @return the saveButton
+	 */
+	public WebElement getSaveButton(String environment,String mode,int timeOut) {
+		ThreadSleep(2000);
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, saveButtonClassic, "Visibility", timeOut, "Save Button Classic");
+		}else{
+			return isDisplayed(driver, saveButtonLighting, "Visibility", timeOut, "Save Button Lighting");
+		}
+	}
+	
+	@FindBy(xpath="//a[contains(@class,'menuTriggerLink slds-button')]//div[contains(@class,'tooltip-trigger uiTooltip')]")
+	private WebElement settingIcon_Lighting;
+	
+	
+	/**
+	 * @return the settingTab_Lighting
+	 */
+	public WebElement getSettingLink_Lighting(int timeOut) {
+		return isDisplayed(driver, settingIcon_Lighting, "Visibility", timeOut, "setting tab in lighting");
+	}
+	
+	
+	@FindBy(xpath="//li[@data-aura-class='uiMenuItem onesetupSetupMenuItem']/a[@title='Setup']")
+	private WebElement setupLink_Lighting;
+	
+	/**
+	 * @return the userMenuSetupLink
+	 */
+	public WebElement getUserMenuSetupLink(String environment, String mode,int timeOut) {
+		WebElement ele=null;
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			ele=userMenuSetupLink;
+		}else {
+			ele= setupLink_Lighting;
+		}
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Setup Link");
+	}
+	
+	@FindBy(xpath="//a[@class='switch-to-lightning']")
+	private WebElement switchToLightingLink;
+
+	/**
+	 * @return the switchToLightingLink
+	 */
+	public WebElement getSwitchToLightingLink(int timeOut) {
+		return isDisplayed(driver, switchToLightingLink, "Visibility", timeOut, "Switch To Lighting Link");
+	}
+	
+	public List<WebElement> getUserMenuTab_Lightning(){
+		return FindElements(driver, "//span[contains(@class,'userProfileCardTriggerRoot')]//img[@alt='User']", "user menu tab in lightning");
+	}
+	
+	@FindBy(xpath = "//a[contains(@href,'logout')]")
+	private WebElement logout_Lightning;
+	
+	
+	
+	public WebElement getLogoutButton(String environment,String mode,int timeOut) {
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			return isDisplayed(driver, logout_Lightning, "Visibility", timeOut, "Logout in User menu");
+
+		}else {
+			return isDisplayed(driver, logout, "Visibility", timeOut, "Logout in User menu");
+			
+		}
+	}
+	
+	
+	@FindBy(xpath="//button[@title='Personalize your nav bar']")
+	private WebElement personalizePencilIcon;
+
+	/**
+	 * @return the personalizePencilIcon
+	 */
+
+
+	public WebElement getPersonalizePencilIcon(String mode, int timeOut) {
+		return isDisplayed(driver, personalizePencilIcon, "Visibility", timeOut, "Personalize Pencil Icon");
+
+	}
+
+	@FindBy(xpath="//button[contains(text(),'Add More Items')]")
+	private WebElement addMoreItemsLink;
+
+	/**
+	 * @return the addMoreItemsLink
+	 */
+	public WebElement getAddMoreItemsLink(String mode, int timeOut) {
+		return isDisplayed(driver, addMoreItemsLink, "Visibility", timeOut, "Add More Items");
+
+	}
+
+	@FindBy(xpath="//div[@role='list']//a[text()='All']")
+	private WebElement allAddLink;
+
+	/**
+	 * @return the allAddLink
+	 */
+	public WebElement getAllAddLink(String mode, int timeOut) {
+		return isDisplayed(driver, allAddLink, "Visibility", timeOut, "Add More Items");
+
+	}
+	
+	@FindBy(xpath="//button/span[contains(text(),'Add')]")
+	private WebElement addNavButton;
+
+	/**
+	 * @return the addNavButton
+	 */
+	public WebElement getAddNavButton(String mode, int timeOut) {
+				return isDisplayed(driver, addNavButton, "Visibility", timeOut, "Add Nav Button");
+	
+	}
+	
+	@FindBy(xpath="//div[@data-aura-class='oneEditMyNav']/../following-sibling::div//button/span[contains(text(),'Save')]")
+	private WebElement tabSaveButton;
+
+	/**
+	 * @return the addNavButton
+	 */
+	public WebElement getTabSaveButton(String mode, int timeOut) {
+				return isDisplayed(driver, tabSaveButton, "Visibility", timeOut, "tAB Save Button");
+	
+	}
+	
+	public WebElement getAddTabCloseTheWindowCrossIcon() {
+		String xpath="//button[@title='Close this window']";
+		List<WebElement> lst = FindElements(driver, xpath, "add tab cross icon");
+		if(!lst.isEmpty()) {
+			for (int i = 0; i < lst.size(); i++) {
+				if(isDisplayed(driver, lst.get(i), "visibility", 1, "cross icon")!=null) {
+					return lst.get(i);
+				}
+			}
+		}
+		return null;
+	}
+	
+	
+	public WebElement getQucikSearchInSetupPage(String environment, String mode,int timeOut ) {
+		WebElement ele = null;
+		String xpath="";
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			xpath = "//input[@id='setupSearch']";
+		}else {
+			xpath="//input[@placeholder='Quick Find']";
+		}
+		ele=FindElement(driver, xpath, "search text box in "+mode, action.SCROLLANDBOOLEAN,30);
+		return isDisplayed(driver,ele,"visibility",30,"quick search text box in "+mode);
+	}
+	
+	@FindBy(id = "ImportedPackage_font")
+	private WebElement installedPackageLink_Classic;
+
+	/**
+	 * @return the installedpackageLink
+	 */
+	@FindBy(xpath="//a[contains(@href,'/setup/ImportedPackage/home')]")
+	private WebElement installedPackageLink_Lighting;
+	
+	public WebElement getInstalledPackageLink(String environment, String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			return isDisplayed(driver, installedPackageLink_Lighting, "Visibility", timeOut, "Installed package in "+mode);
+		}else {
+			return isDisplayed(driver, installedPackageLink_Classic, "Visibility", timeOut, "Installed package in "+mode);
+		}
+	}
+	
+	
+	@FindBy(xpath="//iframe[contains(@title,'Add Users:')]")
+	private WebElement installedPackageParentFrame_Lighting;
+	
+	/**
+	 * @return the installedPackageFrame_Lighting
+	 */
+	public WebElement getInstalledPackageParentFrame_Lighting(int timeOut) {
+		return isDisplayed(driver, installedPackageParentFrame_Lighting, "Visibility", timeOut, " Installed Package Parent Frame in Lightning");
+	}
+	
+	
+	@FindBy(xpath="//ul[contains(@class,'tabBarItems slds-grid')]//span[contains(@class,'title slds-truncate')][contains(text(),'Object Manager')]")
+	private WebElement objectManager_Lighting;
+
+	/**
+	 * @return the objectManage_Lighting
+	 */
+	public WebElement getObjectManager_Lighting(int timeOut) {
+		return isDisplayed(driver, objectManager_Lighting, "Visibility", timeOut, "object manage");
+	}
+	
+	@FindBy(xpath="//input[@id='globalQuickfind']")
+	private WebElement quickSearchInObjectManager_Lighting;
+
+	/**
+	 * @return the quickSearchInObjectManager_Lighting
+	 */
+	public WebElement getQuickSearchInObjectManager_Lighting(int timeOut) {
+		return isDisplayed(driver, quickSearchInObjectManager_Lighting, "Visibility", timeOut, "quick search in object manager in lighting");
+	}
+	
+	@FindBy(xpath = "//li[@id='MoreTabs_Tab']")
+	private WebElement moreTabIConClassic;
+	
+	@FindBy(xpath = "//span[contains(text(),'More')]/..//lightning-primitive-icon")
+	private WebElement moreTabIConLighting;
+	
+	public WebElement getMoreTabIcon(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		return isDisplayed(driver, moreTabIConClassic, "Visibility", timeOut, "More Tab ICon Classic");
+		}else{
+			return isDisplayed(driver, moreTabIConLighting, "Visibility", timeOut, "More Tab ICon Lighting");	
+		}
+	}
+	
 }

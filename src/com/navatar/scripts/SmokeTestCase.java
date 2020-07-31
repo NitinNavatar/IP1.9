@@ -3,7 +3,6 @@
  */
 package com.navatar.scripts;
 
-import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.SmokeCommonVariable.*;
 
@@ -18,6 +17,7 @@ import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.BaseLib;
@@ -29,6 +29,7 @@ import com.navatar.generic.CommonLib.ContentGridArrowKeyFunctions;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
 import com.navatar.generic.CommonLib.ManageApprovalTabs;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.OnlineImportFileAddTo;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
@@ -61,6 +62,7 @@ import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageErrorMessage;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
+import com.relevantcodes.extentreports.LogStatus;
 /**
  * @author Ankit Jaiswal
  *
@@ -68,35 +70,64 @@ import com.navatar.pageObjects.PartnershipPageBusinessLayer;
 public class SmokeTestCase extends BaseLib {
 	String passwordResetLink = null;
 	
-	
-	@Test
-	public void Smoketc001_1_CreateCRMUser3() {
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc001_1_CreateCRMUser3(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
-		SoftAssert saa = new SoftAssert();
+		String parentWindow = null;
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
 		String[] splitedUserName = removeNumbersFromString(SmokeCRMUser3LastName); 
 		String UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(smokeExcelPath,UserLastName, "Users", excelLabel.Variable_Name, "User3", excelLabel.User_Last_Name);
 		scv = new SmokeCommonVariable(this);
-		if (bp.createPEUser(SmokeCRMUser3FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
-				SmokeCRMUser1Profile)) {
-			appLog.info("PE User 1 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(smokeExcelPath,emailID, "Users", excelLabel.Variable_Name, "User3", excelLabel.User_Email);
-			
-		} else {
-			appLog.info("PE User1 is not created successfully");
-			saa.assertTrue(false, "PE User1 is not created successfully");
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User3");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User3");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User3");
+						}
+					}
+					if (bp.createPEUser(environment, mode, SmokeCRMUser3FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
+							SmokeCRMUser1Profile)) {
+						appLog.info("PE User 3 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(smokeExcelPath,emailID, "Users", excelLabel.Variable_Name, "User3", excelLabel.User_Email);
+						if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							driver.close();
+							driver.switchTo().window(parentWindow);
+						}
+						break;
+						
+					}
+				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc001_2_SuperAdminRegistration() {
+	public void Smoketc001_2_SuperAdminRegistration(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -268,152 +299,209 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Admin User is Already registered so we cannot check error messages");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc002_1_CreateCRMUser1InstallPackageAndThenCreatePassword() {
+	public void Smoketc002_1_CreateCRMUser1InstallPackageAndThenCreatePassword(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
+		String parentWindow=null;
+		boolean flag = false;
 		List<String> lst=new ArrayList<String>();
+		String addRemoveTabName="Partnerships"+","+"Commitments"+","+"Navatar Investor Manager";
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
 		String[] splitedUserName = removeNumbersFromString(SmokeCRMUser1LastName); 
 		String UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(smokeExcelPath,UserLastName, "Users", excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
+		WebElement ele=null;
 		scv = new SmokeCommonVariable(this);
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		WebElement ele = FindElement(driver, "//a[contains(@title,'Partnerships')]",
-							  "Partnerships tab", action.SCROLLANDBOOLEAN, 3);
-							 
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(bp.removeUnusedTabs()){
+				appLog.info("Unused tabs remove successfully");
+			}else{
+				appLog.info("Unused tabs not removed successfully");
+				saa.assertTrue(false, "Unused tabs not removed successfully");
 			}
-		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 3);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		if (bp.createPEUser(SmokeCRMUser1FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
-				SmokeCRMUser1Profile)) {
-			appLog.info("PE User 1 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(smokeExcelPath,emailID, "Users", excelLabel.Variable_Name, "User1", excelLabel.User_Email);
+			 ele = FindElement(driver, "//a[contains(@title,'Partnerships')]",
+					"Partnerships tab", action.SCROLLANDBOOLEAN, 3);
 			
-		} else {
-			appLog.info("PE User1 is not created successfully");
-			saa.assertTrue(false, "PE User1 is not created successfully");
-		}
-		if (bp.installedPackages(SmokeCRMUser1FirstName,SmokeCRMUser1LastName)) {
-			appLog.info("Install package is done for PE User 1 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 1 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 1 succesfully");
-		}
-		lp.CRMlogout();
-		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
-		bp = new BasePageBusinessLayer(driver);
-		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		appLog.info("ResetLinkIs: " + passwordResetLink);
-		driver.get(passwordResetLink);
-		if (bp.setNewPassword()) {
-			appLog.info("Password is set successfully for user1");
-		} else {
-			appLog.info("Password is not set for user1");
-			saa.assertTrue(false, "Password is not set for user1");
-		}
-		if (bp.getSalesForceLightingIcon(10) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		 ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 5);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
+			if(ele==null){
+				lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
+				if(!lst.isEmpty()){
+					for (int i = 0; i < lst.size(); i++) {
+						appLog.error(lst.get(i));
+						saa.assertTrue(false,lst.get(i));
+					}
 				}
 			}
-		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 5);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
+			ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
+					action.SCROLLANDBOOLEAN, 3);
+			if(ele==null){
+				lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
+				if(!lst.isEmpty()){
+					for (int i = 0; i < lst.size(); i++) {
+						appLog.error(lst.get(i));
+						saa.assertTrue(false,lst.get(i));
+					}
 				}
 			}
-		}
-		if (bp.getNavatarInvestorManagerTab(5) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(5) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
+		}else {
+			if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+				appLog.info("Tab added : "+addRemoveTabName);
+//				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
+				appLog.error("Tab not added : "+addRemoveTabName);
+//				log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+				sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+			}		
+		}
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						}
+					}
+					if (bp.createPEUser(environment, mode,SmokeCRMUser1FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
+							SmokeCRMUser1Profile)) {
+						appLog.info("PE User 1 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(smokeExcelPath,emailID, "Users", excelLabel.Variable_Name, "User1", excelLabel.User_Email);
+						flag = true;
+						break;
+						
+					}
+				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
 			}
 		}
-		lp.CRMlogout();
+		if (flag) {
+			if (bp.installedPackages(environment, mode,SmokeCRMUser1FirstName,SmokeCRMUser1LastName)) {
+				appLog.info("PE Package is installed Successfully in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
+			} else {
+				appLog.error(
+						"Not able to install PE package in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
+				sa.assertTrue(false,
+						"Not able to install PE package in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
+			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			lp.CRMlogout(environment,mode);
+			driver.close();
+			config(ExcelUtils.readDataFromPropertyFile("Browser"));
+			bp = new BasePageBusinessLayer(driver);
+			lp = new LoginPageBusinessLayer(driver);
+			try {
+				passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+						ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+						ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			appLog.info("ResetLinkIs: " + passwordResetLink);
+			driver.get(passwordResetLink);
+			if (bp.setNewPassword()) {
+				appLog.info("Password is set successfully for user1");
+			} else {
+				appLog.info("Password is not set for user1");
+				saa.assertTrue(false, "Password is not set for user1");
+			}
+			if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				if (bp.getSalesForceLightingIcon(10) != null) {
+					lp.switchToClassic();
+				} else {
+					appLog.info("Sales Force is open in classic mode.");
+				}
+				if(bp.removeUnusedTabs()){
+					appLog.info("Unused tabs remove successfully");
+				}else{
+					appLog.info("Unused tabs not removed successfully");
+					saa.assertTrue(false, "Unused tabs not removed successfully");
+				}
+				ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
+						action.SCROLLANDBOOLEAN, 5);
+				if(ele==null){
+					lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
+					if(!lst.isEmpty()){
+						for (int i = 0; i < lst.size(); i++) {
+							appLog.error(lst.get(i));
+							saa.assertTrue(false,lst.get(i));
+						}
+					}
+				}
+				ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
+						action.SCROLLANDBOOLEAN, 5);
+				if(ele==null){
+					lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
+					if(!lst.isEmpty()){
+						for (int i = 0; i < lst.size(); i++) {
+							appLog.error(lst.get(i));
+							saa.assertTrue(false,lst.get(i));
+						}
+					}
+				}
+				if (bp.getNavatarInvestorManagerTab(5) == null) {
+					lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
+					if(!lst.isEmpty()){
+						for (int i = 0; i < lst.size(); i++) {
+							appLog.error(lst.get(i));
+							saa.assertTrue(false,lst.get(i));
+						}
+					}
+					if (bp.getNavatarInvestorManagerTab(5) != null) {
+						appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
+					} else {
+						appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
+						saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
+					}
+				}
+			}else {
+				if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+					log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+					sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+				}	
+			}
+			lp.CRMlogout(environment,mode);
+		}else{
+			appLog.error("could not create CRM User so cannot installed Package and set password of created user");
+			sa.assertTrue(false,"could not create CRM User so cannot installed Package and set password of created user");
+
+		}
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc002_2_provideAccesstoUser1() {
+	
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc002_2_provideAccesstoUser1(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
-		if(lp.clickOnTab(TabName.NIMTab)) {
-			if(nim.giveAccessToUserInNIMTabFromAdmin(SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName, accessType.InternalUserAccess)) {
+		if(lp.clickOnTab(environment,mode,TabName.NIMTab)) {
+			if(nim.giveAccessToUserInNIMTabFromAdmin(environment,mode,SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName, accessType.InternalUserAccess)) {
 				appLog.info("internal user access has been provided to the user : "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
 			}else {
 				appLog.error("Not able to provide internal user access to the user : "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
@@ -423,13 +511,15 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on NIM tab so cannot provide access to user "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot provide access to user "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
 
+	
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc002_3_user1CompleteRegistration() {
+	public void Smoketc002_3_user1CompleteRegistration(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
@@ -444,12 +534,14 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on NIM tab so cannot register CRM User 1 "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot register CRM User 1 "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc003_1_CreateCRMUser2InstallPackageAndThenCreatePassword() {
+	
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc003_1_CreateCRMUser2InstallPackageAndThenCreatePassword(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -488,7 +580,7 @@ public class SmokeTestCase extends BaseLib {
 				}
 			}
 		}
-		if (bp.createPEUser(SmokeCRMUser2FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
+		if (bp.createPEUser(environment, mode,SmokeCRMUser2FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
 				SmokeCRMUser1Profile)) {
 			appLog.info("PE User 1 created Successfully");
 			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
@@ -505,7 +597,7 @@ public class SmokeTestCase extends BaseLib {
 			appLog.info("Install package is not done for PE User 2 succesfully");
 			saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		bp = new BasePageBusinessLayer(driver);
@@ -577,13 +669,15 @@ public class SmokeTestCase extends BaseLib {
 				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc003_2_provideAccesstoUser2() {
+
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc003_2_provideAccesstoUser2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
@@ -606,13 +700,15 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on NIM tab so cannot provide access to user "+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName);
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot provide access to user "+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
 	
+
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc003_3_user2CompleteRegsitration() {
+	public void Smoketc003_3_user2CompleteRegsitration(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
@@ -628,12 +724,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot register CRM User 2 "+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc004_createPreconditionData() {
+	
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc004_createPreconditionData(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -802,12 +900,14 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on commitment tab so cannot create committment for limite partner: "+SmokeLimitedPartner2+" and partnership Name: "+SmokePartnership1);
 			sa.assertTrue(false, "Not able to click on commitment tab so cannot create committment for limite partner: "+SmokeLimitedPartner2+" and partnership Name: "+SmokePartnership1);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc005_1_buildFRWorkSpaceAndProvideContactAccess() {
+	
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc005_1_buildFRWorkSpaceAndProvideContactAccess(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1015,12 +1115,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace: "+SmokeFundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc006_inviteContactAndSendEmailToContact() {
+
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc006_inviteContactAndSendEmailToContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1286,12 +1388,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contacts");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc007_activateManageApprovalWatermarkingSettingAndUpdateProfilesInfo() {
+	
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc007_activateManageApprovalWatermarkingSettingAndUpdateProfilesInfo(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
@@ -1389,12 +1493,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on nim tab so cannot activate manage approvals, watermarking settings and update profile, firm profile data");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc008_addRenameAndDeleteFolderFromManageFolder() {
+	public void Smoketc008_addRenameAndDeleteFolderFromManageFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath).split("<break>");
@@ -1475,12 +1581,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
-	public void Smoketc009_addRemoveRenameInvestorFromManageInvestor() {
+	
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc009_addRemoveRenameInvestorFromManageInvestor(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1602,12 +1710,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc010_uploadDocumentCRMSide() {
+
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc010_uploadDocumentCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -1655,12 +1765,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc011_importOnlineDocument() {
+
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc011_importOnlineDocument(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -1686,12 +1798,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc012_1_approvePendingDocumentAndCheckUI() {
+	public void Smoketc012_1_approvePendingDocumentAndCheckUI(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1926,13 +2040,15 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot approve pending documents");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
 	
-	@Test
-	public void Smoketc012_2_updateDocumentCRMSideAndCheckDuplicatePopUp() {
+
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc012_2_updateDocumentCRMSideAndCheckDuplicatePopUp(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -2039,15 +2155,17 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
 	
 	
 	
-	@Test
-	public void Smoketc013_registerInvestorAndCheckFolder() {
+
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc013_registerInvestorAndCheckFolder(String environment, String mode) {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2194,8 +2312,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void Smoketc014_updateprofileAndFirmProfileInvestorSide() {
+
+	@Parameters({ "environment", "mode" })
+	@Test 
+	public void Smoketc014_updateprofileAndFirmProfileInvestorSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
@@ -2329,8 +2449,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc015_checkLinksOnHomePageAlert() {
+	public void Smoketc015_checkLinksOnHomePageAlert(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -2554,13 +2676,15 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to select range dropdown value ");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc016_checkLinksOnFundDetailsPage() {
+	public void Smoketc016_checkLinksOnFundDetailsPage(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3334,12 +3458,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc017_checkLinksOnContactDetailsPage() {
+	public void Smoketc017_checkLinksOnContactDetailsPage(String environment, String mode) {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3789,13 +3915,15 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on contact tab");
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
 
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc018_checkLinkOnInstitutionPage() {
+	public void Smoketc018_checkLinkOnInstitutionPage(String environment, String mode) {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4018,12 +4146,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on institution tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc019_checkLinksOnNIMPage() {
+	public void Smoketc019_checkLinksOnNIMPage(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
@@ -4166,13 +4296,15 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
 
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc020_checkLinksOnAllFirmsPage() {
+	public void Smoketc020_checkLinksOnAllFirmsPage(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
 		InvestorFirmPageBusinesslayer inv = new InvestorFirmPageBusinesslayer(driver);
@@ -4303,8 +4435,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc021_checkLinksOnAllDocumentsAndRecentActivitiesGrid() {
+	public void Smoketc021_checkLinksOnAllDocumentsAndRecentActivitiesGrid(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4547,8 +4681,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();
 	}
 
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc022_checkLinkInvestorLoginPage() {
+	public void Smoketc022_checkLinkInvestorLoginPage(String environment, String mode) {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
      	driver.get(SmokeInvestorURL);
      	if (click(driver, lp.getResetPasswordLink(60), "Reset Password Link",action.BOOLEAN)) {
@@ -4852,8 +4988,10 @@ public class SmokeTestCase extends BaseLib {
      sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc023_1_SendForgotPasswordEmailToInvestor(){
+	public void Smoketc023_1_SendForgotPasswordEmailToInvestor(String environment, String mode){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 	   	driver.get(SmokeInvestorURL);
@@ -4880,8 +5018,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();		
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc023_2_VerifySendingResetPasswordAndChangePassword(){
+	public void Smoketc023_2_VerifySendingResetPasswordAndChangePassword(String environment, String mode){
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer afp =new AllFirmsPageBusinesslayer(driver);
@@ -4937,8 +5077,9 @@ public class SmokeTestCase extends BaseLib {
 	
 	////////////////////////// INvestor
 	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc024_buildINWorkSpaceAndProvideContactAccess() {
+	public void Smoketc024_buildINWorkSpaceAndProvideContactAccess(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5146,12 +5287,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build Investor workspace: "+SmokeFundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc025_inviteContactAndSendEmailToContact() {
+	public void Smoketc025_inviteContactAndSendEmailToContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5416,12 +5559,15 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contacts");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc026_addRenameAndDeleteFolderFromManageFolder() {
+	public void Smoketc026_addRenameAndDeleteFolderFromManageFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath).split("<break>");
@@ -5502,12 +5648,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc027_addRemoveRenameInvestorFromManageInvestor() {
+	public void Smoketc027_addRemoveRenameInvestorFromManageInvestor(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5629,12 +5777,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc028_uploadDocumentCRMSide() {
+	public void Smoketc028_uploadDocumentCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -5682,12 +5832,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc029_importOnlineDocument() {
+	public void Smoketc029_importOnlineDocument(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -5713,12 +5865,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc030_1_approvePendingDocumentAndCheckUI() {
+	public void Smoketc030_1_approvePendingDocumentAndCheckUI(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5954,12 +6108,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot approve pending documents");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc030_2_updateDocumentCRMSideAndCheckDuplicatePopUp() {
+	public void Smoketc030_2_updateDocumentCRMSideAndCheckDuplicatePopUp(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -6074,15 +6230,17 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
 	
 	
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc031_registerInvestorAndCheckFolder() {
+	public void Smoketc031_registerInvestorAndCheckFolder(String environment, String mode) {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6229,8 +6387,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc032_updateprofileAndFirmProfileInvestorSide() {
+	public void Smoketc032_updateprofileAndFirmProfileInvestorSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
@@ -6319,8 +6479,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc033_checkLinksOnFundDetailsPage() {
+	public void Smoketc033_checkLinksOnFundDetailsPage(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7095,12 +7257,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc034_checkLinksOnContactDetailsPage() {
+	public void Smoketc034_checkLinksOnContactDetailsPage(String environment, String mode) {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -7578,13 +7742,15 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on contact tab");
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
 
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc035_checkLinkOnInstitutionPage() {
+	public void Smoketc035_checkLinkOnInstitutionPage(String environment, String mode) {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -7806,12 +7972,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on institution tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc036_checkLinkOnLPPage() {
+	public void Smoketc036_checkLinkOnLPPage(String environment, String mode) {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8042,12 +8210,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on institution tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc037_checkLinkOnCommitmentPage() {
+	public void Smoketc037_checkLinkOnCommitmentPage(String environment, String mode) {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8280,12 +8450,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on institution tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc038_1_resetpasswordFromContactPage(){
+	public void Smoketc038_1_resetpasswordFromContactPage(String environment, String mode){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -8423,12 +8595,14 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();		
 	}
 
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc038_2_VerifySendingResetPasswordAndChangePassword(){
+	public void Smoketc038_2_VerifySendingResetPasswordAndChangePassword(String environment, String mode){
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		String updatedPassword = ExcelUtils.readData(smokeExcelPath,"Contact",excelLabel.Variable_Name, "SmokeC2", excelLabel.Updated_Password);
 		driver.get(ExcelUtils.readData(smokeExcelPath,"Contact",excelLabel.Variable_Name, "SmokeC2", excelLabel.Click_HereLink));		
@@ -8458,8 +8632,10 @@ public class SmokeTestCase extends BaseLib {
 	}
 	
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc039_1_closeWorkSpace() {
+	public void Smoketc039_1_closeWorkSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName,SmokePassword);
@@ -8488,13 +8664,15 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot close fundraising and investor workspace");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot close fundraising and investor workspace");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
 
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc039_2_checkFirmNameAfterCloseWorkSpace() {
+	public void Smoketc039_2_checkFirmNameAfterCloseWorkSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfm = new AllFirmsPageBusinesslayer(driver);
 		lp.investorLogin(SmokeContact1EmailId, SmokeContactUpdatedPassword);
@@ -8520,8 +8698,10 @@ public class SmokeTestCase extends BaseLib {
 		sa.assertAll();
 	}
 	
+	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc040_clearWorkSpace() {
+	public void Smoketc040_clearWorkSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName,SmokePassword);
@@ -8722,7 +8902,7 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot close fundraising and investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	

@@ -68,7 +68,7 @@ public class BaseLib extends AppListeners {
 			options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 			options.setExperimentalOption("useAutomationExtension", false);
 			options.addArguments("start-maximized");
-
+			options.addArguments("--disable-notifications");
 			System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
 			Logger.getLogger("org.openqa.selenium").setLevel(Level.OFF);
 			Map<String, Object> prefs = new HashMap<String, Object>();

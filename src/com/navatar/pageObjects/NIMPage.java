@@ -62,7 +62,18 @@ public class NIMPage extends BasePageBusinessLayer {
 	public WebElement getNIMTabFrame(int timeOut) {
 		return isDisplayed(driver, NIMTabFrame, "Visibility", timeOut, "NIM Tab Frame");
 	}
-
+	
+	@FindBy(xpath = "(//div[@data-aura-class='lafPageHost']//div[contains(@class,'iframe-paren')]/iframe)[2]")
+	private WebElement NIMTabParentFrame_Lightning;
+	
+	/**
+	 * @return the nIMTabFrame
+	 */
+	public WebElement getNIMTabParentFrame_Lightning(int timeOut) {
+		return NIMTabParentFrame_Lightning;
+	}
+	
+	
 	@FindBy(xpath = "//input[@name='page:j_id10:j_id12']")
 	private WebElement registrationSuccessfulCloseBtn;
 

@@ -7,11 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.sikuli.script.App;
 import org.testng.Assert;
-
-import com.jcraft.jsch.ConfigRepository.Config;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
@@ -28,31 +24,21 @@ import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.customTabActionType;
 import com.navatar.generic.CommonLib.excelLabel;
 import com.navatar.generic.CommonLib.sideMenu;
+import com.relevantcodes.extentreports.LogStatus;
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.*;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
-
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.BaseLib.sa;
-import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonVariables.CRMUser1EmailID;
-import static com.navatar.generic.CommonVariables.M12Contact1FirstName;
-import static com.navatar.generic.CommonVariables.M12Contact1LastName;
-import static com.navatar.generic.CommonVariables.M12FundName1;
-import static com.navatar.generic.CommonVariables.adminPassword;
-import static com.navatar.generic.CommonVariables.browserToLaunch;
-import static com.navatar.generic.CommonVariables.superAdminUserName;
-
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -189,6 +175,217 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		return false;
 	}
+	
+	
+	// Lightning Method.....
+	public boolean clickOnTab(String environment, String mode,TabName TabName) {
+		boolean flag = false;
+		String tabName = null;
+		switch (TabName) {
+		case ContactTab:
+			tabName = "Contacts";
+			break;
+		case InstituitonsTab:
+			tabName = "Institutions";
+			break;
+		case NIMTab:
+			tabName = "Navatar Investor Manager";
+			break;
+		case FundraisingsTab:
+			tabName = "Fundraisings";
+			break;
+		case FundsTab:
+			tabName = "Funds";
+			break;
+		case CommitmentsTab:
+			tabName = "Commitments";
+			break;
+		case PartnershipsTab:
+			tabName = "Partnerships";
+			break;
+		case NavatarInvestorAddOns:
+			tabName = "Navatar Investor Add-ons";
+			break;
+		case HomeTab:
+			tabName="Home";
+			break;
+		case FolderTemplate:
+			tabName = "Folder Templates";
+			break;
+		default:
+			return false;
+		}
+		System.err.println("Passed switch statement");
+		for (int i = 0; i < 2; i++)
+			if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				if (click(driver,
+						isDisplayed(driver,
+								FindElement(driver, "//a[contains(@title,'"+tabName+" Tab')]", tabName,
+										action.SCROLLANDBOOLEAN, 30),
+								"visibility", 30, tabName),
+						tabName, action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked On " + tabName);
+					if (tabName.equalsIgnoreCase("Contacts Tab") || tabName.equalsIgnoreCase("Institutions Tab")
+							|| tabName.equalsIgnoreCase("Fundraisings Tab") || tabName.equalsIgnoreCase("Funds Tab")
+							|| tabName.equalsIgnoreCase("Commitments Tab")
+							|| tabName.equalsIgnoreCase("Partnerships Tab")) {
+						WebElement ele = isDisplayed(driver,
+								FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40),
+								"visibility", 60, tabName);
+						if (ele != null) {
+							String header = ele.getText().trim();
+							if (header.contains(tabName.split(" ")[0])) {
+								appLog.info("Successfully clicked on " + tabName);
+								return true;
+							}
+						}
+					} else if (tabName.equalsIgnoreCase("Navatar Investor Manager Tab")) {
+						NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
+						BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+						if (nim.getNIMTabFrame(20) != null) {
+							appLog.info("NIM Frame Loaded Successfully.");
+							switchToFrame(driver, 30, nim.getNIMTabFrame(30));
+							for(int j = 0; j < 20; j++ )
+								if (nim.getFolderTemplatetab(0) != null) {
+									switchToDefaultContent(driver);
+									appLog.info("NIM Tab is loaded successfully.");
+									return true;
+								} else if (nim.getStartButton(0) != null) {
+									switchToDefaultContent(driver);
+									appLog.info("NIM Tab is loaded successfully.");
+									return true;
+								} else if (nim.getNextButton(0) != null) {
+									switchToDefaultContent(driver);
+									appLog.info("NIM Tab is loaded successfully");
+									return true;
+								} else if (nim.getRegistrationSuccessfulCloseBtn(0) != null) {
+									System.err.println("Inside reg close button");
+									switchToDefaultContent(driver);
+									appLog.info("NIM Tab is loaded successfully.");
+									return true;
+								} else if (bp.getErrorMessageBeforeGivingInternalUserAccess(0) != null) {
+									switchToDefaultContent(driver);
+									appLog.info("NIM Tab is loaded successfully.");
+									return true;
+								} else {
+									appLog.error("NIM Tab is not loaded");
+								}
+							switchToDefaultContent(driver);
+						}
+					} else if (tabName.equalsIgnoreCase("Navatar Investor Add-ons Tab")) {
+						if (new NavatarInvestorAddonsPageBusinessLayer(driver).getDisclaimerLabel(60) != null) {
+							appLog.info("Navatar investor add ons page is loaded successfully");
+							switchToDefaultContent(driver);
+							return true;
+						} else {
+							appLog.error("Navatar investor add on page is not loaded successfully");
+						}
+					}else if(tabName.equalsIgnoreCase("Home Tab")){
+						WebElement ele=new HomePageBusineesLayer(driver).getDashboardLabelOnHomePage(60);
+						if (ele != null) {
+							appLog.info("Successfully clicked on " + tabName);
+							return true;
+						}
+					} else if (tabName.equalsIgnoreCase("Folder Templates Tab")){
+						return true;
+					}
+				}
+			}else {
+				WebElement ele = isDisplayed(driver,
+						FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",
+								tabName, action.SCROLLANDBOOLEAN,30),
+						"visibility", 30, tabName);
+				if (ele != null) {
+					appLog.info("Tab Found");
+					ThreadSleep(5000);
+					if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
+						CommonLib.log(LogStatus.INFO, "Tab found", YesNo.No);
+						appLog.info("Clicked on Tab : "+tabName);
+						return true;
+					} else {
+						appLog.error("Not Able to Click on Tab : "+tabName);
+					}
+
+				} else {
+					CommonLib.log(LogStatus.INFO, "Going to found tab after clicking on More Icon", YesNo.No);
+					if (click(driver, getMoreTabIcon(environment, mode, 10), "More Icon", action.SCROLLANDBOOLEAN)) {
+						ele = isDisplayed(driver,
+								FindElement(driver,
+										"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
+												+ tabName + "')]",
+										tabName, action.SCROLLANDBOOLEAN, 10),
+								"visibility", 10, tabName);
+						if (ele!=null) {
+							if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
+								appLog.info("Clicked on Tab on More Icon: "+tabName);
+								CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
+								return true;
+							}	
+						}
+					} else {
+						appLog.error("Not Able to Clicked on Tab on More Icon: "+tabName);
+					}
+				}
+				if (tabName.equalsIgnoreCase("Navatar Investor Manager")) {
+					NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
+					BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+					for(int K=0; K<20; K++) {
+						if(nim.getNIMTabParentFrame_Lightning(20)!=null) {
+							ThreadSleep(3000);
+							switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning(30));
+							if (nim.getNIMTabFrame(20) != null) {
+								appLog.info("NIM Frame Loaded Successfully.");
+								switchToFrame(driver, 30, nim.getNIMTabFrame(30));
+								for(int j = 0; j < 20; j++ ) {
+									if (nim.getFolderTemplatetab(0) != null) {
+										switchToDefaultContent(driver);
+										appLog.info("NIM Tab is loaded successfully.");
+										flag=true;
+										return true;
+									} else if (nim.getStartButton(0) != null) {
+										switchToDefaultContent(driver);
+										appLog.info("NIM Tab is loaded successfully.");
+										flag=true;
+										return true;
+									} else if (nim.getNextButton(0) != null) {
+										switchToDefaultContent(driver);
+										appLog.info("NIM Tab is loaded successfully");
+										flag=true;
+										return true;
+									} else if (nim.getRegistrationSuccessfulCloseBtn(0) != null) {
+										System.err.println("Inside reg close button");
+										switchToDefaultContent(driver);
+										appLog.info("NIM Tab is loaded successfully.");
+										flag=true;
+										return true;
+									} else if (bp.getErrorMessageBeforeGivingInternalUserAccess(0) != null) {
+										switchToDefaultContent(driver);
+										appLog.info("NIM Tab is loaded successfully.");
+										flag=true;
+										return true;
+									} else {
+										appLog.error("NIM Tab is not loaded");
+									}
+								}
+							}
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning(30));
+						}
+						if(flag) {
+							break;
+						}
+					}
+					switchToDefaultContent(driver);
+				}
+			}
+		return false;
+	}
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * @author Ankit Jaiswal
@@ -199,97 +396,111 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param userProfile
 	 * @return true/false
 	 */
-	public boolean createPEUser(String userfirstname, String userlastname, String email, String userLicense,
+	public boolean createPEUser(String environment, String mode,String userfirstname, String userlastname, String email, String userLicense,
 			String userProfile) {
-		if (click(driver, getUserMenuTab(60), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			appLog.info("clicked on user menu tab");
-			if (click(driver, getUserMenuSetupLink(60), "Setup Link", action.SCROLLANDBOOLEAN)) {
-				appLog.info("Clicked on setup link");
-				if (click(driver, getExpandManageUserIcon(60), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
-					appLog.info("clicked on manage user expand icon");
-					if (click(driver, getUsersLink(60), "User Link", action.SCROLLANDBOOLEAN)) {
-						appLog.info("clicked on users link");
-						if (click(driver, getNewUserLink(60), "New User Button", action.SCROLLANDBOOLEAN)) {
-							appLog.info("clicked on new users button");
-							if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
+			if (click(driver, getExpandUserIcon(environment, mode, 30), "expand User Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on user expand icon");
+				if (click(driver, getUsersLink(environment, mode, 30), "User Link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on users link");
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						switchToFrame(driver, 20, getSetUpPageIframe(20));
+					}
+					ThreadSleep(2000);
+					if (click(driver, getNewUserLink(20), "New User Button", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on new users button");
+						ThreadSleep(2000);
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}else{
+							System.err.println(">>>11111111111111<<<<<<<<<<<<");	
+						}
+						if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
+								action.SCROLLANDBOOLEAN)) {
+							if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
 									action.SCROLLANDBOOLEAN)) {
-								if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
+								if (sendKeys(driver, getUserEmailId(60), email, "User Email Id",
 										action.SCROLLANDBOOLEAN)) {
-									if (sendKeys(driver, getUserEmailId(60), email, "User Email Id",
-											action.SCROLLANDBOOLEAN)) {
-										if (selectVisibleTextFromDropDown(driver, getUserUserLicenseDropDownList(60),
-												"User License drop down list", userLicense)) {
-											appLog.info("select user license from drop downlist: " + userLicense);
-											if (selectVisibleTextFromDropDown(driver, getUserProfileDropDownList(60),
-													"User profile drop down list", userProfile)) {
-												appLog.info("select user profile from drop downlist: " + userProfile);
-												if(click(driver, getSalesforceCRMContentUserCheckBox(60), "Salesforce CRM Content User check Box",
-														action.SCROLLANDBOOLEAN)){
-													appLog.info("Clicked on Content User Check Box");
-												}else{
-													appLog.error("Not able to click on content user checkbox");
+									if (selectVisibleTextFromDropDown(driver, getUserUserLicenseDropDownList(60),
+											"User License drop down list", userLicense)) {
+										appLog.info("select user license from drop downlist: " + userLicense);
+										if (selectVisibleTextFromDropDown(driver, getUserProfileDropDownList(60),
+												"User profile drop down list", userProfile)) {
+											appLog.info("select user profile from drop downlist: " + userProfile);
+											if(click(driver, getSalesforceCRMContentUserCheckBox(60), "Salesforce CRM Content User check Box",
+													action.SCROLLANDBOOLEAN)){
+												if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+													if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+															action.SCROLLANDBOOLEAN)) {
+														appLog.info("clicked on save button");
+														appLog.info("CRM User is created successfully: " + userfirstname
+																+ " " + userlastname);
+														return true;
+													} else {
+														appLog.error(
+																"Not able to click on save buttton so cannot create user: "
+																		+ userfirstname + " " + userlastname);
+													}
+												}else {
+													if (click(driver, getSaveButton(environment, mode, 20), "Save Button",
+															action.SCROLLANDBOOLEAN)) {
+														appLog.info("clicked on save button");
+														appLog.info("CRM User is created successfully: " + userfirstname
+																+ " " + userlastname);
+														return true;
+													} else {
+														appLog.error(
+																"Not able to click on save buttton so cannot create user: "
+																		+ userfirstname + " " + userlastname);
+													}
 												}
-												if (click(driver, getSaveButton(60), "Save Button",
-														action.SCROLLANDBOOLEAN)) {
-													appLog.info("clicked on save button");
-													appLog.info("CRM User is created successfully: " + userfirstname
-															+ " " + userlastname);
-													return true;
-												} else {
-													appLog.error(
-															"Not able to click on save buttton so cannot create user: "
-																	+ userfirstname + " " + userlastname);
-												}
-											} else {
-												appLog.error("Not able to select profile from drop downlist: "
-														+ userProfile + " so cannot create user: " + userfirstname + " "
-														+ userlastname);
+											}else{
+												appLog.info("Not able to click on content user checkbox");
 											}
-
 										} else {
-											appLog.error("Not able to select user license from drop downlist: "
-													+ userLicense + " so cannot create user: " + userfirstname + " "
+											appLog.error("Not able to select profile from drop downlist: "
+													+ userProfile + " so cannot create user: " + userfirstname + " "
 													+ userlastname);
 										}
-
+										
 									} else {
-										appLog.error("Not able to pass email id in text box: " + email
-												+ " so cannot create user: " + userfirstname + " " + userlastname);
+										appLog.error("Not able to select user license from drop downlist: "
+												+ userLicense + " so cannot create user: " + userfirstname + " "
+												+ userlastname);
 									}
-
+									
 								} else {
-									appLog.error("Not able to pass user last name in text box: " + userlastname
+									appLog.error("Not able to pass email id in text box: " + email
 											+ " so cannot create user: " + userfirstname + " " + userlastname);
 								}
+								
 							} else {
-								appLog.error("Not able pass user first name in text box: " + userfirstname
+								appLog.error("Not able to pass user last name in text box: " + userlastname
 										+ " so cannot create user: " + userfirstname + " " + userlastname);
 							}
-
 						} else {
-							appLog.error("Not able to click on new user button so cannot create user: " + userfirstname
-									+ " " + userlastname);
+							appLog.error("Not able pass user first name in text box: " + userfirstname
+									+ " so cannot create user: " + userfirstname + " " + userlastname);
 						}
-
+						
 					} else {
-						appLog.error("Not able to click on users link so cannot create user: " + userfirstname + " "
-								+ userlastname);
+						appLog.error("Not able to click on new user button so cannot create user: " + userfirstname
+								+ " " + userlastname);
 					}
-
+					
 				} else {
-					appLog.error("Not able to click on manage user expand icon so cannot create user: " + userfirstname
-							+ " " + userlastname);
+					appLog.error("Not able to click on users link so cannot create user: " + userfirstname + " "
+							+ userlastname);
 				}
-
+				
 			} else {
-				appLog.error(
-						"Not able to click on setup link so cannot create user: " + userfirstname + " " + userlastname);
+				appLog.error("Not able to click on manage user expand icon so cannot create user: " + userfirstname
+						+ " " + userlastname);
 			}
-
-		} else {
-			appLog.error(
-					"Not able to click on user menu tab so cannot create user: " + userfirstname + " " + userlastname);
-		}
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())){
+				switchToDefaultContent(driver);
+			}
 		return false;
 	}
 
@@ -401,7 +612,162 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
+	
+	//Lightning Method ...................
+	public boolean installedPackages(String environment, String mode,String firstName, String lastName) {
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToDefaultContent(driver);
+			if(sendKeys(driver,getQucikSearchInSetupPage(environment, mode, 30),"Installed package","quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "passed value in serach text box installed package ", YesNo.No);
+				
+			}else {
+				log(LogStatus.INFO, "Not able to search installed package in search text box so cannot click on installed package link in lightning", YesNo.Yes);
+				return false;
+			}
+		}
+		if (click(driver, getInstalledPackageLink(environment, mode, 30), "Installed Package link", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO,"clicked on installed package link", YesNo.No);
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				switchToFrame(driver, 30, getSetUpPageIframe(30));
+			}
+			if (click(driver, getManageLicensesLink(60), "Manage licenses link", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO,"clicked on manage licenses link", YesNo.No);
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 30, getSetUpPageIframe(30));
+				}
+				if (click(driver, getAddUsersbutton(60), "Add Users link", action.BOOLEAN)) {
+					log(LogStatus.INFO,"clicked on add users button", YesNo.No);
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						switchToDefaultContent(driver);
+					}
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						switchToFrame(driver, 30, getInstalledPackageParentFrame_Lighting(20));
+					}
+					if (switchToFrame(driver, 30, getInstalledPackageFrame(20))) {
+						appLog.info("Inside Installerd Package Frame");
+						for (int i = 0; i < 2; i++) {
+							if (click(driver, getActiveUserTab(60), "Active Users Tab",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO,"Clicked on active user tab ", YesNo.No);
+							} else {
+								if (i == 1) {
+									switchToDefaultContent(driver);
+									log(LogStatus.INFO,"Not able to click on active user tab", YesNo.Yes);
+								}
+							}
+						}
+						WebElement ele = FindElement(driver,
+								"//img[@title='Checked']/../..//span[contains(text(),'" + lastName + ", "
+										+ firstName + "')]/../..//input",
+										"Activate User Check Box", action.BOOLEAN, 20);
+						if (ele != null) {
+							for (int i = 0; i < 2; i++) {
+								if (click(driver, ele, firstName + " " + lastName + " check box",
+										action.BOOLEAN)) {
+									ThreadSleep(2000);
+									WebElement checkBox = FindElement(driver,
+											"//img[@title='Checked']/../..//span[contains(text(),'" + lastName
+											+ ", " + firstName + "')]/../..//input",
+											"Activate User Check Box", action.BOOLEAN, 20);
+									if (isSelected(driver, checkBox,
+											firstName + " " + lastName + " check box")) {
+										log(LogStatus.INFO,"clicked on user check box: " + firstName + " " + lastName, YesNo.No);
+										if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+											switchToDefaultContent(driver);
+											switchToFrame(driver, 30, getInstalledPackageParentFrame_Lighting(20));
+										}else {
+											switchToDefaultContent(driver);
+										}
+										if (click(driver, getActiveUserAddButton(60), "Active User Add Button",
+												action.BOOLEAN)) {
+											log(LogStatus.INFO,"clicked on add button", YesNo.No);
+											log(LogStatus.INFO,"package is installed successfully: " + firstName + " "
+													+ lastName, YesNo.No);
+											switchToDefaultContent(driver);
+											return true;
 
+										} else {
+											switchToDefaultContent(driver);
+											log(LogStatus.INFO,"Not able to click on add button so cannot install user package: "
+													+ firstName + " " + lastName, YesNo.Yes);
+										}
+									} else {
+										if (i == 1) {
+											switchToDefaultContent(driver);
+											log(LogStatus.INFO,"username checkbox is not selected in istalled package : "
+													+ firstName + " " + lastName, YesNo.Yes);
+										}
+									}
+								} else {
+									if (i == 1) {
+										switchToDefaultContent(driver);
+										log(LogStatus.INFO,"Not able to click on user check box: " + firstName + " "
+												+ lastName, YesNo.Yes);
+									}
+								}
+							}
+						} else {
+							switchToDefaultContent(driver);
+							log(LogStatus.INFO,"create user " + firstName + " " + lastName
+									+ " is not visible so cannot istall user package: " + firstName + " "
+									+ lastName, YesNo.Yes);
+						}
+					} else {
+						switchToDefaultContent(driver);
+						log(LogStatus.INFO,"installed package frame is not loaded so cannot install user package: "
+								+ firstName + " " + lastName, YesNo.Yes);
+					}
+				} else {
+					log(LogStatus.INFO,"Not able to click on add users button so cannot install user package: "
+							+ firstName + " " + lastName, YesNo.Yes);
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						switchToDefaultContent(driver);
+					}
+				}
+			} else {
+				log(LogStatus.INFO,"Not able to click on manage licenses link so cannot install user package: "
+						+ firstName + " " + lastName, YesNo.Yes);
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					switchToDefaultContent(driver);
+				}
+			}
+		} else {
+			log(LogStatus.INFO,"Not able to click on installed packages link so cannot istall user package: "
+					+ firstName + " " + lastName, YesNo.Yes);
+		}
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToDefaultContent(driver);
+		}
+		return false;
+	}
+	
+	
+	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(sendKeys(driver,getQucikSearchInSetupPage(environment, mode, 30),objectName.toString(),"quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
+				appLog.info("passed value in serach text box: "+objectName);
+				return true;
+			}else {
+				appLog.error("Not able to search object in classic : "+objectName);
+			}
+		}else {
+			if (click(driver, getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on object manager tab");
+				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), objectName.toString(), "quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
+					appLog.info("passed value in quick search text box: "+ objectName);
+					return true;
+				}else {
+					appLog.error("Not able to search object in lighting : "+objectName);
+				}
+			} else {
+				appLog.error("Not able to click on object manager tab so cannot search object: "+objectName);
+			}
+	}
+		return false;
+}
+	
+	
 	/**
 	 * @author Ankit Jaiswal
 	 * @description- This method is used to set new password for CRM Users
@@ -2698,7 +3064,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param access
 	 * @return true/false
 	 */
-	public boolean preCondition(String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
+	public boolean preCondition(String environment, String mode,String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(adminEmail, adminPassword);
@@ -2815,7 +3181,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			switchToDefaultContent(driver);
 		}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		String[] mailId = userEmailID.split("<break>");
 		for(int k =0;k<mailId.length;k++){
 		lp.CRMLogin(mailId[k], adminPassword);
@@ -2832,7 +3198,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			 sa.assertTrue(false, "Not able to click on Nim Tab");
 			 
 		 }
-		 lp.CRMlogout();
+		 lp.CRMlogout(environment,mode);
 		}
 		 return flag1&&flag2;
 
@@ -4261,7 +4627,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param access
 	 * @return true/false
 	 */
-	public boolean preConditionWithoutClickingRegisterrationPopupClose(String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
+	public boolean preConditionWithoutClickingRegisterrationPopupClose(String environment, String mode,String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(adminEmail, adminPassword);
@@ -4376,7 +4742,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			appLog.error("internal users side tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();		
+		lp.CRMlogout(environment,mode);
 		return flag1&&flag2;
 	}
 
@@ -4735,5 +5101,110 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return clickFlag;
 	}
-
+	
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @return true/false
+	 */
+	public boolean clickOnSetUpLink(String environment,String mode) {
+		boolean flag = false;
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(click(driver, getUserMenuTab(20), "user menu tab", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on user menu tab");
+				
+			}else {
+				appLog.error("user menu tab");
+				return flag;
+			}
+		}else {
+			if(click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("setting icon");
+				
+			}else {
+				appLog.error("setting icon");
+				return flag;
+			}
+		}
+		if(click(driver, getUserMenuSetupLink(environment, mode, 20), "setup link", action.SCROLLANDBOOLEAN)) {
+			appLog.info("setup link");
+			flag=true;
+		}else {
+			appLog.error("user setup link");
+		}
+		return flag;
+	}
+	
+	public boolean addTab_Lighting(String mode,String tabToBeAdded,int timeOut){
+		String xpath;
+		WebElement ele;
+		boolean flag = true;
+		int count =0;
+		if (click(driver, getPersonalizePencilIcon(mode, timeOut), "Personalize Pencil Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(2000);
+			if (click(driver, getAddMoreItemsLink(mode, timeOut), "Add More items Link", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(2000);
+				if (click(driver, getAllAddLink(mode, timeOut), "All Link", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					click(driver, getAllAddLink(mode, timeOut), "All Link", action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					String[] tabs = tabToBeAdded.split(",");
+					for (int i = 0; i < tabs.length; i++) {
+						xpath ="//h3[contains(text(),'"+tabs[i]+"')]/..//preceding-sibling::label/div";
+						ele = FindElement(driver, xpath, "Tab to be add : "+tabs[i], action.SCROLLANDBOOLEAN, 1);
+						if (ele!=null) {
+							scrollDownThroughWebelement(driver, ele, "TABS : "+tabs[i]);	
+							if (click(driver, ele, "Tab to be add : "+tabs[i], action.SCROLLANDBOOLEAN)) {
+								appLog.error("Tab Added : "+tabs[i]);
+//								log(LogStatus.INFO, "Tab Added : "+tabs[i], YesNo.No);
+							} else {
+								flag = false;
+								appLog.error("Not Able to add Tab : "+tabs[i]);
+//								log(LogStatus.INFO, "Not Able to add Tab : "+tabs[i], YesNo.Yes);
+							}
+							
+						} else {
+							appLog.error("Tab Already Added : "+tabs[i]);
+//							log(LogStatus.INFO, "Tab Already Added : "+tabs[i], YesNo.No);
+							count++;
+						}
+					}
+					if(count!=tabs.length) {
+						if (click(driver, getAddNavButton(mode, timeOut), "Add Nav Button", action.SCROLLANDBOOLEAN)) {
+							if (click(driver, getTabSaveButton(mode, timeOut), "Save Button", action.SCROLLANDBOOLEAN)) {
+							} else {
+								appLog.error("Not Able to click on Save Button");
+//							log(LogStatus.FAIL, "Not Able to click on Save Button", YesNo.Yes);
+								flag = false;
+							}
+						} else {
+							appLog.error("Not Able to click on Add Nav Button");
+//						log(LogStatus.FAIL, "Not Able to click on Add Nav Button", YesNo.Yes);
+							flag = false;
+						}
+					}else {
+						click(driver, getAddTabCloseTheWindowCrossIcon(), "cross icon", action.BOOLEAN);
+//						click(driver, getAddTabCloseTheWindowCrossIcon(), "cross icon", action.BOOLEAN);
+					}
+				} else {
+					appLog.error("Not Able to click on All Link");
+//					log(LogStatus.FAIL, "Not Able to click on All Link", YesNo.Yes);
+					flag = false;
+				}
+			} else {
+				appLog.error("Not Able to click on Add More items Link");
+//				log(LogStatus.FAIL, "Not Able to click on Add More items Link", YesNo.Yes);
+				flag = false;
+			}
+		} else {
+			appLog.error("Not Able to click on personalize Pencil Icon");
+//			log(LogStatus.FAIL, "Not Able to click on personalize Pencil Icon", YesNo.Yes);
+			flag = false;
+		}
+		return flag;
+	}
+	
+	
 }

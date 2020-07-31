@@ -17,24 +17,15 @@ import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.accessType;
-import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
 import com.navatar.generic.CommonLib.sideMenu;
 import org.openqa.selenium.WebElement;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
-import org.testng.TestNGAntTask.Mode;
 
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonVariables.CRMUser1EmailID;
-import static com.navatar.generic.CommonVariables.CRMUser1FirstName;
-import static com.navatar.generic.CommonVariables.CRMUser1LastName;
-import static com.navatar.generic.CommonVariables.adminPassword;
-import static com.navatar.generic.CommonVariables.browserToLaunch;
-import static com.navatar.generic.CommonVariables.superAdminUserName;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -262,6 +253,94 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 	 * @return true/false
 	 */
 	public boolean giveAccessToUserInNIMTabFromAdmin(String userName, accessType access) {
+		switchToFrame(driver, 30, getNIMTabFrame(30));
+		//internal User Tab click
+		if (clickOnEditIcon()) {
+			if (access == accessType.InternalUserAccess) {
+				WebElement ele = isDisplayed(driver,
+						FindElement(driver,
+								"//span[@id='grid_Users-rows']/span/span[3]/span[text()='" + userName
+										+ "']/../..//input[@type='checkbox']",
+								"Access checkbox of user" + userName, action.SCROLLANDBOOLEAN, 30),
+						"Visibility", 60, " Access checkbox for " + userName);
+				
+				if (ele != null) {
+					if(!isSelected(driver, ele, "checkbox for "+userName)) {
+					scrollDownThroughWebelement(driver, ele, "");
+					if (click(driver, ele, "Access for " + userName, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on checkbox of " + userName);
+						if (click(driver, getYesAccessButton(60), "Yes button for User access", action.BOOLEAN)) {
+							appLog.info("internal user access granted successfully to user: " + userName);
+							if(click(driver,getGoBackLink(30),"internal user go back link", action.SCROLLANDBOOLEAN)) {
+								appLog.info("clicked on go back link");
+								driver.switchTo().defaultContent();
+								return true;
+							}else {
+								appLog.error("Not able to click on go back link");
+							}
+						} else {
+							appLog.error(
+									"Yes button for popup not found so cannot provide internal user access to user: "
+											+ userName);
+						}
+					} else {
+						appLog.error(
+								"Not able to click on internal user check box so cannot provide internal user access to user: "
+										+ userName);
+					}
+					}
+					else {
+						appLog.info(userName+" was given IP access already by default");
+						return true;
+					}
+				}
+				
+					else {
+				
+					appLog.error("Checkbox for " + userName
+							+ " not found so cannot provide internal user access to user: " + userName);
+				}
+				
+			} else if (access == accessType.AdminUserAccess) {
+				WebElement ele_check = isDisplayed(driver,
+						FindElement(driver,
+								"//span[@id='grid_Users-rows']/span/span[3]/span[text()='" + userName
+										+ "']/../..//input[@type='radio']",
+								"Access checkbox of user" + userName, action.SCROLLANDBOOLEAN, 30),
+						"Visibility", 60, " Access checkbox for " + userName);
+				if (ele_check != null) {
+					if (click(driver, ele_check, "Access for " + userName, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on  admin user radio button of user: " + userName);
+						if (click(driver, getYesAdminButton(60), "Yes button for Admin access", action.BOOLEAN)) {
+							appLog.info("successfully provided admin user access to user: " + userName);
+								driver.switchTo().defaultContent();
+								return true;
+						}
+					}
+				} else {
+					appLog.error("user radio button is not visible so cannot provide admin user access to user: "
+							+ userName);
+				}
+			}
+		} else {
+			appLog.error("Edit icon cannot be clickable so cannot provide " + access.toString() + " access to user: "
+					+ userName);
+		}
+		switchToDefaultContent(driver);
+		return false;
+	}
+	
+	
+	
+	//Give Access to User Lightning Method ...
+	public boolean giveAccessToUserInNIMTabFromAdmin(String environment, String mode,String userName, accessType access) {
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToFrame(driver, 60, getNIMTabParentFrame_Lightning(60));
+			ThreadSleep(5000);
+		}else {
+			appLog.error("Not able to switch to NIM Tab Parent Frame so cannot give access to user");
+			return false;
+		}
 		switchToFrame(driver, 30, getNIMTabFrame(30));
 		//internal User Tab click
 		if (clickOnEditIcon()) {

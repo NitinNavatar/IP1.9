@@ -25,6 +25,7 @@ import org.testng.Assert;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
@@ -197,7 +198,7 @@ public class CommonLib implements Comparator<String> {
 	}
 	
 	public static enum YesNo {
-		Yes,No;
+		Yes,No,YesWinium;
 	}
 	public static enum EnableDisable {
 		Enable,Disable;
@@ -251,6 +252,36 @@ public class CommonLib implements Comparator<String> {
 	public static enum CheckBoxName{
 		View,Download,Upload;
 	}
+	
+	public static enum Mode{
+		Lightning,Classic;
+	}
+	public static enum Environment{
+		Sandbox,Testing,Dev;
+	}
+	
+	public static enum object{
+		Account{
+			@Override
+			public String toString() {
+//				if(ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Lighting.toString())) {
+//					return "Institution";
+//				} else {
+					return "Accounts";
+			//	}
+			}
+		},Contact,Fund,Fundraising,Fundraising_Contact{
+			@Override
+			public String toString() {
+				return "Fundraising Contact";
+			}
+		},Email,InstalledPackage{
+			@Override
+			public String toString() {
+				return "Installed Packages";
+		}
+	}
+	};
 	
 	/*****************************************Common Utilities***********************************************************/
 
@@ -2415,6 +2446,58 @@ public class CommonLib implements Comparator<String> {
 		return false;
 
 	}
+	
+	
+	/**
+	 * @author Ankur Rana
+	 * @param e
+	 * @description Gets the exact line number of the log
+	 */
+	public static String logLineNumber(Throwable e) {
+		String logLineNumber = "";
+		String allClassNames = ExcelUtils.readDataFromPropertyFile(
+				System.getProperty("user.dir") + "//ConfigFiles//classes.properties", "Classes");
+		String[] className = allClassNames.split(",");
+		int flag = 0;
+		for (int i = 0; i < e.getStackTrace().length; i++) {
+			for (int j = 0; j < className.length; j++) {
+				if (e.getStackTrace()[i].getFileName() == null) {
+					continue;
+				}
+				if (e.getStackTrace()[i].getFileName().contains(className[j].trim())) {
+					logLineNumber = "(" + e.getStackTrace()[i].getFileName()+":"+ e.getStackTrace()[i].getLineNumber()+")";
+					flag++;
+					if (flag > 0) {
+						break;
+					}
+				}
+			}
+			if (flag > 0) {
+				break;
+			}
+		}
+		return logLineNumber;
+	}
+	
+	public static void log(LogStatus logStatus, String message, YesNo takeScreenshot){
+		if(takeScreenshot.toString().equalsIgnoreCase(YesNo.No.toString())){
+			extentLog.log(logStatus, message, "");
+			appLog.info(message);
+		} else {
+//			if(takeScreenshot.toString().equalsIgnoreCase(YesNo.YesWinium.toString())){
+//				extentLog.log(logStatus, message, extentLog.addScreenCapture(CommonLib.screenshot(BaseLib.dDriver, currentlyExecutingTC)));
+//			} else {
+//				extentLog.log(logStatus, message, extentLog.addScreenCapture(CommonLib.screenshot(currentlyExecutingTC)));
+//			}
+			extentLog.log(logStatus, message, extentLog.addScreenCapture(CommonLib.screenshot(currentlyExecutingTC)));
+		}
+		if (logStatus.toString().equalsIgnoreCase(LogStatus.PASS.toString())) {
+			appLog.info(message + " " + logLineNumber(new Throwable()));
+		} else {
+			appLog.error(message + " " + logLineNumber(new Throwable()));
+		}
+	}
+	
 
 }
 

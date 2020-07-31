@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.openqa.selenium.remote.BrowserType;
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlInclude;
@@ -24,13 +26,15 @@ public class Executioner {
 		main(null);
 		
 	}
-	public static void testNgXmlSuite(List<String> excludedMethods, String browser) {
+	public static void testNgXmlSuite(List<String> excludedMethods, String browser, String platform, String mode) {
 		
 		List<XmlSuite> suites = new ArrayList<XmlSuite>();
 		List<XmlClass> classes = new ArrayList<XmlClass>();
 		List<String> listenerClasses = new ArrayList<String>();
 		Map<String, String> parameters = new LinkedHashMap<String, String>();
 		parameters.put("browser", browser);
+		parameters.put("environment", platform);
+		parameters.put("mode", mode);
 		listenerClasses.add("com.navatar.generic.AppListeners");
 		XmlSuite suite = new XmlSuite();
 		suite.setName("NavatarSuite");
@@ -86,7 +90,10 @@ public class Executioner {
 
 	public static void main(String[] args) {
 		CommonLib.execution();
-		testNgXmlSuite(CommonLib.excludedMethods, ExcelUtils.readDataFromPropertyFile("Browser"));
+		String browser = ExcelUtils.readDataFromPropertyFile("Browser");
+		String platform = ExcelUtils.readDataFromPropertyFile("Environment");
+		String mode = ExcelUtils.readDataFromPropertyFile("Mode");
+		testNgXmlSuite(CommonLib.excludedMethods, browser, platform, mode);
 
 	}
 
