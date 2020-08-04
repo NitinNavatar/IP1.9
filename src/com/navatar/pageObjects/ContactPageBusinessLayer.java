@@ -8,12 +8,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
+import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.M12FundName1;
@@ -94,6 +96,333 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 		}
 		return true;
 	}
+	
+	//Lightning Method....
+	/**
+	 * @author Azhar Alam
+	 * @param environment
+	 * @param mode
+	 * @param contactFirstName
+	 * @param contactLastName
+	 * @param legalName
+	 * @param emailID
+	 * @return true if able to create Contact
+	 */
+	public boolean createContact(String environment, String mode, String contactFirstName, String contactLastName,
+			String legalName, String emailID, String otherLabelFields,String otherLabelValues,CreationPage creationPage) {
+		InstitutionPageBusinessLayer ins = new InstitutionPageBusinessLayer(driver);
+		String labelNames[]=null;
+		String labelValue[]=null;
+		if(otherLabelFields!=null && otherLabelValues !=null) {
+			labelNames= otherLabelFields.split(",");
+			labelValue=otherLabelValues.split(",");
+		}
+		if(creationPage.toString().equalsIgnoreCase(CreationPage.InstitutionPage.toString())) {
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				
+				if(ClickonRelatedTab_Lighting(environment, RecordType.Contact)) {
+					appLog.info("clicked on related list tab");
+				}else {
+					appLog.error("Not able to click on related list tab so cannot create contact: "+contactFirstName+" "+contactLastName);
+					return false;
+				}
+			}
+			if(click(driver, getNewContactBtn(environment, mode, 30), "new contact button in "+mode, action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on new contact button in institution page");
+			}else {
+				appLog.error("Not able to click on new button on institution page so cannot create contact: "+contactFirstName+" "+contactLastName);
+				return false;
+			}
+		}else {
+			refresh(driver);
+			ThreadSleep(3000);
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				ThreadSleep(5000);
+				if(clickUsingJavaScript(driver, getNewButton(environment, mode, 60), "new button")) {
+					appLog.info("clicked on new button");
+				}else {
+					appLog.error("Not able to click on New Button so cannot create Contact: " + contactFirstName+" "+contactLastName);
+					return false;
+				}
+			}else {
+				ThreadSleep(5000);
+				if (click(driver, getNewButton(environment,mode,60), "New Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on new button");
+				} else {
+					appLog.error("Not able to click on New Button so cannot create Contact: " + contactFirstName+" "+contactLastName);
+					return false;
+				}
+			}
+		}
+			ThreadSleep(2000);
+			if (sendKeys(driver, getContactFirstName(environment, mode, 60), contactFirstName, "Contact first Name",
+					action.BOOLEAN)) {
+				if (sendKeys(driver, getContactLastName(environment, mode, 60), contactLastName, "Contact Last Name",
+						action.BOOLEAN)) {
+					
+					if(creationPage.toString().equalsIgnoreCase(CreationPage.InstitutionPage.toString())) {
+						
+					}else {
+						if (sendKeys(driver, getLegalName(environment, mode, 60), legalName, "Legal Name",
+								action.SCROLLANDBOOLEAN)) {
+							if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								ThreadSleep(1000);
+								if (click(driver,
+										FindElement(driver,
+												"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + legalName
+												+ "']",
+												"Legal Name List", action.THROWEXCEPTION, 30),
+										legalName + "   :   Legal Name", action.BOOLEAN)) {
+									appLog.info(legalName + "  is present in list.");
+								} else {
+									appLog.info(legalName + "  is not present in the list.");
+									return false;
+								}
+							}
+							
+						} else {
+							appLog.error("Not able to enter legal name");
+							return false;
+						}
+					}
+					
+						if (sendKeys(driver, getEmailId(environment, mode, 60), emailID, "Email ID",
+								action.SCROLLANDBOOLEAN)) {
+							if(labelNames!=null && labelValue!=null) {
+								for(int i=0; i<labelNames.length; i++) {
+									WebElement ele = getContactPageTextBoxOrRichTextBoxWebElement(environment, mode, labelNames[i].trim(), 30);
+									if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
+										appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
+									}else {
+										appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+										BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+									}
+								}
+								
+							}
+							if (click(driver, getSaveButton(environment, mode, 60), "Save Button",
+									action.SCROLLANDBOOLEAN)) {
+								appLog.info("Clicked on save button");
+								if(creationPage.toString().equalsIgnoreCase(CreationPage.InstitutionPage.toString())) {
+									if(mode.equalsIgnoreCase(Mode.Lightning.toString())){
+										if(clickOnGridSection_Lightning(environment, mode,RelatedList.Contacts, 30)) {
+											WebElement ele = isDisplayed(driver, FindElement(driver, "//span[@title='Contact Name']/ancestor::table/tbody/tr/th/span/a", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
+											if (ele != null) {
+												String contactFullName = getText(driver,ele, "Contact Name",action.BOOLEAN);
+												System.err.println("Contact Name : "+contactFullName);
+												if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
+													appLog.info("Contact Created Successfully :" + contactFirstName + " "+ contactLastName);
+													return true;
+												} else {
+													appLog.error("Contact did not get created successfully :" + contactFirstName
+															+ " " + contactLastName);
+												}
+											} else {
+												appLog.error("Not able to find contact name label");
+											}
+										}else {
+											log(LogStatus.ERROR, "Not able to click on Contacts related list view all section so cannot verify Created Contact "+contactFirstName+" "+contactLastName, YesNo.Yes);
+										}
+									} else {
+										if (getContactFullNameInViewMode(environment, mode, 60) != null) {
+											String contactFullName = getText(driver,
+													getContactFullNameInViewMode(environment, mode, 60), "Contact Name",
+													action.BOOLEAN);
+											System.err.println("Contact Name : "+contactFullName);
+											if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
+												appLog.info("Contact Created Successfully :" + contactFirstName + " "
+														+ contactLastName);
+												if(labelNames!=null && labelValue!=null ) {
+													for(int i=0; i<labelNames.length; i++) {
+														if(fieldValueVerificationOnContactPage(environment, mode, null, labelNames[i].replace("_", " ").trim(),labelValue[i])){
+															appLog.info(labelNames[i]+" label value "+labelValue[i]+" is matched successfully.");
+														}else {
+															appLog.info(labelNames[i]+" label value "+labelValue[i]+" is not matched successfully.");
+															BaseLib.sa.assertTrue(false, labelNames[i]+" label value "+labelValue[i]+" is not matched.");
+														}
+													}
+												}
+												return true;
+											} else {
+												appLog.error("Contact did not get created successfully :" + contactFirstName
+														+ " " + contactLastName);
+											}
+										} else {
+											appLog.error("Not able to find contact name label");
+										}
+									}
+								}else {
+									if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+										ThreadSleep(2000);
+										refresh(driver);
+										ThreadSleep(5000);
+									}
+
+									if (getContactFullNameInViewMode(environment, mode, 60) != null) {
+										String contactFullName = getText(driver,
+												getContactFullNameInViewMode(environment, mode, 60), "Contact Name",
+												action.BOOLEAN);
+										System.err.println("Contact Name : "+contactFullName);
+										if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
+											appLog.info("Contact Created Successfully :" + contactFirstName + " "
+													+ contactLastName);
+											if(labelNames!=null && labelValue!=null ) {
+												for(int i=0; i<labelNames.length; i++) {
+													if(fieldValueVerificationOnContactPage(environment, mode, null, labelNames[i].replace("_", " ").trim(),labelValue[i])){
+														appLog.info(labelNames[i]+" label value "+labelValue[i]+" is matched successfully.");
+													}else {
+														appLog.info(labelNames[i]+" label value "+labelValue[i]+" is not matched successfully.");
+														BaseLib.sa.assertTrue(false, labelNames[i]+" label value "+labelValue[i]+" is not matched.");
+													}
+												}
+											}
+											return true;
+										} else {
+											appLog.error("Contact did not get created successfully :" + contactFirstName
+													+ " " + contactLastName);
+										}
+									} else {
+										appLog.error("Not able to find contact name label");
+									}
+									
+								}
+								
+							} else {
+								appLog.info("Not able to click on save button");
+							}
+
+						} else {
+							appLog.error("Not able to enter email id");
+						}
+					
+				} else {
+					appLog.error("Not able to enter last name in text box");
+				}
+			} else {
+				appLog.error("Not able to enter first Name in text box");
+			}
+		return false;
+	}
+
+	
+	//Lightning Mthod....
+	public boolean fieldValueVerificationOnContactPage(String environment, String mode, TabName tabName,
+			String labelName,String labelValue) {
+		String finalLabelName="";
+
+
+		if (labelName.contains("_")) {
+			if(labelName.equalsIgnoreCase(excelLabel.Asst_Phone.toString())) {
+//				finalLabelName= IndiviualInvestorFieldLabel.Asst_Phone.toString();
+			}else {
+				finalLabelName = labelName.replace("_", " ");
+			}
+		} else {
+			finalLabelName = labelName;
+		}
+		String xpath = "";
+		WebElement ele = null;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			xpath = "(//td[text()='"+finalLabelName+"']/following-sibling::td)[1]";
+
+		} else {
+
+			/////////////////  Lighting New Start /////////////////////////////////////
+			if(finalLabelName.contains("Street") || finalLabelName.contains("City") || finalLabelName.contains("State") || finalLabelName.contains("Postal") || finalLabelName.contains("ZIP") || finalLabelName.contains("Zip")|| finalLabelName.contains("Country")) {
+
+				if(finalLabelName.contains("Other") || finalLabelName.contains("Other Street") || finalLabelName.contains("Other City") || finalLabelName.contains("Other State") || finalLabelName.contains("Other Zip") || finalLabelName.contains("Other Country")) {
+					xpath="//span[text()='Other Address']/../following-sibling::div//a[contains(@title,'"+labelValue+"')]";	
+				}else{
+					xpath="//span[text()='Mailing Address']/../following-sibling::div//a[contains(@title,'"+labelValue+"')]";
+				}
+
+			}else {
+
+				if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())||
+						labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mobile.toString()) ||
+						labelName.equalsIgnoreCase(excelLabel.Asst_Phone.toString())) {
+					xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*[contains(text(),'"+labelValue+"') or contains(text(),'"+changeNumberIntoUSFormat(labelValue)+"')]";	
+				} else {
+					xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*[text()='"+labelValue+"']";
+				}
+
+
+			}
+			ele = 		FindElement(driver, xpath, finalLabelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);
+			scrollDownThroughWebelement(driver, ele, finalLabelName + " label text with  " + labelValue);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, finalLabelName + " label text with  " + labelValue);
+			if (ele != null) {
+				String aa = ele.getText().trim();
+				appLog.info(finalLabelName + " label text with  " + labelValue+" verified");
+				return true;
+
+			} else {
+				appLog.error("<<<<<<   "+finalLabelName + " label text with  " + labelValue+" not verified "+">>>>>>");
+			}
+			return false;
+
+
+			/////////////////  Lighting New End /////////////////////////////////////
+
+
+		}
+
+		/////////////////////////////////////////////////////////////////////////////////////////
+		if(finalLabelName.contains("Street") || finalLabelName.contains("City") || finalLabelName.contains("State") || finalLabelName.contains("Postal") || finalLabelName.contains("ZIP") || finalLabelName.contains("Zip")|| finalLabelName.contains("Country")) {
+
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				//	xpath="//span[text()='Address Information']/../../following-sibling::div";
+				if(finalLabelName.contains("Legal Name")){
+					xpath="("+xpath+")[2]";
+				}else if(finalLabelName.contains("Other Street") || finalLabelName.contains("Other City") || finalLabelName.contains("Other State") || finalLabelName.contains("Other Zip") || finalLabelName.contains("Other Country")) {
+					xpath="(//span[text()='Address Information']/../../following-sibling::div/div/div/div/div)[2]";	
+				}else{
+					xpath="(//span[text()='Address Information']/../../following-sibling::div/div/div/div/div)[1]";
+				}
+			}else {
+				if(finalLabelName.contains("Other Street") || finalLabelName.contains("Other City") || finalLabelName.contains("Other State") || finalLabelName.contains("Other Zip") || finalLabelName.contains("Other Country")) {
+					xpath="(//h3[text()='Address Information']/../following-sibling::div[1]//td//tbody/tr[1]/td)[2]";	
+				}else{
+					xpath="(//h3[text()='Address Information']/../following-sibling::div[1]//td//tbody/tr[1]/td)[1]";
+				}
+			}
+		}
+
+		ele = isDisplayed(driver,
+				FindElement(driver, xpath, finalLabelName + " label text in " + mode, action.SCROLLANDBOOLEAN, 5),
+				"Visibility", 5, finalLabelName + " label text in " + mode);
+		if (ele != null) {
+			String aa = ele.getText().trim();
+			appLog.info("<<<<<<<<     "+finalLabelName+ " : Lable Value is: "+aa+"      >>>>>>>>>>>");
+
+			if (aa.isEmpty()) {
+				appLog.error(finalLabelName + " Value is Emptylabel Value "+labelValue);
+				return false;
+			}
+
+			if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())||
+					labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mobile.toString()) ||
+					labelName.equalsIgnoreCase(excelLabel.Asst_Phone.toString())) {
+
+				if(aa.contains(labelValue) || aa.contains(changeNumberIntoUSFormat(labelValue))) {
+					appLog.info(labelValue + " Value is matched successfully.");
+					return true;
+
+				}
+			}else if(aa.contains(labelValue)) {
+				appLog.info(labelValue + " Value is matched successfully.");
+				return true;
+
+			}else {
+				appLog.info(labelValue + " Value is not matched. Expected: "+labelValue+" /t Actual : "+aa);
+			}
+		} else {
+			appLog.error(finalLabelName + " Value is not visible so cannot matched  label Value "+labelValue);
+		}
+		return false;
+
+	}
+	
 	
 	/**
 	 * @return String

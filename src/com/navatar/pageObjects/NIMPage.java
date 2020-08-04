@@ -73,6 +73,22 @@ public class NIMPage extends BasePageBusinessLayer {
 		return NIMTabParentFrame_Lightning;
 	}
 	
+	public WebElement getNIMTabParentFrame_Lightning(){
+		List<WebElement> lst = FindElements(driver, "//div[@data-aura-class='lafPageHost']//div[contains(@class,'iframe-paren')]/iframe", "NIM Page iFrame List");
+		if(!lst.isEmpty()) {
+			for (int i = 0; i < lst.size(); i++) {
+				if(isDisplayed(driver, lst.get(i), "visibility",2, "NIM Page iFrame")!=null) {
+					return lst.get(i);
+				}else {
+					if(i==lst.size()-1) {
+						return null;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 	
 	@FindBy(xpath = "//input[@name='page:j_id10:j_id12']")
 	private WebElement registrationSuccessfulCloseBtn;

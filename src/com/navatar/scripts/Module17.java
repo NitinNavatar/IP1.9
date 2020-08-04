@@ -1507,7 +1507,7 @@ public class Module17 extends BaseLib {
 	lp.CRMLogin(CRMUser1EmailID,adminPassword);
 	if(fp.clickOnTab(TabName.FundsTab)) {
 		if(fp.clickOnCreatedFund(M17FundName1)) {
-			if(fp.inviteContact(M17Institution1,M17Contact1EmailId,null, FolderType.Standard,null, null, null, null, Workspace.FundraisingWorkspace,null)) {
+			if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,null, FolderType.Standard, null, null, null,null, Workspace.FundraisingWorkspace, null)) {
 				appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 				ThreadSleep(2000);
 				if(click(driver, fp.getApplyBtn(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace+" apply button", action.SCROLLANDBOOLEAN)) {
@@ -2370,7 +2370,7 @@ public class Module17 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on Manage folder icon so cannot delete Common and shared folders ");
 				}
 				switchToDefaultContent(driver);
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,null, FolderType.Standard,null, "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,null, FolderType.Standard, null, "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Contact invited "+M17Contact1FirstName+" "+M17Contact1LastName);
 					switchToDefaultContent(driver);
 					if(contact.deleteCreatedContact(M17Contact1FirstName, M17Contact1LastName)) {
@@ -3231,7 +3231,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,stdPath[0], FolderType.Standard,"Upload", "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,stdPath[0], FolderType.Standard, "Upload", "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
@@ -3348,7 +3348,7 @@ public class Module17 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on folder structure "+stdPath[2]+" so cannot check error message ");
 					}
 					switchToDefaultContent(driver);
-					if(fp.inviteContact(M17Institution1,M17Contact1EmailId,stdPath[2], FolderType.Standard,null, "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,stdPath[2], FolderType.Standard, null, "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 						appLog.info("Contact is invited "+M17Contact1FirstName+" "+M17Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from folder "+stdPath[2]);
@@ -4218,7 +4218,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,stdPath[0], FolderType.Standard,null, "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,stdPath[0], FolderType.Standard, null, "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
 					
@@ -4721,21 +4721,21 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,stdPath[0], FolderType.Standard,"Upload", "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,stdPath[0], FolderType.Standard, "Upload", "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+stdPath[0]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+stdPath[0]);
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+stdPath[0]);
 				}
 				
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,stdPath[1], FolderType.Standard,null, "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,stdPath[1], FolderType.Standard, null, "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+stdPath[1]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+stdPath[1]);
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+stdPath[1]);
 				}
 				
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,stdPath[2], FolderType.Standard,"download", "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,stdPath[2], FolderType.Standard, "download", "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+stdPath[2]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+stdPath[2]);
@@ -5091,7 +5091,7 @@ public class Module17 extends BaseLib {
 		if (fp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
 				//Inviting contact from newly created Shared folder.
-				if (fp.inviteContact(M17Institution1, M17Contact1EmailId, shdPath[0], FolderType.Shared, null, "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M17Institution1, M17Contact1EmailId, shdPath[0], FolderType.Shared, null, "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 					
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
@@ -5865,7 +5865,7 @@ public class Module17 extends BaseLib {
 				// Invite
 				System.err.println("Going for 2nd Round");
 				switchToDefaultContent(driver);
-				if (fp.inviteContact(null, M17Contact1EmailId, shdPath, FolderType.Shared, null, "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, null, M17Contact1EmailId, shdPath, FolderType.Shared, null, "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1FirstName+" "+M17Contact1LastName+" contact has been given access successfully and invite has been sent to mail");
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 					//Verify data in Selected Contacts grid.
@@ -6713,7 +6713,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				// invite contcat Shared sub Folder
-				if(fp.inviteContact(null,M17Contact1EmailId,shdPath[0], FolderType.Shared,"download", "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[0], FolderType.Shared, "download", "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
@@ -6915,7 +6915,7 @@ public class Module17 extends BaseLib {
 					
 					switchToDefaultContent(driver);
 					
-					if(fp.inviteContact(null,M17Contact1EmailId,shdPath[2], FolderType.Shared,null, "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[2], FolderType.Shared, null, "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 						appLog.info("Contact is invited "+M17Contact1FirstName+" "+M17Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from folder "+shdPath[2]);
@@ -7900,7 +7900,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 
-				if(fp.inviteContact(null,M17Contact1EmailId,shdPath[0], FolderType.Shared,"Download", "Yes", null, null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[0], FolderType.Shared, "Download", "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+shdPath[0]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+shdPath[0]);
@@ -8338,7 +8338,7 @@ public class Module17 extends BaseLib {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 
 				appLog.info("FundraisingWorkspace is build successfully on fund : "+M17FundName2);
-				if(fp.inviteContact(M17Institution1,M17Contact4EmailId, null, FolderType.Standard,null, "Yes","Yes","All Folders", Workspace.FundraisingWorkspace,M17Contact4FirstName+" "+M17Contact4LastName)) {
+				if(fp.inviteContact(environment,mode, M17Institution1, M17Contact4EmailId,null, FolderType.Standard,null,"Yes", "Yes","All Folders", Workspace.FundraisingWorkspace, M17Contact4FirstName+" "+M17Contact4LastName)) {
 					appLog.info("contact is invites successfully from FundraisingWorkspace: "+M17Contact4FirstName+" "+M17Contact4LastName);
 				}else {
 					appLog.error("Not able to invite contact from FundraisingWorkspacee: "+M17Contact4FirstName+" "+M17Contact4LastName);
@@ -8371,7 +8371,7 @@ public class Module17 extends BaseLib {
 				if(fp.buildWorkspace(data,WorkSpaceAction.IMPORTFOLDERTEMPLATE,templateName,null,null, Workspace.FundraisingWorkspace,60)) {
 
 					appLog.info("FundraisingWorkspace is build successfully on fund : "+M17FundName2);
-					if(fp.inviteContact(null,M17Contact4EmailId, shdPath, FolderType.Shared,null, "Yes","Yes","All Folders", Workspace.FundraisingWorkspace,M17Contact4LastName)) {
+					if(fp.inviteContact(environment,mode, null, M17Contact4EmailId,shdPath, FolderType.Shared,null,"Yes", "Yes","All Folders", Workspace.FundraisingWorkspace, M17Contact4LastName)) {
 						appLog.info("contact is invites successfully from FundraisingWorkspace: "+M17Contact4FirstName+" "+M17Contact4LastName);
 					}else {
 						appLog.error("Not able to invite contact from FundraisingWorkspacee: "+M17Contact4FirstName+" "+M17Contact4LastName);
@@ -10761,7 +10761,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,null, FolderType.Standard,null, null, null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,null, FolderType.Standard, null, null, null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
 					if(click(driver, fp.getApplyBtn(Workspace.InvestorWorkspace, 60), Workspace.InvestorWorkspace+" apply button", action.SCROLLANDBOOLEAN)) {
@@ -11642,7 +11642,7 @@ public class Module17 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on Manage folder icon so cannot delete Common and shared folders ");
 				}
 				switchToDefaultContent(driver);
-				if(fp.inviteContact(M17Institution1,M17Contact1EmailId,null, FolderType.Standard,null, "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,null, FolderType.Standard, null, "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact invited "+M17Contact1FirstName+" "+M17Contact1LastName);
 					switchToDefaultContent(driver);
 					if(contact.deleteCreatedContact(M17Contact1FirstName, M17Contact1LastName)) {
@@ -12531,7 +12531,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				if(fp.inviteContact(M17Institution1+"/"+M17LimitedPartner1,M17Contact1EmailId,stdPath[0], FolderType.Standard,"Upload", "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1+"/"+M17LimitedPartner1, M17Contact1EmailId,stdPath[0], FolderType.Standard, "Upload", "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
@@ -12649,7 +12649,7 @@ public class Module17 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on folder structure "+stdPath[2]+" so cannot check error message ");
 					}
 					switchToDefaultContent(driver);
-					if(fp.inviteContact(M17Institution1+"/"+M17LimitedPartner1,M17Contact1EmailId,stdPath[2], FolderType.Standard,null, "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,M17Institution1+"/"+M17LimitedPartner1, M17Contact1EmailId,stdPath[2], FolderType.Standard, null, "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 						appLog.info("Contact is invited "+M17Contact1FirstName+" "+M17Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from folder "+stdPath[2]);
@@ -13525,7 +13525,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				if(fp.inviteContact(M17Institution1+"/"+M17LimitedPartner1,M17Contact1EmailId,stdPath[0], FolderType.Standard,null, "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1+"/"+M17LimitedPartner1, M17Contact1EmailId,stdPath[0], FolderType.Standard, null, "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
 					
@@ -14039,21 +14039,21 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				if(fp.inviteContact(M17Institution1+"/"+M17LimitedPartner1,M17Contact1EmailId,stdPath[0], FolderType.Standard,"Upload", "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1+"/"+M17LimitedPartner1, M17Contact1EmailId,stdPath[0], FolderType.Standard, "Upload", "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+stdPath[0]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+stdPath[0]);
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+stdPath[0]);
 				}
 				
-				if(fp.inviteContact(M17Institution1+"/"+M17LimitedPartner1,M17Contact1EmailId,stdPath[1], FolderType.Standard,null, "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1+"/"+M17LimitedPartner1, M17Contact1EmailId,stdPath[1], FolderType.Standard, null, "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+stdPath[1]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+stdPath[1]);
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+stdPath[1]);
 				}
 				
-				if(fp.inviteContact(M17Institution1+"/"+M17LimitedPartner1,M17Contact1EmailId,stdPath[2], FolderType.Standard,"download", "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M17Institution1+"/"+M17LimitedPartner1, M17Contact1EmailId,stdPath[2], FolderType.Standard, "download", "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+stdPath[2]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+stdPath[2]);
@@ -14410,7 +14410,7 @@ public class Module17 extends BaseLib {
 		if (fp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
 				//Inviting contact from newly created Shared folder.
-				if (fp.inviteContact(M17Institution1, M17Contact1EmailId, shdPath[0], FolderType.Shared, null, "Yes", "No", "Shared", Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M17Institution1, M17Contact1EmailId, shdPath[0], FolderType.Shared, null, "Yes", "No", "Shared", Workspace.InvestorWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 					
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
@@ -15184,7 +15184,7 @@ public class Module17 extends BaseLib {
 				// Invite
 				System.err.println("Going for 2nd Round");
 				switchToDefaultContent(driver);
-				if (fp.inviteContact(null, M17Contact1EmailId, shdPath, FolderType.Shared, null, "Yes", "No", "Shared", Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, null, M17Contact1EmailId, shdPath, FolderType.Shared, null, "Yes", "No", "Shared", Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1FirstName+" "+M17Contact1LastName+" contact has been given access successfully and invite has been sent to mail");
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 					//Verify data in Selected Contacts grid.
@@ -16033,7 +16033,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				// invite contcat Shared sub Folder
-				if(fp.inviteContact(null,M17Contact1EmailId,shdPath[0], FolderType.Shared,"download", "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[0], FolderType.Shared, "download", "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
@@ -16235,7 +16235,7 @@ public class Module17 extends BaseLib {
 					
 					switchToDefaultContent(driver);
 					
-					if(fp.inviteContact(null,M17Contact1EmailId,shdPath[2], FolderType.Shared,null, "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[2], FolderType.Shared, null, "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 						appLog.info("Contact is invited "+M17Contact1FirstName+" "+M17Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from folder "+shdPath[2]);
@@ -17220,7 +17220,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 
-				if(fp.inviteContact(null,M17Contact1EmailId,shdPath[0], FolderType.Shared,"Download", "Yes", null, null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[0], FolderType.Shared, "Download", "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is invited successfully from folder "+shdPath[0]);
 				}else {
 					appLog.error("Not able to invite contact from parent folder "+shdPath[0]);
@@ -17670,7 +17670,7 @@ public class Module17 extends BaseLib {
 				if(fp.buildWorkspace(data,WorkSpaceAction.IMPORTFOLDERTEMPLATE,templateName,null,null, Workspace.InvestorWorkspace,60)) {
 
 					appLog.info("InvestorWorkspace is build successfully on fund : "+M17FundName2);
-					if(fp.inviteContact(null,M17Contact3EmailId, shdPath, FolderType.Shared,null, "Yes","Yes","All Folders", Workspace.InvestorWorkspace,M17Contact3EmailId)) {
+					if(fp.inviteContact(environment,mode, null, M17Contact3EmailId,shdPath, FolderType.Shared,null,"Yes", "Yes","All Folders", Workspace.InvestorWorkspace, M17Contact3EmailId)) {
 						appLog.info("contact is invites successfully from InvestorWorkspace: "+M17Contact3FirstName+" "+M17Contact3LastName);
 					}else {
 						appLog.error("Not able to invite contact from InvestorWorkspacee: "+M17Contact3FirstName+" "+M17Contact3LastName);

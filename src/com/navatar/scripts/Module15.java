@@ -4396,7 +4396,7 @@ import java.util.List;
 				System.err.println("successfully retreived the data");
 				System.err.println(institutions.get(1));
 				try{
-					if(fp.inviteContact(institutions.get(1), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+					if(fp.inviteContact(environment, mode, institutions.get(1), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 						appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(1));
 					} else {
 						appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(1));
@@ -4405,49 +4405,49 @@ import java.util.List;
 				} catch (Exception e){
 					e.printStackTrace();
 				}
-				if(fp.inviteContact(institutions.get(2), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(2), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(2));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(2));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(2));
 				}
-				if(fp.inviteContact(institutions.get(3), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(3), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(3));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(3));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(3));
 				}
-				if(fp.inviteContact(institutions.get(4), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(4), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(4));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(4));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(4));
 				}
-				if(fp.inviteContact(institutions.get(5), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(5), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(5));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(5));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(5));
 				}
-				if(fp.inviteContact(institutions.get(6), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(6), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(6));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(6));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(6));
 				}
-				if(fp.inviteContact(institutions.get(7), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(7), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(7));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(7));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(7));
 				}
-				if(fp.inviteContact(institutions.get(8), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(8), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(8));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(8));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(8));
 				}
-				if(fp.inviteContact(institutions.get(9), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, institutions.get(9), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(9));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(9));
@@ -5237,25 +5237,25 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName2)){
 //				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 //				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[0], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[0], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[0]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[0]);
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[0]);
 				}
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[1], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[1], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[1]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[1]);
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[1]);
 				}
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[2], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[2], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[2]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[2]);
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[2]);
 				}
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[3], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[3], FolderType.Shared, "Download", "yes", "No", null, Workspace.FundraisingWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[3]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[3]);
@@ -9522,55 +9522,55 @@ import java.util.List;
 				for(int i = 0; i < institutions.size(); i++){
 					instilp.add(institutions.get(i)+"/"+lpName.get(i));
 				}
-				if(fp.inviteContact(instilp.get(1), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(1), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+institutions.get(1));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(1));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+institutions.get(1));
 				}
-				if(fp.inviteContact(instilp.get(2), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(2), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(2));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(2));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(2));
 				}
-				if(fp.inviteContact(instilp.get(3), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(3), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(3));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(3));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(3));
 				}
-				if(fp.inviteContact(instilp.get(4), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(4), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(4));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(4));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(4));
 				}
-				if(fp.inviteContact(instilp.get(5), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(5), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(5));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(5));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(5));
 				}
-				if(fp.inviteContact(instilp.get(6), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(6), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(6));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(6));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(6));
 				}
-				if(fp.inviteContact(instilp.get(7), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(7), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(7));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(7));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(7));
 				}
-				if(fp.inviteContact(instilp.get(8), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(8), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(8));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(8));
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(8));
 				}
-				if(fp.inviteContact(instilp.get(9), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, instilp.get(9), M15C1EmailId, null, FolderType.Standard, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+instilp.get(9));
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+instilp.get(9));
@@ -10363,25 +10363,25 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName2)){
 //				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 //				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[0], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[0], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[0]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[0]);
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[0]);
 				}
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[1], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[1], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[1]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[1]);
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[1]);
 				}
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[2], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[2], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[2]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[2]);
 					sa.assertTrue(false,M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[2]);
 				}
-				if(fp.inviteContact(null, M15C1EmailId, folderPath[3], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
+				if(fp.inviteContact(environment, mode, null, M15C1EmailId, folderPath[3], FolderType.Shared, "Download", "yes", "No", null, Workspace.InvestorWorkspace, M15C1EmailId)){
 					appLog.info(M15CFN1+" "+M15CLN1+" successfully invited from "+folderPath[3]);
 				} else {
 					appLog.error(M15CFN1+" "+M15CLN1+" didnot get the invitation from "+folderPath[3]);

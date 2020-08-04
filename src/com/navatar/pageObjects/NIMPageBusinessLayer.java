@@ -149,6 +149,7 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 	 * @return true/false
 	 */
 	public boolean NIMRegistration(userType adminOrUser, String userFirstName, String userLastName) {
+		
 		switchToFrame(driver, 60, getFrame(PageName.NavatarInvestorManager,30));
 		// if admin only then start button is displayed
 		if (adminOrUser == userType.SuperAdmin) {
@@ -217,6 +218,99 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 		return false;
 	}
 
+	//Lightning Method....
+	
+	public boolean NIMRegistration(String environment, String mode,userType adminOrUser, String userFirstName, String userLastName) {
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToFrame(driver, 60, getNIMTabParentFrame_Lightning());
+			ThreadSleep(5000);
+		}else {
+			appLog.error("Not able to switch to NIM Tab Parent Frame so cannot register "+adminOrUser.toString());
+			return false;
+		}
+		switchToFrame(driver, 60, getFrame(PageName.NavatarInvestorManager,30));
+		// if admin only then start button is displayed
+		if (adminOrUser == userType.SuperAdmin) {
+			if (click(driver, getStartButton(60), "Start button", action.BOOLEAN)) {
+				appLog.info("clicked on start button");
+			} else {
+				appLog.error("start button not found so cannot register " + adminOrUser.toString() + ": "
+						+ userFirstName + " " + userLastName + "");
+			}
+		}
+		if (userFirstName != null && userLastName != null) {
+			if (sendKeys(driver, getRegisterPopupFirstName(60), userFirstName, "First name of user", action.BOOLEAN)) {
+				appLog.info("pass value in first name text box : " + userFirstName);
+				if (sendKeys(driver, getRegisterPopupLastName(60), userLastName, "Last name of user", action.BOOLEAN)) {
+					appLog.info("pass value in last name text box : " + userLastName);
+				} else {
+					appLog.error("Last name text box not found so cannot register " + adminOrUser.toString() + ": "
+							+ userFirstName + " " + userLastName + "");
+				}
+			} else {
+				appLog.error("First name text box not found so cannot register " + adminOrUser.toString() + ": "
+						+ userFirstName + " " + userLastName + "");
+			}
+		}
+		if (click(driver, getNextButton(60), "Next button", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getAllowButton(60), "Allow button", action.BOOLEAN)) {
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					for(int i=0; i<10; i++) {
+						if(switchToFrame(driver, 60, getNIMTabParentFrame_Lightning())) {
+							ThreadSleep(5000);
+							break;
+						}else {
+							if(i==9) {
+								appLog.error("Not able to switch to NIM Tab Parent Frame so cannot register "+adminOrUser.toString());
+								return false;
+							}
+						}
+					}
+				}
+				if (switchToFrame(driver, 50, getNIMTabFrame(50))) {
+					// if admin only then asks which users to add
+					if (adminOrUser == userType.SuperAdmin) {
+
+						if (click(driver, getRegisterPopup2Of2CompleteButton(60), "Complete button in Users adding popup",
+								action.BOOLEAN)) {
+						} else {
+							appLog.error("Complete button cannot be clicked so cannot register " + adminOrUser.toString()
+							+ ": " + userFirstName + " " + userLastName + "");
+						}
+					}
+					if (click(driver, getRegistrationSuccessfulCloseBtn(60), "Register successfull close button",
+							action.BOOLEAN)) {
+						appLog.info("clicked on registration close button.");
+						appLog.info(adminOrUser + " is successfully registered");
+						switchToDefaultContent(driver);
+						return true;
+					} else {
+						appLog.error("Registration close button is not clickable so cannot register "
+								+ adminOrUser.toString() + ": " + userFirstName + " " + userLastName + "");
+					}
+
+				} 
+				else {
+					appLog.error("Cannot find NIM tab frame so cannot register " + adminOrUser.toString() + ": "
+							+ userFirstName + " " + userLastName + "");
+				}
+			}
+			else {
+
+				appLog.error("Allow button not clicked not found so cannot register " + adminOrUser.toString() + ": "
+						+ userFirstName + " " + userLastName + "");
+			}
+		} else {
+			appLog.error("Next button not clicked not found so cannot register " + adminOrUser.toString() + ": "
+					+ userFirstName + " " + userLastName + "");
+		}
+		switchToDefaultContent(driver);
+		return false;
+	}
+
+	
+	
+	
 	/**
 	 * @author Ankit Jaiswal
 	 * @return true/false
@@ -335,7 +429,7 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 	//Give Access to User Lightning Method ...
 	public boolean giveAccessToUserInNIMTabFromAdmin(String environment, String mode,String userName, accessType access) {
 		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-			switchToFrame(driver, 60, getNIMTabParentFrame_Lightning(60));
+			switchToFrame(driver, 60, getNIMTabParentFrame_Lightning());
 			ThreadSleep(5000);
 		}else {
 			appLog.error("Not able to switch to NIM Tab Parent Frame so cannot give access to user");

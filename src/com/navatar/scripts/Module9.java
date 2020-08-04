@@ -3279,21 +3279,21 @@ public class Module9 extends BaseLib{
 					appLog.info("Workspace is in expanded form");
 				}
 				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
-				if (fp.inviteContact(M9Institution1, M9Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "Yes", M9Institution1, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode,M9Institution1, M9Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "Yes", M9Institution1, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("invited contact "+M9Contact1FirstName+" "+M9Contact1LastName+" for "+M9Institution1);
 				}
 				else {
 					appLog.error("could not invite contact "+M9Contact1FirstName+" for std folder for "+M9Institution1);
 					sa.assertTrue(false, "could not invite contact "+M9Contact1FirstName+" for std folder for "+M9Institution1);
 				}
-				if (fp.inviteContact(M9Institution2, M9Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "No", M9Institution2, Workspace.FundraisingWorkspace, M9Contact1EmailId)) {
+				if (fp.inviteContact(environment, mode,M9Institution2, M9Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "No", M9Institution2, Workspace.FundraisingWorkspace, M9Contact1EmailId)) {
 					appLog.info("invited contact "+M9Contact1FirstName+" "+M9Contact1LastName+" for "+M9Institution2);
 				}
 				else {
 					appLog.error("could not invite contact "+M9Contact1FirstName+" for std folder for "+M9Institution2);
 					sa.assertTrue(false, "could not invite contact "+M9Contact1FirstName+" for std folder for "+M9Institution2);
 				}
-				if (fp.inviteContact(null, M9Contact1EmailId,shdPath, FolderType.Shared, "download", "Yes", "No", "Shared", Workspace.FundraisingWorkspace, M9Contact1EmailId)) {
+				if (fp.inviteContact(environment, mode,null, M9Contact1EmailId, shdPath, FolderType.Shared, "download", "Yes", "No", "Shared", Workspace.FundraisingWorkspace, M9Contact1EmailId)) {
 					appLog.info("contact has been invited to shared folder");
 				}
 				else {
@@ -9414,21 +9414,21 @@ public class Module9 extends BaseLib{
 		
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				if(fp.inviteContact(M9Institution1,M9Contact1EmailId,null,  FolderType.Standard,"Upload", "Yes","No","All Folders", Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,M9Institution1,  M9Contact1EmailId,null, FolderType.Standard,"Upload","Yes", "No","All Folders", Workspace.InvestorWorkspace, null)) {
 					appLog.info(M9Contact1EmailId+" is successfully invited to "+M9Institution1);
 				}
 				else {
 					appLog.error(M9Contact1EmailId+" could not be given access to "+M9Institution1);
 					sa.assertTrue(false, M9Contact1EmailId+" could not be given access to "+M9Institution1);
 				}
-				if(fp.inviteContact(M9Institution2,M9Contact1EmailId,null, FolderType.Standard,"Upload", "Yes","No","All Folders", Workspace.InvestorWorkspace,M9Contact1EmailId)) {
+				if(fp.inviteContact(environment,mode,M9Institution2, M9Contact1EmailId,null, FolderType.Standard,"Upload","Yes", "No","All Folders", Workspace.InvestorWorkspace, M9Contact1EmailId)) {
 					appLog.info(M9Contact1EmailId+" is successfully invited to "+M9Institution2);
 				}
 				else {
 					appLog.error(M9Contact1EmailId+" could not be given access to "+M9Institution1);
 					sa.assertTrue(false, M9Contact1EmailId+" could not be given access to "+M9Institution1);
 				}
-				if(fp.inviteContact(null,M9Contact1EmailId,shdPath, FolderType.Shared,"Download", "Yes","No","All Folders", Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment,mode,null, M9Contact1EmailId,shdPath, FolderType.Shared,"Download","Yes", "No","All Folders", Workspace.InvestorWorkspace, null)) {
 					appLog.info(M9Contact1EmailId+" is successfully invited for shared folder");
 				}
 				else {

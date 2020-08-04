@@ -484,21 +484,21 @@ public class Module16 extends BaseLib{
 					appLog.error("could not build fundraising workspace");
 					sa.assertTrue(false, "could not build fundraising workspace");
 				}
-				if (fp.inviteContact(M16Institution1, M16Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "No", M16Institution1, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode,M16Institution1, M16Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "No", M16Institution1, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("invited contact "+M16Contact1FirstName+" "+M16Contact1LastName+" for "+M16Institution1);
 				}
 				else {
 					appLog.error("could not invite contact "+M16Contact1EmailId + " for "+M16Institution1);
 					sa.assertTrue(false, "could not invite contact "+M16Contact1EmailId + " for "+M16Institution1);
 				}
-				if (fp.inviteContact(M16Institution2, M16Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "No", M16Institution2, Workspace.FundraisingWorkspace, M16Contact1EmailId)) {
+				if (fp.inviteContact(environment, mode,M16Institution2, M16Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "No", M16Institution2, Workspace.FundraisingWorkspace, M16Contact1EmailId)) {
 					appLog.info("invited contact "+M16Contact1FirstName+" "+M16Contact1LastName+" for "+M16Institution2);
 				}
 				else {
 					appLog.error("could not invite contact "+M16Contact1EmailId + " for "+M16Institution2);
 					sa.assertTrue(false, "could not invite contact "+M16Contact1EmailId + " for "+M16Institution2);
 				}
-				if (fp.inviteContact(M16Institution3, M16Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "Yes", M16Institution3, Workspace.FundraisingWorkspace, M16Contact1EmailId)) {
+				if (fp.inviteContact(environment, mode,M16Institution3, M16Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "Yes", M16Institution3, Workspace.FundraisingWorkspace, M16Contact1EmailId)) {
 					appLog.info("invited contact "+M16Contact1FirstName+" "+M16Contact1LastName+" for "+M16Institution3);
 				}
 				else {
@@ -3430,21 +3430,21 @@ public class Module16 extends BaseLib{
 					appLog.error("could not build InvestorWorkspace");
 					sa.assertTrue(false, "could not build InvestorWorkspace");
 				}
-				if (fp.inviteContact(M16Institution1+"/"+M16LimitedPartner1, M16Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "No", "All Folders", Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode,M16Institution1+"/"+M16LimitedPartner1, M16Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "No", "All Folders", Workspace.InvestorWorkspace, null)) {
 					appLog.info("invited contact "+M16Contact1FirstName+" "+M16Contact1LastName+" for "+M16Institution1);
 				}
 				else {
 					appLog.error("could not invite contact "+M16Contact1EmailId + " for "+M16Institution1);
 					sa.assertTrue(false, "could not invite contact "+M16Contact1EmailId + " for "+M16Institution1);
 				}
-				if (fp.inviteContact(M16Institution2+"/"+M16LimitedPartner2, M16Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "No", "All Folders", Workspace.InvestorWorkspace, M16Contact1EmailId)) {
+				if (fp.inviteContact(environment, mode,M16Institution2+"/"+M16LimitedPartner2, M16Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "No", "All Folders", Workspace.InvestorWorkspace, M16Contact1EmailId)) {
 					appLog.info("invited contact "+M16Contact1FirstName+" "+M16Contact1LastName+" for "+M16Institution2);
 				}
 				else {
 					appLog.error("could not invite contact "+M16Contact1EmailId + " for "+M16Institution2);
 					sa.assertTrue(false, "could not invite contact "+M16Contact1EmailId + " for "+M16Institution2);
 				}
-				if (fp.inviteContact(M16Institution3+"/"+M16LimitedPartner3, M16Contact1EmailId,null, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.InvestorWorkspace, M16Contact1EmailId)) {
+				if (fp.inviteContact(environment, mode,M16Institution3+"/"+M16LimitedPartner3, M16Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.InvestorWorkspace, M16Contact1EmailId)) {
 					appLog.info("invited contact "+M16Contact1FirstName+" "+M16Contact1LastName+" for "+M16Institution3);
 				}
 				else {

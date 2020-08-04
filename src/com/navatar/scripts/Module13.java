@@ -1175,13 +1175,13 @@ public class Module13 extends BaseLib {
 				String[] data= {Size,vintageyear,contact,phone,email,description};
 				if(fp.buildWorkspace(data,WorkSpaceAction.IMPORTFOLDERTEMPLATE,templateName,null,M13Institution1+"<break>"+M13Institution2, Workspace.FundraisingWorkspace,60)) {
 					appLog.info("FundRaising work is build successfully.");
-					if(fp.inviteContact(M13Institution1,M13Contact1EmailId,null, FolderType.Standard,"Upload", "Yes","Yes","All Folders", Workspace.FundraisingWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,M13Institution1, M13Contact1EmailId,null, FolderType.Standard,"Upload","Yes", "Yes","All Folders", Workspace.FundraisingWorkspace, null)) {
 						appLog.info("contact is invited from institution in fundraising workspace successfully: "+M13Contact1FirstName+" "+M13Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from institution from fundraising workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);
 						sa.assertTrue(false, "Not able to invite contact from institution from fundraising workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);
 					}
-					if(fp.inviteContact(null,M13Contact1EmailId,sharedfolderpath , FolderType.Shared,"Download", "Yes",null,null, Workspace.FundraisingWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,null , M13Contact1EmailId,sharedfolderpath, FolderType.Shared,"Download","Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 						appLog.info("contact is invites successfully from shared folder in fundraising workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from shared folder in fundraising workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);
@@ -5399,13 +5399,13 @@ public class Module13 extends BaseLib {
 				String[] data= {Size,vintageyear,contact,phone,email,description};
 				if(fp.buildWorkspace(data,WorkSpaceAction.IMPORTFOLDERTEMPLATE,templateName,null,M13Institution1+"/"+M13LimitedPartner1+"<break>"+M13Institution2+"/"+M13LimitedPartner2, Workspace.InvestorWorkspace,60)) {
 					appLog.info("Investor workspace is build successfully.");
-					if(fp.inviteContact(M13Institution1,M13Contact1EmailId,null, FolderType.Standard,"Upload", "Yes",null,null, Workspace.InvestorWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,M13Institution1, M13Contact1EmailId,null, FolderType.Standard,"Upload","Yes", null,null, Workspace.InvestorWorkspace, null)) {
 						appLog.info("contact is invited from institution in investor workspace successfully: "+M13Contact1FirstName+" "+M13Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from institution from investor workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);
 						sa.assertTrue(false, "Not able to invite contact from institution from investor workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);
 					}
-					if(fp.inviteContact(null,M13Contact1EmailId,sharedfolderpath , FolderType.Shared,"Download", "Yes",null,null, Workspace.InvestorWorkspace,null)) {
+					if(fp.inviteContact(environment,mode,null , M13Contact1EmailId,sharedfolderpath, FolderType.Shared,"Download","Yes", null,null, Workspace.InvestorWorkspace, null)) {
 						appLog.info("contact is invites successfully from shared folder in investor workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);
 					}else {
 						appLog.error("Not able to invite contact from shared folder in investor workspace: "+M13Contact1FirstName+" "+M13Contact1LastName);

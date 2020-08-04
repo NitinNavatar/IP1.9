@@ -3287,4 +3287,59 @@ public abstract class BasePage {
 		}
 	}
 	
+	@FindBy(xpath="//input[@name='new']")
+	private WebElement newButtonClassic;
+
+	@FindBy(xpath="//a[@title='New']")
+	private WebElement newButtonLighting;
+	
+	/**
+	 * @return the newButton
+	 */
+	public WebElement getNewButton(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, newButtonClassic, "Visibility", timeOut, "New Button Classic");	
+		}else{
+			return newButtonLighting;	
+		}
+		
+	}
+	
+	public WebElement getNIMTabParentFrame_Lightning(){
+		List<WebElement> lst = FindElements(driver, "//div[@data-aura-class='lafPageHost']//div[contains(@class,'iframe-paren')]/iframe", "NIM Page iFrame List");
+		if(!lst.isEmpty()) {
+			for (int i = 0; i < lst.size(); i++) {
+				if(isDisplayed(driver, lst.get(i), "visibility",2, "NIM Page iFrame")!=null) {
+					return lst.get(i);
+				}else {
+					if(i==lst.size()-1) {
+						return null;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	@FindBy(xpath="//a[@title='Select List View']")
+	private WebElement selectListIcon_Lighting;
+
+	/**
+	 * @return the selectListIcon_Lighting
+	 */
+	public WebElement getSelectListIcon(int timeOut) {
+		return isDisplayed(driver, selectListIcon_Lighting, "Visibility", timeOut, "Select List Icon");
+		}
+	
+	
+	@FindBy(xpath="//input[contains(@name,'search-input')]")
+	private WebElement searchIcon_Lighting;
+
+	/**
+	 * @return the searchIcon_Lighting
+	 */
+	public WebElement getSearchIcon_Lighting(int timeOut) {
+		return isDisplayed(driver, searchIcon_Lighting, "Visibility", timeOut, "Search Icon Lighting");
+	}
+	
 }

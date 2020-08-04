@@ -479,4 +479,87 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 		return false;
 	}
 	
+	
+	//Lightning Method...
+	
+	/**
+	 * @author ANKIT JAISWAL
+	 * @param environment
+	 * @param mode
+	 * @param LimitedPartner
+	 * @param Partnership
+	 * @param basedOnValue
+	 * @return true/false
+	 */
+	public boolean createCommitment(String environment,String mode,String LimitedPartner, String Partnership, String basedOnValue,String excelPath) {
+		ThreadSleep(5000);
+		if (click(driver, getNewButton(environment,mode,60), "New Button", action.BOOLEAN)) {
+			ThreadSleep(5000);
+			if (sendKeys(driver, getLimitedPartnerTextbox(environment,mode,60), LimitedPartner, "Limited Partner Text Box",
+					action.BOOLEAN)) {
+				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					ThreadSleep(1000);
+					if (click(driver,
+							FindElement(driver,
+									"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + LimitedPartner
+											+ "']",
+									"LimitedPartner Name List", action.THROWEXCEPTION, 30),
+							LimitedPartner + "   :   LimitedPartner Name", action.BOOLEAN)) {
+						appLog.info(LimitedPartner + "  is present in list.");
+					} else {
+						appLog.error(LimitedPartner + "  is not present in the list.");
+					}
+				}
+				if (sendKeys(driver, getPartnershipTextBox(environment,mode,60), Partnership, "Partnership Text Box", action.BOOLEAN)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(1000);
+						if (click(driver,
+								FindElement(driver,
+										"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + Partnership
+												+ "']",
+										"Partnership Name List", action.THROWEXCEPTION, 30),
+								Partnership + "   :   Partnership Name", action.BOOLEAN)) {
+							appLog.info(Partnership + "  is present in list.");
+						} else {
+							appLog.error(Partnership + "  is not present in the list.");
+						}
+					}
+					if (click(driver, getSaveButton(environment,mode,60), "Save Button", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+						for(int i=0; i<2; i++) {
+							if (getCommitmentIdInViewMode(environment,mode,20) != null) {
+								String commitmentId = getText(driver, getCommitmentIdInViewMode(environment,mode,60), "Commitment ID",
+										action.BOOLEAN);
+								appLog.info(commitmentId + "  generated");
+								if(excelPath!=null) {
+									ExcelUtils.writeData(excelPath,commitmentId, "Commitments", excelLabel.Variable_Name, basedOnValue,
+											excelLabel.Commitment_ID);
+								}else {
+									ExcelUtils.writeData(commitmentId, "Commitments", excelLabel.Variable_Name, basedOnValue,
+											excelLabel.Commitment_ID);
+								}
+								return true;
+							} else {
+								if(i==1) {
+									appLog.error("Not able to find Commitment id");
+								}else {
+									refresh(driver);
+								}
+							}
+						}
+					} else {
+						appLog.error("Not able to click on save button");
+					}
+				} else {
+					appLog.error("Not able to enter value in partnership text box");
+				}
+			} else {
+				appLog.error("Not able to enter value in limited partner text box");
+			}
+		} else {
+			appLog.error("Not able to click on new button so we cannot create commitment");
+		}
+		return false;
+	}
+	
 }

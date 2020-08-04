@@ -102,7 +102,7 @@ public class CommonLib implements Comparator<String> {
 			public String toString(){
 				return "Test Cases";
 			}
-		}, Priority,Click_HereLink, MyFirmEmail, MyFirmPhone, Updated_Password, Updated_Password2, Updated_Password3, Updated_Password4, Updated_Password5, Updated_Password6, Updated_Password7;
+		}, Priority,Click_HereLink, MyFirmEmail, MyFirmPhone, Updated_Password, Updated_Password2, Updated_Password3, Updated_Password4, Updated_Password5, Updated_Password6, Updated_Password7, Shipping_State, Shipping_Zip, Shipping_Street, Total_CoInvestment_Commitments, Total_Fund_Commitments, Institution_Type, Fax, Other_State, Other_Zip, Asst_Phone, Target_Commitments;
 		
 		
 };
@@ -160,8 +160,13 @@ public class CommonLib implements Comparator<String> {
 		AllInvestor,ThisInvestorOnly;
 	}
 	public static enum TabName {
-		InstituitonsTab,ContactTab,FundraisingsTab,FundsTab,NIMTab,CommitmentsTab,PartnershipsTab,NavatarInvestorAddOns,CurrentInvesment,PotentialInvesment,RecentActivities,AllDocuments,HomeTab, FolderTemplate;
+		InstituitonsTab, ContactTab, FundraisingsTab, FundsTab, NIMTab, CommitmentsTab, PartnershipsTab, 
+		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
+		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
+		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab;
 	}
+	
+	
 	
 	public static enum Workspace{
 
@@ -282,6 +287,166 @@ public class CommonLib implements Comparator<String> {
 		}
 	}
 	};
+	
+	
+	public static enum InstitutionPageFieldLabelText {
+		Street,Referral_Source_Description,Legal_Name,Description,
+		Shipping_State{
+			@Override
+			public String toString() {
+				return "Shipping State/Province";
+			};
+		},Shipping_Zip{
+			@Override
+			public String toString() {
+				return "Shipping Zip/Postal Code";
+			};
+		},Parent_Institution;
+		
+	}
+	
+	public static enum LimitedPartnerPageFieldLabelText {
+		Street,Referral_Source_Description,Legal_Name,Description,
+		Total_CoInvestment_Commitments{
+			@Override
+			public String toString() {
+				return "Total Co-investment Commitments (mn)";
+			};
+		},
+		Total_Fund_Commitments{
+			@Override
+			public String toString() {
+				return "Total Fund Commitments (mn)";
+			};
+		}
+		
+	}
+	
+	public static enum ContactPageFieldLabelText {
+		Legal_Name,Description,Mailing_Street,Other_Street,Candidate_Notes,First_Name,Last_Name,Contact_Referral_Source,Mobile,
+		Mailing_State{
+			@Override
+			public String toString() {
+				return "Mailing State/Province";
+			};
+		},Mailing_Zip{
+			@Override
+			public String toString() {
+				return "Mailing Zip/Postal Code";
+			};
+		},Other_State{
+			@Override
+			public String toString() {
+				return "Other State/Province";
+			};
+		},Other_Zip{
+			@Override
+			public String toString() {
+				return "Other Zip/Postal Code";
+			};
+		}
+		
+	}
+	public static enum Header{
+		Fund,Contact,Company,Marketing_Initiative;	  
+	};
+	
+	public static enum CreationPage{
+		InstitutionPage,ContactPage;
+	}
+	
+	public static enum RecordType{
+		Company,Institution,IndividualInvestor,Contact, PipeLine, Fund, Fundraising,Partnerships;
+	}
+	
+	public static enum RelatedList {
+		Fundraising_Contacts{
+			@Override
+			public String toString() {
+				return "Fundraising Contacts";
+			}
+		},Office_Locations, Open_Activities,Affiliations,Contacts, Activities,Activity_History,Commitments,Partnerships,Fundraisings,FundDistribution {
+			@Override
+			public String toString() {
+				return "Fund Distribution";
+				
+			}
+			}, InvestorDistributions{
+				@Override
+				public String toString() {
+					return "Investor Distributions";
+				}
+			}, FundDrawdown {
+		@Override
+		public String toString() {
+			return "Fund Drawdown";
+			
+		}
+		}, CapitalCalls{
+			@Override
+			public String toString() {
+				return "Capital Calls";
+			}
+		},
+			Deals_Sourced{
+			@Override
+			public String toString() {
+				return "Deals Sourced";
+			}
+		},
+			Pipeline_Stage_Logs{
+			@Override
+			public String toString() {
+				return "Pipeline Stage Logs";
+			}
+		},Correspondence_Lists{
+			@Override
+			public String toString() {
+				return "Correspondence Lists";
+			}
+		}
+	};
+	
+	public static enum FundPageFieldLabelText{
+		Fund_Name,Fund_Type,Investment_Category,Vintage_Year,
+		Frist_Closing_Date{
+			@Override
+			public String toString() {
+					return "1st Closing Date";
+		}
+		},Second_Closing_Date{
+			@Override
+			public String toString() {
+					return "2nd_Closing_Date";
+		}
+		}
+		,Third_Closing_Date{
+			@Override
+			public String toString() {
+					return "3rd_Closing_Date";
+		}
+		},Fourth_Closing_Date{
+			@Override
+			public String toString() {
+					return "4th_Closing_Date";
+		}
+		},Fivth_Closing_Date{
+			@Override
+			public String toString() {
+					return "5th_Closing_Date";
+		}
+		},Sixth_Closing_Date{
+			@Override
+			public String toString() {
+					return "6th_Closing_Date";
+		}
+		},Final_Closing_Date,Termination_Date,Dissolution_Date,Step_Down_Date,Investment_Period_End_Date,Target_Commitments{
+			@Override
+			public String toString() {
+					return "Target Commitments (mn)";
+		}
+		};
+	}
 	
 	/*****************************************Common Utilities***********************************************************/
 
@@ -2498,6 +2663,16 @@ public class CommonLib implements Comparator<String> {
 		}
 	}
 	
-
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param number
+	 * @return String
+	 */
+	public static String changeNumberIntoUSFormat(String number) {
+		String s=String.valueOf(number).replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+		System.out.println("Change US Number Formate >>>>> "+number);
+		return s;
+	}
 }
 

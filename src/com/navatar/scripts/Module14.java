@@ -4364,7 +4364,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.inviteContact(M14Institution1, M14Contact1EmailId, null, FolderType.Standard, "upload", "Yes",null,null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment, mode, M14Institution1, M14Contact1EmailId, null, FolderType.Standard,"upload","Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("invite contact successfully: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					FRW_UniqueDocument=FRW_UniqueDocument-2;
 					FRW_DocumentViews=FRW_DocumentViews-2;
@@ -4571,7 +4571,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.inviteContact(M14Institution1, M14Contact1EmailId, null, FolderType.Standard, "upload", "Yes",null,null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment, mode, M14Institution1, M14Contact1EmailId, null, FolderType.Standard,"upload","Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("invite contact successfully: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					FRW_UniqueDocument=FRW_UniqueDocument-2;
 					FRW_DocumentViews=FRW_DocumentViews-2;
@@ -4778,7 +4778,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.inviteContact(M14Institution1, M14Contact1EmailId, null, FolderType.Standard, "upload", "Yes",null,null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment, mode, M14Institution1, M14Contact1EmailId, null, FolderType.Standard,"upload","Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("invite contact successfully: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					FRW_UniqueDocument=FRW_UniqueDocument-2;
 					FRW_DocumentViews=FRW_DocumentViews-2;
@@ -9235,7 +9235,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.inviteContact(M14Institution1+"/"+M14LimitedPartner1, M14Contact1EmailId, null, FolderType.Standard, "upload", "Yes",null,null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment, mode, M14Institution1+"/"+M14LimitedPartner1, M14Contact1EmailId, null, FolderType.Standard,"upload","Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("invite contact successfully: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					INV_UniqueDocument=INV_UniqueDocument-2;
 					INV_DocumentViews=INV_DocumentViews-2;
@@ -9422,7 +9422,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.inviteContact(M14Institution1+"/"+M14LimitedPartner1, M14Contact1EmailId, null, FolderType.Standard, "upload", "Yes",null,null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment, mode, M14Institution1+"/"+M14LimitedPartner1, M14Contact1EmailId, null, FolderType.Standard,"upload","Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("invite contact successfully: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					INV_UniqueDocument=INV_UniqueDocument-2;
 					INV_DocumentViews=INV_DocumentViews-2;
@@ -9628,7 +9628,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.inviteContact(M14Institution1+"/"+M14LimitedPartner1, M14Contact1EmailId, null, FolderType.Standard, "upload", "Yes",null,null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment, mode, M14Institution1+"/"+M14LimitedPartner1, M14Contact1EmailId, null, FolderType.Standard,"upload","Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("invite contact successfully: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					INV_UniqueDocument=INV_UniqueDocument-2;
 					INV_DocumentViews=INV_DocumentViews-2;

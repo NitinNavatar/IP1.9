@@ -640,15 +640,15 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				if (fp.inviteContact(M6Institution1, M6Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M6Institution1, M6Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Contact get invited successfully");
 				} else {
 					appLog.info("Not able to invite contact");
 					saa.assertTrue(false, "Not able to invite contact");
 				}
-				if (fp.inviteContact(M6Institution2, M6Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, M6Contact2EmailId)) {
+				if (fp.inviteContact(environment, mode, M6Institution2, M6Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, M6Contact2EmailId)) {
 					appLog.info("Contact get invited successfully");
 				} else {
 					appLog.info("Not able to invite contact");
@@ -1061,11 +1061,11 @@ public class Module6 extends BaseLib {
 												}
 												switchToDefaultContent(driver);
 												if (fp.inviteContact(
-														M6Institution1 + "Renamed",
-														M6Contact1EmailId, null,
-														FolderType.Standard, "Upload", "Yes",
-														"No", null, Workspace.FundraisingWorkspace,
-														null)) {
+														environment,
+														mode, M6Institution1 + "Renamed",
+														M6Contact1EmailId, null, FolderType.Standard,
+														"Upload", "Yes", "No",
+														null, Workspace.FundraisingWorkspace, null)) {
 													appLog.info(
 															"Contact get invited successfully");
 												} else {
@@ -1839,8 +1839,8 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				if (fp.inviteContact(M6Institution1 + "Renamed", M6Contact1EmailId, null, FolderType.Standard, "Upload",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M6Institution1 + "Renamed", M6Contact1EmailId, null,
+						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Contact get invited successfully");
 				} else {
 					appLog.info("Not able to invite contact");
@@ -2802,16 +2802,16 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				if (fp.inviteContact(M6Institution1 + "/" + M6LimitedPartner1, M6Contact1EmailId, null,
-						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M6Institution1 + "/" + M6LimitedPartner1,
+						M6Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact get invited successfully");
 				} else {
 					appLog.info("Not able to invite contact");
 					saa.assertTrue(false, "Not able to invite contact");
 				}
-				if (fp.inviteContact(M6Institution2 + "/" + M6LimitedPartner2, M6Contact2EmailId, null,
-						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace,
-						M6Contact2EmailId)) {
+				if (fp.inviteContact(environment, mode, M6Institution2 + "/" + M6LimitedPartner2,
+						M6Contact2EmailId, null, FolderType.Standard, "Upload", "Yes", "No",
+						null, Workspace.InvestorWorkspace, M6Contact2EmailId)) {
 					appLog.info("Contact get invited successfully");
 				} else {
 					appLog.info("Not able to invite contact");
@@ -3034,12 +3034,12 @@ public class Module6 extends BaseLib {
 																		}
 																		switchToDefaultContent(driver);
 																		if (fp.inviteContact(
-																				M6Institution1 + "/" + M6LimitedPartner1
+																				environment,
+																				mode, M6Institution1 + "/" + M6LimitedPartner1
 																						+ "Renamed",
-																				M6Contact1EmailId, null,
-																				FolderType.Standard, "Upload", "Yes",
-																				"No", null, Workspace.InvestorWorkspace,
-																				null)) {
+																				M6Contact1EmailId, null, FolderType.Standard,
+																				"Upload", "Yes", "No",
+																				null, Workspace.InvestorWorkspace, null)) {
 																			appLog.info(
 																					"Contact get invited successfully");
 																		} else {
@@ -3764,8 +3764,8 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				if (fp.inviteContact(M6Institution1 + "/" + M6LimitedPartner1 + "Renamed", M6Contact1EmailId, null,
-						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M6Institution1 + "/" + M6LimitedPartner1 + "Renamed",
+						M6Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact get invited successfully");
 				} else {
 					appLog.info("Not able to invite contact");

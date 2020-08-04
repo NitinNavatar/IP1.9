@@ -882,25 +882,25 @@ public class Module4 extends BaseLib{
 				//String step1Of3Data[] = {"2254","2015","acb","987654321","abc@bcd.com","Sample description"};
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.IMPORTFOLDERTEMPLATE, folderTemplateName, null, M4I1, Workspace.FundraisingWorkspace, 60)){
 					appLog.info("Workspace is built successfully.");
-					if(fp.inviteContact(M4I1, M4C1Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, M4C1Email)){
+					if(fp.inviteContact(environment, mode, M4I1, M4C1Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, M4C1Email)){
 						appLog.info("Successfully provided access to contact '"+M4CFN1+" "+M4CLN1+"'.");
 					} else {
 						appLog.error("Not able to provide access to contact '"+M4CFN1+" "+M4CLN1+"'.");
 						sa.assertTrue(false,"Not able to provide access to contact '"+M4CFN1+" "+M4CLN1+"'.");
 					}
-					if(fp.inviteContact(M4I1, M4C2Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, M4C2Email)){
+					if(fp.inviteContact(environment, mode, M4I1, M4C2Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, M4C2Email)){
 						appLog.info("Successfully provided access to contact '"+M4CFN2+" "+M4CLN2+"'.");
 					} else {
 						appLog.error("Not able to provide access to contact '"+M4CFN2+" "+M4CLN2+"'.");
 						sa.assertTrue(false,"Not able to provide access to contact '"+M4CFN2+" "+M4CLN2+"'.");
 					}
-					if(fp.inviteContact(null, M4C1Email, shdPath[0], FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, M4C1Email)){
+					if(fp.inviteContact(environment, mode, null, M4C1Email, shdPath[0], FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, M4C1Email)){
 						appLog.info("Successfully provided access to contact '"+M4CFN1+" "+M4CLN1+"'.");
 					} else {
 						appLog.error("Not able to provide access to contact '"+M4CFN1+" "+M4CLN1+"'.");
 						sa.assertTrue(false,"Not able to provide access to contact '"+M4CFN1+" "+M4CLN1+"'.");
 					}
-					if(fp.inviteContact(null, M4C2Email, shdPath[0], FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, M4C2Email)){
+					if(fp.inviteContact(environment, mode, null, M4C2Email, shdPath[0], FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, M4C2Email)){
 						appLog.info("Successfully provided access to contact '"+M4CFN2+" "+M4CLN2+"'.");
 					} else {
 						appLog.error("Not able to provide access to contact '"+M4CFN2+" "+M4CLN2+"'.");
@@ -3760,29 +3760,29 @@ public class Module4 extends BaseLib{
 					appLog.error("Investor workspace is not built successfully.");
 					sa.assertTrue(false, "Investor workspace is not built successfully.");
 				}
-				if (fp.inviteContact(M4I1, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I1, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I1, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I1, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
@@ -3848,29 +3848,29 @@ public class Module4 extends BaseLib{
 					appLog.error("Not able to upload files in '" + intPath[1] + "'");
 					sa.assertTrue(false, "Not able to upload files in '" + intPath[1] + "'");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C1Email, stdPath[1], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C2Email, stdPath[1], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C1Email, stdPath[0], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C2Email, stdPath[0], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
@@ -5039,57 +5039,57 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				if (fp.inviteContact(M4I1, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I1, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I1, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I1, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I1, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C1Email, stdPath[1], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C2Email, stdPath[1], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C1Email, stdPath[0], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C2Email, stdPath[0], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
@@ -5648,29 +5648,29 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				if (fp.inviteContact(M4I2, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C1Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I2, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C2Email, stdPath[1], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I2, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I2, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
@@ -5702,8 +5702,8 @@ public class Module4 extends BaseLib{
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 										"InvestorWorkspace View.");
-								if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C1Email, stdPath[1], FolderType.Standard,
-										"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
+								if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C1Email,
+										stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
 									appLog.info(
 											"Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 								} else {
@@ -5712,8 +5712,8 @@ public class Module4 extends BaseLib{
 									sa.assertTrue(false,
 											"Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 								}
-								if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C2Email, stdPath[1], FolderType.Standard,
-										"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
+								if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C2Email,
+										stdPath[1], FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
 									appLog.info(
 											"Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 								} else {
@@ -5722,8 +5722,8 @@ public class Module4 extends BaseLib{
 									sa.assertTrue(false,
 											"Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 								}
-								if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C1Email, stdPath[0], FolderType.Standard,
-										"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
+								if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C1Email,
+										stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
 									appLog.info(
 											"Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 								} else {
@@ -5732,8 +5732,8 @@ public class Module4 extends BaseLib{
 									sa.assertTrue(false,
 											"Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 								}
-								if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C2Email, stdPath[0], FolderType.Standard,
-										"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
+								if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C2Email,
+										stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
 									appLog.info(
 											"Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 								} else {
@@ -7873,29 +7873,29 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				if (fp.inviteContact(M4I2, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I2, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C1Email, stdPath[0], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I3 + "/" + M4LP1, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I3 + "/" + M4LP1, M4C2Email, stdPath[0], FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M4C2Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
@@ -8408,22 +8408,22 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				if (fp.inviteContact(M4I2, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C1Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C1Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 				}
-				if (fp.inviteContact(M4I2, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C2Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
-				if (fp.inviteContact(M4I2, M4C3Email, stdPath[0], FolderType.Standard, "Upload", "Yes", "No", null,
-						Workspace.FundraisingWorkspace, M4C3Email)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C3Email, stdPath[0], FolderType.Standard, "Upload", "Yes",
+						"No", null, Workspace.FundraisingWorkspace, M4C3Email)) {
 					appLog.info("Successfully provided access to contact '" + M4CFN3 + " " + M4CLN3 + "'.");
 				} else {
 					appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
@@ -8834,16 +8834,16 @@ public class Module4 extends BaseLib{
 						if (click(driver, fp.getManageFolderCloseButton(Workspace.FundraisingWorkspace, 60),
 								"Mansge folder lcose button", action.SCROLLANDBOOLEAN)) {
 							switchToDefaultContent(driver);
-							if (fp.inviteContact(M4I2, M4C1Email, (stdPath.split(","))[0], FolderType.Standard,
-									"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, M4C1Email)) {
+							if (fp.inviteContact(environment, mode, M4I2, M4C1Email,
+									(stdPath.split(","))[0], FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, M4C1Email)) {
 								appLog.info("Successfully provided access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 							} else {
 								appLog.error("Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 								sa.assertTrue(false,
 										"Not able to provide access to contact '" + M4CFN1 + " " + M4CLN1 + "'.");
 							}
-							if (fp.inviteContact(M4I2, M4C2Email, (stdPath.split(","))[0], FolderType.Standard,
-									"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+							if (fp.inviteContact(environment, mode, M4I2, M4C2Email,
+									(stdPath.split(","))[0], FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 								appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 							} else {
 								appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
@@ -9757,8 +9757,8 @@ public class Module4 extends BaseLib{
 				String[] step1Of3Data= {Size,vintageyear,contact,phone,email,description};
 				if (fp.buildWorkspace(step1Of3Data, WorkSpaceAction.IMPORTFOLDERTEMPLATE, folderTemplateName, null,
 						M4I2, Workspace.FundraisingWorkspace, 30)) {
-					if (fp.inviteContact(M4I2, M4C2Email, null, FolderType.Standard, "Upload", "Yes", "No", null,
-							Workspace.FundraisingWorkspace, M4C2Email)) {
+					if (fp.inviteContact(environment, mode, M4I2, M4C2Email, null, FolderType.Standard, "Upload", "Yes",
+							"No", null, Workspace.FundraisingWorkspace, M4C2Email)) {
 						appLog.info("Successfully provided access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 					} else {
 						appLog.error("Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2
@@ -9972,8 +9972,8 @@ public class Module4 extends BaseLib{
 				scrollDownThroughWebelement(driver, fp.getFundRaisingWorkSpaceSection(60),
 						"fundrasing workspace section");
 				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
-				if (fp.inviteContact(M4I2, M4C1Email, stdPath, FolderType.Standard, "upload", "Yes", "no", "Standard",
-						Workspace.FundraisingWorkspace, M4C1Email)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C1Email, stdPath, FolderType.Standard, "upload", "Yes",
+						"no", "Standard", Workspace.FundraisingWorkspace, M4C1Email)) {
 					appLog.info("contact is invited for fundraising workspace successfully :" + M4CFN1 + " " + M4CLN1);
 				} else {
 					appLog.error(
@@ -9981,8 +9981,8 @@ public class Module4 extends BaseLib{
 					sa.assertTrue(false, "contact is not invited for for fundraising workspace successfully :" + M4CFN1
 							+ " " + M4CLN1);
 				}
-				if (fp.inviteContact(M4I2, M4C2Email, stdPath, FolderType.Standard, "upload", "Yes", "no", "Standard",
-						Workspace.FundraisingWorkspace, M4C2Email)) {
+				if (fp.inviteContact(environment, mode, M4I2, M4C2Email, stdPath, FolderType.Standard, "upload", "Yes",
+						"no", "Standard", Workspace.FundraisingWorkspace, M4C2Email)) {
 					appLog.info("contact is invited for fundraising workspace successfully :" + M4CFN2 + " " + M4CLN2);
 				} else {
 					appLog.error(

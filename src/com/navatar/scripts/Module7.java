@@ -651,8 +651,8 @@ public class Module7 extends BaseLib {
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M7FundName1)) {
 				// giving access in Inst 1 fundraising workspace standard folder
-				if (fp.inviteContact(M7Institution1, M7Contact1EmailId, stdPath, FolderType.Standard, "Upload", "Yes",
-						"No", stdPath, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M7Institution1, M7Contact1EmailId, stdPath, FolderType.Standard,
+						"Upload", "Yes", "No", stdPath, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				} else {
 					appLog.error("Contact could not be given access");
@@ -660,8 +660,8 @@ public class Module7 extends BaseLib {
 				}
 
 				// giving access in Inst 1 fundraising workspace shared folder
-				if (fp.inviteContact(M7Institution1, M7Contact1EmailId, shdPath, FolderType.Shared, "Download", "Yes",
-						"No", "Shared", Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M7Institution1, M7Contact1EmailId, shdPath, FolderType.Shared,
+						"Download", "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				} else {
 					appLog.error("Contact could not be given access");
@@ -669,16 +669,16 @@ public class Module7 extends BaseLib {
 				}
 
 				// giving access in Inst 2 fundraising workspace standard folder
-				if (fp.inviteContact(M7Institution2, M7Contact2EmailId, stdPath, FolderType.Standard, "Upload", "Yes",
-						"No", stdPath, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M7Institution2, M7Contact2EmailId, stdPath, FolderType.Standard,
+						"Upload", "Yes", "No", stdPath, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				} else {
 					sa.assertTrue(false, "Contact could not be given access");
 				}
 
 				// giving access in Inst 2 fundraising workspace shared folder
-				if (fp.inviteContact(M7Institution2, M7Contact2EmailId, shdPath, FolderType.Shared, "Download", "Yes",
-						"No", "Shared", Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M7Institution2, M7Contact2EmailId, shdPath, FolderType.Shared,
+						"Download", "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				} else {
 					sa.assertTrue(false, "Contact could not be given access");
@@ -2893,8 +2893,8 @@ public class Module7 extends BaseLib {
 
 				String docpath = "UploadFiles\\Module8\\INV_Multiple";
 				// providing contact access to contact 1 for inst 2
-				if (fp.inviteContact(M7Institution2, M7Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", stdPath, Workspace.FundraisingWorkspace, M7Contact1EmailId)) {
+				if (fp.inviteContact(environment, mode, M7Institution2, M7Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", stdPath, Workspace.FundraisingWorkspace, M7Contact1EmailId)) {
 					appLog.info(M7Contact2FirstName + " " + M7Contact2LastName + " has been given access for "
 							+ M7Institution2);
 				} else {
@@ -6576,8 +6576,8 @@ public class Module7 extends BaseLib {
 
 				// Institution2 access
 
-				if (fp.inviteContact(M7Institution2, M7Contact1EmailId, null, FolderType.Standard, "upload", "Yes",
-						"no", "Standard", Workspace.FundraisingWorkspace, M7Contact1LastName)) {
+				if (fp.inviteContact(environment, mode, M7Institution2, M7Contact1EmailId, null, FolderType.Standard,
+						"upload", "Yes", "no", "Standard", Workspace.FundraisingWorkspace, M7Contact1LastName)) {
 					appLog.info("For " + M7Institution2 + "/" + stdPath
 							+ " contact has been given access successfully and invite has been sent to mail "
 							+ M7Contact1FirstName + " " + M7Contact1LastName);
@@ -16608,9 +16608,9 @@ public class Module7 extends BaseLib {
 			if (fp.clickOnCreatedFund(M7FundName1)) {
 
 				// Institution1+Lp1+Standard
-				if (fp.inviteContact(M7Institution1 + "/" + M7LimitedPartner1, M7Contact1EmailId, stdPath,
-						FolderType.Standard, "upload", "Yes", "no", "Standard", Workspace.InvestorWorkspace,
-						M7Contact1LastName)) {
+				if (fp.inviteContact(environment, mode, M7Institution1 + "/" + M7LimitedPartner1,
+						M7Contact1EmailId, stdPath, FolderType.Standard, "upload", "Yes", "no",
+						"Standard", Workspace.InvestorWorkspace, M7Contact1LastName)) {
 					appLog.info("For " + M7Institution1 + "/" + M7LimitedPartner1 + "/" + stdPath
 							+ " contact has been given access successfully and invite has been sent to mail "
 							+ M7Contact1FirstName + " " + M7Contact1LastName);
@@ -16625,8 +16625,8 @@ public class Module7 extends BaseLib {
 				}
 
 				// Institution1+Shared
-				if (fp.inviteContact(null, M7Contact1EmailId, shdPath, FolderType.Shared, "Download", "Yes", "no",
-						"Shared", Workspace.InvestorWorkspace, M7Contact1LastName)) {
+				if (fp.inviteContact(environment, mode, null, M7Contact1EmailId, shdPath, FolderType.Shared, "Download",
+						"Yes", "no", "Shared", Workspace.InvestorWorkspace, M7Contact1LastName)) {
 					appLog.info("For " + shdPath
 							+ " contact has been given access successfully and invite has been sent to mail "
 							+ M7Contact1FirstName + " " + M7Contact1LastName);
@@ -16638,9 +16638,9 @@ public class Module7 extends BaseLib {
 				}
 
 				// Institution2+Lp2+Standard
-				if (fp.inviteContact(M7Institution2 + "/" + M7LimitedPartner2, M7Contact2EmailId, stdPath,
-						FolderType.Standard, "upload", "Yes", "no", "Standard", Workspace.InvestorWorkspace,
-						M7Contact2LastName)) {
+				if (fp.inviteContact(environment, mode, M7Institution2 + "/" + M7LimitedPartner2,
+						M7Contact2EmailId, stdPath, FolderType.Standard, "upload", "Yes", "no",
+						"Standard", Workspace.InvestorWorkspace, M7Contact2LastName)) {
 					appLog.info("For " + M7Institution2 + "/" + M7LimitedPartner2 + "/" + stdPath
 							+ " contact has been given access successfully and invite has been sent to mail "
 							+ M7Contact2FirstName + " " + M7Contact2LastName);
@@ -16655,8 +16655,8 @@ public class Module7 extends BaseLib {
 				}
 
 				// Institution2+Shared
-				if (fp.inviteContact(null, M7Contact2EmailId, shdPath, FolderType.Shared, "Download", "Yes", "no",
-						"Shared", Workspace.InvestorWorkspace, M7Contact2LastName)) {
+				if (fp.inviteContact(environment, mode, null, M7Contact2EmailId, shdPath, FolderType.Shared, "Download",
+						"Yes", "no", "Shared", Workspace.InvestorWorkspace, M7Contact2LastName)) {
 					appLog.info("For " + shdPath
 							+ " contact has been given access successfully and invite has been sent to mail "
 							+ M7Contact2FirstName + " " + M7Contact2LastName);
@@ -23218,8 +23218,8 @@ public class Module7 extends BaseLib {
 
 				// Institution1+Lp1+Standard
 
-				if (fp.inviteContact(M7Institution2, M7Contact1EmailId, null, FolderType.Standard, "upload", "Yes",
-						"no", "Standard", Workspace.InvestorWorkspace, M7Contact1LastName)) {
+				if (fp.inviteContact(environment, mode, M7Institution2, M7Contact1EmailId, null, FolderType.Standard,
+						"upload", "Yes", "no", "Standard", Workspace.InvestorWorkspace, M7Contact1LastName)) {
 					appLog.info("For " + M7Institution2
 							+ " contact has been given access successfully and invite has been sent to mail "
 							+ M7Contact1FirstName + " " + M7Contact1LastName);

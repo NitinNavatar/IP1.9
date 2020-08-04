@@ -5903,4 +5903,103 @@ public class FundsPage extends BasePageBusinessLayer {
 	public WebElement getDocumentStatisticsRangeDropDownList(int timeOut) {
 		return isDisplayed(driver, documentStatisticsRangeDropDownList, "Visibility", timeOut, "document statistics range drop down list");
 	}
+	
+	
+	@FindBy(xpath="//input[@name='Name']")
+	private WebElement fundName_Classic;
+	
+	@FindBy(xpath="//span[text()='Fund Name']/../following-sibling::input")
+	private WebElement fundName_Lighting;
+
+	/**
+	 * @return the fundName
+	 */
+	public WebElement getFundName(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, fundName_Classic, "Visibility", timeOut, "Fund Name Classic");
+		}else{
+			return isDisplayed(driver, fundName_Lighting, "Visibility", timeOut, "Fund Name Lighting");
+		}
+		
+	}
+	
+	
+	@FindBy(xpath="(//div[@class='requiredInput']//select)[2]")
+	private WebElement investmentCategory_Classic;
+	
+	@FindBy(xpath="//span[text()='Investment Category']/../..//a[@class='select']")
+	private WebElement investmentCategory_Lighting;
+
+	/**
+	 * @return the investmentCategory
+	 */
+	public WebElement getInvestmentCategory(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, investmentCategory_Classic, "Visibility", timeOut, "Investment Category Classic");
+		}else{
+			return isDisplayed(driver, investmentCategory_Lighting, "Visibility", timeOut, "Investment Category Lighting");
+		}
+	} 
+	
+	@FindBy(xpath="//div[@id='Name_ileinner']")
+	private WebElement fundNameInViewMode_Classic;
+	
+	@FindBy(xpath="//div//h1/div[contains(text(),'Fund')]/..")
+	private WebElement fundNameInViewMode_Lighting;
+
+	/**
+	 * @return the fundNameLabel
+	 */
+	public WebElement getFundNameInViewMode(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, fundNameInViewMode_Classic, "Visibility", timeOut, "Fund Name in View Mode Classic");
+		}else{
+			return isDisplayed(driver, fundNameInViewMode_Lighting, "Visibility", timeOut, "Fund Name in View Mode Lighting");
+		}
+		
+	}
+	@FindBy(xpath="//div[@class='requiredInput']//select")
+	private WebElement fundType_Classic;
+	
+	@FindBy(xpath="//span[text()='Fund Type']/../..//div[@class='uiMenu']//a[@class='select']")
+	private WebElement fundType_Lighting;
+
+	/**
+	 * @return the fundType
+	 */
+	public WebElement getFundType(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, fundType_Classic, "Visibility", timeOut, "Fund Type Classic");
+		}else{
+			return isDisplayed(driver, fundType_Lighting, "Visibility", timeOut, "Fund Type Lighting");
+		}
+		
+	}
+	
+	public WebElement getFundtPageTextBoxOrRichTextBoxWebElement(String environment,String mode, String labelName, int timeOut) {
+		WebElement ele=null;
+		String xpath ="",inputXpath="", dateXpath="",finalXpath="",finalLabelName="";
+		if(labelName.contains("_")) {
+			finalLabelName=labelName.replace("_", " ");
+		}else {
+			finalLabelName=labelName;
+		}
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			xpath="//label[contains(text(),'"+finalLabelName+"')]";
+			inputXpath="/../following-sibling::td/input";
+			dateXpath="/../following-sibling::td[1]/span/input";
+		}else {
+			//span[text()='Description']/..//following-sibling::textarea
+			xpath="//span[contains(text(),'"+finalLabelName+"')]";
+			inputXpath="/..//following-sibling::input";
+			dateXpath="/../following-sibling::div/input";
+		}
+		if(labelName.contains("Date")) {
+			finalXpath=xpath+dateXpath;
+		}else {
+			finalXpath=xpath+inputXpath;
+		}
+		ele=isDisplayed(driver, FindElement(driver, finalXpath, finalLabelName+" text box in "+mode, action.SCROLLANDBOOLEAN,30), "Visibility", timeOut, finalLabelName+"text box in "+mode);
+		return ele;
+	}
 }

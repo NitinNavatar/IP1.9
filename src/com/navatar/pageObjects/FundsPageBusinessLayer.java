@@ -27,6 +27,7 @@ import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.ErrorMessageType;
 import com.navatar.generic.CommonLib.FolderType;
 import com.navatar.generic.CommonLib.ManageApprovalTabs;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.UpdateIgnore;
@@ -442,23 +443,34 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	
 	/**
 	 * @author Ankit Jaiswal
-	 * @param firmName
+	 * @param environment TODO
+	 * @param mode TODO
 	 * @param emailID
-	 * @param folderType
 	 * @param permission
 	 * @param applyInvite
 	 * @param sendInvitationMail
 	 * @param contactAccessViewfolderName
 	 * @param workspace
 	 * @param contactSearchKeyword
+	 * @param firmName
+	 * @param folderType
 	 * @return true/false
 	 */
-	public boolean inviteContact(String instutionOrLPName,String emailID,String folderpath,FolderType FolderType,String permission,String applyInvite,String sendInvitationMail,String contactAccessViewfolderName,Workspace workspace,String contactSearchKeyword ) {
+	public boolean inviteContact(String environment,String mode,String instutionOrLPName,String emailID,String folderpath,FolderType FolderType,String permission,String applyInvite,String sendInvitationMail,String contactAccessViewfolderName, Workspace workspace, String contactSearchKeyword ) {
 	String[] splitedEmailId=emailID.split(",");
 	String [] spiltedInstitutionOrLP=null;
 	String ins=null;
 	String lpName=null;
-	switchToFrame(driver, 30, getFrame(PageName.FundsPage, 30));
+	if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+		if(switchToFrame(driver, 30, getNIMTabParentFrame_Lightning())) {
+			
+		}else {
+			appLog.error("Not able to switch in parent frame in Lightning so cannot invite Contact "+emailID);
+			return false;
+		}
+	}else {
+		switchToFrame(driver, 30,getFrame(PageName.FundsPage, 30));
+	}
 	scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, 30), workspace.toString()+" Section view");
 	if(FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
 		if(instutionOrLPName!=null) {
@@ -8553,7 +8565,84 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 	}
 	
+	
+	//Lightning Method....
+	
+public boolean clickOnCreatedFund(String environment, String mode,String fundName) {
+		
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		int i=1;
+		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text").equalsIgnoreCase("All")) {
+			if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
 
+			}
+			else {
+				appLog.error("Go button not found");
+				return false;
+			}
+		}
+		else{
+			if (selectVisibleTextFromDropDown(driver, getViewDropdown(60),"View dropdown","All") ){
+			}
+			else {
+				appLog.error("All Funds not found in dropdown");
+				return false;
+			}
+
+		}
+	
+			WebElement fund = getFundNameAtFundPage(fundName, 20);
+			if (fund != null) {
+				if (click(driver, fund, "Fund Name", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on fund name : " + fundName);
+					return true;
+					} 
+			} else {
+		
+				//
+				
+				while (true) {
+					appLog.error("Fund Name is not Displaying on "+i+ " Page:" + fundName);
+					if (click(driver, getNextImageonPage(10), "Fund Page Next Button",
+							action.SCROLLANDBOOLEAN)) {
+
+						appLog.info("Clicked on Next Button");
+						 fund = getFundNameAtFundPage(fundName, 20);
+						if (fund != null) {
+							if (click(driver, fund, "Fund Name", action.SCROLLANDBOOLEAN)) {
+								appLog.info("Clicked on fund name : " + fundName);
+								return true;
+								
+							}
+						}
+
+						
+
+					} else {
+						appLog.error("Fund Not Available : " + fundName);
+						return false;
+					}
+					i++;
+				}
+				
+				//
+				
+			}
+	}else{
+		if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab, fundName, 30)){
+			appLog.info("Clicked on fund name : " + fundName);
+			return true;
+		}else{
+			appLog.error("Fund Not Available : " + fundName);	
+		}
+	}
+			return false;
+		
+		
+	}
+	
+	
+	
 	public SoftAssert verifySelectedContactsGridDataInContactAccess(Workspace workspace,String contactDetails) {
 		SoftAssert saa = new SoftAssert();
 		String[] contactDetailList=contactDetails.split("<break>");
@@ -9198,6 +9287,248 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 		
 	}
+
+	//Lightning Mthod...
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param fundName
+	 * @param fundType
+	 * @param investmentCategory
+	 * @param otherLabelFields
+	 * @param otherLabelValues
+	 * @return true/false
+	 */
+	public boolean createFund(String environment, String mode, String fundName, String fundType,
+			String investmentCategory, String otherLabelFields,String otherLabelValues) {
+		String labelNames[]=null;
+		String labelValue[]=null;
+		if(otherLabelFields!=null && otherLabelValues !=null) {
+			labelNames= otherLabelFields.split(",");
+			labelValue=otherLabelValues.split(",");
+		}
+		
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			refresh(driver);
+			ThreadSleep(10000);
+			if(clickUsingJavaScript(driver, getNewButton(environment, mode, 60), "new button")) {
+				appLog.info("clicked on new button");
+			}else {
+				appLog.error("Not able to click on new button so cannot create fund : "+fundName);
+				return false;
+			}
+		}else {
+			ThreadSleep(5000);
+			if (click(driver, getNewButton(environment,mode,60), "New Button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on new button");
+			} else {
+				appLog.error("Not able to click on new button so cannot create fund : "+fundName);
+				return false;
+			}
+		}
+//		if (click(driver, getNewButton(environment, mode, 60), "New Button", action.BOOLEAN)) {
+			ThreadSleep(500);
+			if (sendKeys(driver, getFundName(environment, mode, 60), fundName, "Fund Name", action.BOOLEAN)) {
+				ThreadSleep(500);
+				if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+					if (selectVisibleTextFromDropDown(driver, getFundType(environment, mode, 60), "Fund Type",
+							fundType)) {
+						ThreadSleep(500);
+						if (selectVisibleTextFromDropDown(driver, getInvestmentCategory(environment, mode, 60),
+								"Investment Category", investmentCategory)) {
+							ThreadSleep(500);
+						} else {
+							appLog.error("Not able to select investment category");
+						}
+					} else {
+						appLog.error("Not able to select fund type");
+					}
+				} else {
+					if (click(driver, getFundType(environment, mode, 60), "Fund Type ", action.SCROLLANDBOOLEAN)) {
+						WebElement fundTypeEle = FindElement(driver,
+								"(//div[@class='select-options'])[2]//a[@title='" + fundType + "']", fundType,
+								action.SCROLLANDBOOLEAN, 10);
+						ThreadSleep(500);
+						if (click(driver, fundTypeEle, fundType, action.SCROLLANDBOOLEAN)) {
+
+						} else {
+							appLog.error("Not able to Select Fund Type");
+						}
+					} else {
+						appLog.error("Not able to Click on Fund Type");
+					}
+
+					if (click(driver, getInvestmentCategory(environment, mode, 60), "Investment Category",
+							action.SCROLLANDBOOLEAN)) {
+						WebElement InvsCatgEle = FindElement(driver,
+								"(//div[@class='select-options'])[2]//a[@title='" + investmentCategory + "']",
+								investmentCategory, action.SCROLLANDBOOLEAN, 10);
+						ThreadSleep(500);
+						if (click(driver, InvsCatgEle, investmentCategory, action.SCROLLANDBOOLEAN)) {
+						
+						} else {
+							appLog.error("Not able to select Investment Category");
+						}
+					} else {
+						appLog.error("Not able to Click on Investment Category");
+					}
+				}
+				if(labelNames!=null && labelValue!=null) {
+					for(int i=0; i<labelNames.length; i++) {
+						WebElement ele = getFundtPageTextBoxOrRichTextBoxWebElement(environment, mode, labelNames[i].trim(), 30);
+						if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
+							appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
+						}else {
+							appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+							BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+						}
+					}
+					
+				}
+				if (click(driver, getSaveButton(environment, mode, 60), "Save Button", action.BOOLEAN)) {
+					ThreadSleep(5000);
+					
+					WebElement ele;
+					if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
+						String	xpath="//*[contains(text(),'Fund')]/..//*[text()='"+fundName+"']";
+//						 ele = FindElement(driver, xpath, "Header : "+fundName, action.BOOLEAN, 30);
+//						 ele=isDisplayed(driver, ele, "Visibility", 10, "Fund Name in View Mode Lighting");
+//						 
+						 ele = verifyCreatedItemOnPage(Header.Fund, fundName);
+					
+					} else {
+						ele=getFundNameInViewMode(environment, mode, 60);
+					}
+					
+					if (ele != null) {
+						ThreadSleep(2000);
+						String fundNameViewMode = ele.getText().trim();
+						if (fundNameViewMode.contains(fundName)) {
+							appLog.info("Fund is created successfully.:" + fundName);
+							if(labelNames!=null && labelValue!=null ) {
+								for(int i=0; i<labelNames.length; i++) {
+									if(FieldValueVerificationOnFundPage(environment, mode, labelNames[i].replace("_", " ").trim(),labelValue[i])){
+										appLog.info(labelNames[i]+" label value "+labelValue[i]+" is matched successfully.");
+									}else {
+										appLog.info(labelNames[i]+" label value "+labelValue[i]+" is not matched successfully.");
+										BaseLib.sa.assertTrue(false, labelNames[i]+" label value "+labelValue[i]+" is not matched.");
+									}
+								}
+							}
+							return true;
+						} else {
+							appLog.error("Fund is not created successfully.:" + fundName);
+						}
+					} else {
+						appLog.error("Not able to find Fund Name in View Mode");
+					}
+				} else {
+					appLog.error("Not able to click on save button");
+				}
+
+			} else {
+				appLog.error("Not able to enter fund name in text box");
+			}
+//		} else {
+//			appLog.info("Not able to click on new button so we cannot create fund");
+//		}
+		return false;
+	}
+	
+	
+	//Lightning Method...
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param tabName
+	 * @param labelName
+	 * @param labelValue
+	 * @return true/false
+	 */
+	public boolean FieldValueVerificationOnFundPage(String environment, String mode,
+			String labelName,String labelValue) {
+		String xpath = "";
+		WebElement ele = null;
+		if(labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
+			labelName=FundPageFieldLabelText.Target_Commitments.toString();
+		}
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(labelName.contains("Total") || labelName.contains("Target")) {
+				xpath="//td[text()='"+labelName+"']/following-sibling::td/div";
+			}else {
+				xpath = "//td[text()='"+ labelName +"']/../td[2]/div";
+			}
+		} else {
+			//////////////////////////////////  
+			
+			if(labelName.contains("Date")) {
+				xpath = "//span[text()='"+labelName+"']/../following-sibling::div//*[contains(text(),'"+labelValue+"')]";
+				ele = 	FindElement(driver, xpath, labelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);
+				scrollDownThroughWebelement(driver, ele, labelName + " label text with  " + labelValue);
+				ele = 	isDisplayed(driver,ele,"Visibility", 10, labelName + " label text with  " + labelValue);
+				if (ele != null) {
+					String aa = ele.getText().trim();
+					appLog.info(labelName + " label text with value : " + labelValue+" verified");
+					return true;
+
+				} else {
+					appLog.error("<<<<<<   "+labelName + " label text with value : " + labelValue+" not verified "+">>>>>>");
+				}
+				
+			}else {
+				xpath = "//span[text()='"+labelName+"']/../following-sibling::div//*[contains(text(),'"+labelValue+"')]";
+				ele = 		FindElement(driver, xpath, labelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);
+				scrollDownThroughWebelement(driver, ele, labelName + " label text with  " + labelValue);
+				ele = 	isDisplayed(driver,ele,"Visibility", 10, labelName + " label text with  " + labelValue);
+				if (ele != null) {
+					String aa = ele.getText().trim();
+					appLog.info(labelName + " label text with value : " + labelValue+" verified");
+					return true;
+
+				} else {
+					appLog.error("<<<<<<   "+labelName + " label text with  " + labelValue+" not verified "+">>>>>>");
+				}	
+			}
+			
+			return false;
+			
+			
+			///////////////////////////////////////
+			
+		}
+		ele = isDisplayed(driver,
+				FindElement(driver, xpath, labelName + " label text in " + mode, action.SCROLLANDBOOLEAN, 10),
+				"Visibility", 30, labelName + " label text in " + mode);
+		if (ele != null) {
+			String aa = ele.getText().trim();
+			appLog.info("Lable Value is: "+aa);
+			if(labelName.contains("Date")) {
+				if(verifyDate(aa,null, labelName)) {
+					appLog.info("Dtae is verified Successfully");
+					return true;
+				}else {
+					appLog.error(labelName+ " Date is not verified. /t Actual Result: "+aa);
+				}
+			}else {
+				if(aa.contains(labelValue)) {
+					appLog.info(labelValue + " Value is matched successfully.");
+					return true;
+					
+				}else {
+					appLog.error(labelValue + " Value is not matched. Expected: "+labelValue+" /t Actual : "+aa);
+				}
+			}
+		} else {
+			appLog.error(labelName + " Value is not visible so cannot matched  label Value "+labelValue);
+		}
+		return false;
+
+	}
+
 }
 
 

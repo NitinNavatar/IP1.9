@@ -1348,8 +1348,8 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				if (fp.inviteContact(M10Institution1, M10Contact1EmailId, stdPath[0], FolderType.Standard, "Upload",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, stdPath[0],
+						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -1358,8 +1358,8 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M10Institution1, M10Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -1368,8 +1368,8 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M10Institution1, M10Contact1EmailId, sharedPath[1], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, sharedPath[1],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -1378,8 +1378,8 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M10Institution2, M10Contact2EmailId, stdPath[0], FolderType.Standard, "Upload",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution2, M10Contact2EmailId, stdPath[0],
+						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -3865,16 +3865,16 @@ public class Module10 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on contact access buttomn");
 					}
 					switchToDefaultContent(driver);
-					if (fp.inviteContact(M10Institution1, M10Contact1EmailId, sharedPath, FolderType.Shared, "", "Yes",
-							"No", null, Workspace.FundraisingWorkspace, null)) {
+					if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, sharedPath, FolderType.Shared,
+							"", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 						appLog.info(M10Contact1FirstName + " " + M10Contact1LastName + " is invited successfully");
 					} else {
 						appLog.info(M10Contact1FirstName + " " + M10Contact1LastName + " is not invited successfully");
 						sa.assertTrue(false,
 								M10Contact1FirstName + " " + M10Contact1LastName + " is not invited  successfully");
 					}
-					if (fp.inviteContact(M10Institution1, M10Contact2EmailId, sharedPath, FolderType.Shared, "", "Yes",
-							"No", null, Workspace.FundraisingWorkspace, null)) {
+					if (fp.inviteContact(environment, mode, M10Institution1, M10Contact2EmailId, sharedPath, FolderType.Shared,
+							"", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 						appLog.info(M10Contact2FirstName + " " + M10Contact2LastName + "  is invited successfully");
 					} else {
 						appLog.info(M10Contact2FirstName + " " + M10Contact2LastName + "is not invited successfully");
@@ -5140,8 +5140,8 @@ public class Module10 extends BaseLib {
 				appLog.info("Fundraising workspace is not created successfully");
 				sa.assertTrue(false, " Fundraising workspace is not craeted successfully");
 			}
-			if (fp.inviteContact(M10Institution1, M10Contact1EmailId, stdPath[0], FolderType.Standard, "Upload", "Yes",
-					"No", null, Workspace.FundraisingWorkspace, null)) {
+			if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, stdPath[0], FolderType.Standard,
+					"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 				appLog.info("Successfully provided access to contact '" + M10Contact1FirstName+"RUP" + " "
 						+ M10Contact1LastName+"RUP" + "'.");
 			} else {
@@ -6189,8 +6189,8 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				if (fp.inviteContact(M10Institution1+"/"+M10LimitedPartner1, M10Contact1EmailId, stdPath[0], FolderType.Standard, "Upload",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution1+"/"+M10LimitedPartner1, M10Contact1EmailId, stdPath[0],
+						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -6199,8 +6199,8 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M10Institution1+"/"+M10LimitedPartner1, M10Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution1+"/"+M10LimitedPartner1, M10Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -6209,8 +6209,8 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M10Institution1, M10Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -6220,8 +6220,8 @@ public class Module10 extends BaseLib {
 							+ M10Contact1LastName + "'.");
 				}	
 				
-				if (fp.inviteContact(M10Institution1, M10Contact1EmailId, sharedPath[1], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, sharedPath[1],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				} else {
@@ -6230,8 +6230,8 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M10Institution2+"/"+M10LimitedPartner2, M10Contact2EmailId, stdPath[0], FolderType.Standard, "Upload",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M10Institution2+"/"+M10LimitedPartner2, M10Contact2EmailId, stdPath[0],
+						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact2FirstName + " "
 							+ M10Contact2LastName + "'.");
 				} else {
@@ -8733,16 +8733,16 @@ public class Module10 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on contact access buttomn");
 					}
 					switchToDefaultContent(driver);
-					if (fp.inviteContact(M10Institution1, M10Contact1EmailId, sharedPath, FolderType.Shared, "", "Yes",
-							"No", null, Workspace.InvestorWorkspace, null)) {
+					if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, sharedPath, FolderType.Shared,
+							"", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 						appLog.info(M10Contact1FirstName + " " + M10Contact1LastName + " is invited successfully");
 					} else {
 						appLog.info(M10Contact1FirstName + " " + M10Contact1LastName + " is not invited successfully");
 						sa.assertTrue(false,
 								M10Contact1FirstName + " " + M10Contact1LastName + " is not invited  successfully");
 					}
-					if (fp.inviteContact(M10Institution1, M10Contact2EmailId, sharedPath, FolderType.Shared, "", "Yes",
-							"No", null, Workspace.InvestorWorkspace, null)) {
+					if (fp.inviteContact(environment, mode, M10Institution1, M10Contact2EmailId, sharedPath, FolderType.Shared,
+							"", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 						appLog.info(M10Contact2FirstName + " " + M10Contact2LastName + "  is invited successfully");
 					} else {
 						appLog.info(M10Contact2FirstName + " " + M10Contact2LastName + "is not invited successfully");
@@ -9838,8 +9838,8 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUPINV")) {
-				if (fp.inviteContact("", M10Contact2UpdatedEmailID, "UP"+sharedPath, FolderType.Shared, "Download", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, M10Contact2UpdatedEmailID)) {
+				if (fp.inviteContact(environment, mode, "", M10Contact2UpdatedEmailID, "UP"+sharedPath, FolderType.Shared,
+						"Download", "Yes", "No", null, Workspace.FundraisingWorkspace, M10Contact2UpdatedEmailID)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact2FirstName + " "
 							+ M10Contact2LastName + "'.");
 				} else {
@@ -9875,8 +9875,8 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on manage email");
 				}
 				switchToDefaultContent(driver);
-				if (fp.inviteContact("", M10Contact2UpdatedEmailID, "UP"+sharedPath, FolderType.Shared, "Download", "Yes",
-						"No", null, Workspace.InvestorWorkspace, M10Contact2UpdatedEmailID)) {
+				if (fp.inviteContact(environment, mode, "", M10Contact2UpdatedEmailID, "UP"+sharedPath, FolderType.Shared,
+						"Download", "Yes", "No", null, Workspace.InvestorWorkspace, M10Contact2UpdatedEmailID)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact2FirstName + " "
 							+ M10Contact2LastName + "'.");
 				} else {

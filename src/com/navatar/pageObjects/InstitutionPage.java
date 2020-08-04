@@ -435,4 +435,95 @@ public class InstitutionPage extends BasePageBusinessLayer{
 	public WebElement getAccountActivityAlertNameText(int timeOut) {
 		return isDisplayed(driver, AccountActivityAlertNameText, "Visibility", timeOut, "Account Activity Alert Name Text");
 	}
+	
+	/**
+	 * @return the radioButtonforNewInstitution
+	 */
+	public WebElement getRadioButtonforRecordType(String recordType,int timeOut) {
+		String xpath="//div[@class='changeRecordTypeRow']//span[text()='"+recordType+"']/../..//input";
+		WebElement ele = null;
+		ThreadSleep(500);
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
+		ThreadSleep(500);
+		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+	}
+	
+	@FindBy(xpath="//input[@title='Continue']")
+	private WebElement continueBtnClassic;
+
+	@FindBy(xpath="//span[text()='Next']")
+	private WebElement nextBtnLighting;
+	
+	/**
+	 * @return the continueBtn
+	 */
+	public WebElement getContinueOrNextBtn(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, continueBtnClassic, "Visibility", timeOut, "Continue Button Classic");	
+		}else{
+			return isDisplayed(driver, nextBtnLighting, "Visibility", timeOut, "Next Button Lighting");
+		}
+		
+	}
+	
+	@FindBy(xpath="//input[@name='acc2']")
+	private WebElement legalNameTextBoxClassic;
+	
+	@FindBy(xpath="//label[@data-aura-class='uiLabel']//span[text()='Legal Name']/..//following-sibling::input")
+	private WebElement legalNameTextBoxLighting;
+	
+	/**
+	 * @return the legalNameTextBox
+	 */
+	public WebElement getLegalNameTextBox(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, legalNameTextBoxClassic, "Visibility", timeOut, "Legal Name Text Box Classic");
+		}else{
+			return isDisplayed(driver, legalNameTextBoxLighting, "Visibility", timeOut, "Legal Name Text Box Lighting");
+		}
+		
+	}
+	
+	public WebElement getInstitutionPageTextBoxOrRichTextBoxWebElement(String environment,String mode, String labelName, int timeOut) {
+		WebElement ele=null;
+		String xpath ="",inputXpath="", textAreaXpath="",finalXpath="",finalLabelName="";
+		if(labelName.equalsIgnoreCase(excelLabel.Shipping_State.toString())) {
+			labelName=InstitutionPageFieldLabelText.Shipping_State.toString();
+		}else if (labelName.equalsIgnoreCase(excelLabel.Shipping_Zip.toString())) {
+			labelName=InstitutionPageFieldLabelText.Shipping_Zip.toString();
+		}
+		if(labelName.contains("_")) {
+			finalLabelName=labelName.replace("_", " ");
+		}else {
+			finalLabelName=labelName;
+		}
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			xpath="//label[text()='"+finalLabelName+"']";
+			inputXpath="/../following-sibling::td/input";
+			textAreaXpath="/../following-sibling::td/textarea";
+			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+				inputXpath="/../following-sibling::td//span/input";
+			}
+			
+		}else {
+			//span[text()='Description']/..//following-sibling::textarea
+			xpath="//span[text()='"+finalLabelName+"']";
+			inputXpath="/..//following-sibling::input";
+			textAreaXpath="/..//following-sibling::textarea";
+			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+				inputXpath="/..//following-sibling::div//input[@title='Search Institutions']";
+			}
+			
+		}
+		
+		if(labelName.equalsIgnoreCase(InstitutionPageFieldLabelText.Description.toString()) || labelName.equalsIgnoreCase(InstitutionPageFieldLabelText.Referral_Source_Description.toString()) 
+				|| labelName.equalsIgnoreCase(InstitutionPageFieldLabelText.Street.toString()) || labelName.equalsIgnoreCase(excelLabel.Shipping_Street.toString())) {
+			finalXpath=xpath+textAreaXpath;
+		}else {
+			finalXpath=xpath+inputXpath;
+		}
+		ele=isDisplayed(driver, FindElement(driver, finalXpath, finalLabelName+" text box in "+mode, action.SCROLLANDBOOLEAN,30), "Visibility", timeOut, finalLabelName+"text box in "+mode);
+		return ele;
+		
+	}
 }

@@ -3,6 +3,7 @@
  */
 package com.navatar.scripts;
 
+import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.SmokeCommonVariable.*;
 
@@ -523,8 +524,8 @@ public class SmokeTestCase extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
-		if (nim.clickOnTab(TabName.NIMTab)) {
-			if (nim.NIMRegistration(userType.CRMUser, SmokeCRMUser1FirstName, SmokeCRMUser1LastName)) {
+		if (nim.clickOnTab(environment,mode,TabName.NIMTab)) {
+			if (nim.NIMRegistration(environment,mode,userType.CRMUser, SmokeCRMUser1FirstName, SmokeCRMUser1LastName)) {
 				appLog.info(SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName+" CRM User 1 is registered successfully ");
 			} else {
 				appLog.error(SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName+" CRM User 1 is not registered successfully ");
@@ -546,131 +547,186 @@ public class SmokeTestCase extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
+		String parentWindow=null;
+		WebElement ele=null;
+		boolean flag= false;
 		List<String> lst=new ArrayList<String>();
+		String addRemoveTabName="Partnerships"+","+"Commitments"+","+"Navatar Investor Manager";
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
 		String[] splitedUserName = removeNumbersFromString(SmokeCRMUser2LastName); 
 		String UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(smokeExcelPath,UserLastName, "Users", excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 		scv = new SmokeCommonVariable(this);
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 3);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(bp.removeUnusedTabs()){
+				appLog.info("Unused tabs remove successfully");
+			}else{
+				appLog.info("Unused tabs not removed successfully");
+				saa.assertTrue(false, "Unused tabs not removed successfully");
+			}
+			 ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
+					action.SCROLLANDBOOLEAN, 3);
+			if(ele==null){
+				lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
+				if(!lst.isEmpty()){
+					for (int i = 0; i < lst.size(); i++) {
+						appLog.error(lst.get(i));
+						saa.assertTrue(false,lst.get(i));
+					}
 				}
 			}
-		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 3);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
+			ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
+					action.SCROLLANDBOOLEAN, 3);
+			if(ele==null){
+				lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
+				if(!lst.isEmpty()){
+					for (int i = 0; i < lst.size(); i++) {
+						appLog.error(lst.get(i));
+						saa.assertTrue(false,lst.get(i));
+					}
 				}
 			}
-		}
-		if (bp.createPEUser(environment, mode,SmokeCRMUser2FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
-				SmokeCRMUser1Profile)) {
-			appLog.info("PE User 1 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(smokeExcelPath,emailID, "Users", excelLabel.Variable_Name, "User2", excelLabel.User_Email);
-			
-		} else {
-			appLog.info("PE User2 is not created successfully");
-			saa.assertTrue(false, "PE User2 is not created successfully");
-		}
-		if (bp.installedPackages(SmokeCRMUser2FirstName,SmokeCRMUser2LastName)) {
-			appLog.info("Install package is done for PE User 2 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 2 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
-		}
-		lp.CRMlogout(environment,mode);
-		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
-		bp = new BasePageBusinessLayer(driver);
-		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		appLog.info("ResetLinkIs: " + passwordResetLink);
-		driver.get(passwordResetLink);
-		if (bp.setNewPassword()) {
-			appLog.info("Password is set successfully for user2");
-		} else {
-			appLog.info("Password is not set for user2");
-			saa.assertTrue(false, "Password is not set for user2");
-		}
-		if (bp.getSalesForceLightingIcon(10) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		 ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 5);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 5);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		if (bp.getNavatarInvestorManagerTab(5) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(5) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
+		}else {
+			if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+				appLog.info("Tab added : "+addRemoveTabName);
+//				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
+				appLog.error("Tab not added : "+addRemoveTabName);
+//				log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+				sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+			}		
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						}
+					}
+					if (bp.createPEUser(environment, mode,SmokeCRMUser2FirstName, UserLastName, cp.generateRandomEmailId(), SmokeCRMUser1UserLicense,
+							SmokeCRMUser1Profile)) {
+						appLog.info("PE User 2 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(smokeExcelPath,emailID, "Users", excelLabel.Variable_Name, "User2", excelLabel.User_Email);
+						flag = true;
+						break;
+						
+					}
+				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
 			}
 		}
-		lp.CRMlogout(environment,mode);
-		sa.combineAssertions(saa);
+		
+		
+		if (flag) {
+			if (bp.installedPackages(environment,mode,SmokeCRMUser2FirstName,SmokeCRMUser2LastName)) {
+				appLog.info("Install package is done for PE User 2 succesfully");
+			} else {
+				appLog.info("Install package is not done for PE User 2 succesfully");
+				saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
+			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			lp.CRMlogout(environment,mode);
+			driver.close();
+			config(ExcelUtils.readDataFromPropertyFile("Browser"));
+			bp = new BasePageBusinessLayer(driver);
+			lp = new LoginPageBusinessLayer(driver);
+			try {
+				passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+						ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+						ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			appLog.info("ResetLinkIs: " + passwordResetLink);
+			driver.get(passwordResetLink);
+			if (bp.setNewPassword()) {
+				appLog.info("Password is set successfully for user2");
+				
+				if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+					if (bp.getSalesForceLightingIcon(10) != null) {
+						lp.switchToClassic();
+					} else {
+						appLog.info("Sales Force is open in classic mode.");
+					}
+					if(bp.removeUnusedTabs()){
+						appLog.info("Unused tabs remove successfully");
+					}else{
+						appLog.info("Unused tabs not removed successfully");
+						saa.assertTrue(false, "Unused tabs not removed successfully");
+					}
+					ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
+							action.SCROLLANDBOOLEAN, 5);
+					if(ele==null){
+						lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
+						if(!lst.isEmpty()){
+							for (int i = 0; i < lst.size(); i++) {
+								appLog.error(lst.get(i));
+								saa.assertTrue(false,lst.get(i));
+							}
+						}
+					}
+					ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
+							action.SCROLLANDBOOLEAN, 5);
+					if(ele==null){
+						lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
+						if(!lst.isEmpty()){
+							for (int i = 0; i < lst.size(); i++) {
+								appLog.error(lst.get(i));
+								saa.assertTrue(false,lst.get(i));
+							}
+						}
+					}
+					if (bp.getNavatarInvestorManagerTab(5) == null) {
+						lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
+						if(!lst.isEmpty()){
+							for (int i = 0; i < lst.size(); i++) {
+								appLog.error(lst.get(i));
+								saa.assertTrue(false,lst.get(i));
+							}
+						}
+						if (bp.getNavatarInvestorManagerTab(5) != null) {
+							appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
+						} else {
+							appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
+							saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
+						}
+					}
+				}else {
+					if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+						log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+					} else {
+						log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+						sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+					}	
+				}
+				lp.CRMlogout(environment,mode);
+			} else {
+				appLog.info("Password is not set for user2");
+				saa.assertTrue(false, "Password is not set for user2");
+			}
+		}else{
+			appLog.error("could not create CRM User so cannot installed Package and set password of created user");
+			sa.assertTrue(false,"could not create CRM User so cannot installed Package and set password of created user");
+
+		}
 		sa.assertAll();
 	}
 	
@@ -681,15 +737,15 @@ public class SmokeTestCase extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
-		if(lp.clickOnTab(TabName.NIMTab)) {
-			if(nim.giveAccessToUserInNIMTabFromAdmin(SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName, accessType.InternalUserAccess)) {
+		if(lp.clickOnTab(environment,mode,TabName.NIMTab)) {
+			if(nim.giveAccessToUserInNIMTabFromAdmin(environment,mode,SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName, accessType.InternalUserAccess)) {
 				appLog.info("internal user access has been provided to the user : "+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName);
 			}else {
 				appLog.error("Not able to provide internal user access to the user : "+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName);
 				sa.assertTrue(false, "Not able to provide internal user access to the user : "+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName);
 			}
 			
-			if(nim.giveAccessToUserInNIMTabFromAdmin(SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName, accessType.AdminUserAccess)) {
+			if(nim.giveAccessToUserInNIMTabFromAdmin(environment,mode,SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName, accessType.AdminUserAccess)) {
 				appLog.info("internal user access has been provided to the user : "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
 			}else {
 				appLog.error("Not able to provide internal user access to the user : "+SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName);
@@ -712,8 +768,8 @@ public class SmokeTestCase extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
-		if (nim.clickOnTab(TabName.NIMTab)) {
-			if (nim.NIMRegistration(userType.CRMUser, SmokeCRMUser2FirstName, SmokeCRMUser2LastName)) {
+		if (nim.clickOnTab(environment,mode,TabName.NIMTab)) {
+			if (nim.NIMRegistration(environment,mode,userType.CRMUser, SmokeCRMUser2FirstName, SmokeCRMUser2LastName)) {
 				appLog.info(SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName+" CRM User 2 is registered successfully ");
 			} else {
 				appLog.error(SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName+" CRM User 2 is not registered successfully ");
@@ -742,22 +798,30 @@ public class SmokeTestCase extends BaseLib {
 		PartnershipPageBusinessLayer p = new PartnershipPageBusinessLayer(driver);
 		CommitmentPageBusinessLayer com = new CommitmentPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
-		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
-			if (nim.createFolderTemplate("FolderTemp", SmokefolderTemplateName, "", 60)) {
-				appLog.info("folder template"+SmokefolderTemplateName+" is successfully created");
-			}
-			else {
-				appLog.error("folder template could not be created");
-				sa.assertTrue(false, "folder template could not be created");
+		if (nim.clickOnTab(environment,mode,TabName.NIMTab)) {
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				switchToFrame(driver, 60, nim.getNIMTabParentFrame_Lightning());
+				ThreadSleep(5000);
+				switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+				if (nim.createFolderTemplate("FolderTemp", SmokefolderTemplateName, "", 60)) {
+					appLog.info("folder template"+SmokefolderTemplateName+" is successfully created");
+				}
+				else {
+					appLog.error("folder template could not be created");
+					sa.assertTrue(false, "folder template could not be created");
+				}
+			}else {
+				appLog.error("Not able to switch to NIM Tab Parent Frame so cannot create folder template");
+				sa.assertTrue(false, "Not able to switch to NIM Tab Parent Frame so cannot create folder template");
+				
 			}
 		}else {
 			appLog.error("Not able to click on NIM tab so cannot create folder template");
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot create folder template");
 		}
 		switchToDefaultContent(driver);
-		if(ins.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.createInstitution(SmokeInstitution1)) {
+		if(ins.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if(ins.createInstitution(environment,mode,SmokeInstitution1,"Institution",null,null)) {
 				
 			}else {
 				appLog.error("Not able to create institution: "+SmokeInstitution1);
@@ -767,8 +831,8 @@ public class SmokeTestCase extends BaseLib {
 				appLog.error("Not able to click on institution tab so cannot create institution: "+SmokeInstitution1);
 				sa.assertTrue(false, "Not able to click on institution tab so cannot create institution: "+SmokeInstitution1);
 		}
-		if(ins.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.createInstitution(SmokeInstitution2)) {
+		if(ins.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if(ins.createInstitution(environment,mode,SmokeInstitution2,"Institution",null,null)) {
 				
 			}else {
 				appLog.error("Not able to create institution: "+SmokeInstitution2);
@@ -778,9 +842,9 @@ public class SmokeTestCase extends BaseLib {
 				appLog.error("Not able to click on institution tab so cannot create institution: "+SmokeInstitution2);
 				sa.assertTrue(false, "Not able to click on institution tab so cannot create institution: "+SmokeInstitution2);
 		}
-		if(bp.clickOnTab(TabName.ContactTab)){
+		if(bp.clickOnTab(environment,mode,TabName.ContactTab)){
 			String emailId = cp.generateRandomEmailId();
-			if(cp.createContact(SmokeContact1FirstName, SmokeContact1LastName,SmokeInstitution1, emailId)) {
+			if(cp.createContact(environment,mode,SmokeContact1FirstName, SmokeContact1LastName,SmokeInstitution1, emailId,null,null,CreationPage.ContactPage)) {
 				appLog.info("contact is created: "+SmokeContact1FirstName+" "+SmokeContact1LastName);
 				ExcelUtils.writeData(smokeExcelPath,emailId,"Contact", excelLabel.Variable_Name, "SmokeC1",excelLabel.Contact_EmailId);
 				
@@ -789,9 +853,9 @@ public class SmokeTestCase extends BaseLib {
 				sa.assertTrue(false, "Not able to create contact: "+SmokeContact1FirstName+" "+SmokeContact1LastName);
 			}
 		}
-		if(bp.clickOnTab(TabName.ContactTab)){
+		if(bp.clickOnTab(environment,mode,TabName.ContactTab)){
 			String emailId = cp.generateRandomEmailId();
-			if(cp.createContact(SmokeContact2FirstName, SmokeContact2LastName,SmokeInstitution1, emailId)) {
+			if(cp.createContact(environment,mode,SmokeContact2FirstName, SmokeContact2LastName,SmokeInstitution1, emailId,null,null,CreationPage.ContactPage)) {
 				appLog.info("contact is created: "+SmokeContact2FirstName+" "+SmokeContact2LastName);
 				ExcelUtils.writeData(smokeExcelPath,emailId,"Contact", excelLabel.Variable_Name, "SmokeC2",excelLabel.Contact_EmailId);
 				
@@ -800,9 +864,9 @@ public class SmokeTestCase extends BaseLib {
 				sa.assertTrue(false, "Not able to create contact: "+SmokeContact2FirstName+" "+SmokeContact2LastName);
 			}
 		}
-		if(bp.clickOnTab(TabName.ContactTab)){
+		if(bp.clickOnTab(environment,mode,TabName.ContactTab)){
 			String emailId = cp.generateRandomEmailId();
-			if(cp.createContact(SmokeContact3FirstName, SmokeContact3LastName,SmokeInstitution1, emailId)) {
+			if(cp.createContact(environment,mode,SmokeContact3FirstName, SmokeContact3LastName,SmokeInstitution1, emailId,null,null,CreationPage.ContactPage)) {
 				appLog.info("contact is created: "+SmokeContact3FirstName+" "+SmokeContact3LastName);
 				ExcelUtils.writeData(smokeExcelPath,emailId,"Contact", excelLabel.Variable_Name, "SmokeC3",excelLabel.Contact_EmailId);
 				
@@ -811,8 +875,8 @@ public class SmokeTestCase extends BaseLib {
 				sa.assertTrue(false, "Not able to create contact: "+SmokeContact3FirstName+" "+SmokeContact3LastName);
 			}
 		}
-		if(fund.clickOnTab(TabName.FundsTab)) {
-			if(fund.createFund(SmokeFundName1,SmokeFundType1,SmokeFundInvestmentCategory1)) {
+		if(fund.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fund.createFund(environment,mode,SmokeFundName1,SmokeFundType1,SmokeFundInvestmentCategory1,null,null)) {
 				appLog.info("fund is created: "+SmokeFundName1);
 			}else {
 				appLog.error("Not able to create fund: "+SmokeFundName1);
@@ -822,8 +886,8 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot create fund: "+SmokeFundName1);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot create fund: "+SmokeFundName1);
 		}
-		if(bp.clickOnTab(TabName.FundraisingsTab)) {
-			if(fr.createFundRaising(SmokeFundRaisingName1,SmokeFundName1,SmokeInstitution1)) {
+		if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
+			if(fr.createFundRaising(environment,mode,SmokeFundRaisingName1,SmokeFundName1,SmokeInstitution1)) {
 				appLog.info("fundraising is created : "+SmokeFundRaisingName1);
 			}else {
 				appLog.error("Not able to create fundraising: "+SmokeFundRaisingName1);
@@ -833,8 +897,8 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on fundraising tab so cannot create fundraising: "+SmokeFundRaisingName1);
 			sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+SmokeFundRaisingName1);
 		}
-		if(bp.clickOnTab(TabName.FundraisingsTab)) {
-			if(fr.createFundRaising(SmokeFundRaisingName2,SmokeFundName1,SmokeInstitution2)) {
+		if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
+			if(fr.createFundRaising(environment,mode,SmokeFundRaisingName2,SmokeFundName1,SmokeInstitution2)) {
 				appLog.info("fundraising is created : "+SmokeFundRaisingName2);
 			}else {
 				appLog.error("Not able to create fundraising: "+SmokeFundRaisingName2);
@@ -844,8 +908,9 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on fundraising tab so cannot create fundraising: "+SmokeFundRaisingName2);
 			sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+SmokeFundRaisingName2);
 		}
-		if(bp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.createLimitedPartner(SmokeLimitedPartner1,SmokeInstitution1)) {
+		if(bp.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			
+			if(ins.createInstitution(environment, mode, SmokeLimitedPartner1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), SmokeInstitution1)) {
 				appLog.info("limited partner is created: "+SmokeLimitedPartner1);
 			}else {
 				appLog.error("Not able to create limited partner: "+SmokeLimitedPartner1);
@@ -855,8 +920,8 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on institution tab so cannot create limite partner: "+SmokeLimitedPartner1);
 			sa.assertTrue(false, "Not able to click on institution tab so cannot create limite partner: "+SmokeLimitedPartner1);
 		}
-		if(bp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.createLimitedPartner(SmokeLimitedPartner2,SmokeInstitution2)) {
+		if(bp.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if(ins.createInstitution(environment, mode, SmokeLimitedPartner2, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), SmokeInstitution2)) {
 				appLog.info("limited partner is created: "+SmokeLimitedPartner2);
 			}else {
 				appLog.error("Not able to create limited partner: "+SmokeLimitedPartner2);
@@ -866,8 +931,8 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on institution tab so cannot create limite partner: "+SmokeLimitedPartner2);
 			sa.assertTrue(false, "Not able to click on institution tab so cannot create limite partner: "+SmokeLimitedPartner2);
 		}
-		if(bp.clickOnTab(TabName.PartnershipsTab)) {
-			if(p.createPartnership(SmokePartnership1,SmokeFundName1)) {
+		if(bp.clickOnTab(environment,mode,TabName.PartnershipsTab)) {
+			if(p.createPartnership(environment,mode,SmokePartnership1,SmokeFundName1)) {
 				appLog.info("partnership is created: "+SmokePartnership1);
 			}else {
 				appLog.error("Not able to create partnership: "+SmokePartnership1);
@@ -877,8 +942,8 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on partnership tab so cannot create partnership: "+SmokePartnership1);
 			sa.assertTrue(false, "Not able to click on partnership tab so cannot create partnership: "+SmokePartnership1);
 		}
-		if(bp.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.createCommitment(SmokeLimitedPartner1,SmokePartnership1,"SmokeCom1", smokeExcelPath)) {
+		if(bp.clickOnTab(environment,mode,TabName.CommitmentsTab)) {
+			if(com.createCommitment(environment, mode, SmokeLimitedPartner1, SmokePartnership1, "SmokeCom1", smokeExcelPath)) {
 				appLog.info("commitment is created successfully");
 			}else {
 				appLog.error("Not able to create commitment for limited partner: "+SmokeLimitedPartner1+" and partnership Name: "+SmokePartnership1);
@@ -889,8 +954,9 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on commitment tab so cannot create committment for limite partner: "+SmokeLimitedPartner1+" and partnership Name: "+SmokePartnership1);
 		}
 		
-		if(bp.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.createCommitment(SmokeLimitedPartner2,SmokePartnership1,"SmokeCom2", smokeExcelPath)) {
+		if(bp.clickOnTab(environment,mode,TabName.CommitmentsTab)) {
+			
+			if(com.createCommitment(environment, mode,SmokeLimitedPartner2,SmokePartnership1,"SmokeCom2", smokeExcelPath)) {
 				appLog.info("commitment is created successfully");
 			}else {
 				appLog.error("Not able to create commitment for limited partner: "+SmokeLimitedPartner2+" and partnership Name: "+SmokePartnership1);
@@ -913,8 +979,8 @@ public class SmokeTestCase extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String standardFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				String Size=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Size);
 				String vintageyear=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_VintageYear);
 				String con=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Contact);
@@ -922,7 +988,16 @@ public class SmokeTestCase extends BaseLib {
 				String email=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Email);
 				String description=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Description);
 				String[] data= {Size,vintageyear,con,phone,email,description};
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+						
+					}else {
+						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
+						exit("Not able to switch in parent frame so cannot build FR Workspace");
+					}
+				}else {
+					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				}
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 20), Workspace.FundraisingWorkspace.toString()+" View.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 10), Workspace.FundraisingWorkspace.toString()+" Workspace Button", action.BOOLEAN)){
@@ -1125,28 +1200,36 @@ public class SmokeTestCase extends BaseLib {
 	public void Smoketc006_inviteContactAndSendEmailToContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String shrdfolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				if(fp.inviteContact(SmokeInstitution1, SmokeContact1EmailId,null, FolderType.Standard,"Upload", "Yes","No",null, Workspace.FundraisingWorkspace,null)) {
+		if(fp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment, mode,SmokeFundName1)) {
+				if(fp.inviteContact(environment, mode,SmokeInstitution1, SmokeContact1EmailId,null, FolderType.Standard,"Upload","Yes", "No",null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is invited successfuly");
 				}else {
 					appLog.error("Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is not invited successfuly");
 					sa.assertTrue(false, "Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is not invited successfuly");
 				}
-				if(fp.inviteContact(SmokeInstitution1, SmokeContact3EmailId,null, FolderType.Standard,null, "Yes","No",null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment, mode,SmokeInstitution1, SmokeContact3EmailId,null, FolderType.Standard,null,"Yes", "No",null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact3FirstName+" "+SmokeContact3LastName+" is invited successfuly");
 				}else {
 					appLog.error("Contact "+SmokeContact3FirstName+" "+SmokeContact3LastName+" is not invited successfuly");
 					sa.assertTrue(false, "Contact "+SmokeContact3FirstName+" "+SmokeContact3LastName+" is not invited successfuly");
 				}
 				
-				if(fp.inviteContact(SmokeInstitution1, SmokeContact2EmailId,null, FolderType.Standard,null,null,null,null, Workspace.FundraisingWorkspace,null)) {
+				if(fp.inviteContact(environment, mode,SmokeInstitution1, SmokeContact2EmailId,null,FolderType.Standard,null,null, null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is invited successfuly");
-					ThreadSleep(2000);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						switchToDefaultContent(driver);
+						if(switchToFrame(driver, 10, fp.getNIMTabParentFrame_Lightning())) {
+							
+						}else {
+							appLog.error("Not able to switch in parent frame in Lightning so cannot click on remove link of contact "+SmokeContact2EmailId);
+							sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on remove link of contact "+SmokeContact2EmailId);
+						}
+					}else {
+						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+					}
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 					if(click(driver, fp.getcontactaccessremoveLink(Workspace.FundraisingWorkspace, EnableDisable.Enable,SmokeContact2EmailId, 10),SmokeContact2EmailId+" contact remove link", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on contact "+SmokeContact2EmailId+" remove link");
@@ -1164,13 +1247,23 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is not invited successfuly");
 				}
 				switchToDefaultContent(driver);
-				if(fp.inviteContact(null, SmokeContact1EmailId,shrdfolder, FolderType.Shared,"download", "Yes","Yes",null, Workspace.FundraisingWorkspace,SmokeContact1EmailId)) {
+				if(fp.inviteContact(environment, mode,null, SmokeContact1EmailId,shrdfolder, FolderType.Shared,"download","Yes", "Yes",null, Workspace.FundraisingWorkspace, SmokeContact1EmailId)) {
 					appLog.info("Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is invited successfuly from "+shrdfolder);
 				}else {
 					appLog.error("Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is not invited from "+shrdfolder);
 					sa.assertTrue(false, "Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is not invited from "+shrdfolder);
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					if(switchToFrame(driver, 10, fp.getNIMTabParentFrame_Lightning())) {
+						
+					}else {
+						appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+						sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+						exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+					}
+				}else {
+					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+				}
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage emails icon",action.SCROLLANDBOOLEAN)) {
 					if(selectVisibleTextFromDropDown(driver, fp.getManageEmailContactAccessViewDropDownList(60), "manage emails drop down list", "All Folders")) {
 						appLog.info("select all folders from drop down list");
@@ -1183,7 +1276,7 @@ public class SmokeTestCase extends BaseLib {
 						appLog.info("clicked on contact name "+SmokeContact1FirstName+" "+SmokeContact1LastName);
 						String parent = switchOnWindow(driver);
 						if(parent!=null) {
-							ele=FindElement(driver, "//h2[contains(text(),'"+SmokeContact1FirstName+" "+SmokeContact1LastName+"')]", "contatc name ", action.BOOLEAN, 30);
+							ele=FindElement(driver, "//*[contains(text(),'"+SmokeContact1FirstName+" "+SmokeContact1LastName+"')]", "contatc name ", action.BOOLEAN, 30);
 							if(ele!=null) {
 								appLog.info("Contact page is open ");
 								driver.close();
@@ -1204,13 +1297,24 @@ public class SmokeTestCase extends BaseLib {
 						sa.assertTrue(false, "Not able to click on contact name "+SmokeContact1FirstName+" "+SmokeContact1LastName+"  so cannot check contact page");
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+							
+						}else {
+							appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+							sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+							exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+						}
+					}else {
+						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+					}
 					List<WebElement> lst=  FindElements(driver, "//div[@id='manageemailgrid_ME']//a[text()='"+SmokeInstitution1+"']","account name list");
 					if(click(driver, lst.get(0), "account name link", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on account name of contact "+SmokeContact1FirstName+" "+SmokeContact1LastName);
 						String parent = switchOnWindow(driver);
 						if(parent!=null) {
-							ele=FindElement(driver, "//h2[contains(text(),'"+SmokeInstitution1+"')]", "contatc name ", action.BOOLEAN, 30);
+							ele=FindElement(driver, "//*[contains(text(),'"+SmokeInstitution1+"')]", "contatc name ", action.BOOLEAN, 30);
 							if(ele!=null) {
 								appLog.info("account page is open ");
 								driver.close();
@@ -1232,7 +1336,17 @@ public class SmokeTestCase extends BaseLib {
 					}
 					String parentid=null;
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+							
+						}else {
+							appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+							sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+							exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+						}
+					}else {
+						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+					}
 					if (click(driver, fp.getManageEmailInvitationEmailTemplateEditPreviewTextList().get(0), "Edit ",action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on template edit link ");
 						if (fp.getManageEmailEditNotRegisteredClickHereLink(20) != null) {
@@ -1243,8 +1357,17 @@ public class SmokeTestCase extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
-
+							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+									
+								}else {
+									appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+									sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+									exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+								}
+							}else {
+								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+							}
 						} else {
 							appLog.info(
 									"Not Registered Click Here Link is not clickable on Manage Email Invitation Edit Pop Up.");
@@ -1252,7 +1375,17 @@ public class SmokeTestCase extends BaseLib {
 									"Not Registered Click Here Link is not clickable on Manage Email Invitation Edit Pop Up.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+									
+								}else {
+									appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+									sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+									exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+								}
+							}else {
+								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+							}
 						}
 						if (fp.getManageEmailEditRegisteredClickHereLink(30) != null) {
 							click(driver, fp.getManageEmailEditRegisteredClickHereLink(30),
@@ -1262,8 +1395,17 @@ public class SmokeTestCase extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
-
+							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+									
+								}else {
+									appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+									sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+									exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+								}
+							}else {
+								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+							}
 						} else {
 							appLog.info(
 									"Registered Click Here Link is not clickable on Manage Email Invitation Edit Pop Up.");
@@ -1293,7 +1435,17 @@ public class SmokeTestCase extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+									if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+										
+									}else {
+										appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+										sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+										exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+									}
+								}else {
+									switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+								}
 							} else {
 								appLog.info("Not able to click on not registered click here link");
 								sa.assertTrue(false, "Not able to click on not registered click here link");
@@ -1312,7 +1464,17 @@ public class SmokeTestCase extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+									if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+										
+									}else {
+										appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
+										sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on manage email");
+										exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
+									}
+								}else {
+									switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+								}
 							} else {
 								appLog.info("Not able to click on Registered Click Here Link");
 								sa.assertTrue(false, "Not able to click on Registered Click Here Link");
@@ -1401,7 +1563,15 @@ public class SmokeTestCase extends BaseLib {
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		String watermarkinglabel=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Watermarking);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment,mode,TabName.NIMTab)) {
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				if(switchToFrame(driver, 30, np.getNIMTabParentFrame_Lightning())) {
+					
+				}else {
+					appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
+					exit("Not able to switch in parent frame so cannot build FR Workspace");
+				}
+			}
 			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if(np.activateManageApprovalsSettings(SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName+","+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName).isEmpty()) {
@@ -1506,9 +1676,19 @@ public class SmokeTestCase extends BaseLib {
 		String[] standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath).split("<break>");
 		String shrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
-		if (lp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		if (lp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+						
+					}else {
+						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
+						exit("Not able to switch in parent frame so cannot build FR Workspace");
+					}
+				}else {
+					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				}
+				
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(fp.createFolderStructure(standrdFolder[0], FolderType.Common, Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 30).isEmpty()){
@@ -1594,9 +1774,18 @@ public class SmokeTestCase extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String errorMsg=FundsPageErrorMessage.filterPleaseSelectAFieldErroresage;
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
-		if (lp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		if (lp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+						
+					}else {
+						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
+						exit("Not able to switch in parent frame so cannot build FR Workspace");
+					}
+				}else {
+					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				}
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor icon",action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -5302,19 +5491,19 @@ public class SmokeTestCase extends BaseLib {
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				if(fp.inviteContact(SmokeInstitution1, SmokeContact2EmailId,null, FolderType.Standard,"Upload", "Yes","No",null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment, mode,SmokeInstitution1, SmokeContact2EmailId,null, FolderType.Standard,"Upload","Yes", "No",null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is invited successfuly");
 				}else {
 					appLog.error("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is not invited successfuly");
 					sa.assertTrue(false, "Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is not invited successfuly");
 				}
-				if(fp.inviteContact(SmokeInstitution1+"/"+SmokeLimitedPartner1, SmokeContact3EmailId,null, FolderType.Standard,null, "Yes","No",null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment, mode,SmokeInstitution1+"/"+SmokeLimitedPartner1, SmokeContact3EmailId,null, FolderType.Standard,null,"Yes", "No",null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact3FirstName+" "+SmokeContact3LastName+" is invited successfuly");
 				}else {
 					appLog.error("Contact "+SmokeContact3FirstName+" "+SmokeContact3LastName+" is not invited successfuly");
 					sa.assertTrue(false, "Contact "+SmokeContact3FirstName+" "+SmokeContact3LastName+" is not invited successfuly");
 				}
-				if(fp.inviteContact(SmokeInstitution1, SmokeContact1EmailId,null, FolderType.Standard,null,null,null,null, Workspace.InvestorWorkspace,null)) {
+				if(fp.inviteContact(environment, mode,SmokeInstitution1, SmokeContact1EmailId,null,FolderType.Standard,null,null, null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is invited successfuly");
 					ThreadSleep(2000);
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
@@ -5335,7 +5524,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is not invited successfuly");
 				}
 				switchToDefaultContent(driver);
-				if(fp.inviteContact(null, SmokeContact2EmailId,shrdfolder, FolderType.Shared,"download", "Yes","Yes",null, Workspace.InvestorWorkspace,SmokeContact2EmailId)) {
+				if(fp.inviteContact(environment, mode,null, SmokeContact2EmailId,shrdfolder, FolderType.Shared,"download","Yes", "Yes",null, Workspace.InvestorWorkspace, SmokeContact2EmailId)) {
 					appLog.info("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is invited successfuly from "+shrdfolder);
 				}else {
 					appLog.error("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is not invited from "+shrdfolder);

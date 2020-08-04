@@ -675,19 +675,19 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				if(fp.inviteContact(M5I1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, M5C1Email)){
+				if(fp.inviteContact(environment, mode, M5I1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, M5C1Email)){
 					appLog.info("Successfully provided access of '"+M5I1+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				} else {
 					appLog.error("Not able to provide access of '"+M5I1+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 					sa.assertTrue(false,"Not able to provide access of '"+M5I1+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				}
-				if(fp.inviteContact(M5I2, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, M5C1Email)){
+				if(fp.inviteContact(environment, mode, M5I2, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, M5C1Email)){
 					appLog.info("Successfully provided access of '"+M5I2+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				} else {
 					appLog.error("Not able to provide access of '"+M5I2+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 					sa.assertTrue(false,"Not able to provide access of '"+M5I2+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				}
-				if(fp.inviteContact(M5I1, M5C1Email, sharedFolderPath, FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, M5C1Email)){
+				if(fp.inviteContact(environment, mode, M5I1, M5C1Email, sharedFolderPath, FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, M5C1Email)){
 					appLog.info("Successfully provided access of '"+sharedFolderPath+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				} else {
 					appLog.error("Not able to provide access of '"+sharedFolderPath+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
@@ -703,19 +703,19 @@ public class Module5 extends BaseLib {
 		}
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				if(fp.inviteContact(M5I1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.InvestorWorkspace, M5C1Email)){
+				if(fp.inviteContact(environment, mode, M5I1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "Yes", null, Workspace.InvestorWorkspace, M5C1Email)){
 					appLog.info("Successfully provided access of '"+M5I1+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				} else {
 					appLog.error("Not able to provide access of '"+M5I1+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 					sa.assertTrue(false,"Not able to provide access of '"+M5I1+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				}
-				if(fp.inviteContact(M5I2, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M5C1Email)){
+				if(fp.inviteContact(environment, mode, M5I2, M5C1Email, null, FolderType.Standard, "Upload", "Yes", "No", null, Workspace.InvestorWorkspace, M5C1Email)){
 					appLog.info("Successfully provided access of '"+M5I2+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				} else {
 					appLog.error("Not able to provide access of '"+M5I2+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 					sa.assertTrue(false,"Not able to provide access of '"+M5I2+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				}
-				if(fp.inviteContact(null, M5C1Email, sharedFolderPath, FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, M5C1Email)){
+				if(fp.inviteContact(environment, mode, null, M5C1Email, sharedFolderPath, FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, M5C1Email)){
 					appLog.info("Successfully provided access of '"+sharedFolderPath+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
 				} else {
 					appLog.error("Not able to provide access of '"+sharedFolderPath+"' to contact '"+M5CFN1+" "+M5CLN1+"'.");
@@ -5812,7 +5812,7 @@ public class Module5 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on manage investor done button");
 					}
 					switchToDefaultContent(driver);
-					if(fp.inviteContact(M5I1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", null, null, Workspace.FundraisingWorkspace, null)) {
+					if(fp.inviteContact(environment, mode, M5I1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", null, null, Workspace.FundraisingWorkspace, null)) {
 						appLog.info("contact is invited successfully from fundraising workspace: "+M5CFN1+" "+M5CLN1);
 					}else {
 						appLog.error("Not able to invite contact from fundraising workspace : "+M5CFN1+" "+M5CLN1);
@@ -5824,7 +5824,7 @@ public class Module5 extends BaseLib {
 				}
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.CREATEFOLDERTEMPLATE, null, "HybridFolder_Temp", M5I1+"/"+M5LP1, Workspace.InvestorWorkspace, 60)){
 					appLog.info("Invstor Workspace is build successfully  :"+M5F1);
-					if(fp.inviteContact(M5I1+"/"+M5LP1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", null, null, Workspace.InvestorWorkspace, null)) {
+					if(fp.inviteContact(environment, mode, M5I1+"/"+M5LP1, M5C1Email, null, FolderType.Standard, "Upload", "Yes", null, null, Workspace.InvestorWorkspace, null)) {
 						appLog.info("contact is invited successfully from investor workspace: "+M5CFN1+" "+M5CLN1);
 					}else {
 						appLog.error("Not able to invite contact from investor workspace : "+M5CFN1+" "+M5CLN1);

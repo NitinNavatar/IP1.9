@@ -353,7 +353,7 @@ public class Module2 extends BaseLib{
 			if (fp.clickOnCreatedFund(M2Fund1Name)) {
 				//giving access in fundraising workspace
 				
-				if (fp.inviteContact(M2Institution1, M2Contact1EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.FundraisingWorkspace, M2Contact1EmailID)) {
+				if (fp.inviteContact(environment, mode, M2Institution1, M2Contact1EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.FundraisingWorkspace, M2Contact1EmailID)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				}
 				else {
@@ -362,7 +362,7 @@ public class Module2 extends BaseLib{
 				}
 			
 				//giving access in investor workspace
-				if (fp.inviteContact(M2Institution1+"/"+M2LP1, M2Contact2EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.InvestorWorkspace, M2Contact2EmailID)) {
+				if (fp.inviteContact(environment, mode, M2Institution1+"/"+M2LP1, M2Contact2EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.InvestorWorkspace, M2Contact2EmailID)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				}
 				else {
@@ -1389,7 +1389,7 @@ public class Module2 extends BaseLib{
 			if (fp.clickOnCreatedFund(M2Fund1Name)) {
 				//giving access in fundraising workspace
 				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
-				if (fp.inviteContact(M2Institution1, M2Contact1EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.FundraisingWorkspace, M2Contact1EmailID)) {
+				if (fp.inviteContact(environment, mode, M2Institution1, M2Contact1EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.FundraisingWorkspace, M2Contact1EmailID)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				}
 				else {
@@ -1399,7 +1399,7 @@ public class Module2 extends BaseLib{
 			
 				//giving access in investor workspace
 				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
-				if (fp.inviteContact(M2Institution1+"/"+M2LP1, M2Contact1EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.InvestorWorkspace, M2Contact1EmailID)) {
+				if (fp.inviteContact(environment, mode, M2Institution1+"/"+M2LP1, M2Contact1EmailID, stdPath, FolderType.Standard, "Upload", "Yes", "Yes", "All Folders", Workspace.InvestorWorkspace, M2Contact1EmailID)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 				}
 				else {

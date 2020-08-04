@@ -272,8 +272,8 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M18FundName1)) {				
-				if (fp.inviteContact(M18Institution1, M18Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"Yes", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M18Institution1, M18Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M18Contact1FirstName + " "
 							+ M18Contact1LastName + "'.");
 				} else {
@@ -282,8 +282,8 @@ public class Module18 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M18Contact1FirstName + " "
 							+ M18Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M18Institution1, M18Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"Yes", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M18Institution1, M18Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "Yes", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M18Contact2FirstName + " "
 							+ M18Contact2LastName + "'.");
 				} else {
@@ -1566,8 +1566,8 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M18FundName1)) {				
-				if (fp.inviteContact(M18Institution1, M18Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M18Institution1, M18Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M18Contact1FirstName + " "
 							+ M18Contact1LastName + "'.");
 				} else {
@@ -1576,8 +1576,8 @@ public class Module18 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M18Contact1FirstName + " "
 							+ M18Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M18Institution1, M18Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M18Institution1, M18Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M18Contact2FirstName + " "
 							+ M18Contact2LastName + "'.");
 				} else {
@@ -2192,8 +2192,8 @@ public class Module18 extends BaseLib {
 					sa.assertTrue(false, " Investor workspace is not craeted successfully");
 				}				
 		switchToDefaultContent(driver);
-		if (fp.inviteContact(M18Institution1, M18Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-				"No", null, Workspace.InvestorWorkspace, null)) {
+		if (fp.inviteContact(environment, mode, M18Institution1, M18Contact1EmailId, null, FolderType.Standard,
+				"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 			appLog.info("Successfully provided access to contact '" + M18Contact1FirstName + " "
 					+ M18Contact1LastName + "'.");
 		} else {
@@ -2202,8 +2202,8 @@ public class Module18 extends BaseLib {
 			sa.assertTrue(false, "Not able to provide access to contact '" + M18Contact1FirstName + " "
 					+ M18Contact1LastName + "'.");
 		}
-		if (fp.inviteContact(M18Institution1, M18Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-				"No", null, Workspace.InvestorWorkspace, null)) {
+		if (fp.inviteContact(environment, mode, M18Institution1, M18Contact2EmailId, null, FolderType.Standard,
+				"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 			appLog.info("Successfully provided access to contact '" + M18Contact2FirstName + " "
 					+ M18Contact2LastName + "'.");
 		} else {
@@ -2580,8 +2580,8 @@ public class Module18 extends BaseLib {
 					sa.assertTrue(false, " Fundraising workspace is not craeted successfully");
 				}				
 		switchToDefaultContent(driver);
-		if (fp.inviteContact(M18Institution1, M18Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-				"No", null, Workspace.FundraisingWorkspace, null)) {
+		if (fp.inviteContact(environment, mode, M18Institution1, M18Contact1EmailId, null, FolderType.Standard,
+				"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 			appLog.info("Successfully provided access to contact '" + M18Contact1FirstName + " "
 					+ M18Contact1LastName + "'.");
 		} else {
@@ -2590,8 +2590,8 @@ public class Module18 extends BaseLib {
 			sa.assertTrue(false, "Not able to provide access to contact '" + M18Contact1FirstName + " "
 					+ M18Contact1LastName + "'.");
 		}
-		if (fp.inviteContact(M18Institution1, M18Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-				"No", null, Workspace.FundraisingWorkspace, null)) {
+		if (fp.inviteContact(environment, mode, M18Institution1, M18Contact2EmailId, null, FolderType.Standard,
+				"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 			appLog.info("Successfully provided access to contact '" + M18Contact2FirstName + " "
 					+ M18Contact2LastName + "'.");
 		} else {
@@ -3047,8 +3047,8 @@ public class Module18 extends BaseLib {
 					sa.assertTrue(false, " Fundraising workspace is not craeted successfully");
 				}				
 		switchToDefaultContent(driver);
-		if (fp.inviteContact(M18Institution2, M18Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-				"No", null, Workspace.FundraisingWorkspace, M18Contact1EmailId)) {
+		if (fp.inviteContact(environment, mode, M18Institution2, M18Contact1EmailId, null, FolderType.Standard,
+				"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, M18Contact1EmailId)) {
 			appLog.info("Successfully provided access to contact '" + M18Contact1FirstName + " "
 					+ M18Contact1LastName + "'.");
 		} else {
@@ -3057,8 +3057,8 @@ public class Module18 extends BaseLib {
 			sa.assertTrue(false, "Not able to provide access to contact '" + M18Contact1FirstName + " "
 					+ M18Contact1LastName + "'.");
 		}
-		if (fp.inviteContact(M18Institution2, M18Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-				"No", null, Workspace.FundraisingWorkspace, M18Contact2EmailId)) {
+		if (fp.inviteContact(environment, mode, M18Institution2, M18Contact2EmailId, null, FolderType.Standard,
+				"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, M18Contact2EmailId)) {
 			appLog.info("Successfully provided access to contact '" + M18Contact2FirstName + " "
 					+ M18Contact2LastName + "'.");
 		} else {

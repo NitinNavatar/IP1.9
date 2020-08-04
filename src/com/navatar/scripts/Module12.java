@@ -427,8 +427,8 @@ public class Module12 extends BaseLib {
 					appLog.info("Fundraising workspace is not created successfully");
 					saa.assertTrue(false, " Fundraising workspace is not craeted successfully");
 				}
-				if (fp.inviteContact(M12Institution1, M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1, M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -437,8 +437,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				} else {
@@ -447,8 +447,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution1, M12Contact1EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1, M12Contact1EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -457,8 +457,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -4876,8 +4876,8 @@ public class Module12 extends BaseLib {
 					appLog.info("Fundraising workspace is not created successfully");
 					saa.assertTrue(false, " Fundraising workspace is not craeted successfully");
 				}
-				if (fp.inviteContact(M12Institution1, M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1, M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -4886,8 +4886,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-			if (fp.inviteContact(null, M12Contact1EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+			if (fp.inviteContact(environment, mode, null, M12Contact1EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -10693,8 +10693,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to cretaed shared folder");
 				}
 				switchToDefaultContent(driver);
-				if (fp.inviteContact(M12Institution1, M12Contact1EmailId, shdPath, FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1, M12Contact1EmailId, shdPath,
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -10703,8 +10703,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath, FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath,
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -11210,8 +11210,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath, FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath,
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -11220,8 +11220,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution1, M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1, M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -11230,8 +11230,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				} else {
@@ -11748,7 +11748,7 @@ public class Module12 extends BaseLib {
 						if(click(driver, fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60), "Done button", action.SCROLLANDBOOLEAN)){
 							appLog.info("Clicked on done button");
 							switchToDefaultContent(driver);
-							if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes","No", null, Workspace.FundraisingWorkspace, null)) {
+							if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard,"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 								appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "+ M12Contact1LastName + "'.");
 							} else {
 								appLog.error("Not able to provide access to contact '" + M12Contact1FirstName + " "+ M12Contact1LastName + "'.");
@@ -12327,8 +12327,8 @@ public class Module12 extends BaseLib {
 					appLog.info("Fundraising workspace is not created successfully");
 					saa.assertTrue(false, " Fundraising workspace is not craeted successfully");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -12337,8 +12337,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				} else {
@@ -12347,8 +12347,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -12357,8 +12357,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -12697,8 +12697,8 @@ public class Module12 extends BaseLib {
 					appLog.info("Investor workspace is not created successfully");
 					saa.assertTrue(false, " Investor workspace is not craeted successfully");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -12707,8 +12707,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				} else {
@@ -12717,8 +12717,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -12727,8 +12727,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -14861,8 +14861,8 @@ public class Module12 extends BaseLib {
 					appLog.info("Investor workspace is not created successfully");
 					saa.assertTrue(false, " Investor workspace is not craeted successfully");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -14871,8 +14871,8 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-			if (fp.inviteContact(null, M12Contact1EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+			if (fp.inviteContact(environment, mode, null, M12Contact1EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -19880,8 +19880,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to cretaed shared folder");
 				}
 				switchToDefaultContent(driver);
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, shdPath, FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, shdPath,
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -19890,8 +19890,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath, FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath,
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -20406,8 +20406,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath, FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath,
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -20416,8 +20416,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -20426,8 +20426,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				} else {
@@ -20971,7 +20971,7 @@ public class Module12 extends BaseLib {
 						if(click(driver, fp.getManageInvestorDoneButton(Workspace.InvestorWorkspace, 60), "Done button", action.SCROLLANDBOOLEAN)){
 							appLog.info("Clicked on done button");
 							switchToDefaultContent(driver);
-							if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes","No", null, Workspace.InvestorWorkspace, null)) {
+							if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard,"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 								appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "+ M12Contact1LastName + "'.");
 							} else {
 								appLog.error("Not able to provide access to contact '" + M12Contact1FirstName + " "+ M12Contact1LastName + "'.");
@@ -21551,8 +21551,8 @@ public class Module12 extends BaseLib {
 					appLog.info("Investor workspace is not created successfully");
 					sa.assertTrue(false, " Investor workspace is not craeted successfully");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -21561,8 +21561,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, null, FolderType.Standard, "Upload", "Yes",
-						"No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, null, FolderType.Standard,
+						"Upload", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				} else {
@@ -21571,8 +21571,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact2FirstName + " "
 							+ M12Contact2LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution1+"NUP", M12Contact1EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution1+"NUP", M12Contact1EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {
@@ -21581,8 +21581,8 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				if (fp.inviteContact(M12Institution2, M12Contact2EmailId, shdPath[0], FolderType.Shared, "Download",
-						"Yes", "No", null, Workspace.InvestorWorkspace, null)) {
+				if (fp.inviteContact(environment, mode, M12Institution2, M12Contact2EmailId, shdPath[0],
+						FolderType.Shared, "Download", "Yes", "No", null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				} else {

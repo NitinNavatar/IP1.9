@@ -37,11 +37,13 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -330,9 +332,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 					BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 					for(int K=0; K<20; K++) {
-						if(nim.getNIMTabParentFrame_Lightning(20)!=null) {
+						if(nim.getNIMTabParentFrame_Lightning()!=null) {
 							ThreadSleep(3000);
-							switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning(30));
+							switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
 							if (nim.getNIMTabFrame(20) != null) {
 								appLog.info("NIM Frame Loaded Successfully.");
 								switchToFrame(driver, 30, nim.getNIMTabFrame(30));
@@ -5102,7 +5104,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return clickFlag;
 	}
 	
-	
+	// Lightning Method....................
 	/**
 	 * @author Ankit Jaiswal
 	 * @param environment
@@ -5206,5 +5208,211 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 	
+	public WebElement verifyCreatedItemOnPage(Header header,String itemName)
+	{
+		WebElement ele;
+		String xpath ="";
+		String head =header.toString().replace("_", " ");
+		ThreadSleep(3000);
+		xpath="//*[contains(text(),'"+head+"')]/..//*[text()='"+itemName+"']";
+		 ele = FindElement(driver, xpath, "Header : "+itemName, action.BOOLEAN, 30);
+		 ele = isDisplayed(driver, ele, "Visibility", 10, head+" : "+itemName);
+		return ele;
+	}
 	
+	public static String convertNumberIntoMillions(String number){
+		double d = Double.parseDouble(number);
+		double aa = d/1000000;
+		String output = new DecimalFormatSymbols(Locale.US).getCurrencySymbol()+aa;
+		System.err.println("convertNumberIntoMillions  outpurttt >>>> "+output);
+		return output;
+	}
+	
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param RecordType
+	 * @return true/false
+	 */
+	public boolean ClickonRelatedTab_Lighting(String environment,RecordType recordType) {
+		String xpath1 = "//*[text()='Related']";
+		String xpath2 = "//*[text()='Related']";
+		String xpath="";
+		
+		if (recordType == RecordType.PipeLine) 
+			return true;
+		if ((recordType == RecordType.Partnerships) || (recordType == RecordType.Fund)|| (recordType == RecordType.Fundraising)||(recordType == RecordType.Company) || (recordType == RecordType.IndividualInvestor) ||(recordType == RecordType.Institution)|| (recordType == RecordType.Contact))
+		xpath = xpath1;
+		else
+			xpath = xpath2;
+		for(int i=0;i<2; i++){
+			refresh(driver);
+			ThreadSleep(3000);
+			
+			List<WebElement> eleList = FindElements(driver, xpath, "Related Tab");
+			for (WebElement ele : eleList) {
+				if(click(driver, ele, recordType+" related tab", action.BOOLEAN)) {
+					log(LogStatus.INFO, "clicked on "+recordType+" related tab", YesNo.No);
+					return true;
+				}
+			}
+		}		
+		log(LogStatus.ERROR,"Not able to click on related tab "+recordType ,YesNo.Yes);
+		return false;
+	}
+	
+	
+	public boolean clickOnGridSection_Lightning(String environment,String mode,RelatedList gridSectionName ,int timeOut) {
+		WebElement ele = null;
+		boolean flag=false;
+		String xpath1="//span[@title='"+gridSectionName+"']";
+		ele = isDisplayed(driver, FindElement(driver,xpath1, gridSectionName.toString()+ " link", action.SCROLLANDBOOLEAN,timeOut),"visibility", timeOut, gridSectionName.toString()+ " link");
+		if(click(driver, ele, gridSectionName.toString()+ " link", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on "+gridSectionName.toString()+" link", YesNo.No);
+			flag=true;
+		}else {
+			log(LogStatus.ERROR, "Not able to click on "+gridSectionName.toString()+" link so cannot verify error message", YesNo.Yes);
+		}
+		return flag;
+	}
+	
+	
+	public boolean verifyDate(String date, String dateFormat, String typeOfDate){
+		if(dateFormat==null) {
+			if(date.contains(getDateAccToTimeZone("America/New_York", "M/dd/yyyy"))){
+				appLog.info(typeOfDate+" date is verified : "+getDateAccToTimeZone("America/New_York", "M/dd/yyyy"));
+				return true;
+			} else if (date.contains(getDateAccToTimeZone("America/New_York", "MM/dd/yyyy"))) {
+				appLog.info(typeOfDate+" date is verified : "+getDateAccToTimeZone("America/New_York", "MM/dd/yyyy"));
+				return true;
+			} else if (date.contains(getDateAccToTimeZone("America/New_York", "dd/M/yyyy"))) {
+				appLog.info(typeOfDate+" date is verified : "+getDateAccToTimeZone("America/New_York", "dd/M/yyyy"));
+				return true;
+			} else if (date.contains(getDateAccToTimeZone("America/New_York", "dd/MM/yyyy"))) {
+				appLog.info(typeOfDate+" date is verified : "+getDateAccToTimeZone("America/New_York", "dd/MM/yyyy"));
+				return true;
+			}else if (date.contains(getDateAccToTimeZone("America/New_York",  "M/d/yyyy"))) {
+				appLog.info(typeOfDate+" date is verified : "+getDateAccToTimeZone("America/New_York", "M/d/yyyy"));
+				return true;
+			}else if (date.contains(getDateAccToTimeZone("America/New_York",  "d/M/yyyy"))) {
+				appLog.info(typeOfDate+" date is verified : "+getDateAccToTimeZone("America/New_York", "d/M/yyyy"));
+				return true;
+			}else {
+				appLog.info(typeOfDate+" date is not verified. found result : "+date);
+				appLog.info("Expected Date is : "+getDateAccToTimeZone("America/New_York","M/dd/yyyy")+ " or "+getDateAccToTimeZone("America/New_York", "MM/dd/yyyy")+" or "+getDateAccToTimeZone("America/New_York", "dd/M/yyyy")+" or "+getDateAccToTimeZone("America/New_York", "dd/MM/yyyy")+" or "+getDateAccToTimeZone("America/New_York", "M/d/yyyy"));
+				return false;
+			}
+		}else {
+			if(date.contains(getDateAccToTimeZone("America/New_York", dateFormat))){
+				appLog.info(typeOfDate+" date is verified : "+getDateAccToTimeZone("America/New_York", dateFormat));
+				return true;
+			}else {
+				appLog.info(typeOfDate+" date is not verified. found result : "+date);
+				appLog.info("Expected Date is : "+getDateAccToTimeZone("America/New_York", dateFormat)+ " or "+getDateAccToTimeZone("America/New_York", dateFormat)+" or "+getDateAccToTimeZone("America/New_York", dateFormat)+" or "+date.contains(getDateAccToTimeZone("America/New_York", dateFormat)));
+				return false;
+			}
+			
+		}
+		
+		
+
+	}
+
+	
+	public boolean clickOnAlreadyCreated_Lighting(String environment, String mode, TabName tabName,
+			String alreadyCreated, int timeout) {
+
+		String viewList = null;
+		switch (tabName) {
+		case ContactTab:
+			viewList = "All Contacts";
+			break;
+		case InstituitonsTab:
+			viewList = "All Institutions";
+			break;
+		case CompaniesTab:
+			viewList = "All Companies";
+			break;
+		case LimitedPartner:
+			viewList = "All Limited Partners";
+			break;
+		case FundraisingsTab:
+			viewList = "All";
+			break;
+		case FundsTab:
+			viewList = "All";
+			break;
+		case CommitmentsTab:
+			viewList = "All";
+			break;
+		case PartnershipsTab:
+			viewList = "All";
+			break;
+		case FundDistributions:
+			viewList = "All";
+			break;
+		case InvestorDistributions:
+			viewList = "All";
+			break;
+		case MarketingInitiatives:
+			viewList = "All";
+			break;
+		case MarketingProspects:
+			viewList = "Marketing Prospects";
+			break;
+		case Pipelines:
+			viewList = "All";
+			break;
+		case CapitalCalls:
+			viewList = "All";
+			break;
+		case FundDrawdowns:
+			viewList = "All";
+			break;
+		case FundraisingContacts:
+			viewList = "All";
+			break;
+		default:
+			return false;
+		}
+		System.err.println("Passed switch statement");
+		WebElement ele, selectListView;
+		ele = null;
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			selectListView = FindElement(driver, "//div[@class='listContent']//li/a/span[text()='" + viewList + "']",
+					"Select List View", action.SCROLLANDBOOLEAN, 30);
+			if (click(driver, selectListView, "select List View", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					refresh(driver);
+					ThreadSleep(5000);
+				}
+				if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(5000);
+					ele = FindElement(driver,
+							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
+									+ alreadyCreated + "']",
+							alreadyCreated, action.BOOLEAN, 30);
+					ThreadSleep(2000);
+					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+						ThreadSleep(3000);
+						return true;
+					} else {
+						appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+					}
+				} else {
+					appLog.error("Not able to enter value on Search Box");
+				}
+			} else {
+				appLog.error("Not able to select on Select View List");
+			}
+		} else {
+			appLog.error("Not able to click on Select List Icon");
+		}
+		return false;
+	}
+
 }
