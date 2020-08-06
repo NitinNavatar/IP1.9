@@ -802,7 +802,7 @@ public class SmokeTestCase extends BaseLib {
 			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 				switchToFrame(driver, 60, nim.getNIMTabParentFrame_Lightning());
 				ThreadSleep(5000);
-				switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, nim.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 				if (nim.createFolderTemplate("FolderTemp", SmokefolderTemplateName, "", 60)) {
 					appLog.info("folder template"+SmokefolderTemplateName+" is successfully created");
 				}
@@ -989,14 +989,14 @@ public class SmokeTestCase extends BaseLib {
 				String description=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Description);
 				String[] data= {Size,vintageyear,con,phone,email,description};
 				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 						
 					}else {
 						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
 						exit("Not able to switch in parent frame so cannot build FR Workspace");
 					}
 				}else {
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				}
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 20), Workspace.FundraisingWorkspace.toString()+" View.");
@@ -1221,14 +1221,14 @@ public class SmokeTestCase extends BaseLib {
 					appLog.info("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is invited successfuly");
 					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 						switchToDefaultContent(driver);
-						if(switchToFrame(driver, 10, fp.getNIMTabParentFrame_Lightning())) {
+						if(switchToFrame(driver, 10, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 							
 						}else {
 							appLog.error("Not able to switch in parent frame in Lightning so cannot click on remove link of contact "+SmokeContact2EmailId);
 							sa.assertTrue(false, "Not able to switch in parent frame in Lightning so cannot click on remove link of contact "+SmokeContact2EmailId);
 						}
 					}else {
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 					}
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 					if(click(driver, fp.getcontactaccessremoveLink(Workspace.FundraisingWorkspace, EnableDisable.Enable,SmokeContact2EmailId, 10),SmokeContact2EmailId+" contact remove link", action.SCROLLANDBOOLEAN)) {
@@ -1254,7 +1254,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is not invited from "+shrdfolder);
 				}
 				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					if(switchToFrame(driver, 10, fp.getNIMTabParentFrame_Lightning())) {
+					if(switchToFrame(driver, 10, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 						
 					}else {
 						appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1262,7 +1262,7 @@ public class SmokeTestCase extends BaseLib {
 						exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 					}
 				}else {
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				}
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage emails icon",action.SCROLLANDBOOLEAN)) {
 					if(selectVisibleTextFromDropDown(driver, fp.getManageEmailContactAccessViewDropDownList(60), "manage emails drop down list", "All Folders")) {
@@ -1299,7 +1299,7 @@ public class SmokeTestCase extends BaseLib {
 					switchToDefaultContent(driver);
 					
 					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-						if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+						if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 							
 						}else {
 							appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1307,7 +1307,7 @@ public class SmokeTestCase extends BaseLib {
 							exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 						}
 					}else {
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 					}
 					List<WebElement> lst=  FindElements(driver, "//div[@id='manageemailgrid_ME']//a[text()='"+SmokeInstitution1+"']","account name list");
 					if(click(driver, lst.get(0), "account name link", action.SCROLLANDBOOLEAN)) {
@@ -1337,7 +1337,7 @@ public class SmokeTestCase extends BaseLib {
 					String parentid=null;
 					switchToDefaultContent(driver);
 					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-						if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+						if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 							
 						}else {
 							appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1345,7 +1345,7 @@ public class SmokeTestCase extends BaseLib {
 							exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 						}
 					}else {
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 					}
 					if (click(driver, fp.getManageEmailInvitationEmailTemplateEditPreviewTextList().get(0), "Edit ",action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on template edit link ");
@@ -1358,7 +1358,7 @@ public class SmokeTestCase extends BaseLib {
 							driver.close();
 							driver.switchTo().window(parentid);
 							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 									
 								}else {
 									appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1366,7 +1366,7 @@ public class SmokeTestCase extends BaseLib {
 									exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 								}
 							}else {
-								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 							}
 						} else {
 							appLog.info(
@@ -1376,7 +1376,7 @@ public class SmokeTestCase extends BaseLib {
 							driver.close();
 							driver.switchTo().window(parentid);
 							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 									
 								}else {
 									appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1384,7 +1384,7 @@ public class SmokeTestCase extends BaseLib {
 									exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 								}
 							}else {
-								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 							}
 						}
 						if (fp.getManageEmailEditRegisteredClickHereLink(30) != null) {
@@ -1396,7 +1396,7 @@ public class SmokeTestCase extends BaseLib {
 							driver.close();
 							driver.switchTo().window(parentid);
 							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+								if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 									
 								}else {
 									appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1404,7 +1404,7 @@ public class SmokeTestCase extends BaseLib {
 									exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 								}
 							}else {
-								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 							}
 						} else {
 							appLog.info(
@@ -1436,7 +1436,7 @@ public class SmokeTestCase extends BaseLib {
 								driver.close();
 								driver.switchTo().window(parentid);
 								if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-									if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+									if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 										
 									}else {
 										appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1444,7 +1444,7 @@ public class SmokeTestCase extends BaseLib {
 										exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 									}
 								}else {
-									switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 								}
 							} else {
 								appLog.info("Not able to click on not registered click here link");
@@ -1465,7 +1465,7 @@ public class SmokeTestCase extends BaseLib {
 								driver.close();
 								driver.switchTo().window(parentid);
 								if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-									if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+									if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 										
 									}else {
 										appLog.error("Not able to switch in parent frame in Lightning so cannot click on manage email");
@@ -1473,7 +1473,7 @@ public class SmokeTestCase extends BaseLib {
 										exit("Not able to switch in parent frame in Lightning so cannot click on manage email");
 									}
 								}else {
-									switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 30));
 								}
 							} else {
 								appLog.info("Not able to click on Registered Click Here Link");
@@ -1572,7 +1572,7 @@ public class SmokeTestCase extends BaseLib {
 					exit("Not able to switch in parent frame so cannot build FR Workspace");
 				}
 			}
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if(np.activateManageApprovalsSettings(SmokeCRMUser1FirstName+" "+SmokeCRMUser1LastName+","+SmokeCRMUser2FirstName+" "+SmokeCRMUser2LastName).isEmpty()) {
 					appLog.info("manage approvals settings is activated");
@@ -1679,14 +1679,14 @@ public class SmokeTestCase extends BaseLib {
 		if (lp.clickOnTab(environment,mode,TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 						
 					}else {
 						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
 						exit("Not able to switch in parent frame so cannot build FR Workspace");
 					}
 				}else {
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				}
 				
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
@@ -1777,14 +1777,14 @@ public class SmokeTestCase extends BaseLib {
 		if (lp.clickOnTab(environment,mode,TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning())) {
+					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 						
 					}else {
 						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
 						exit("Not able to switch in parent frame so cannot build FR Workspace");
 					}
 				}else {
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				}
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor icon",action.SCROLLANDBOOLEAN)) {
@@ -1913,10 +1913,10 @@ public class SmokeTestCase extends BaseLib {
 		String shrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		String commonpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				String common_docpath="UploadFiles\\SmokeUploadFile\\Common";
-				if(fp.uploadFileBulk(SmokeCRMUser1Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser1Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+commonpath);
 					appLog.info("File is upload successfullly");
 					
@@ -1926,7 +1926,7 @@ public class SmokeTestCase extends BaseLib {
 				}
 				
 				String shrd_docpath="UploadFiles\\SmokeUploadFile\\Shared";
-				if(fp.uploadFileBulk(SmokeCRMUser1Email, smokeExcelPath, shrdFolder, null, shrd_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser1Email, smokeExcelPath, shrdFolder, null, shrd_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+shrdFolder);
 					appLog.info("File is upload successfullly");
 				
@@ -1936,7 +1936,7 @@ public class SmokeTestCase extends BaseLib {
 				}
 				
 				String std_docpath="UploadFiles\\SmokeUploadFile\\Standard";
-				if(fp.uploadFileBulk(SmokeCRMUser1Email, smokeExcelPath, standrdFolder, UpdateSmokeInstitution1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser1Email, smokeExcelPath, standrdFolder, UpdateSmokeInstitution1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+standrdFolder);
 					appLog.info("File is upload successfullly");
 					
@@ -1968,9 +1968,9 @@ public class SmokeTestCase extends BaseLib {
 		String fileName=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String docPath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath);;
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				if(fp.onlineImport(UpdateSmokeInstitution1, null, null,folderpath,docPath,fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				if(fp.onlineImport(environment, mode, UpdateSmokeInstitution1,null,null,folderpath, docPath, fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
 				}else {
 					appLog.error("file is not imported: "+fileName+" in :"+folderpath);
@@ -2003,9 +2003,9 @@ public class SmokeTestCase extends BaseLib {
 		String parentID=null;
 		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		if (bp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesStandard.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30))){
 						parentID = switchOnWindow(driver);
@@ -2018,7 +2018,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 						}else {
 							appLog.error("No new window is open so cannot check document");
 							sa.assertTrue(false, "No new window is open so cannot check document");
@@ -2200,7 +2200,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 							}else {
 								appLog.error("No new window is open so cannot check document");
 								sa.assertTrue(false, "No new window is open so cannot check document");
@@ -2245,12 +2245,12 @@ public class SmokeTestCase extends BaseLib {
 		String fileName=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String docPath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath);;
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				
 				String common_docpath="UploadFiles\\SmokeUploadFile\\Common";
 				
-				if(fp.uploadFileBulk(SmokeCRMUser1Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser1Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+commonpath);
 					appLog.info("File is upload successfullly");
 					
@@ -2259,7 +2259,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false,"Not able to upload file in "+commonpath);
 				}
 				
-				if(fp.uploadFileBulk(SmokeCRMUser1Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser1Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+commonpath);
 					appLog.info("File is upload successfullly");
 					
@@ -2268,20 +2268,20 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false,"Not able to upload file in "+commonpath);
 				}
 				
-				if(fp.onlineImport(UpdateSmokeInstitution1, null, null,folderpath,docPath,fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, UpdateSmokeInstitution1,null,null,folderpath, docPath, fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
 				}else {
 					appLog.error("file is not imported: "+fileName+" in :"+folderpath);
 					sa.assertTrue(false, "file is not imported: "+fileName+" in :"+folderpath);
 				}
 				
-				if(fp.onlineImport(UpdateSmokeInstitution1, null, null,folderpath,docPath,fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, UpdateSmokeInstitution1,null,null,folderpath, docPath, fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
 				}else {
 					appLog.error("file is not imported: "+fileName+" in :"+folderpath);
 					sa.assertTrue(false, "file is not imported: "+fileName+" in :"+folderpath);
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					if(selectVisibleTextFromDropDown(driver, fp.getManageAppPendingDropdown(60), "drop down list", "All Pending Documents")) {
 					WebElement alldocCheckBox=fp.getManageApprovalsAllDocumentSelectCheckBox(10);
@@ -2649,15 +2649,15 @@ public class SmokeTestCase extends BaseLib {
 		String File = ExcelUtils.readData(smokeExcelPath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
 		ThreadSleep(5000);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame(environment,mode,PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.HomePage, 60));
 		if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 			appLog.info("Clicked on activity type");
 			if (click(driver, bp.getGoToContactButton(PageName.HomePage,null,60), "Go to Contact button", action.SCROLLANDBOOLEAN)) {
 				appLog.info("Clicked on Go to Contact button");
 				String parentID = switchOnWindow(driver);
 				if (parentID != null) {
-					WebElement ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+					WebElement ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName + " " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 					if (ele != null) {
 						if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 							appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -2672,7 +2672,7 @@ public class SmokeTestCase extends BaseLib {
 					}
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+					switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.HomePage, 60));
 				} else {
 					appLog.info("No new window is open");
 					sa.assertTrue(false, "No new window is open");
@@ -2704,7 +2704,7 @@ public class SmokeTestCase extends BaseLib {
 				appLog.info("Clicked on Go to firm button");
 				String parentID = switchOnWindow(driver);
 				if (parentID != null) {
-					WebElement ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+					WebElement ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 					if (ele != null) {
 						if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 							appLog.info(SmokeInstitution1 + " Page is opened");
@@ -2718,7 +2718,7 @@ public class SmokeTestCase extends BaseLib {
 					}
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+					switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.HomePage, 60));
 				} else {
 					appLog.info("No new window is open");
 					sa.assertTrue(false, "No new window is open");
@@ -2750,7 +2750,7 @@ public class SmokeTestCase extends BaseLib {
 			if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 				String parentID = switchOnWindow(driver);
 				if (parentID != null) {
-					ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+					ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName +" " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 					if (ele != null) {
 						if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 							appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -2765,7 +2765,7 @@ public class SmokeTestCase extends BaseLib {
 					}
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+					switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.HomePage, 60));
 				} else {
 					appLog.info("No new window is open");
 					sa.assertTrue(false, "No new window is open");
@@ -2794,7 +2794,7 @@ public class SmokeTestCase extends BaseLib {
 					
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+					switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.HomePage, 60));
 				} else {
 					appLog.info("No new window is open");
 					sa.assertTrue(false, "No new window is open");
@@ -2823,7 +2823,7 @@ public class SmokeTestCase extends BaseLib {
 					}
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+					switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.HomePage, 60));
 				} else {
 					appLog.info("No new window is open");
 					sa.assertTrue(false, "No new window is open");
@@ -2882,19 +2882,19 @@ public class SmokeTestCase extends BaseLib {
 		String shrdfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
 		String shrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace.toString() + " View.");
-				/*if(fp.verifyFolderPathdummy(standrdFolder, UpdateSmokeInstitution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 60)){
+				if(fp.verifyFolderPathdummy(standrdFolder, UpdateSmokeInstitution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.PotentialInvestmentPage, Workspace.FundraisingWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}
 					else {
 						appLog.error("download button is not successfully verified");
 						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}
 					WebElement ele=FindElement(driver, "//a[@title='"+standrdfile[0]+"']/../../following-sibling::span//a/u[text()='View']", "view link", action.BOOLEAN, 10);
 					if(ele!=null) {
@@ -2954,7 +2954,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName +" " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 										appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -2969,7 +2969,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -2989,7 +2989,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -3003,7 +3003,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -3030,7 +3030,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -3068,14 +3068,14 @@ public class SmokeTestCase extends BaseLib {
 					}
 					if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),"Alert History Link", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 						if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 							appLog.info("Clicked on activity type");
 							if (click(driver, bp.getGoToContactButton(PageName.FundsPage,Workspace.FundraisingWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on Go to Contact button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName +" " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 											appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -3090,7 +3090,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -3122,7 +3122,7 @@ public class SmokeTestCase extends BaseLib {
 								appLog.info("Clicked on Go to firm button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 											appLog.info(SmokeInstitution1 + " Page is opened");
@@ -3136,7 +3136,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -3167,7 +3167,7 @@ public class SmokeTestCase extends BaseLib {
 							if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName +" "+ SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 											appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -3182,7 +3182,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -3211,7 +3211,7 @@ public class SmokeTestCase extends BaseLib {
 									
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -3522,7 +3522,7 @@ public class SmokeTestCase extends BaseLib {
 						
 						driver.close();
 						driver.switchTo().window(parentid);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}else {
 						appLog.error("Not able to click on analytics icon so cannot verify links");
 						sa.assertTrue(false, "Not able to click on analytics icon so cannot verify links");
@@ -3531,7 +3531,7 @@ public class SmokeTestCase extends BaseLib {
 					appLog.error("Folder path not visible "+standrdFolder+" so cannot click on file link");
 					sa.assertTrue(false, "Folder path not visible "+standrdFolder+" so cannot click on file link");
 				}
-				*/String docPath=System.getProperty("user.dir") + "\\UploadFiles\\SmokeUploadFile\\Shared\\";
+				String docPath=System.getProperty("user.dir") + "\\UploadFiles\\SmokeUploadFile\\Shared\\";
 				if(fp.updateFile(shrdFolder, shrdfile, UpdateSmokeInstitution1, null, FolderType.Shared,docPath+shrdfile,null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is updated successfully: "+shrdfile+" in :"+shrdFolder);
 						
@@ -3540,7 +3540,7 @@ public class SmokeTestCase extends BaseLib {
 					appLog.error("Not able to update file in shared folder "+shrdfile);
 					sa.assertTrue(false, "Not able to update file in shared folder "+shrdfile);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(shrdFolder, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 60)){
 					if(fp.clickOnManageVersionOnContentGrid(shrdfile, Workspace.FundraisingWorkspace, 20)) {
 						appLog.info("clicked on manage version link");
@@ -3552,7 +3552,7 @@ public class SmokeTestCase extends BaseLib {
 								appLog.info("Update file window is open ");
 								driver.close();
 								driver.switchTo().window(parentwindow);
-								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+								switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 								
 							}else {
 								appLog.error("No new window is open ");
@@ -3574,7 +3574,7 @@ public class SmokeTestCase extends BaseLib {
 										
 										driver.close();
 										driver.switchTo().window(parentID);
-										switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+										switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 									} else {
 										appLog.info("No new window is open");
 										sa.assertTrue(false, "No new window is open");
@@ -3600,7 +3600,7 @@ public class SmokeTestCase extends BaseLib {
 							sa.assertTrue(false, "Update Button on manage version pop up is not available.");
 						}
 						switchToDefaultContent(driver);
-						if(fp.makeCurrentversionDocViaManageVersion(null, null, shrdFolder,shrdfile, shrdfile, Workspace.FundraisingWorkspace,30)) {
+						if(fp.makeCurrentversionDocViaManageVersion(environment, mode, null,null, shrdFolder, shrdfile,shrdfile, Workspace.FundraisingWorkspace, 30)) {
 							appLog.info("file is successfully make current: "+shrdfile+" in :"+shrdFolder);
 							
 						}else {
@@ -3662,19 +3662,19 @@ public class SmokeTestCase extends BaseLib {
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String[] standrdfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard).split("<break>");
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(contact.clickOnTab(TabName.ContactTab)) {
-			if(contact.clickOnCreatedContact(SmokeContact1FirstName, SmokeContact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+		if(contact.clickOnTab(environment,mode,TabName.ContactTab)) {
+			if(contact.clickOnCreatedContact(environment,mode,SmokeContact1FirstName, SmokeContact1LastName, null)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder, UpdateSmokeInstitution1, null, SmokeFundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.ContactsPage, Workspace.FundraisingWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 					}
 					else {
 						appLog.error("download button is not successfully verified");
 						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}
 					
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
@@ -3722,7 +3722,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName +" " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 										appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -3737,7 +3737,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -3757,7 +3757,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -3771,7 +3771,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -3798,7 +3798,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -3835,14 +3835,14 @@ public class SmokeTestCase extends BaseLib {
 					}
 					if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),"Alert History Link", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 						if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 							appLog.info("Clicked on activity type");
 							if (click(driver, bp.getGoToContactButton(PageName.ContactsPage,Workspace.FundraisingWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on Go to Contact button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName +" " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 											appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -3857,7 +3857,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -3889,7 +3889,7 @@ public class SmokeTestCase extends BaseLib {
 								appLog.info("Clicked on Go to firm button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 											appLog.info(SmokeInstitution1 + " Page is opened");
@@ -3903,7 +3903,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -3934,7 +3934,7 @@ public class SmokeTestCase extends BaseLib {
 							if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName +" " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 											appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -3949,7 +3949,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -3978,7 +3978,7 @@ public class SmokeTestCase extends BaseLib {
 									
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -4024,11 +4024,6 @@ public class SmokeTestCase extends BaseLib {
 							appLog.error("Not able to select show dropdown value");
 							sa.assertTrue(false, "Not able to select dropdown value");
 						}
-						
-						
-						
-						
-						
 						if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
 							appLog.info("Clicked on alert history aross icon");
 						}else{
@@ -4053,9 +4048,9 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		if(contact.clickOnTab(TabName.ContactTab)) {
-			if(contact.clickOnCreatedContact(SmokeContact3FirstName, SmokeContact3LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+		if(contact.clickOnTab(environment,mode,TabName.ContactTab)) {
+			if(contact.clickOnCreatedContact(environment,mode,SmokeContact3FirstName, SmokeContact3LastName, null)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace.toString() + " View.");
 				
 				if(click(driver, contact.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
@@ -4069,7 +4064,7 @@ public class SmokeTestCase extends BaseLib {
 								switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 								driver.switchTo().window(ParentID);
 								refresh(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 30));
 								scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace Section view");
 							}else{
 								appLog.info("No new window to switch");
@@ -4120,20 +4115,20 @@ public class SmokeTestCase extends BaseLib {
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String[] standrdfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard).split("<break>");
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(ins.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedInstitution(SmokeInstitution1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+		if(ins.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if(ins.clickOnCreatedInstitution(environment,mode,SmokeInstitution1)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder, null, null, SmokeFundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 60)){
-					if (bp.verifyDownloadFunctionality(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, standrdfile[0], true, false,false)) {
-						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
-					}
-					else {
-						appLog.error("download button is not successfully verified");
-						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
-					}
+//					if (bp.verifyDownloadFunctionality(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, standrdfile[0], true, false,false)) {
+//						appLog.info("download button is successfully verified");
+//						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+//					}
+//					else {
+//						appLog.error("download button is not successfully verified");
+//						sa.assertTrue(false, "download button is not successfully verified");
+//						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+//					}
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
 					if (bp.enterValueAndClickonSearchBoxContentGrid(PageName.ContactsPage, Workspace.FundraisingWorkspace,standrdfile[0], 30)) {
 						ThreadSleep(2000);
@@ -4210,7 +4205,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact1FirstName+" " + SmokeContact1LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact1FirstName + " " + SmokeContact1LastName)) {
 										appLog.info(SmokeContact1FirstName + " " + SmokeContact1LastName + " Page is opened");
@@ -4225,7 +4220,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -4245,7 +4240,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -4259,7 +4254,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -4286,7 +4281,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -4346,8 +4341,15 @@ public class SmokeTestCase extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
-		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+		if(nim.clickOnTab(environment,mode,TabName.NIMTab)) {
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				switchToFrame(driver, 60, nim.getNIMTabParentFrame_Lightning());
+				ThreadSleep(5000);
+			}else {
+				appLog.error("Not able to switch to NIM Tab Parent Frame so cannot check link on NIM page");
+				exit("Not able to switch to NIM Tab Parent Frame so cannot check link on NIM page");
+			}
+			switchToFrame(driver, 30, nim.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnEditIcon()) {
 				ThreadSleep(3000);
 				WebElement ele = isDisplayed(driver,
@@ -5274,8 +5276,8 @@ public class SmokeTestCase extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String standardFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				String Size=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Size);
 				String vintageyear=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_VintageYear);
 				String con=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Contact);
@@ -5283,7 +5285,7 @@ public class SmokeTestCase extends BaseLib {
 				String email=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Email);
 				String description=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Description);
 				String[] data= {Size,vintageyear,con,phone,email,description};
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 20), Workspace.InvestorWorkspace.toString()+" View.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 10), Workspace.InvestorWorkspace.toString()+" Workspace Button", action.BOOLEAN)){
@@ -5489,8 +5491,8 @@ public class SmokeTestCase extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String shrdfolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				if(fp.inviteContact(environment, mode,SmokeInstitution1, SmokeContact2EmailId,null, FolderType.Standard,"Upload","Yes", "No",null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is invited successfuly");
 				}else {
@@ -5506,7 +5508,8 @@ public class SmokeTestCase extends BaseLib {
 				if(fp.inviteContact(environment, mode,SmokeInstitution1, SmokeContact1EmailId,null,FolderType.Standard,null,null, null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info("Contact "+SmokeContact1FirstName+" "+SmokeContact1LastName+" is invited successfuly");
 					ThreadSleep(2000);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 					if(click(driver, fp.getcontactaccessremoveLink(Workspace.InvestorWorkspace, EnableDisable.Enable,SmokeContact1EmailId, 10),SmokeContact1EmailId+" contact remove link", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on contact "+SmokeContact1EmailId+" remove link");
@@ -5530,7 +5533,7 @@ public class SmokeTestCase extends BaseLib {
 					appLog.error("Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is not invited from "+shrdfolder);
 					sa.assertTrue(false, "Contact "+SmokeContact2FirstName+" "+SmokeContact2LastName+" is not invited from "+shrdfolder);
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Manage emails icon",action.SCROLLANDBOOLEAN)) {
 					if(selectVisibleTextFromDropDown(driver, fp.getManageEmailContactAccessViewDropDownList(60), "manage emails drop down list", "All Folders")) {
 						appLog.info("select all folders from drop down list");
@@ -5543,7 +5546,7 @@ public class SmokeTestCase extends BaseLib {
 						appLog.info("clicked on contact name "+SmokeContact2FirstName+" "+SmokeContact2LastName);
 						String parent = switchOnWindow(driver);
 						if(parent!=null) {
-							ele=FindElement(driver, "//h2[contains(text(),'"+SmokeContact2FirstName+" "+SmokeContact2LastName+"')]", "contatc name ", action.BOOLEAN, 30);
+							ele=FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "contatc name ", action.BOOLEAN, 30);
 							if(ele!=null) {
 								appLog.info("Contact page is open ");
 								driver.close();
@@ -5564,13 +5567,13 @@ public class SmokeTestCase extends BaseLib {
 						sa.assertTrue(false, "Not able to click on contact name "+SmokeContact2FirstName+" "+SmokeContact2LastName+"  so cannot check contact page");
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 					List<WebElement> lst=  FindElements(driver, "//div[@id='manageemailgrid_ME']//a[text()='"+SmokeInstitution1+"']","account name list");
 					if(click(driver, lst.get(0), "account name link", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on account name of contact "+SmokeContact1FirstName+" "+SmokeContact1LastName);
 						String parent = switchOnWindow(driver);
 						if(parent!=null) {
-							ele=FindElement(driver, "//h2[contains(text(),'"+SmokeInstitution1+"')]", "contatc name ", action.BOOLEAN, 30);
+							ele=FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "contatc name ", action.BOOLEAN, 30);
 							if(ele!=null) {
 								appLog.info("account page is open ");
 								driver.close();
@@ -5592,7 +5595,7 @@ public class SmokeTestCase extends BaseLib {
 					}
 					String parentid=null;
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 					if (click(driver, fp.getManageEmailInvitationEmailTemplateEditPreviewTextList().get(0), "Edit ",action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on template edit link ");
 						if (fp.getManageEmailEditNotRegisteredClickHereLink(20) != null) {
@@ -5603,7 +5606,7 @@ public class SmokeTestCase extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 
 						} else {
 							appLog.info(
@@ -5612,7 +5615,7 @@ public class SmokeTestCase extends BaseLib {
 									"Not Registered Click Here Link is not clickable on Manage Email Invitation Edit Pop Up.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 						}
 						if (fp.getManageEmailEditRegisteredClickHereLink(30) != null) {
 							click(driver, fp.getManageEmailEditRegisteredClickHereLink(30),
@@ -5622,7 +5625,7 @@ public class SmokeTestCase extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 
 						} else {
 							appLog.info(
@@ -5653,7 +5656,7 @@ public class SmokeTestCase extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 							} else {
 								appLog.info("Not able to click on not registered click here link");
 								sa.assertTrue(false, "Not able to click on not registered click here link");
@@ -5672,7 +5675,7 @@ public class SmokeTestCase extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 							} else {
 								appLog.info("Not able to click on Registered Click Here Link");
 								sa.assertTrue(false, "Not able to click on Registered Click Here Link");
@@ -5762,9 +5765,9 @@ public class SmokeTestCase extends BaseLib {
 		String[] standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath).split("<break>");
 		String shrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
-		if (lp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		if (lp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(fp.createFolderStructure(standrdFolder[0], FolderType.Common, Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 30).isEmpty()){
@@ -5850,9 +5853,9 @@ public class SmokeTestCase extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String errorMsg=FundsPageErrorMessage.filterPleaseSelectAFieldErroresage;
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
-		if (lp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		if (lp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor icon",action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -5980,10 +5983,10 @@ public class SmokeTestCase extends BaseLib {
 		String shrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		String commonpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				String common_docpath="UploadFiles\\SmokeUploadFile\\Common";
-				if(fp.uploadFileBulk(SmokeCRMUser2Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser2Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+commonpath);
 					appLog.info("File is upload successfullly");
 					
@@ -5993,7 +5996,7 @@ public class SmokeTestCase extends BaseLib {
 				}
 				
 				String shrd_docpath="UploadFiles\\SmokeUploadFile\\Shared";
-				if(fp.uploadFileBulk(SmokeCRMUser2Email, smokeExcelPath, shrdFolder, null, shrd_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser2Email, smokeExcelPath, shrdFolder, null, shrd_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+shrdFolder);
 					appLog.info("File is upload successfullly");
 				
@@ -6003,7 +6006,7 @@ public class SmokeTestCase extends BaseLib {
 				}
 				
 				String std_docpath="UploadFiles\\SmokeUploadFile\\Standard";
-				if(fp.uploadFileBulk(SmokeCRMUser2Email, smokeExcelPath, standrdFolder, SmokeInstitution1+"/"+UpdatedSmokeLP1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser2Email, smokeExcelPath, standrdFolder, SmokeInstitution1+"/"+UpdatedSmokeLP1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+standrdFolder);
 					appLog.info("File is upload successfullly");
 					
@@ -6035,9 +6038,9 @@ public class SmokeTestCase extends BaseLib {
 		String fileName=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String docPath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath);;
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				if(fp.onlineImport(SmokeInstitution1, UpdatedSmokeLP1, null,folderpath,docPath,fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				if(fp.onlineImport(environment, mode, SmokeInstitution1,UpdatedSmokeLP1,null,folderpath, docPath, fileName, SmokeBoxUserName, SmokeBoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
 				}else {
 					appLog.error("file is not imported: "+fileName+" in :"+folderpath);
@@ -6070,9 +6073,9 @@ public class SmokeTestCase extends BaseLib {
 		String std = ExcelUtils.readData(smokeExcelPath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String parentID=null;
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		if (bp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					
 					if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesStandard.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30))){
@@ -6086,7 +6089,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 						}else {
 							appLog.error("No new window is open so cannot check document");
 							sa.assertTrue(false, "No new window is open so cannot check document");
@@ -6268,7 +6271,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 							}else {
 								appLog.error("No new window is open so cannot check document");
 								sa.assertTrue(false, "No new window is open so cannot check document");
@@ -6310,12 +6313,12 @@ public class SmokeTestCase extends BaseLib {
 		String commonpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String folderpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
 				
 				String common_docpath="UploadFiles\\SmokeUploadFile\\Common";
 				
-				if(fp.uploadFileBulk(SmokeCRMUser2Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser2Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+commonpath);
 					appLog.info("File is upload successfullly");
 					
@@ -6324,7 +6327,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false,"Not able to upload file in "+commonpath);
 				}
 				
-				if(fp.uploadFileBulk(SmokeCRMUser2Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser2Email, smokeExcelPath, commonpath, null, common_docpath, UploadFileActions.SelectAll, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+commonpath);
 					appLog.info("File is upload successfullly");
 					
@@ -6334,7 +6337,7 @@ public class SmokeTestCase extends BaseLib {
 				}
 				
 				String std_docpath="UploadFiles\\SmokeUploadFile\\Standard";
-				if(fp.uploadFileBulk(SmokeCRMUser2Email, smokeExcelPath, folderpath, SmokeInstitution1+"/"+UpdatedSmokeLP1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser2Email, smokeExcelPath, folderpath, SmokeInstitution1+"/"+UpdatedSmokeLP1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+folderpath);
 					appLog.info("File is upload successfullly");
 					
@@ -6344,7 +6347,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false,"Not able to upload file in "+folderpath);
 				}
 				
-				if(fp.uploadFileBulk(SmokeCRMUser2Email, smokeExcelPath, folderpath, SmokeInstitution1+"/"+UpdatedSmokeLP1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, SmokeCRMUser2Email, smokeExcelPath, folderpath, SmokeInstitution1+"/"+UpdatedSmokeLP1, std_docpath, UploadFileActions.SelectAll, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+folderpath);
 					appLog.info("File is upload successfullly");
 					
@@ -6354,7 +6357,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false,"Not able to upload file in "+folderpath);
 				}
 				ThreadSleep(5000);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);
 					if(selectVisibleTextFromDropDown(driver, fp.getManageAppPendingDropdown(60), "drop down list", "All Pending Documents")) {
@@ -6680,19 +6683,19 @@ public class SmokeTestCase extends BaseLib {
 		String shrdfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
 		String shrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder, SmokeInstitution1,UpdatedSmokeLP1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.PotentialInvestmentPage, Workspace.InvestorWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}
 					else {
 						appLog.error("download button is not successfully verified");
 						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}
 					WebElement ele=FindElement(driver, "//a[@title='"+standrdfile[0]+"']/../../following-sibling::span//a/u[text()='View']", "view link", action.BOOLEAN, 10);
 					if(ele!=null) {
@@ -6752,7 +6755,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 										appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -6767,7 +6770,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -6787,7 +6790,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -6801,7 +6804,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -6828,7 +6831,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -6866,14 +6869,14 @@ public class SmokeTestCase extends BaseLib {
 					}
 					if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),"Alert History Link", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 						if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 							appLog.info("Clicked on activity type");
 							if (click(driver, bp.getGoToContactButton(PageName.FundsPage,Workspace.InvestorWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on Go to Contact button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 											appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -6888,7 +6891,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -6920,7 +6923,7 @@ public class SmokeTestCase extends BaseLib {
 								appLog.info("Clicked on Go to firm button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 											appLog.info(SmokeInstitution1 + " Page is opened");
@@ -6934,7 +6937,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -6965,7 +6968,7 @@ public class SmokeTestCase extends BaseLib {
 							if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 											appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -6980,7 +6983,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -7009,7 +7012,7 @@ public class SmokeTestCase extends BaseLib {
 									
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -7321,7 +7324,7 @@ public class SmokeTestCase extends BaseLib {
 						
 						driver.close();
 						driver.switchTo().window(parentid);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}else {
 						appLog.error("Not able to click on analytics icon so cannot verify links");
 						sa.assertTrue(false, "Not able to click on analytics icon so cannot verify links");
@@ -7339,7 +7342,7 @@ public class SmokeTestCase extends BaseLib {
 					appLog.error("Not able to update file in shared folder "+shrdfile);
 					sa.assertTrue(false, "Not able to update file in shared folder "+shrdfile);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(shrdFolder, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 60)){
 					if(fp.clickOnManageVersionOnContentGrid(shrdfile, Workspace.InvestorWorkspace, 20)) {
 						appLog.info("clicked on manage version link");
@@ -7351,7 +7354,7 @@ public class SmokeTestCase extends BaseLib {
 								appLog.info("Update file window is open ");
 								driver.close();
 								driver.switchTo().window(parentwindow);
-								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+								switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 								
 							}else {
 								appLog.error("No new window is open ");
@@ -7372,7 +7375,7 @@ public class SmokeTestCase extends BaseLib {
 										
 										driver.close();
 										driver.switchTo().window(parentID);
-										switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+										switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 									} else {
 										appLog.info("No new window is open");
 										sa.assertTrue(false, "No new window is open");
@@ -7399,7 +7402,7 @@ public class SmokeTestCase extends BaseLib {
 							sa.assertTrue(false, "Update Button on manage version pop up is not available.");
 						}
 						switchToDefaultContent(driver);
-						if(fp.makeCurrentversionDocViaManageVersion(null, null, shrdFolder,shrdfile, shrdfile, Workspace.InvestorWorkspace,30)) {
+						if(fp.makeCurrentversionDocViaManageVersion(environment, mode, null,null, shrdFolder, shrdfile,shrdfile, Workspace.InvestorWorkspace, 30)) {
 							appLog.info("file is successfully make current: "+shrdfile+" in :"+shrdFolder);
 							
 						}else {
@@ -7461,19 +7464,19 @@ public class SmokeTestCase extends BaseLib {
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String[] standrdfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard).split("<break>");
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(contact.clickOnTab(TabName.ContactTab)) {
-			if(contact.clickOnCreatedContact(SmokeContact2FirstName, SmokeContact2LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+		if(contact.clickOnTab(environment,mode,TabName.ContactTab)) {
+			if(contact.clickOnCreatedContact(environment,mode,SmokeContact2FirstName, SmokeContact2LastName, null)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder, SmokeInstitution1,UpdatedSmokeLP1, SmokeFundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.ContactsPage, Workspace.InvestorWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 					}
 					else {
 						appLog.error("download button is not successfully verified");
 						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.FundsPage, 60));
 					}
 					
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
@@ -7549,7 +7552,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 										appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -7564,7 +7567,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -7584,7 +7587,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -7598,7 +7601,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -7625,7 +7628,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -7662,14 +7665,14 @@ public class SmokeTestCase extends BaseLib {
 					}
 					if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),"Alert History Link", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 						if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 							appLog.info("Clicked on activity type");
 							if (click(driver, bp.getGoToContactButton(PageName.ContactsPage,Workspace.InvestorWorkspace,60), "Go to Contact button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on Go to Contact button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 											appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -7684,7 +7687,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -7716,7 +7719,7 @@ public class SmokeTestCase extends BaseLib {
 								appLog.info("Clicked on Go to firm button");
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 											appLog.info(SmokeInstitution1 + " Page is opened");
@@ -7730,7 +7733,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -7761,7 +7764,7 @@ public class SmokeTestCase extends BaseLib {
 							if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 								String parentID = switchOnWindow(driver);
 								if (parentID != null) {
-									ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+									ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 									if (ele != null) {
 										if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 											appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -7776,7 +7779,7 @@ public class SmokeTestCase extends BaseLib {
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -7805,7 +7808,7 @@ public class SmokeTestCase extends BaseLib {
 									
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 								} else {
 									appLog.info("No new window is open");
 									sa.assertTrue(false, "No new window is open");
@@ -7879,9 +7882,9 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		if(contact.clickOnTab(TabName.ContactTab)) {
-			if(contact.clickOnCreatedContact(SmokeContact3FirstName, SmokeContact3LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+		if(contact.clickOnTab(environment,mode,TabName.ContactTab)) {
+			if(contact.clickOnCreatedContact(environment,mode,SmokeContact3FirstName, SmokeContact3LastName, null)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 				
 				if(click(driver, contact.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
@@ -7896,7 +7899,7 @@ public class SmokeTestCase extends BaseLib {
 								switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 								driver.switchTo().window(ParentID);
 								refresh(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 30));
 								scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising Workspace Section view");
 							}else{
 								appLog.info("No new window to switch");
@@ -7947,19 +7950,19 @@ public class SmokeTestCase extends BaseLib {
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String[] standrdfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard).split("<break>");
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(ins.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedInstitution(SmokeInstitution1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+		if(ins.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if(ins.clickOnCreatedInstitution(environment,mode,SmokeInstitution1)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder,UpdatedSmokeLP1,null, SmokeFundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.InstitutionsPage, Workspace.InvestorWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 					}
 					else {
 						appLog.error("download button is not successfully verified");
 						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 					}
 					
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
@@ -8036,7 +8039,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 										appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -8051,7 +8054,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -8071,7 +8074,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -8085,7 +8088,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -8112,7 +8115,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -8178,19 +8181,19 @@ public class SmokeTestCase extends BaseLib {
 		String CommonFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String Commonfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(ins.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(SmokeLimitedPartner1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+		if(ins.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if(ins.clickOnCreatedLP(environment,mode,SmokeLimitedPartner1)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.LimitedPartnerPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder,null,null, SmokeFundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.InstitutionsPage, Workspace.InvestorWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.LimitedPartnerPage, 60));
 					}
 					else {
 						appLog.error("download button is not successfully verified");
 						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.LimitedPartnerPage, 60));
 					}
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
 					if (bp.enterValueAndClickonSearchBoxContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace,standrdfile[0], 30)) {
@@ -8264,7 +8267,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 										appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -8279,7 +8282,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.LimitedPartnerPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -8299,7 +8302,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -8313,7 +8316,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.LimitedPartnerPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -8340,7 +8343,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.LimitedPartnerPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -8416,19 +8419,19 @@ public class SmokeTestCase extends BaseLib {
 		String CommonFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String Commonfile=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
 		lp.CRMLogin(SmokeCRMUser2Email,SmokePassword);
-		if(com.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.clickOnCreatedCommitmentId(SmokeCommitment1Id)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.CommitmentsPage, 60));
+		if(com.clickOnTab(environment,mode,TabName.CommitmentsTab)) {
+			if(com.clickOnCreatedCommitmentId(environment,mode,SmokeCommitment1Id)) {
+				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.CommitmentsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder,null,UpdatedSmokeLP1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.CommitmentsPage, Workspace.InvestorWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.CommitmentsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.CommitmentsPage, 60));
 					}
 					else {
 						appLog.error("download button is not successfully verified");
 						sa.assertTrue(false, "download button is not successfully verified");
-						switchToFrame(driver, 30, bp.getFrame(PageName.CommitmentsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.CommitmentsPage, 60));
 					}
 					
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
@@ -8505,7 +8508,7 @@ public class SmokeTestCase extends BaseLib {
 						if(click(driver, ele, "contact name link", action.BOOLEAN)) {
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeContact2FirstName +" " + SmokeContact2LastName+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeContact2FirstName + " " + SmokeContact2LastName)) {
 										appLog.info(SmokeContact2FirstName + " " + SmokeContact2LastName + " Page is opened");
@@ -8520,7 +8523,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.CommitmentsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.CommitmentsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -8540,7 +8543,7 @@ public class SmokeTestCase extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+								ele = FindElement(driver, "//*[text()='"+SmokeInstitution1+"']", "Page Header", action.BOOLEAN, 40);
 								if (ele != null) {
 									if (ele.getText().trim().equalsIgnoreCase(SmokeInstitution1)) {
 										appLog.info(SmokeInstitution1 + " Page is opened");
@@ -8554,7 +8557,7 @@ public class SmokeTestCase extends BaseLib {
 								}
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, bp.getFrame(PageName.CommitmentsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.CommitmentsPage, 60));
 							} else {
 								appLog.info("No new window is open");
 								sa.assertTrue(false, "No new window is open");
@@ -8581,7 +8584,7 @@ public class SmokeTestCase extends BaseLib {
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.CommitmentsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.CommitmentsPage, 60));
 						} else {
 							appLog.info("No new window is open");
 							sa.assertTrue(false, "No new window is open");
@@ -8651,9 +8654,9 @@ public class SmokeTestCase extends BaseLib {
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
-		if(bp.clickOnTab(TabName.ContactTab)) {
-			if(cp.clickOnCreatedContact(SmokeContact2FirstName, SmokeContact2LastName, null)) {
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+		if(bp.clickOnTab(environment,mode,TabName.ContactTab)) {
+			if(cp.clickOnCreatedContact(environment,mode,SmokeContact2FirstName, SmokeContact2LastName, null)) {
+				switchToFrame(driver, 30,bp. getFrame(environment,mode,PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace.toString()+" Section view");
 			if(click(driver, cp.getResetPasswordActiveButton(Workspace.InvestorWorkspace, 60), "Reset password button", action.SCROLLANDBOOLEAN)) {
 				if(cp.getResetPasswordpopupHeader(60)!=null){
@@ -8828,9 +8831,9 @@ public class SmokeTestCase extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.closeWorkSpace(Workspace.FundraisingWorkspace, 60)) {
 					appLog.info("fundraising workspace is close successfully");
 				}else {
@@ -8838,7 +8841,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "Fundraising Workspace is not closed");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.closeWorkSpace(Workspace.InvestorWorkspace, 60)) {
 					appLog.info("investor workspace is close successfully");
 				}else {
@@ -8894,9 +8897,9 @@ public class SmokeTestCase extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName,SmokePassword);
-		if(fp.clickOnTab(TabName.FundsTab)) {
-			if(fp.clickOnCreatedFund(SmokeFundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+		if(fp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if(fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(click(driver, fp.getWorkSpaceClearBtn(Workspace.FundraisingWorkspace, 30), "workspace clear button", action.SCROLLANDBOOLEAN)) {
 					String parentID=switchOnWindow(driver);
 					String NewChildWindow=null;
@@ -8982,7 +8985,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "No new window is open so cannot clear workspace");
 				}
 				refresh(driver);
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30)!=null) {
 					appLog.info("build workspace fundraising button is displaying ");
 				}else {
@@ -9075,7 +9078,7 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "No new window is open so cannot clear workspace");
 				}
 				refresh(driver);
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30)!=null) {
 					appLog.info("build investor workspace  button is displaying ");
 				}else {

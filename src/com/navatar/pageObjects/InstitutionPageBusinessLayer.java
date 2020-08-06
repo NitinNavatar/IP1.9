@@ -506,6 +506,101 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 		return false;
 	}
 
+	//Lightning Method...........
+	public boolean clickOnCreatedInstitution(String environment,String mode,String inst_name) {
+
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+
+			List<WebElement> optionsInDropDown = FindElements(driver, "//select[@id='fcf']/option[text()='All Institutions']", "");
+			String[] options = {};
+			if(optionsInDropDown.size()>1){
+				String[] o = {optionsInDropDown.get(0).getAttribute("value"), optionsInDropDown.get(1).getAttribute("value")};
+				options = o;
+			} else {
+				String[] o = {optionsInDropDown.get(0).getAttribute("value")};
+				options = o;
+			}
+
+			int i =1;
+			if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
+					.equalsIgnoreCase("All Institutions")) {
+				if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+
+				} else {
+					appLog.error("Go button not found");
+				}
+			} else {
+				if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", options[0])) {
+				} else {
+					appLog.error("All institutions not found in dropdown");
+				}
+
+			}
+			WebElement ele = isDisplayed(driver,
+					FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + inst_name + "']/..",
+							"Institution link", action.SCROLLANDBOOLEAN, 20),
+					"visibility", 20, "");
+			if(ele==null){
+				if(options.length>1){
+					if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", options[1])) {
+						ele = isDisplayed(driver,
+								FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + inst_name + "']/..",
+										"Institution link", action.SCROLLANDBOOLEAN, 20),
+								"visibility", 20, "");
+					} else {
+						appLog.error("All institutions not found in dropdown");
+					}
+				} else {
+					appLog.error("All institutions not found in dropdown");
+				}
+			}
+			if (ele != null) {
+				scrollDownThroughWebelement(driver, ele, "");
+				if (click(driver, ele, inst_name + " name text", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on institution link");
+					return true;
+				} else {
+					appLog.error("Not able to click on " + inst_name);
+				}
+			} else {
+				while (true) {
+					appLog.error("Institutions is not Displaying on "+i+ " Page: " + inst_name);
+					if (click(driver, getNextImageonPage(10), "Institutions Page Next Button",
+							action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(2000);
+						appLog.info("Clicked on Next Button");
+						ele = FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + inst_name + "']/..",
+								"Institution link", action.SCROLLANDBOOLEAN, 20);
+						if (ele != null) {
+							if (click(driver, ele, inst_name, action.SCROLLANDBOOLEAN)) {
+								appLog.info("Clicked on Institutions name : " + inst_name);
+								return true;
+
+							} else {
+								appLog.error("Not able to click on " + inst_name);
+							}
+						}
+					} else {
+						appLog.error("Institutions Not Available : " + inst_name);
+						return false;
+					}
+					i++;
+				}
+			}
+		}else{
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, inst_name, 30)){
+				appLog.info("Clicked on Institutions name : " + inst_name);
+				return true;
+			}else{
+				appLog.error("Institutions Not Available : " + inst_name);
+			}	
+		}
+		return false;
+	}
+	
+	
+	
+	
 	/**
 	 * @author Akul Bhutani
 	 * @param lp_name
@@ -569,6 +664,78 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 		return false;
 	}
 
+	
+	//Lightning Method...
+	public boolean clickOnCreatedLP(String environment,String mode,String lp_name) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		int i =1;
+		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
+				.equalsIgnoreCase("All Limited Partners")) {
+			if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+				appLog.info("Clicked on Go button");
+			} else {
+				appLog.error("Go button not found");
+			}
+		} else {
+			if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", "All Limited Partners")) {
+				appLog.info("Select Limited Partners in View Dropdown");
+
+			}
+
+		}
+		WebElement ele = isDisplayed(driver,
+				FindElement(driver,
+						"//*[@id='ext-gen12']/div/table/tbody/tr/td[4]/div/a/span[text()='" + lp_name + "']", "LP link",
+						action.SCROLLANDBOOLEAN, 10),
+				"visibility", 10, "");
+		if (ele != null) {
+			scrollDownThroughWebelement(driver, ele, "");
+			if (click(driver, ele, lp_name + " name text", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on limited partner link");
+				return true;
+			} else {
+				appLog.error("Not able to click on " + lp_name);
+			}
+		} else {
+			while (true) {
+				appLog.error("limited partner is not Displaying on "+i+ " Page: " + lp_name);
+				if (click(driver, getNextImageonPage(10), "limited partner Page Next Button",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.info("Clicked on Next Button");
+					ele = FindElement(driver,
+							"//*[@id='ext-gen12']/div/table/tbody/tr/td[4]/div/a/span[text()='" + lp_name + "']", "LP link",
+							action.SCROLLANDBOOLEAN, 10);
+					if (ele != null) {
+						if (click(driver, ele, lp_name, action.SCROLLANDBOOLEAN)) {
+							appLog.info("Clicked on limited partner name : " + lp_name);
+							return true;
+							
+						}
+					}
+
+					
+
+				} else {
+					appLog.error("limited partner Not Available : " + lp_name);
+					return false;
+				}
+				i++;
+			}
+		}
+		}else{
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.LimitedPartner, lp_name, 30)){
+				appLog.info("Clicked on limited partner name : " + lp_name);
+				return true;
+			}else{
+				appLog.error("limited partner Not Available : " + lp_name);
+			}	
+		}
+		return false;
+	}
+	
+	
+	
 	/**
 	 * @author Parul Singh
 	 * @param lp_name

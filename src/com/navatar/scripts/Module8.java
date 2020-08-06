@@ -347,7 +347,7 @@ public class Module8 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(click(driver, nim.getRegistrationSuccessfulCloseBtn(30), "Close Button", action.BOOLEAN)){
 				appLog.info("User is successfully registered.");
 			} else {
@@ -361,7 +361,7 @@ public class Module8 extends BaseLib{
 		}
 		if(nim.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Workspace view.");
 				if(fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30)!=null){
 					appLog.info("Build Fundraising Workspace button is verified.");
@@ -395,7 +395,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 					if(fp.getFundNameField(Workspace.FundraisingWorkspace, 30)!=null){
@@ -704,7 +704,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Build Investor workspace button", action.BOOLEAN)){
 					if(fp.getFundNameField(Workspace.InvestorWorkspace, 30)!=null){
@@ -1014,7 +1014,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -1433,7 +1433,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -1839,7 +1839,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -2057,7 +2057,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -2281,7 +2281,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -2737,7 +2737,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -3182,7 +3182,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -3557,7 +3557,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -3924,7 +3924,7 @@ public class Module8 extends BaseLib{
 		boolean flag = true;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.createFolderTemplate("FolderTemp", folderTemplateName, "Folder Description", 60)){	
 				appLog.info("Folder template created successfully.");
 			} else {
@@ -3938,7 +3938,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.createFolderTemplate("FolderTemp", folderTemplateName+"1", "Folder Description", 60)){	
 				appLog.info(folderTemplateName+"1"+" :Folder template created successfully.");
 			} else {
@@ -3953,7 +3953,7 @@ public class Module8 extends BaseLib{
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -4061,7 +4061,7 @@ public class Module8 extends BaseLib{
 		nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.createFolderTemplate("FolderTemp", folderTemplateName+"2", "Folder Description", 60)){	
 				appLog.info(folderTemplateName+"2"+" :Folder template created successfully.");
 			} else {
@@ -4075,7 +4075,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.createFolderTemplate("FolderTemp", folderTemplateName+"3", "Folder Description", 60)){	
 				appLog.info(folderTemplateName+"3"+" :Folder template created successfully.");
 			} else {
@@ -4100,7 +4100,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -4558,7 +4558,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -5016,7 +5016,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -5375,7 +5375,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -5742,7 +5742,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -6142,7 +6142,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -6539,7 +6539,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -6780,7 +6780,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -7019,7 +7019,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -7240,7 +7240,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F4)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -7460,7 +7460,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -7683,7 +7683,7 @@ public class Module8 extends BaseLib{
 																switchToDefaultContent(driver);
 																if(fp.clickOnTab(TabName.InstituitonsTab)){
 																	if(ins.clickOnCreatedInstitution(M8I1)){
-																		switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+																		switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 																		scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising wokspace view.");
 																		if(fp.VerifyFolderStructure("FolderTemp", null, null, M8F2, Workspace.FundraisingWorkspace, PageName.InstitutionsPage, 30)){
 																			appLog.info("Folder Structure is verified on instituions page.");
@@ -7777,7 +7777,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F5)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Buld Investor workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.InvestorWorkspace, 30), "2013", "Vintage year", action.BOOLEAN)){
@@ -8009,7 +8009,7 @@ public class Module8 extends BaseLib{
 																switchToDefaultContent(driver);
 																if(fp.clickOnTab(TabName.InstituitonsTab)){
 																	if(ins.clickOnCreatedInstitution(M8I1)){
-																		switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+																		switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 																		scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor wokspace view.");
 																		if(fp.VerifyFolderStructure("FolderTemp", null, M8LP1, M8F5, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 																			appLog.info("Folder Structure is verified on institution page.");
@@ -8030,7 +8030,7 @@ public class Module8 extends BaseLib{
 																
 																if(fp.clickOnTab(TabName.InstituitonsTab)){
 																	if(ins.clickOnCreatedInstitution(M8LP1)){
-																		switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+																		switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 																		scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor wokspace view.");
 																		if(fp.VerifyFolderStructure("FolderTemp", null, null, M8F5, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 																			appLog.info("Folder Structure is verified on LP page.");
@@ -8052,7 +8052,7 @@ public class Module8 extends BaseLib{
 																CommitmentPageBusinessLayer cmt = new CommitmentPageBusinessLayer(driver);
 																if(fp.clickOnTab(TabName.CommitmentsTab)){
 																	if(cmt.clickOnCreatedCommitmentId(M8CMT1)){
-																		switchToFrame(driver, 30, cmt.getFrame(PageName.CommitmentsPage, 30));
+																		switchToFrame(driver, 30, cmt.getFrame( PageName.CommitmentsPage, 30));
 																		scrollDownThroughWebelement(driver, cmt.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Workpsace view.");
 																		if(fp.VerifyFolderStructure("FolderTemp", null, M8LP1, M8F5, Workspace.InvestorWorkspace, PageName.CommitmentsPage, 30)){
 																			appLog.info("Folder Structure is verified on Commitment page.");
@@ -8149,7 +8149,7 @@ public class Module8 extends BaseLib{
 			if(fp.clickOnCreatedFund(M8F3)){
 				String step1Of3Data[] = {"2254","2015","acb","987654321","abc@bcd.com","Sample description"};
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.CREATEFOLDERTEMPLATE, null, "FolderTemp", M8I1+"<break>"+M8I2, Workspace.FundraisingWorkspace, 60)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace View");
 					if(fp.VerifyFolderStructure("FolderTemp", M8I1, null, null, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Folder Structure is verified on fund page institute '"+M8I1+"'.");
@@ -8190,7 +8190,7 @@ public class Module8 extends BaseLib{
 			if(fp.clickOnCreatedFund(M8F6)){
 				String step1Of3Data[] = {"2254","2015","acb","987654321","abc@bcd.com","Sample description"};
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.CREATEFOLDERTEMPLATE, null, "FolderTemp", M8I1+"/"+M8LP1+"<break>"+M8I2+"/"+M8LP2, Workspace.InvestorWorkspace, 60)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspace View");
 					if(fp.VerifyFolderStructure("FolderTemp", M8I1, M8LP1, null, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Folder Structure is verified on fund page institute '"+M8I1+"'.");
@@ -8232,7 +8232,7 @@ public class Module8 extends BaseLib{
 			if(fp.clickOnCreatedFund(M8F2)){
 				String step1Of3Data[] = {"5000","2015","Contact1","987654321","abc@bcd.com","Sample description"};
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.CREATEFOLDERTEMPLATE, null, "FolderTemp", null, Workspace.InvestorWorkspace, 60)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspace View");
 					if(click(driver, fp.getInvestmentInfoLink(Workspace.InvestorWorkspace, M8F2, 30), "Investment info link", action.BOOLEAN)){
 						String text  = getText(driver, fp.getInvestmentInfoName(30), "Name", action.BOOLEAN).trim();
@@ -8327,7 +8327,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F5)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Buld Fundraising workspace button", action.BOOLEAN)){
 					if(sendKeys(driver, fp.getFundVintageYearField(Workspace.FundraisingWorkspace, 30), "2015", "Vintage year", action.BOOLEAN)){
@@ -8849,7 +8849,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M8F3)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Funcraising wokspace view.");
 				if(click(driver, fp.getInvestmentInfoLink(Workspace.FundraisingWorkspace, M8F3, 30), "Investment info link", action.BOOLEAN)){
 					if(click(driver, fp.getInvestmentInfoEditIcon(30), "Edit icon", action.BOOLEAN)){
@@ -9125,7 +9125,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));				
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));				
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 			if(fp.clearWorkSpace(Workspace.FundraisingWorkspace, 60)){
 				appLog.info("Workspace get cleared successfully");
@@ -9158,7 +9158,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));				
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));				
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 		if(click(driver, fp.getBuildFundraisinWorkspaceButton(60), "Build Fundraising button", action.SCROLLANDBOOLEAN)){
 			if(!sendKeys(driver,fp.getSizeInMillionTextBox(Workspace.FundraisingWorkspace, 60),fundSize, "Size in Million text box", action.BOOLEAN)){
@@ -9572,7 +9572,7 @@ public class Module8 extends BaseLib{
 					sa.assertTrue(false, "10 rows are not added successfully after clicking on add row link");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				ThreadSleep(4000);
@@ -9653,7 +9653,7 @@ public class Module8 extends BaseLib{
 		String [] institutionname={ExcelUtils.readData(filterPath,"Institutions", 2, 0),ExcelUtils.readData(filterPath,"Institutions", 3, 0),ExcelUtils.readData(filterPath,"Institutions", 4, 0)};
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));				
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));				
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 		if(click(driver, fp.getBuildFundraisinWorkspaceButton(60), "Build Fundraising button", action.SCROLLANDBOOLEAN)){
 			if(!sendKeys(driver,fp.getSizeInMillionTextBox(Workspace.FundraisingWorkspace, 60),fundSize, "Size in Million text box", action.BOOLEAN)){
@@ -9809,7 +9809,7 @@ public class Module8 extends BaseLib{
 		for (int i = 0; i < 2; i++) {
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if(click(driver, fp.getBuildFundraisinWorkspaceButton(60), "Build Fundraising button", action.SCROLLANDBOOLEAN)){
@@ -9889,7 +9889,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));				
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));				
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), Workspace.InvestorWorkspace.toString()+" View.");
 			if(fp.clearWorkSpace(Workspace.InvestorWorkspace, 60)){
 				appLog.info("Workspace get cleared successfully");
@@ -9922,7 +9922,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));				
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));				
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), Workspace.InvestorWorkspace.toString()+" View.");
 		if(click(driver, fp.getBuildInvestorWorkspace(60), "Build Investor button", action.SCROLLANDBOOLEAN)){
 			if(!sendKeys(driver,fp.getSizeInMillionTextBox(Workspace.InvestorWorkspace, 60),fundSize, "Size in Million text box", action.BOOLEAN)){
@@ -10336,7 +10336,7 @@ public class Module8 extends BaseLib{
 					sa.assertTrue(false, "10 rows are not added successfully after clicking on add row link");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				ThreadSleep(4000);
@@ -10417,7 +10417,7 @@ public class Module8 extends BaseLib{
 		String [] institutionname={ExcelUtils.readData(filterPath,"Institutions", 1, 0),ExcelUtils.readData(filterPath,"Institutions", 2, 0),ExcelUtils.readData(filterPath,"Institutions", 3, 0),ExcelUtils.readData(filterPath,"Institutions", 4, 0)};
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));				
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));				
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), Workspace.InvestorWorkspace.toString()+" View.");
 		if(click(driver, fp.getBuildInvestorWorkspace(60), "Build Investor button", action.SCROLLANDBOOLEAN)){
 			if(!sendKeys(driver,fp.getSizeInMillionTextBox(Workspace.InvestorWorkspace, 60),fundSize, "Size in Million text box", action.BOOLEAN)){
@@ -10582,7 +10582,7 @@ public class Module8 extends BaseLib{
 		for (int i = 0; i < 2; i++) {
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if(click(driver, fp.getBuildInvestorWorkspace(60), "Build Investor button", action.SCROLLANDBOOLEAN)){

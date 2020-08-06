@@ -3,6 +3,7 @@
  */
 package com.navatar.scripts;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
@@ -45,7 +46,7 @@ import java.util.List;
 public class Module13 extends BaseLib {
 
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc001_runPreConditionScenario() {
 		boolean flag = false;
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -73,7 +74,7 @@ public class Module13 extends BaseLib {
 				nim = new NIMPageBusinessLayer(driver);
 				lp.CRMLogin(CRMUser2EmailID, adminPassword);
 				if(nim.clickOnTab(TabName.NIMTab)) {
-					switchToFrame(driver, 10, nim.getFrame(PageName.NavatarInvestorManager,10));
+					switchToFrame(driver, 10, nim.getFrame(PageName.NavatarInvestorManager, 10));
 					if(click(driver, nim.getRegistrationSuccessfulCloseBtn(10),"user registration pop up close button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on registration PopUp close button");
 					}else {
@@ -110,7 +111,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc002_Module13_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -226,13 +227,13 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc003_verifyWaterMarkingInViewMode() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				if(nim.getEditIcon(10)!=null) {
 					appLog.info("Edit Icon is visible");
@@ -384,13 +385,13 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc004_verifyErrorMsgAtUser() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				if(nim.clickOnEditIcon()) {
 					if(nim.getWaterMarkingInsufficientPermissionHeadertext(10)!=null) {
@@ -471,13 +472,13 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc005_verifyWaterMarkingInEditMode() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				if(nim.getEditIcon(10)!=null) {
 					appLog.info("Edit Icon is visible");
@@ -711,13 +712,13 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc006_verifyErrorMsg() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				if(nim.clickOnEditIcon()) {
 					if(!isSelected(driver, nim.getWatermarkingActivateCheckbox(10), "watermarking activate check box")) {
@@ -1157,8 +1158,8 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M13tc007_1_buildFWRWorkSpaceandInviteContact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M13tc007_1_buildFWRWorkSpaceandInviteContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String sharedfolderpath=ExcelUtils.readData("FilePath",0, 3, currentlyExecutingTC);
@@ -1203,7 +1204,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc007_2_uploadDocumentInFWR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1214,7 +1215,7 @@ public class Module13 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\FWR\\Standard";
 				if(fp.uploadFile(folderpath,M13Institution1+"<break>"+M13Institution2, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -1242,7 +1243,7 @@ public class Module13 extends BaseLib {
 				String docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\FWR\\Common";
 				if(fp.uploadFile(CommonPath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -1269,7 +1270,7 @@ public class Module13 extends BaseLib {
 				docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\FWR\\Shared";
 				if(fp.uploadFile(SharedFolderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -1297,7 +1298,7 @@ public class Module13 extends BaseLib {
 				docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\FWR\\Internal";
 				if(fp.uploadFile(Internalfolderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -1332,13 +1333,13 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc008_activateWaterMarkingAndManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				String WatermarkingLabels=ExcelUtils.readData("FilePath",0,30,currentlyExecutingTC);
 				if(nim.activateWatermarking2(WatermarkingLabels).isEmpty()) {
@@ -1372,8 +1373,8 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M13tc009_onlineImportDocumentInFWR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M13tc009_onlineImportDocumentInFWR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderpath=ExcelUtils.readData("FilePath",0,4,currentlyExecutingTC);
@@ -1388,9 +1389,9 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				if(fp.onlineImport(M13Institution1, null, M13Institution2,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M13Institution1,null,M13Institution2,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 						if(!result.isEmpty()) {
@@ -1411,9 +1412,9 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+fileName+" in :"+folderpath);
 				}
 				
-				if(fp.onlineImport(null, null, null,Commonfolderpath,docPath,CommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,Commonfolderpath, docPath, CommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+CommonfileName+" in :"+Commonfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,CommonfileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -1433,9 +1434,9 @@ public class Module13 extends BaseLib {
 					appLog.error("file is not imported: "+CommonfileName+" in :"+Commonfolderpath);
 					sa.assertTrue(false, "file is not imported: "+CommonfileName+" in :"+Commonfolderpath);
 				}
-				if(fp.onlineImport(null, null, null,sharedfolderpath,docPath,sharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,sharedfolderpath, docPath, sharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+sharedfileName+" in :"+sharedfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,sharedfileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -1456,9 +1457,9 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+sharedfileName+" in :"+sharedfolderpath);
 				}
 				
-				if(fp.onlineImport(null, null, null,Internalfolderpath,docPath,InternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,Internalfolderpath, docPath, InternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+InternalfileName+" in :"+Internalfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,InternalfileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -1491,7 +1492,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc010_1_verifyDocumentOnFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1511,7 +1512,7 @@ public class Module13 extends BaseLib {
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M13tc009_onlineImportDocumentInFWR", excelLabel.UploadedFileInternal);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					System.err.println(getSystemDate("hh:mm:ss"));
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
@@ -1532,7 +1533,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -1546,7 +1547,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on institution Name ::"+M13Institution1+" so cannot check watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on institution Name ::"+M13Institution1+" so cannot check watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1566,7 +1567,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -1590,7 +1591,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1610,7 +1611,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -1635,7 +1636,7 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on fundpage");
 				}
 				
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Internalfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInInternal,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1649,7 +1650,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInInternal,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Email Address<break>IP Address<break>Download Date<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -1681,7 +1682,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc010_2_verifyDocumentOnInstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1702,7 +1703,7 @@ public class Module13 extends BaseLib {
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M13tc009_onlineImportDocumentInFWR", excelLabel.UploadedFileInternal);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M13Institution1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, M13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1722,7 +1723,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -1736,7 +1737,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Institution page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Institution page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, M13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1756,7 +1757,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -1780,7 +1781,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on Institution Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on Institution Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, M13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1800,7 +1801,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -1825,7 +1826,7 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on Institution Page");
 				}
 				
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Internalfolderpath, null, null, M13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInInternal,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1839,7 +1840,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInInternal,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Email Address<break>IP Address<break>Download Date<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -1871,7 +1872,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc010_3_verifyDocumentOnContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1889,7 +1890,7 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M13tc009_onlineImportDocumentInFWR", excelLabel.UploadedFileShared);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, null, M13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1909,7 +1910,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -1923,7 +1924,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Contact page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Contact page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, M13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1943,7 +1944,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -1967,7 +1968,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, M13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -1987,7 +1988,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -2024,7 +2025,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc010_4_verifyDocumentOnManageApprovalsPendingDocument() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2038,7 +2039,7 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M13tc009_onlineImportDocumentInFWR", excelLabel.UploadedFileShared);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 10), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(3000);
 						List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1+"<break>"+M13Institution2,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ManageApprovalsPopUp, Workspace.FundraisingWorkspace);
@@ -2050,7 +2051,7 @@ public class Module13 extends BaseLib {
 						}else {
 							appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in folder "+stdfolderpath);
 						}
-						switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 20));
 						 aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ManageApprovalsPopUp, Workspace.FundraisingWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -2069,7 +2070,7 @@ public class Module13 extends BaseLib {
 							appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in folder "+Commonfolderpath);
 							sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in folder "+Commonfolderpath);
 						}
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ManageApprovalsPopUp, Workspace.FundraisingWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -2105,7 +2106,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc011_approveAllPendingFileAndverifyWaterMarking() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2119,7 +2120,7 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M13tc009_onlineImportDocumentInFWR", excelLabel.UploadedFileShared);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 20), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 					if(fp.selectAllPendingFilesToApprove(WorkSpaceAction.UPLOAD).isEmpty()) {
 						appLog.info("all pending document is approved successfully from manage approvals");
@@ -2139,7 +2140,7 @@ public class Module13 extends BaseLib {
 							}else {
 								appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in manage approvals approved document tab");
 							}
-							switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 20));
+							switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 20));
 							aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ManageApprovalsPopUp, Workspace.FundraisingWorkspace);
 							if(!aa.isEmpty()) {
 								if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -2158,7 +2159,7 @@ public class Module13 extends BaseLib {
 								appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in manage approvals approved document tab");
 								sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in manage approvals approved document tab");
 							}
-							switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+							switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 							aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ManageApprovalsPopUp, Workspace.FundraisingWorkspace);
 							if(!aa.isEmpty()) {
 								if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -2204,7 +2205,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc012_1_registerContactAndVerifyWaterMarkingInAllDocumentTab() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2378,7 +2379,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc012_2_VerifyWaterMarkingInRecentActivitiesTab() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2500,7 +2501,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc012_3_VerifyWaterMarkingInAllFirmPage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2622,7 +2623,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc012_4_VerifyWaterMarkingInPotentialInvestmentTab() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2764,7 +2765,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc013_1_uploadfileInvestorAndCheckWatermarking() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -2788,7 +2789,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 				
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc013_2_verifyWatermarkingOnHomePageAndFundPage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2796,7 +2797,7 @@ public class Module13 extends BaseLib {
 		String UploadedFileInStd=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String stdfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.StandardPath);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		switchToFrame(driver, 20,fp.getFrame(PageName.HomePage, 10));
+		switchToFrame(driver, 20,fp.getFrame( PageName.HomePage, 10));
 		List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, Workspace.FundraisingWorkspace);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -2818,7 +2819,7 @@ public class Module13 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -2839,7 +2840,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInStd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInStd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 20));
 				}else {
 					appLog.error("Not able to click on folderpath: "+stdfolderpath+"  so cannot check watermarking in investor side uploaded file: "+UploadedFileInStd);
 					sa.assertTrue(false, "Not able to click on folderpath: "+stdfolderpath+"  so cannot check watermarking in investor side uploaded file: "+UploadedFileInStd);
@@ -2880,7 +2881,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc013_3_verifyWatermarkingOnContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2891,7 +2892,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, null, M13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -2911,7 +2912,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" on contact page in FWR");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" on contact page in FWR");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				}else {
 					appLog.error("Not able to click on folderpath: "+stdfolderpath+" on contact page so cannot verify watermarking");
 					sa.assertTrue(false, "Not able to click on folderpath: "+stdfolderpath+" on contact page so cannot verify watermarking");
@@ -2954,7 +2955,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc014_1_verifyWaterMarkingInUploadedFilesOnHomepage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2968,7 +2969,7 @@ public class Module13 extends BaseLib {
 		String importfileInCommon=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOntc1, excelLabel.UploadedFileCommon);
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOntc1, excelLabel.UploadedFileShared);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		switchToFrame(driver, 20,fp.getFrame(PageName.HomePage, 10));
+		switchToFrame(driver, 20,fp.getFrame( PageName.HomePage, 10));
 		List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -2987,7 +2988,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 			sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			for(int i=0; i<aa.size(); i++) {
@@ -2997,7 +2998,7 @@ public class Module13 extends BaseLib {
 		}else {
 			appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -3016,7 +3017,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -3035,7 +3036,7 @@ public class Module13 extends BaseLib {
 			appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -3054,7 +3055,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 			sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -3078,7 +3079,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc014_2_verifyWaterMarkingInUploadedFilesOnFundPageAlert() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3094,7 +3095,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace,PageName.FundsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
@@ -3114,7 +3115,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -3124,7 +3125,7 @@ public class Module13 extends BaseLib {
 					}else {
 						appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in home alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -3143,7 +3144,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -3162,7 +3163,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -3181,7 +3182,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -3220,7 +3221,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc014_3_verifyWaterMarkingInUploadedFilesOnContactPageAlert() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3237,7 +3238,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(contact.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.ContactsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.ContactsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace,PageName.ContactsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
@@ -3257,7 +3258,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -3267,7 +3268,7 @@ public class Module13 extends BaseLib {
 					}else {
 						appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -3286,7 +3287,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -3305,7 +3306,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -3324,7 +3325,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -3363,14 +3364,14 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc015_1_updateMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30,bp.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30,bp.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if(nim.clickOnEditIcon()) {
 					if(sendKeys(driver,nim.getMyFirmProfileNameTextBox(60), Org1FirmName+"Updated1", "my firm profile name", action.SCROLLANDBOOLEAN)) {
@@ -3403,7 +3404,7 @@ public class Module13 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc015_2_updateInvestorNameAndFundName() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3411,7 +3412,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if(fp.updateInvestorOrLPNameFromManageInvestor(Workspace.FundraisingWorkspace, M13Institution1, null, M13Institution1+"UP", "M13Instituition1")) {
 					appLog.info("investor name is updated successfully: "+M13Institution1+"UP");
 				}else {
@@ -3429,7 +3430,7 @@ public class Module13 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if (click(driver, fp.getInvestmentInfo(Workspace.FundraisingWorkspace), "Investment info",
 						action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getInvestmentInfoEdit(60), "investment info edit button",
@@ -3513,14 +3514,14 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc016_1_updateWatermarkingAndVerifyDocumentInFWR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		String WatermarkingLabels=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.Watermarking);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				if(nim.clickOnEditIcon()) {
 					List<WebElement> lst = nim.getWaterMarkingCheckBoxList();
@@ -3623,7 +3624,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc016_2_verifyUpdatedWaterMarkingInUploadedFilesOnHomepage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3639,7 +3640,7 @@ public class Module13 extends BaseLib {
 		String importfileInCommon=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOntc1, excelLabel.UploadedFileCommon);
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOntc1, excelLabel.UploadedFileShared);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		switchToFrame(driver, 20,fp.getFrame(PageName.HomePage, 10));
+		switchToFrame(driver, 20,fp.getFrame( PageName.HomePage, 10));
 		List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 		if(!aa.isEmpty()) {
@@ -3659,7 +3660,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 			sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -3678,7 +3679,7 @@ public class Module13 extends BaseLib {
 				appLog.error("My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in  home alert grid");
 				sa.assertTrue(false, "My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in home alert grid");
 			}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -3697,7 +3698,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 		if(!aa.isEmpty()) {
@@ -3717,7 +3718,7 @@ public class Module13 extends BaseLib {
 			appLog.info("Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -3736,7 +3737,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 			sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -3760,7 +3761,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc016_3_verifyUpdatedWaterMarkingInDocumentOnFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3784,7 +3785,7 @@ public class Module13 extends BaseLib {
 			if(fp.clickOnCreatedFund(UpdatedM13FundName1)) {
 				String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, UpdatedM13Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -3804,7 +3805,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -3827,7 +3828,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on institution Name ::"+UpdatedM13Institution1+" so cannot check watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on institution Name ::"+UpdatedM13Institution1+" so cannot check watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -3847,7 +3848,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -3871,7 +3872,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -3891,7 +3892,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -3928,7 +3929,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc016_4_verifyUpdatedWaterMarkingInUploadedFilesOnFundPageAlert() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3947,7 +3948,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(UpdatedM13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace,PageName.FundsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
@@ -3968,7 +3969,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in fund page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -3987,7 +3988,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in fund page alert grid");
 							sa.assertTrue(false, "My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in fund page alert grid");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -4006,7 +4007,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 					if(!aa.isEmpty()) {
@@ -4026,7 +4027,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -4045,7 +4046,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4084,7 +4085,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc016_5_verifyUpdatedWaterMarkingInUploadedFilesOnInstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4108,7 +4109,7 @@ public class Module13 extends BaseLib {
 			if(ins.clickOnCreatedInstitution(M13Institution1)) {
 				String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedM13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4128,7 +4129,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -4151,7 +4152,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Institution page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Institution page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4171,7 +4172,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4195,7 +4196,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4215,7 +4216,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4252,7 +4253,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc016_6_verifyUpdatedWaterMarkingInUploadedFilesOnContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4276,7 +4277,7 @@ public class Module13 extends BaseLib {
 			String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 			String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, UpdatedM13Institution1, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4296,7 +4297,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -4319,7 +4320,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4339,7 +4340,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4363,7 +4364,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4383,7 +4384,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4420,7 +4421,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc016_7_verifyUpdatedWaterMarkingInUploadedFilesOnContactAlertPopUp() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4439,7 +4440,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(contact.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.ContactsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.ContactsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace,PageName.ContactsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
@@ -4460,7 +4461,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -4479,7 +4480,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in contact page alert grid");
 							sa.assertTrue(false, "My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in contact page alert grid");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -4498,7 +4499,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 					if(!aa.isEmpty()) {
@@ -4518,7 +4519,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -4537,7 +4538,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,M13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4576,8 +4577,8 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M13tc017_1_updateOnlineImportDocumentInFWR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M13tc017_1_updateOnlineImportDocumentInFWR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String UpdatedM13Institution1=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M13Instituition1", excelLabel.UpdateInstitution_NameFormManageInvestor);
@@ -4593,9 +4594,9 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				if(fp.onlineImport(UpdatedM13Institution1, null, M13Institution2,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, UpdatedM13Institution1,null,M13Institution2,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 						if(!result.isEmpty()) {
@@ -4616,9 +4617,9 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "file is not updated: "+fileName+" in :"+folderpath);
 				}
 				
-				if(fp.onlineImport(null, null, null,Commonfolderpath,docPath,CommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,Commonfolderpath, docPath, CommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Common,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+CommonfileName+" in :"+Commonfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,CommonfileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -4638,9 +4639,9 @@ public class Module13 extends BaseLib {
 					appLog.error("file is not updated: "+CommonfileName+" in :"+Commonfolderpath);
 					sa.assertTrue(false, "file is not updated: "+CommonfileName+" in :"+Commonfolderpath);
 				}
-				if(fp.onlineImport(null, null, null,sharedfolderpath,docPath,sharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,sharedfolderpath, docPath, sharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Shared,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+sharedfileName+" in :"+sharedfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,sharedfileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -4661,9 +4662,9 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+sharedfileName+" in :"+sharedfolderpath);
 				}
 				
-				if(fp.onlineImport(null, null, null,Internalfolderpath,docPath,InternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,Internalfolderpath, docPath, InternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+InternalfileName+" in :"+Internalfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,InternalfileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -4697,7 +4698,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc017_2_approveUpdatedDocumentAndVerifyUpdatedDocOnFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4715,7 +4716,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
 				if(click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 20), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 					if(fp.selectAllPendingFilesToApprove(WorkSpaceAction.UPDATE).isEmpty()) {
@@ -4751,7 +4752,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on institution Name ::"+UpdatedM13Institution1+" so cannot check updated watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on institution Name ::"+UpdatedM13Institution1+" so cannot check updated watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String >aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4776,7 +4777,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4815,7 +4816,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc017_3_verifyUpdatedWaterMarkingInUploadedFilesOnFundPageAlert() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4830,7 +4831,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
 				if(click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace,PageName.FundsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, Workspace.FundraisingWorkspace);
@@ -4851,7 +4852,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+importfileInstd+" in fund page alert history");
 							sa.assertTrue(false, "My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+importfileInstd+" in fund page alert history");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4870,7 +4871,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert history");
 						sa.assertTrue(false, "Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert history");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -4909,7 +4910,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc017_4_verifyUpdatedWaterMarkingInUploadedFilesOnContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4930,7 +4931,7 @@ public class Module13 extends BaseLib {
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, UpdatedM13Institution1, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4954,7 +4955,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -4979,7 +4980,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -5003,7 +5004,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on shared Folder ::"+Sharedfolderpath+" so cannot check watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace,PageName.ContactsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
@@ -5023,7 +5024,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+importfileInstd+" in contact alert history");
 							sa.assertTrue(false, "My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+importfileInstd+" in contact alert history");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					 aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -5042,7 +5043,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in folder :"+Commonfolderpath);
 						sa.assertTrue(false, "Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in folder :"+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -5079,7 +5080,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc017_5_verifyUpdatedWaterMarkingInUploadedFilesOnInstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5099,7 +5100,7 @@ public class Module13 extends BaseLib {
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M13Institution1)) {
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedM13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -5123,7 +5124,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Institution page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Institution page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -5147,7 +5148,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedM13Institution1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.FundraisingWorkspace);
 					if(!aa.isEmpty()) {
@@ -5184,7 +5185,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc017_6_VerifyUpdatedWaterMarkingTargetSide() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5261,13 +5262,13 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc018_deactivateWaterMarkingAndManageAppvoralsSettings() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				if(nim.clickOnEditIcon()) {
 					if(isSelected(driver, nim.getWatermarkingActivateCheckbox(10), "watermarking activate check box")) {
@@ -5381,8 +5382,8 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M13tc019_1_buildINVWorkSpaceandInviteContact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M13tc019_1_buildINVWorkSpaceandInviteContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String sharedfolderpath=ExcelUtils.readData("FilePath",0, 3, currentlyExecutingTC);
@@ -5427,7 +5428,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc019_2_uploadDocumentInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5438,7 +5439,7 @@ public class Module13 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\INV\\Standard";
 				if(fp.uploadFile(folderpath,M13Institution1+"/"+M13LimitedPartner1+"<break>"+M13Institution2+"/"+M13LimitedPartner2, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -5465,7 +5466,7 @@ public class Module13 extends BaseLib {
 				String docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\INV\\Common";
 				if(fp.uploadFile(CommonPath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -5491,7 +5492,7 @@ public class Module13 extends BaseLib {
 				docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\INV\\Shared";
 				if(fp.uploadFile(SharedFolderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -5519,7 +5520,7 @@ public class Module13 extends BaseLib {
 				docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\INV\\Internal";
 				if(fp.uploadFile(Internalfolderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -5554,13 +5555,13 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc020_activateWaterMarkingAndManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				String WatermarkingLabels=ExcelUtils.readData("FilePath",0,30,currentlyExecutingTC);
 				if(nim.activateWatermarking2(WatermarkingLabels).isEmpty()) {
@@ -5594,8 +5595,8 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M13tc021_onlineImportDocumentInINV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M13tc021_onlineImportDocumentInINV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -5610,9 +5611,9 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				if(fp.onlineImport(M13Institution1, M13LimitedPartner1, M13LimitedPartner2,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M13Institution1,M13LimitedPartner1,M13LimitedPartner2,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						List<String>result=compareMultipleListOnBasisOfTitle(driver,fileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 						if(!result.isEmpty()) {
@@ -5633,9 +5634,9 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+fileName+" in :"+folderpath);
 				}
 				
-				if(fp.onlineImport(null, null, null,Commonfolderpath,docPath,CommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,Commonfolderpath, docPath, CommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+CommonfileName+" in :"+Commonfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,CommonfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5655,9 +5656,9 @@ public class Module13 extends BaseLib {
 					appLog.error("file is not imported: "+CommonfileName+" in :"+Commonfolderpath);
 					sa.assertTrue(false, "file is not imported: "+CommonfileName+" in :"+Commonfolderpath);
 				}
-				if(fp.onlineImport(null, null, null,sharedfolderpath,docPath,sharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,sharedfolderpath, docPath, sharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+sharedfileName+" in :"+sharedfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,sharedfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5678,9 +5679,9 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+sharedfileName+" in :"+sharedfolderpath);
 				}
 				
-				if(fp.onlineImport(null, null, null,Internalfolderpath,docPath,InternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,Internalfolderpath, docPath, InternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+InternalfileName+" in :"+Internalfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,InternalfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5714,7 +5715,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc022_1_verifyDocumentOnFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5737,7 +5738,7 @@ public class Module13 extends BaseLib {
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileInternal);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, M13LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -5757,7 +5758,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInStd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInStd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -5771,7 +5772,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on institution Name ::"+M13Institution1+" so cannot check watermarking on investor workspace");
 					sa.assertTrue(false, "Not able to click on institution Name ::"+M13Institution1+" so cannot check watermarking on investor workspace");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -5791,7 +5792,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -5815,7 +5816,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on investor workspace");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on investor workspace");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -5835,7 +5836,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -5860,7 +5861,7 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on investor workspace");
 				}
 				
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Internalfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -5874,7 +5875,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Email Address<break>IP Address<break>Download Date<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -5906,7 +5907,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc022_2_verifyDocumentOnInstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5931,7 +5932,7 @@ public class Module13 extends BaseLib {
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileInternal);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M13Institution1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, M13LimitedPartner1, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -5951,7 +5952,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -5965,7 +5966,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Institution page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Institution page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -5985,7 +5986,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6009,7 +6010,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on Institution Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on Institution Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6029,7 +6030,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6054,7 +6055,7 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on Institution Page");
 				}
 				
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Internalfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6068,7 +6069,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Email Address<break>IP Address<break>Download Date<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -6100,7 +6101,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc022_3_verifyDocumentOnContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6122,7 +6123,7 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, M13LimitedPartner1, UpdatedM13FundName, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6142,7 +6143,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -6156,7 +6157,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Contact page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Contact page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6176,7 +6177,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6200,7 +6201,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6220,7 +6221,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6257,7 +6258,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc022_4_verifyDocumentOnLimitedPartnerPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6282,7 +6283,7 @@ public class Module13 extends BaseLib {
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileInternal);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedLP(M13LimitedPartner1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6302,7 +6303,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -6316,7 +6317,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on LP page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on LP page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6336,7 +6337,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6360,7 +6361,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on LP Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on LP Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6380,7 +6381,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6405,7 +6406,7 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on LP Page");
 				}
 				
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Internalfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6419,7 +6420,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Email Address<break>IP Address<break>Download Date<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -6449,7 +6450,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc022_5_verifyDocumentOnCommitmentPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6474,7 +6475,7 @@ public class Module13 extends BaseLib {
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileInternal);
 		if(com.clickOnTab(TabName.CommitmentsTab)) {
 			if(com.clickOnCreatedCommitmentId(M13Commitment1ID)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, M13LimitedPartner1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6494,7 +6495,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -6508,7 +6509,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Commitments page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on Commitments page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6528,7 +6529,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6552,7 +6553,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on CommitmentsPage");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on CommitmentsPage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6572,7 +6573,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6597,7 +6598,7 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on CommitmentsPage");
 				}
 				
-				switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 				if(fp.verifyFolderPathdummy(Internalfolderpath, null, null, UpdatedM13FundName, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6611,7 +6612,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Email Address<break>IP Address<break>Download Date<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -6641,7 +6642,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc023_approveAllPendingFileAndverifyWaterMarking() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6655,7 +6656,7 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 20), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 					if(fp.selectAllPendingFilesToApprove(WorkSpaceAction.UPLOAD).isEmpty()) {
 						appLog.info("all pending document is approved successfully from manage approvals");
@@ -6675,7 +6676,7 @@ public class Module13 extends BaseLib {
 							}else {
 								appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in manage approvals approved document tab");
 							}
-							switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 20));
+							switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 20));
 							aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ManageApprovalsPopUp, Workspace.InvestorWorkspace);
 							if(!aa.isEmpty()) {
 								if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6694,7 +6695,7 @@ public class Module13 extends BaseLib {
 								appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in manage approvals approved document tab");
 								sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in manage approvals approved document tab");
 							}
-							switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+							switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 							aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ManageApprovalsPopUp, Workspace.InvestorWorkspace);
 							if(!aa.isEmpty()) {
 								if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6741,7 +6742,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc024_1_VerifyWaterMarkingInAllDocumentTab() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6866,7 +6867,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc024_2_VerifyWaterMarkingInRecentActivitiesTab() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6991,7 +6992,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc024_3_VerifyWaterMarkingInPotentialInvestmentTab() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7136,7 +7137,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc024_4_VerifyWaterMarkingInAllFirmPage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7261,7 +7262,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc025_1_uploadfileInvestorInCurrentInvestmentAndCheckWatermarking() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7285,7 +7286,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc025_2_verifyWatermarkingOnHomePageAndFundPage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7297,7 +7298,7 @@ public class Module13 extends BaseLib {
 		String UploadedFileInStd=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,dependOnTc, excelLabel.UploadedFileStandard);
 		String stdfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,dependOnTc, excelLabel.StandardPath);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		switchToFrame(driver, 20,fp.getFrame(PageName.HomePage, 10));
+		switchToFrame(driver, 20,fp.getFrame( PageName.HomePage, 10));
 		List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7319,7 +7320,7 @@ public class Module13 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, M13LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -7340,7 +7341,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInStd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInStd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 20));
 				}else {
 					appLog.error("Not able to click on folderpath: "+stdfolderpath+"  so cannot check watermarking in investor side uploaded file: "+UploadedFileInStd);
 					sa.assertTrue(false, "Not able to click on folderpath: "+stdfolderpath+"  so cannot check watermarking in investor side uploaded file: "+UploadedFileInStd);
@@ -7381,7 +7382,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc025_3_verifyWatermarkingOnContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7396,7 +7397,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, M13LimitedPartner1, UpdatedM13FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -7416,7 +7417,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" on contact page in INV");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" on contact page in INV");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				}else {
 					appLog.error("Not able to click on folderpath: "+stdfolderpath+" on contact page so cannot verify watermarking");
 					sa.assertTrue(false, "Not able to click on folderpath: "+stdfolderpath+" on contact page so cannot verify watermarking");
@@ -7459,7 +7460,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc025_4_verifyWaterMarkingOnLimitedPartnerAndCommitmentPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7474,7 +7475,7 @@ public class Module13 extends BaseLib {
 		String stdfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,dependOnTc, excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedLP(M13LimitedPartner1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -7509,7 +7510,7 @@ public class Module13 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(com.clickOnTab(TabName.CommitmentsTab)) {
 			if(com.clickOnCreatedCommitmentId(M13Commitment1ID)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.CommitmentsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, M13LimitedPartner1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -7546,7 +7547,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc026_1_verifyWaterMarkingInUploadedFilesInINVOnHomepage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7563,7 +7564,7 @@ public class Module13 extends BaseLib {
 		String importfileInCommon=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileCommon);
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		switchToFrame(driver, 20,fp.getFrame(PageName.HomePage, 10));
+		switchToFrame(driver, 20,fp.getFrame( PageName.HomePage, 10));
 		List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7582,7 +7583,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 			sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			for(int i=0; i<aa.size(); i++) {
@@ -7592,7 +7593,7 @@ public class Module13 extends BaseLib {
 		}else {
 			appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7611,7 +7612,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -7630,7 +7631,7 @@ public class Module13 extends BaseLib {
 			appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7649,7 +7650,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 			sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -7673,7 +7674,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc026_2_verifyWaterMarkingInUploadedFilesInINVOnFundPageAlert() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7692,7 +7693,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace,PageName.FundsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
@@ -7712,7 +7713,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" in fund alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" in fund alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -7722,7 +7723,7 @@ public class Module13 extends BaseLib {
 					}else {
 						appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in fund alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7741,7 +7742,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -7760,7 +7761,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7779,7 +7780,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -7818,7 +7819,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc026_3_verifyWaterMarkingInUploadedFilesInINVOnContactPageAlert() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7838,7 +7839,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(contact.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.ContactsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.ContactsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace,PageName.ContactsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
@@ -7858,7 +7859,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -7868,7 +7869,7 @@ public class Module13 extends BaseLib {
 					}else {
 						appLog.info("Watermarking labels are verified in  import file : "+importfileInstd+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7887,7 +7888,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -7906,7 +7907,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -7925,7 +7926,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 						sa.assertTrue(false, "Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+M13LimitedPartner1,UpdatedM13FundName1,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -7964,14 +7965,14 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc027_1_updateMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30,bp.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30,bp.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if(nim.clickOnEditIcon()) {
 					if(sendKeys(driver,nim.getMyFirmProfileNameTextBox(60), Org1FirmName+"UpdatedIWR", "my firm profile name", action.SCROLLANDBOOLEAN)) {
@@ -8004,7 +8005,7 @@ public class Module13 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc027_2_updateInvestorNameLPNameAndFundName() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8012,7 +8013,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if(fp.updateInvestorOrLPNameFromManageInvestor(Workspace.InvestorWorkspace, M13Institution1, M13LimitedPartner1, M13LimitedPartner1+"UP", "M13LimitedPartner1")) {
 					appLog.info("investor name is updated successfully: "+M13LimitedPartner1+"UP");
 				}else {
@@ -8030,7 +8031,7 @@ public class Module13 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if (click(driver, fp.getInvestmentInfo(Workspace.InvestorWorkspace), "Investment info",
 						action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getInvestmentInfoEdit(60), "investment info edit button",
@@ -8115,14 +8116,14 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_1_updateWatermarkingAndVerifyDocumentInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		String WatermarkingLabels=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.Watermarking);
 		lp.CRMLogin(CRMUser2EmailID,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				if(nim.clickOnEditIcon()) {
 					List<WebElement> lst = nim.getWaterMarkingCheckBoxList();
@@ -8225,7 +8226,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_2_verifyOldWaterMarkingInUploadedFilesOnHomepageINV() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8244,7 +8245,7 @@ public class Module13 extends BaseLib {
 		String importfileInCommon=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileCommon);
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		switchToFrame(driver, 20,fp.getFrame(PageName.HomePage, 10));
+		switchToFrame(driver, 20,fp.getFrame( PageName.HomePage, 10));
 		List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 		if(!aa.isEmpty()) {
@@ -8264,7 +8265,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 			sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -8283,7 +8284,7 @@ public class Module13 extends BaseLib {
 				appLog.error("My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in  home alert grid");
 				sa.assertTrue(false, "My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in home alert grid");
 			}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -8302,7 +8303,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage, null);
 		String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 		if(!aa.isEmpty()) {
@@ -8322,7 +8323,7 @@ public class Module13 extends BaseLib {
 			appLog.info("Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 			sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -8341,7 +8342,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 			sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in home alert grid");
 		}
-		switchToFrame(driver, 30,fp.getFrame(PageName.HomePage, 20));
+		switchToFrame(driver, 30,fp.getFrame( PageName.HomePage, 20));
 		aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,M13Institution1+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.HomePage,null);
 		if(!aa.isEmpty()) {
 			if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -8365,7 +8366,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_3_verifyOldWaterMarkingInDocumentOnFundPageINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8393,7 +8394,7 @@ public class Module13 extends BaseLib {
 			if(fp.clickOnCreatedFund(UpdatedM13FundName1)) {
 				String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, UpdatedLPName, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8413,7 +8414,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -8436,7 +8437,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on institution Name ::"+UpdatedM13Institution1+" so cannot check  old watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on institution Name ::"+UpdatedM13Institution1+" so cannot check  old watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8456,7 +8457,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -8480,7 +8481,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check old watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check old watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8500,7 +8501,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -8537,7 +8538,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_4_verifyOlddWaterMarkingInUploadedFilesOnFundPageAlert() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8558,7 +8559,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace,PageName.FundsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
@@ -8579,7 +8580,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in fund page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -8598,7 +8599,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in fund page alert grid");
 							sa.assertTrue(false, "My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in fund page alert grid");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -8617,7 +8618,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, null);
 					String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 					if(!aa.isEmpty()) {
@@ -8637,7 +8638,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 						sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -8656,7 +8657,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in fund page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -8695,7 +8696,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_5_verifyOldWaterMarkingInUploadedFilesOnInstitutionPageInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8723,7 +8724,7 @@ public class Module13 extends BaseLib {
 			if(ins.clickOnCreatedInstitution(M13Institution1)) {
 				String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, UpdatedLPName, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8743,7 +8744,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -8766,7 +8767,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check old watermarking on Institution page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check old watermarking on Institution page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldM13Institution1,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8786,7 +8787,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -8810,7 +8811,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8830,7 +8831,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -8867,7 +8868,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_6_verifyOldWaterMarkingInUploadedFilesOnContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8894,7 +8895,7 @@ public class Module13 extends BaseLib {
 			String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 			String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, UpdatedLPName, UpdatedM13FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8914,7 +8915,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -8937,7 +8938,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -8957,7 +8958,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -8981,7 +8982,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check old watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check old watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9001,7 +9002,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9038,7 +9039,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_7_verifyOldWaterMarkingInUploadedFilesOnContactAlertPopUpInINV() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9059,7 +9060,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(contact.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.ContactsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.ContactsPage, 10));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace,PageName.ContactsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
@@ -9080,7 +9081,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -9099,7 +9100,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in contact page alert grid");
 							sa.assertTrue(false, "My Firm Name/Fund Name/Investor Name/Download Date/Label1/Label2/Label3/UserEmailID is not available on file: "+UploadedFileInStd+" in contact page alert grid");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -9118,7 +9119,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 					if(!aa.isEmpty()) {
@@ -9138,7 +9139,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 						sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInCommon+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableWaterMarkingLabels, aa)) {
@@ -9157,7 +9158,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in contact page alert grid");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldInstituteName+"<break>"+oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9196,7 +9197,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_8_verifyOldWaterMarkingInUploadedFilesOnLimitedPartnerPageInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9220,7 +9221,7 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedLP(M13LimitedPartner1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedFundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
@@ -9242,7 +9243,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -9265,7 +9266,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check old watermarking on LP page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check old watermarking on LP page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedFundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9285,7 +9286,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9308,7 +9309,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check old watermarking on LP Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check old watermarking on LP Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedFundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9328,7 +9329,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9364,7 +9365,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc028_9_verifyOldWaterMarkingAtTargetSide() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9502,7 +9503,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc030_1_updateDocumentInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9514,7 +9515,7 @@ public class Module13 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\INV\\Standard";
 				if(fp.uploadFile(folderpath,M13Institution1+"/"+UpdatedLPName+"<break>"+M13Institution2+"/"+M13LimitedPartner2, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -9541,7 +9542,7 @@ public class Module13 extends BaseLib {
 				String docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\INV\\Common";
 				if(fp.uploadFile(CommonPath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -9567,7 +9568,7 @@ public class Module13 extends BaseLib {
 				docpath="UploadFiles\\Module13\\FileToUploadCRMSide\\UploadFilesCRMSide\\INV\\Shared";
 				if(fp.uploadFile(SharedFolderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -9603,7 +9604,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc030_2_approveUpdatedDocumentAndVerifyUpdatedDocOnFundPageINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9620,7 +9621,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
 				if(click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 20), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 					if(fp.selectAllPendingFilesToApprove(WorkSpaceAction.UPDATE).isEmpty()) {
@@ -9656,7 +9657,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on institution Name ::"+M13Institution1+" so cannot check updated watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on institution Name ::"+M13Institution1+" so cannot check updated watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String >aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9681,7 +9682,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on fundpage");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on fundpage");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9720,7 +9721,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc030_3_verifyUpdatedWaterMarkingInUploadedFilesOnFundPageAlertINV() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9735,7 +9736,7 @@ public class Module13 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				switchToFrame(driver, 20,fp.getFrame(PageName.FundsPage, 10));
+				switchToFrame(driver, 20,fp.getFrame( PageName.FundsPage, 10));
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
 				if(click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace,PageName.FundsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, Workspace.InvestorWorkspace);
@@ -9756,7 +9757,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+uploadfileInstd+" in fund page alert history");
 							sa.assertTrue(false, "My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+uploadfileInstd+" in fund page alert history");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9775,7 +9776,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+uploadfileInCommon+" in fund page alert history");
 						sa.assertTrue(false, "Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+uploadfileInCommon+" in fund page alert history");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundPageAlertPopUp,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9814,7 +9815,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc030_4_verifyUpdatedWaterMarkingInUploadedFilesOnContactPageINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9834,7 +9835,7 @@ public class Module13 extends BaseLib {
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
 			if(contact.clickOnCreatedContact(M13Contact1FirstName, M13Contact1LastName, null)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M13Institution1, UpdatedLPName, UpdatedM13FundName, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9858,7 +9859,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Contact page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9883,7 +9884,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9907,7 +9908,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on shared Folder ::"+Sharedfolderpath+" so cannot check watermarking on Contact Page");
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on Contact Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 				if(click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace,PageName.ContactsPage, 10), "alert histroy link", action.SCROLLANDBOOLEAN)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp, null);
 					if(!aa.isEmpty()) {
@@ -9927,7 +9928,7 @@ public class Module13 extends BaseLib {
 							appLog.error("My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+uploadfileInstd+" in contact alert history");
 							sa.assertTrue(false, "My Firm Name/Update Fund Name/Updated Investor Name/Download Date/Updated Label1/Label3/UserEmailID is not available on file: "+uploadfileInstd+" in contact alert history");
 						}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					 aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9946,7 +9947,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+uploadfileInCommon+" in folder :"+Commonfolderpath);
 						sa.assertTrue(false, "Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+uploadfileInCommon+" in folder :"+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,oldM13Institution1+"<break>"+UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.ContactPageAlertPopUp,null);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9983,7 +9984,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc030_5_verifyUpdatedWaterMarkingInUploadedFilesOnInstitutionPageINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10002,7 +10003,7 @@ public class Module13 extends BaseLib {
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M13Institution1)) {
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address<break>Label 2";
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, UpdatedLPName, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -10026,7 +10027,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Institution page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check updated watermarking on Institution page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -10050,7 +10051,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check updated watermarking on Institution Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.InstitutionsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -10087,7 +10088,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc030_6_VerifyUpdatedWaterMarkingTargetSide() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10138,7 +10139,7 @@ public class Module13 extends BaseLib {
 				appLog.info("Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+uploadfileInCommon+" in all document page");
 				sa.assertTrue(false, "Investor Name,Label 2 and IP Address Watermarking labels are present in import file : "+uploadfileInCommon+" in all document page");
 			}
-			switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+			switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 			aa=fp.verifyWatermarkingWithoutAssertion(uploadfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,UpdatedLPName,UpdatedM13FundName,M13Contact1EmailId,getSystemDate("MM-dd-YYYY"), PageName.AllDocumentTab,null);
 			if(!aa.isEmpty()) {
 				if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -10165,7 +10166,7 @@ public class Module13 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M13tc031_PostConditionForAll() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);

@@ -4,6 +4,7 @@
 
 package com.navatar.scripts;
 
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebElement;
 import com.navatar.generic.BaseLib;
@@ -49,7 +50,7 @@ import java.util.List;
  */
 public class Module10 extends BaseLib {
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc001_CreatePreconditionData() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -222,7 +223,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc002_CreateFundraisingAndInvestorWorkspaceForFund1AndVerifyManageEmailIcon() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -241,7 +242,7 @@ public class Module10 extends BaseLib {
 					appLog.info("Fundraising workspace is not created successfully");
 					saa.assertTrue(false, " Fundraising workspace is not craeted successfully");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"Fundraising Workspace View.");
@@ -261,7 +262,7 @@ public class Module10 extends BaseLib {
 					appLog.info("Investor workspace is not created successfully");
 					saa.assertTrue(false, " Investor workspace is not craeted successfully");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
@@ -285,7 +286,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc003_VerifyManageEmailPopUpUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -294,7 +295,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"Fundraising Workspace View.");
@@ -313,7 +314,7 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on manage emails icon");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
@@ -345,7 +346,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc004_CheckVariousErrorMessageOnManageEmails() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -354,7 +355,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"Fundraising Workspace View.");
@@ -529,7 +530,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc005_CheckPreviewAndEditLinkForInvitationEmailTemplateOption() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -538,7 +539,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"Fundraising Workspace View.");
@@ -651,7 +652,7 @@ public class Module10 extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							} else {
 								appLog.info("Not able to click on not registered click here link");
 								sa.assertTrue(false, "Not able to click on not registered click here link");
@@ -670,7 +671,7 @@ public class Module10 extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							} else {
 								appLog.info("Not able to click on Registered Click Here Link");
 								sa.assertTrue(false, "Not able to click on Registered Click Here Link");
@@ -844,7 +845,7 @@ public class Module10 extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 
 						} else {
 							appLog.info(
@@ -860,7 +861,7 @@ public class Module10 extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 
 						} else {
 							appLog.info(
@@ -990,7 +991,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc006_CheckPreviewAndEditLinkForCustomEmailTemplateOption() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -999,7 +1000,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"Fundraising Workspace View.");
@@ -1028,7 +1029,7 @@ public class Module10 extends BaseLib {
 							sa.assertTrue(false, "Body Rich Text is not available in the Custom Template Pop Up");
 						}
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (fp.getManageEmailCustomApplyButton(20) != null) {
 							appLog.info("Apply Button is available.");
 						} else {
@@ -1189,7 +1190,7 @@ public class Module10 extends BaseLib {
 									"This is Test Mail Data for Email", "Custom Email Body Text Box",
 									action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver, fp.getManageEmailCustomApplyButton(20), "Apply Button",
 										action.SCROLLANDBOOLEAN)) {
 									appLog.info("click on apply button");
@@ -1283,7 +1284,7 @@ public class Module10 extends BaseLib {
 									"This is Test Mail Data for Email", "Custom Email Body Text Box",
 									action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver, fp.getManageEmailCustomApplyButton(20), "Apply Button",
 										action.SCROLLANDBOOLEAN)) {
 									appLog.info("click on apply button");
@@ -1327,8 +1328,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M10tc007_InviteContactAndVerifyManageEmailsPopUp() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M10tc007_InviteContactAndVerifyManageEmailsPopUp(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1348,7 +1349,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				if (fp.inviteContact(environment, mode, M10Institution1, M10Contact1EmailId, stdPath[0],
+				if (fp.inviteContact(environment, mode,M10Institution1, M10Contact1EmailId, stdPath[0],
 						FolderType.Standard, "Upload", "Yes", "No", null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("Successfully provided access to contact '" + M10Contact1FirstName + " "
 							+ M10Contact1LastName + "'.");
@@ -1389,7 +1390,7 @@ public class Module10 extends BaseLib {
 							+ M10Contact1LastName + "'.");
 				}
 				driver.navigate().refresh();
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage email icon",
@@ -2184,7 +2185,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc008_VerifyConfirmationPopUpReceivedMailAtInvestorSideVerifyCreateActivityAtContactAndAccountPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2196,7 +2197,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Fundarising workspace",
@@ -2619,7 +2620,7 @@ public class Module10 extends BaseLib {
 						sa.assertTrue(false, "Not able to click on contact1 name");
 					}
 					ThreadSleep(3000);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 							"Fundraising Section view");
 					ele = FindElement(driver, "//a[text()='" + M10Institution1 + "']", "Contact 1 firm name",
@@ -2933,7 +2934,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc009_RegisterInvestorAndCheckImpactInManageEmailsPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2987,7 +2988,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Fundarising workspace",
@@ -3043,7 +3044,7 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact 1 name");
 						sa.assertTrue(false, "Not able to click on contact 1 name");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 							"Fundraising Section view");
 					ele = FindElement(driver, "//a[text()='" + M10Institution1 + "RUP" + "']", "Contact 1 firm name",
@@ -3093,7 +3094,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc010_CheckSearchingAndSortingOnManageEmail() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3103,7 +3104,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (fp.verifyFolderPathdummy(stdPath, M10Institution1, null, M10FundName1, PageName.FundsPage,
@@ -3568,8 +3569,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M10tc011_InviteContactFromSharedParentFolderAndVerifyfManageEmailIconInContactAccessPopup() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M10tc011_InviteContactFromSharedParentFolderAndVerifyfManageEmailIconInContactAccessPopup(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3578,7 +3579,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (fp.verifyFolderPathdummy(sharedPath, null, null, M10FundName1, PageName.FundsPage,
@@ -3881,7 +3882,7 @@ public class Module10 extends BaseLib {
 						sa.assertTrue(false,
 								M10Contact2FirstName + " " + M10Contact2LastName + "is not invited  successfully");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 							Workspace.FundraisingWorkspace.toString() + " Section view");
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace, action.SCROLLANDBOOLEAN)) {
@@ -3932,7 +3933,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc012_VerifyInvitationEmailsPopUpWithCustomEmailTemplate() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3944,7 +3945,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Fundarising workspace",
@@ -4003,7 +4004,7 @@ public class Module10 extends BaseLib {
 										"We are happy to inform you that You are invited to Fund. Please Invest in this Fund.",
 										"Body text box", action.SCROLLANDBOOLEAN)) {
 									switchToDefaultContent(driver);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver,
 											bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 											"Fundraising Section view");
@@ -4137,7 +4138,7 @@ public class Module10 extends BaseLib {
 							sa.assertTrue(false, "Body field is not blank");
 						}
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 						scrollDownThroughWebelement(driver,
 								bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 								"Fundraising Section view");
@@ -4175,7 +4176,7 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact 2 name");
 						sa.assertTrue(false, "Not able to click on contact2 name");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 							"Fundraising Section view");
 					ele = FindElement(driver, "//a[text()='" + M10Institution2 + "']", "Contact 2 firm name",
@@ -4240,7 +4241,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc013_UpdateFolderNameFundNamePEFirmNameAndVerifyItsImpactInManageEmailsPopUpAndReceivedMail() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4249,7 +4250,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			appLog.info("Clicked on NIM Tab");
-			switchToFrame(driver, 60, bp.getFrame(PageName.NavatarInvestorManager, 60));
+			switchToFrame(driver, 60, bp.getFrame( PageName.NavatarInvestorManager, 60));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (nim.clickOnEditIcon()) {
 					if (sendKeys(driver, nim.getMyFirmProfileNameTextBox(60), Org1FirmName + "UP",
@@ -4295,7 +4296,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 60), "Manage folder icon",
@@ -4430,7 +4431,7 @@ public class Module10 extends BaseLib {
 				appLog.info("Not able to click on edit button");
 				sa.assertTrue(false, "Not able to click on edit icon");				
 			}
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 					"Fundraising Section view");		
 			if (fp.verifyFolderPathdummy("UP"+commonPath, null, null, M10FundName1, PageName.FundsPage,
@@ -4729,7 +4730,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc014_CheckRenamingOfContactAndAccountNameImpactOnManageEmail(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4810,7 +4811,7 @@ public class Module10 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
@@ -4887,7 +4888,7 @@ public class Module10 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)){
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
@@ -4963,7 +4964,7 @@ public class Module10 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
@@ -5066,7 +5067,7 @@ public class Module10 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage Email icon",
@@ -5117,8 +5118,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
-	public void M10tc015_CreateFundraisingWorkspaceForFund2InviteAlreadyInvitedContactAndVerifyManageEmailsPopUp(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M10tc015_CreateFundraisingWorkspaceForFund2InviteAlreadyInvitedContactAndVerifyManageEmailsPopUp(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -5150,7 +5151,7 @@ public class Module10 extends BaseLib {
 				sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact1FirstName+"RUP" + " "
 						+ M10Contact1LastName+"RUP" + "'.");
 			}	
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");	
 			if(click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Mange emails ", action.SCROLLANDBOOLEAN)){
 				if (fp.verifyManageEmailGrid(
@@ -5187,7 +5188,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc016_CheckVariousErrorMessageOnManageEmails(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5196,7 +5197,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
@@ -5372,7 +5373,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc017_CheckPreviewAndEditLinkForIInvitationEmailTemplateOption(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5381,7 +5382,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
@@ -5493,7 +5494,7 @@ public class Module10 extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							} else {
 								appLog.info("Not able to click on not registered click here link");
 								sa.assertTrue(false, "Not able to click on not registered click here link");
@@ -5512,7 +5513,7 @@ public class Module10 extends BaseLib {
 										"Registration Page is not open after clicking on Resgister Click Here Link.");
 								driver.close();
 								driver.switchTo().window(parentid);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							} else {
 								appLog.info("Not able to click on Registered Click Here Link");
 								sa.assertTrue(false, "Not able to click on Registered Click Here Link");
@@ -5686,7 +5687,7 @@ public class Module10 extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 
 						} else {
 							appLog.info(
@@ -5702,7 +5703,7 @@ public class Module10 extends BaseLib {
 									"Registration Page is not open after clicking on Resgister Click Here Link.");
 							driver.close();
 							driver.switchTo().window(parentid);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 
 						} else {
 							appLog.info(
@@ -5832,7 +5833,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc018_CheckPreviewAndEditLinkForCustomEmailTemplateOption(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5841,7 +5842,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
@@ -5870,7 +5871,7 @@ public class Module10 extends BaseLib {
 							sa.assertTrue(false, "Body Rich Text is not available in the Custom Template Pop Up");
 						}
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (fp.getManageEmailCustomApplyButton(20) != null) {
 							appLog.info("Apply Button is available.");
 						} else {
@@ -6030,7 +6031,7 @@ public class Module10 extends BaseLib {
 									"This is Test Mail Data for Email", "Custom Email Body Text Box",
 									action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver, fp.getManageEmailCustomApplyButton(20), "Apply Button",
 										action.SCROLLANDBOOLEAN)) {
 									appLog.info("click on apply button");
@@ -6124,7 +6125,7 @@ public class Module10 extends BaseLib {
 									"This is Test Mail Data for Email", "Custom Email Body Text Box",
 									action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver, fp.getManageEmailCustomApplyButton(20), "Apply Button",
 										action.SCROLLANDBOOLEAN)) {
 									appLog.info("click on apply button");
@@ -6168,8 +6169,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
-	public void M10tc019_InviteContactAndVerifyManageEmailsPopUp(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M10tc019_InviteContactAndVerifyManageEmailsPopUp(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6242,7 +6243,7 @@ public class Module10 extends BaseLib {
 				}
 		
 				driver.navigate().refresh();
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Manage email icon",
@@ -7219,7 +7220,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc020_VerifyConfirmationPopUpReceivedMailAtInvestorSideVerifyCreateActivityAtContactAndAccountPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7231,7 +7232,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor  Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Fundarising workspace",
@@ -7650,7 +7651,7 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact 1 name");
 						sa.assertTrue(false, "Not able to click on contact1 name");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							"Investor Section view");
 					ele = FindElement(driver, "//a[text()='" + M10Institution1+"RUP" + "']", "Contact 1 firm name",
@@ -7962,7 +7963,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc021_CheckSearchingAndSortingOnManageEmail(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7972,7 +7973,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (fp.verifyFolderPathdummy(stdPath, M10Institution1, M10LimitedPartner1, M10FundName1, PageName.FundsPage,
@@ -8436,8 +8437,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
-	public void M10tc022_InviteContactFromSharedParentFolderAgainInviteContactAndVerifyManageEmailIconInContactAccessPopup(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M10tc022_InviteContactFromSharedParentFolderAgainInviteContactAndVerifyManageEmailIconInContactAccessPopup(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8446,7 +8447,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (fp.verifyFolderPathdummy(sharedPath, null, null, M10FundName1, PageName.FundsPage,
@@ -8749,7 +8750,7 @@ public class Module10 extends BaseLib {
 						sa.assertTrue(false,
 								M10Contact2FirstName + " " + M10Contact2LastName + "is not invited  successfully");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							Workspace.InvestorWorkspace.toString() + " Section view");					
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace, action.SCROLLANDBOOLEAN)) {
@@ -8800,7 +8801,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc023_VerifyInvitationEmailsPopUpWithCustomEmailTemplate(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8812,7 +8813,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Investor workspace",
@@ -8872,7 +8873,7 @@ public class Module10 extends BaseLib {
 										"We are happy to inform you that You are invited to Fund. Please Invest in this Fund.",
 										"Body text box", action.SCROLLANDBOOLEAN)) {
 									switchToDefaultContent(driver);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver,
 											bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 											"Fundraising Section view");
@@ -9006,7 +9007,7 @@ public class Module10 extends BaseLib {
 							sa.assertTrue(false, "Body field is not blank");
 						}
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 						scrollDownThroughWebelement(driver,
 								bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Fundraising Section view");
@@ -9044,7 +9045,7 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact 2 name");
 						sa.assertTrue(false, "Not able to click on contact2 name");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							"Fundraising Section view");
 					ele = FindElement(driver, "//a[text()='" + M10Institution2 + "']", "Contact 2 firm name",
@@ -9109,7 +9110,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 		}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc024_UpdateFolderNameFundNameAndVerifyItsImpactInManageEmailsPopUpAndReceivedMail(){
 	LoginPageBusinessLayer	lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9126,7 +9127,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Workspace Section view");
 				if (click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 60), "Manage folder icon",
@@ -9261,7 +9262,7 @@ public class Module10 extends BaseLib {
 				appLog.info("Not able to click on edit button");
 				sa.assertTrue(false, "Not able to click on edit icon");				
 			}
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 					"Investor Workspace Section view");		
 			if (fp.verifyFolderPathdummy("UP"+commonPath, null, null, M10FundName1, PageName.FundsPage,
@@ -9560,7 +9561,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc025_CheckRenamingOfContactAndAccountNameImpactOnManageEmailCheckDeletionOfContactAndChangeOfEmailImpactOnManageEmails(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9603,7 +9604,7 @@ public class Module10 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUPINV")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Manage Email icon",
@@ -9677,7 +9678,7 @@ public class Module10 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1+"NUPINV")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Manage Email icon",
@@ -9729,7 +9730,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M10tc026_VerifyManageEmailsPopUpAfterRemovingCompleteAccessForAContact(){
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 			BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9738,7 +9739,7 @@ public class Module10 extends BaseLib {
 			lp.CRMLogin(superAdminUserName, adminPassword);
 			if(bp.clickOnTab(TabName.FundsTab)){
 				if(fp.clickOnCreatedFund(M10FundName1+"NUPINV")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 							"fundraising Section view");	
 				if(fp.closeWorkSpace(Workspace.FundraisingWorkspace, 60)){
@@ -9747,7 +9748,7 @@ public class Module10 extends BaseLib {
 					appLog.info("Workspace does not get closed successfully");
 					sa.assertTrue(false, "Workspace does not get closed successfully");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							"Investor Section view");	
 				if(fp.closeWorkSpace(Workspace.InvestorWorkspace, 60)){
@@ -9774,7 +9775,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M10FundName1+"NUPINV")){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"fundraising Section view");	
 		if(click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Mange email icon", action.SCROLLANDBOOLEAN)){
@@ -9795,7 +9796,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on manage email icon");
 		}
 		switchToDefaultContent(driver);
-		switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 		scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 					"Investor  Section view");	
 	if(click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Mange email icon", action.SCROLLANDBOOLEAN)){
@@ -9828,8 +9829,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Test
-	public void M10tc027_VerifyManageEmailsPopUpAfterInvitingContactAgain(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M10tc027_VerifyManageEmailsPopUpAfterInvitingContactAgain(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9848,7 +9849,7 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact2FirstName + " "
 						+ M10Contact2LastName + "'.");
 				}		
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 							"fundraising Section view");	
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage email icon",
@@ -9885,7 +9886,7 @@ public class Module10 extends BaseLib {
 					sa.assertTrue(false, "Not able to provide access to contact '" + M10Contact2FirstName + " "
 						+ M10Contact2LastName + "'.");
 				}		
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							"fundraising Section view");	
 				if (click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 60), "Manage email icon",
@@ -9924,6 +9925,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 	}
 	
+	@Parameters({ "environment", "mode" }) 
 	@Test
 	public void M10tc028_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);

@@ -384,11 +384,113 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 	
 	
-	
-	
-	
-	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param userfirstname
+	 * @param userlastname
+	 * @param email
+	 * @param userLicense
+	 * @param userProfile
+	 * @return true/false
+	 */
+	public boolean createPEUser(String userfirstname, String userlastname, String email, String userLicense,
+			String userProfile) {
+		if (click(driver, getUserMenuTab(60), "User Menu Button", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on user menu tab");
+			if (click(driver, getUserMenuSetupLink(60), "Setup Link", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on setup link");
+				if (click(driver, getExpandManageUserIcon(60), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on manage user expand icon");
+					if (click(driver, getUsersLink(60), "User Link", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on users link");
+						if (click(driver, getNewUserLink(60), "New User Button", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on new users button");
+							if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
+									action.SCROLLANDBOOLEAN)) {
+								if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
+										action.SCROLLANDBOOLEAN)) {
+									if (sendKeys(driver, getUserEmailId(60), email, "User Email Id",
+											action.SCROLLANDBOOLEAN)) {
+										if (selectVisibleTextFromDropDown(driver, getUserUserLicenseDropDownList(60),
+												"User License drop down list", userLicense)) {
+											appLog.info("select user license from drop downlist: " + userLicense);
+											if (selectVisibleTextFromDropDown(driver, getUserProfileDropDownList(60),
+													"User profile drop down list", userProfile)) {
+												appLog.info("select user profile from drop downlist: " + userProfile);
+												if(click(driver, getSalesforceCRMContentUserCheckBox(60), "Salesforce CRM Content User check Box",
+														action.SCROLLANDBOOLEAN)){
+													appLog.info("Clicked on Content User Check Box");
+												}else{
+													appLog.error("Not able to click on content user checkbox");
+												}
+												if (click(driver, getSaveButton(60), "Save Button",
+														action.SCROLLANDBOOLEAN)) {
+													appLog.info("clicked on save button");
+													appLog.info("CRM User is created successfully: " + userfirstname
+															+ " " + userlastname);
+													return true;
+												} else {
+													appLog.error(
+															"Not able to click on save buttton so cannot create user: "
+																	+ userfirstname + " " + userlastname);
+												}
+											} else {
+												appLog.error("Not able to select profile from drop downlist: "
+														+ userProfile + " so cannot create user: " + userfirstname + " "
+														+ userlastname);
+											}
 
+										} else {
+											appLog.error("Not able to select user license from drop downlist: "
+													+ userLicense + " so cannot create user: " + userfirstname + " "
+													+ userlastname);
+										}
+
+									} else {
+										appLog.error("Not able to pass email id in text box: " + email
+												+ " so cannot create user: " + userfirstname + " " + userlastname);
+									}
+
+								} else {
+									appLog.error("Not able to pass user last name in text box: " + userlastname
+											+ " so cannot create user: " + userfirstname + " " + userlastname);
+								}
+							} else {
+								appLog.error("Not able pass user first name in text box: " + userfirstname
+										+ " so cannot create user: " + userfirstname + " " + userlastname);
+							}
+
+						} else {
+							appLog.error("Not able to click on new user button so cannot create user: " + userfirstname
+									+ " " + userlastname);
+						}
+
+					} else {
+						appLog.error("Not able to click on users link so cannot create user: " + userfirstname + " "
+								+ userlastname);
+					}
+
+				} else {
+					appLog.error("Not able to click on manage user expand icon so cannot create user: " + userfirstname
+							+ " " + userlastname);
+				}
+
+			} else {
+				appLog.error(
+						"Not able to click on setup link so cannot create user: " + userfirstname + " " + userlastname);
+			}
+
+		} else {
+			appLog.error(
+					"Not able to click on user menu tab so cannot create user: " + userfirstname + " " + userlastname);
+		}
+		return false;
+	}
+	
+	
+	
+	
+	//Lightning Method...............
 	/**
 	 * @author Ankit Jaiswal
 	 * @param userfirstname
@@ -2590,9 +2692,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				ele = getSearchIcon(driver, pageName, workspace, timeOut);
 				if (ele != null) {
 					try {
-						ele.click();
-						appLog.error("Clicked on Search Icon ");
-						return true;
+						scrollDownThroughWebelement(driver, ele, "");
+						if(clickUsingJavaScript(driver, ele, "search icon on "+pageName)) {
+							appLog.error("Clicked on Search Icon ");
+							return true;
+						}else {
+							new Throwable();
+						}
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						appLog.error(" Not Able to Click Search Icon " );
@@ -3066,7 +3172,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param access
 	 * @return true/false
 	 */
-	public boolean preCondition(String environment, String mode,String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
+	public boolean preCondition(String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(adminEmail, adminPassword);
@@ -3074,7 +3180,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (clickOnTab(TabName.NIMTab)) {
 			if (manageApproval == EnableDisable.Enable) {
 				appLog.info("enabling manage approval");
-				switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 				if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 					if (np.clickOnEditIcon()) {
 						if (!isSelected(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.Edit), "checkbox to tick manage approvals")) {
@@ -3118,14 +3224,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (manageApproval == EnableDisable.Disable){
 				appLog.info("disabling manage approval");
-				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 				flag1 = np.deactivateManageApprovalsSetting();
 				switchToDefaultContent(driver);
 
 			}
 			if (watermarking == EnableDisable.Enable) {
 				appLog.info("enabling watermarking");
-				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 				if (np.clickOnSideMenusTab(sideMenu.Watermarking)) {
 					if (!isSelected(driver, np.getWatermarkingActivateCheckbox(60), "Watermarking Activate checkbox")) {
 						if ( np.clickOnEditIcon()) {
@@ -3161,7 +3267,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (watermarking == EnableDisable.Disable){
 				appLog.info("deactivating watermarking setting");
-				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 				flag2 = np.deactivateWatermarkingSetting();
 				switchToDefaultContent(driver);
 			}
@@ -3169,7 +3275,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		appLog.info("providing access to user "+userName);
 		String[] users = userName.split("<break>");
 		for (int i = 0; i < users.length; i++) {
-			switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.InternalUsers)) {
 				switchToDefaultContent(driver);
 				if (np.giveAccessToUserInNIMTabFromAdmin(users[i], access)) {
@@ -3183,7 +3289,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			switchToDefaultContent(driver);
 		}
 		
-		lp.CRMlogout(environment,mode);
+		lp.CRMlogout();
 		String[] mailId = userEmailID.split("<break>");
 		for(int k =0;k<mailId.length;k++){
 		lp.CRMLogin(mailId[k], adminPassword);
@@ -3200,7 +3306,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			 sa.assertTrue(false, "Not able to click on Nim Tab");
 			 
 		 }
-		 lp.CRMlogout(environment,mode);
+		 lp.CRMlogout();
 		}
 		 return flag1&&flag2;
 
@@ -3222,8 +3328,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
 		SoftAssert saa=new SoftAssert();
-		scrollDownThroughWebelement(driver, getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, getFrame( PageName.HomePage, 60));
 		ThreadSleep(2000);
 		if(hp.alertRecordCountAtHomePage()){
 			appLog.info("Successfully write home page count");
@@ -3233,7 +3339,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		switchToDefaultContent(driver);
 		if(clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(fundName)){
-				switchToFrame(driver, 30, getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, 60),
 						workspace + " View.");
 			if(fp.alertRecordCountAtFundPage(workspace, PageName.FundsPage,fundVariableName)){
@@ -3252,7 +3358,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		switchToDefaultContent(driver);
 		if(clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(ContactFirstName,ContactLastName, null)){
-				switchToFrame(driver, 30,getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30,getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, 60),
 						workspace + " View.");
 				if(cp.alertRecordCountAtContactPage(workspace, PageName.ContactsPage,ContactVariableName)){
@@ -3526,7 +3632,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		      System.err.println("Clicked ON Element");
 		      String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
-			switchToFrame(driver, 30, getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, getFrame( PageName.ContactsPage, 30));
 			scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, 30), workspace.toString()+" Section view");
 			if(new ContactPageBusinessLayer(driver).getRemoveContactAccessButton(workspace, 60)!=null)	{
 				appLog.info("contact Page is opening");
@@ -4170,7 +4276,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public SoftAssert postCondition(){
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		if (np.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.removeAllUserAccess()) {
 				appLog.info("IP access has been removed for all users");
 			} else {
@@ -4629,7 +4735,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param access
 	 * @return true/false
 	 */
-	public boolean preConditionWithoutClickingRegisterrationPopupClose(String environment, String mode,String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
+	public boolean preConditionWithoutClickingRegisterrationPopupClose(String adminEmail,String userName, String userEmailID, EnableDisable watermarking, EnableDisable manageApproval, accessType access) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(adminEmail, adminPassword);
@@ -4637,7 +4743,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (clickOnTab(TabName.NIMTab)) {
 			if (manageApproval == EnableDisable.Enable) {
 				appLog.info("enabling manage approval");
-				switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 				if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 					if (np.clickOnEditIcon()) {
 						if (!isSelected(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.Edit), "checkbox to tick manage approvals")) {
@@ -4681,14 +4787,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (manageApproval == EnableDisable.Disable){
 				appLog.info("disabling manage approval");
-				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 				flag1 = np.deactivateManageApprovalsSetting();
 				switchToDefaultContent(driver);
 
 			}
 			if (watermarking == EnableDisable.Enable) {
 				appLog.info("enabling watermarking");
-				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 				if (np.clickOnSideMenusTab(sideMenu.Watermarking)) {
 					if (!isSelected(driver, np.getWatermarkingActivateCheckbox(60), "Watermarking Activate checkbox")) {
 						if ( np.clickOnEditIcon()) {
@@ -4724,13 +4830,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (watermarking == EnableDisable.Disable){
 				appLog.info("deactivating watermarking setting");
-				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 				flag2 = np.deactivateWatermarkingSetting();
 				switchToDefaultContent(driver);
 			}
 			}
 		appLog.info("providing access to user "+userName);
-		switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 30));
+		switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
 		if (np.clickOnSideMenusTab(sideMenu.InternalUsers)) {
 			switchToDefaultContent(driver);
 			if (np.giveAccessToUserInNIMTabFromAdmin(userName, access)) {
@@ -4744,7 +4850,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			appLog.error("internal users side tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout(environment,mode);
+		lp.CRMlogout();
 		return flag1&&flag2;
 	}
 

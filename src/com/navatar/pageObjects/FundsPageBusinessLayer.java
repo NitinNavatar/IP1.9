@@ -356,9 +356,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 				if(msg.trim().toLowerCase().contains("error") || msg.trim().toLowerCase().contains("status") || msg.trim().toLowerCase().contains("code")){
 					driver.navigate().refresh();
-					if(getFrame(PageName, timeOut)!=null){
+					if(getFrame( PageName, timeOut)!=null){
 //						scrollDownThroughWebelement(driver, getDealRoomSection(30), "Deal room view.");
-						switchToFrame(driver, 30, getFrame(PageName, timeOut));
+						switchToFrame(driver, 30, getFrame( PageName, timeOut));
 					}
 					if(verifyFolderPathdummy(path, institutionName, limitedPartner, fundName, PageName, Workspace, timeOut)){
 						found=true;
@@ -381,9 +381,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 			if(flag){
 				driver.navigate().refresh();
-				if(getFrame(PageName, timeOut)!=null){
+				if(getFrame( PageName, timeOut)!=null){
 //					scrollDownThroughWebelement(driver, getDealRoomSection(30), "Deal room view.");
-					switchToFrame(driver, 30, getFrame(PageName, timeOut));
+					switchToFrame(driver, 30, getFrame( PageName, timeOut));
 				}
 				if(verifyFolderPathdummy(path, institutionName, limitedPartner, fundName, PageName, Workspace, timeOut)){
 					found=true;
@@ -462,14 +462,14 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	String ins=null;
 	String lpName=null;
 	if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-		if(switchToFrame(driver, 30, getNIMTabParentFrame_Lightning())) {
+		if(switchToFrame(driver, 30, getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 			
 		}else {
 			appLog.error("Not able to switch in parent frame in Lightning so cannot invite Contact "+emailID);
 			return false;
 		}
 	}else {
-		switchToFrame(driver, 30,getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30,getFrame( PageName.FundsPage, 30));
 	}
 	scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, 30), workspace.toString()+" Section view");
 	if(FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
@@ -970,27 +970,38 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	
 	/**
 	 * @author Ankit Jaiswal
+	 * @param environment TODO
+	 * @param mode TODO
 	 * @param institution
 	 * @param limitedPartner
-	 * @param InstitutionNameForStdFolder
 	 * @param folderPath
 	 * @param documentPath
 	 * @param fileName
 	 * @param boxUserName
 	 * @param boxPassword
 	 * @param onlineImportFileAddTo
-	 * @param updateUpload
 	 * @param FolderType
 	 * @param pageName
 	 * @param workspace
 	 * @param timeOut
+	 * @param InstitutionNameForStdFolder
+	 * @param updateUpload
 	 * @return true/false
 	 */
-	public boolean onlineImport(String institution, String limitedPartner, String InstitutionOrLPNameForStdFolder, String folderPath,
-			String documentPath, String fileName, String boxUserName, String boxPassword,OnlineImportFileAddTo onlineImportFileAddTo,
-			WorkSpaceAction WorkSpaceAction, FolderType FolderType, PageName pageName, Workspace workspace,int timeOut) {
+	public boolean onlineImport(String environment, String mode, String institution, String limitedPartner,
+			String InstitutionOrLPNameForStdFolder, String folderPath, String documentPath, String fileName,String boxUserName,
+			String boxPassword, OnlineImportFileAddTo onlineImportFileAddTo, WorkSpaceAction WorkSpaceAction, FolderType FolderType,PageName pageName, Workspace workspace, int timeOut) {
 		if (pageName.toString().equalsIgnoreCase(pageName.FundsPage.toString())) {
-			switchToFrame(driver, 60, getFrame(pageName.FundsPage, 60));
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				if(switchToFrame(driver, 30, getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
+					
+				}else {
+					appLog.error("Not able to switch in parent frame so cannot online import in "+workspace);
+					exit("Not able to switch in parent frame so cannot online import in "+workspace);
+				}
+			}else {
+				switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
+			}
 		}
 		String parentID = null;
 		if (FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
@@ -1120,7 +1131,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 */
 	public boolean buildWorkspace(String[] step1Of3Data, WorkSpaceAction WithOrWithOutFolderTemplate, String folderTemplateName, String folderStructureSheetName, String institutionOrLPName, Workspace workspace, int timeOut){
 		boolean flag = true;
-		switchToFrame(driver, 30, getFrame(PageName.FundsPage, timeOut));
+		switchToFrame(driver, 30, getFrame( PageName.FundsPage, timeOut));
 		System.err.println("Switched to frame.");
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
 		if(click(driver, getBuildWorkspaceButton(workspace, timeOut), workspace.toString()+" Workspace Button", action.BOOLEAN)){
@@ -1462,7 +1473,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public boolean updateFile(String folderPath, String documentName, String institutionName,String limitedPartnername, FolderType FolderType,
 			String filePath, multiInstance multiInstance, String verifyErrorMessage, ContentGridArrowKeyFunctions ContentGridArrowKeyFunctions,
 			int timeOut, PageName pageName, String scroll,String fundName,Workspace Workspace) {
-			switchToFrame(driver, 60, getFrame(pageName, timeOut));			
+			switchToFrame(driver, 60, getFrame( pageName, timeOut));			
 		if (FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
 			if (!verifyFolderPathdummy(folderPath, institutionName , limitedPartnername, fundName, pageName, Workspace, timeOut)) {
 				BaseLib.sa.assertTrue(false, folderPath + " :Folder Structure is not verified.");
@@ -1545,7 +1556,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 							driver.switchTo().window(parentWinID);
 							if (ContentGridArrowKeyFunctions.toString()
 									.equalsIgnoreCase(ContentGridArrowKeyFunctions.ManageVersions.toString())) {
-								switchToFrame(driver, 60, getFrame(pageName, timeOut));
+								switchToFrame(driver, 60, getFrame( pageName, timeOut));
 								if (!click(driver, getManageVersionsPopUpCrossIcon(30), "Manage Versions Cross Icon",
 										action.BOOLEAN)) {
 									if (!click(driver, getManageVersionPopUpCloseButton(30),
@@ -1611,7 +1622,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public boolean updateBulkFile(String loggedInUsername,String folderPath, String documentName, String institutionName,String limitedPartnername, FolderType FolderType,
 			String filePath, multiInstance multiInstance, String verifyErrorMessage, ContentGridArrowKeyFunctions ContentGridArrowKeyFunctions,
 			int timeOut, PageName pageName, String scroll,String fundName,Workspace Workspace) {
-			switchToFrame(driver, 60, getFrame(pageName, timeOut));			
+			switchToFrame(driver, 60, getFrame( pageName, timeOut));			
 		if (FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
 			if (!verifyFolderPathdummy(folderPath, institutionName , limitedPartnername, fundName, pageName, Workspace, timeOut)) {
 				BaseLib.sa.assertTrue(false, folderPath + " :Folder Structure is not verified.");
@@ -1713,7 +1724,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						driver.switchTo().window(parentWinID);
 						if (ContentGridArrowKeyFunctions.toString()
 								.equalsIgnoreCase(ContentGridArrowKeyFunctions.ManageVersions.toString())) {
-							switchToFrame(driver, 60, getFrame(pageName, timeOut));
+							switchToFrame(driver, 60, getFrame( pageName, timeOut));
 							if (!click(driver, getManageVersionsPopUpCrossIcon(30), "Manage Versions Cross Icon",
 									action.BOOLEAN)) {
 								if (!click(driver, getManageVersionPopUpCloseButton(30),
@@ -1772,14 +1783,16 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	
 	/**
 	 * @author Ankit Jaiswal
+	 * @param environment TODO
+	 * @param mode TODO
 	 * @param uploadedDocumentName
 	 * @param makeCurrentDocumentName
 	 * @param Workspace
 	 * @param timeOut
 	 * @return True/False
 	 */
-	public boolean makeCurrentversionDocViaManageVersion(String instituteName,String LPName,String folderPath,String uploadedDocumentName,String makeCurrentDocumentName,Workspace Workspace,int timeOut) {
-		switchToFrame(driver, timeOut, getFrame(PageName.FundsPage, 30));
+	public boolean makeCurrentversionDocViaManageVersion(String environment,String mode,String instituteName,String LPName,String folderPath,String uploadedDocumentName,String makeCurrentDocumentName, Workspace Workspace, int timeOut) {
+		switchToFrame(driver, timeOut, getFrame(environment,mode,PageName.FundsPage, 30));
 		if(verifyFolderPathdummy(folderPath, instituteName, LPName, null, PageName.FundsPage, Workspace, timeOut)) {
 			appLog.info("folder path is verified successfully: "+folderPath);
 			if(clickOnManageVersionOnContentGrid(uploadedDocumentName, Workspace, timeOut)) {
@@ -1842,7 +1855,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		int counter = 0;
 		String dropImage = "DropLoc.JPG";
 		CommonLib compare = new CommonLib();
-		switchToFrame(driver, timeOut, getFrame(pageName, timeOut));
+		switchToFrame(driver, timeOut, getFrame( pageName, timeOut));
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" view.");
 		if(institutionOrLPName!=null){
 			if(workspace.toString().equalsIgnoreCase(Workspace.FundraisingWorkspace.toString())){
@@ -1892,7 +1905,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								driver.switchTo().window(parentWin);
 								if (pageName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
 									System.out.println("Searching for the frame");
-									switchToFrame(driver, 30, getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
 								}
 								if (counter > 1) {
 									appLog.error(
@@ -2249,7 +2262,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 */
 	public void recover(Workspace workspace, int timeOut){
 		refresh(driver);
-		switchToFrame(driver, timeOut/2, getFrame(PageName.FundsPage, timeOut/2));
+		switchToFrame(driver, timeOut/2, getFrame( PageName.FundsPage, timeOut/2));
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
 	}
 
@@ -3086,7 +3099,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		}
 		
 		//file has been updated, now check updated document name present in manage version window
-		switchToFrame(driver, 30, getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
 		click(driver, getManageVersionRefresh(60), "manage version refresh button", action.SCROLLANDBOOLEAN);
 		ThreadSleep(10000);
 		scrollDownThroughWebelement(driver,getDocumentNameColumnManageVersion().get(0) , "first row in manage version popup");
@@ -3240,7 +3253,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 							appLog.info(value + " is not present in the lookup window.");
 							driver.close();
 							driver.switchTo().window(parentWinID);
-							switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame(PageName.FundsPage, timeOut));
+							switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame( PageName.FundsPage, timeOut));
 							return false;
 						}
 					} else {
@@ -3255,7 +3268,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								appLog.info(value + " is not present in the lookup window.");
 								driver.close();
 								driver.switchTo().window(parentWinID);
-								switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame(PageName.FundsPage, timeOut));
+								switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame( PageName.FundsPage, timeOut));
 								return false;
 							}
 						}
@@ -3263,7 +3276,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					if (!click(driver, getInsertSelectedButton(timeOut), "Insert Selected", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Successfully selected the value: " + value);
 						driver.switchTo().window(parentWinID);
-						switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame(PageName.FundsPage, timeOut));
+						switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame( PageName.FundsPage, timeOut));
 						scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut),
 								workspace+"View.");
 						return true;
@@ -3271,7 +3284,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					System.out.println("going to close the lookup window.");
 					driver.close();
 					driver.switchTo().window(parentWinID);
-					switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame(PageName.FundsPage, timeOut));
+					switchToFrame(driver, timeOut,new BasePageBusinessLayer(driver).getFrame( PageName.FundsPage, timeOut));
 					appLog.info("Not able to select value " + value + " from the lookup window");
 					return false;
 				} else {
@@ -5807,9 +5820,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 				if(msg.trim().toLowerCase().contains("error") || msg.trim().toLowerCase().contains("status") || msg.trim().toLowerCase().contains("code")){
 					driver.navigate().refresh();
-					if(getFrame(PageName, timeOut)!=null){
+					if(getFrame( PageName, timeOut)!=null){
 //						scrollDownThroughWebelement(driver, getDealRoomSection(30), "Deal room view.");
-						switchToFrame(driver, 30, getFrame(PageName, timeOut));
+						switchToFrame(driver, 30, getFrame( PageName, timeOut));
 					}
 					if(verifyFolderPathdummy(path, institutionName, limitedPartner, fundName, PageName, Workspace, timeOut)){
 						found=true;
@@ -5832,8 +5845,8 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 			if(flag){
 				driver.navigate().refresh();
-				if(getFrame(PageName, timeOut)!=null){
-					switchToFrame(driver, 30, getFrame(PageName, timeOut));
+				if(getFrame( PageName, timeOut)!=null){
+					switchToFrame(driver, 30, getFrame( PageName, timeOut));
 				}
 				if(verifyFolderPathdummy(path, institutionName, limitedPartner, fundName, PageName, Workspace, timeOut)){
 					found=true;
@@ -5936,9 +5949,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 				if(msg.trim().toLowerCase().contains("error") || msg.trim().toLowerCase().contains("status") || msg.trim().toLowerCase().contains("code")){
 					driver.navigate().refresh();
-					if(getFrame(PageName, timeOut)!=null){
+					if(getFrame( PageName, timeOut)!=null){
 //						scrollDownThroughWebelement(driver, getDealRoomSection(30), "Deal room view.");
-						switchToFrame(driver, 30, getFrame(PageName, timeOut));
+						switchToFrame(driver, 30, getFrame( PageName, timeOut));
 					}
 					if(verifyFolderPathdummy(path, institutionName, limitedPartner, fundName, PageName, Workspace, timeOut)){
 						found=true;
@@ -5961,8 +5974,8 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 			if(flag){
 				driver.navigate().refresh();
-				if(getFrame(PageName, timeOut)!=null){
-					switchToFrame(driver, 30, getFrame(PageName, timeOut));
+				if(getFrame( PageName, timeOut)!=null){
+					switchToFrame(driver, 30, getFrame( PageName, timeOut));
 				}
 				if(verifyFolderPathdummy(path, institutionName, limitedPartner, fundName, PageName, Workspace, timeOut)){
 					found=true;
@@ -6664,7 +6677,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		int noofCount = 0;
 		String ins=null;
 		String lpName=null;
-		switchToFrame(driver, 30, getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, 30), workspace.toString()+" Section view");
 		if(FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
 			if(instutionOrLPName!=null) {
@@ -7704,7 +7717,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 												break;
 											} // continue from here
 											driver.navigate().refresh();
-											switchToFrame(driver, 30, getFrame(PageName.FundsPage, timeOut));
+											switchToFrame(driver, 30, getFrame( PageName.FundsPage, timeOut));
 											System.err.println("Switched to frame.");
 											scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
 											click(driver, getManageInvestorIcon(workspace, timeOut), "Manage investor Icon", action.BOOLEAN);
@@ -7718,7 +7731,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 										String screenshotLoc = screenshot(currentlyExecutingTC);
 										appLog.info("Visual Force failure screenshot: "+screenshotLoc);
 										driver.navigate().refresh();
-										switchToFrame(driver, 30, getFrame(PageName.FundsPage, timeOut));
+										switchToFrame(driver, 30, getFrame( PageName.FundsPage, timeOut));
 										System.err.println("Switched to frame.");
 										scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
 										click(driver, getManageInvestorIcon(workspace, timeOut), "Manage investor Icon", action.BOOLEAN);
@@ -7735,7 +7748,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								} else {//span[@class='title'][text()='Error: Time limit exceeded']
 									if(FindElement(driver, "//span[@class='title'][text()='Error: Time limit exceeded']", "Visiual force timeout error", action.BOOLEAN, 10)!=null){
 										driver.navigate().refresh();
-										switchToFrame(driver, 30, getFrame(PageName.FundsPage, timeOut));
+										switchToFrame(driver, 30, getFrame( PageName.FundsPage, timeOut));
 										System.err.println("Switched to frame.");
 										scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
 										click(driver, getManageInvestorIcon(workspace, timeOut), "Manage investor Icon", action.BOOLEAN);
@@ -8066,7 +8079,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				appLog.info("No Alert present.");
 			}
 			driver.navigate().refresh();
-			switchToFrame(driver, 30, getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
 			if(institutionOrLPName!=null && workspace.toString().equalsIgnoreCase(Workspace.FundraisingWorkspace.toString())){
 				if(clickOnInstituionFolder(institutionOrLPName, workspace, 30)){
 					if(click(driver, getContactAccessIcon(workspace, 30), "Contact access icon", action.BOOLEAN)){
@@ -8099,6 +8112,8 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	
 	/**
 	 * @author Ankit Jaiswal
+	 * @param environment TODO
+	 * @param mode TODO
 	 * @param loggedInUsername
 	 * @param excelPath
 	 * @param path
@@ -8111,7 +8126,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @param timeOut
 	 * @return true/false
 	 */
-	public boolean uploadFileBulk(String loggedInUsername, String excelPath, String path, String institutionOrLPName, String dragFromFolder, UploadFileActions uploadFileAddTo, UploadFileActions uploadUpdate, Workspace workspace, PageName pageName, int timeOut){
+	public boolean uploadFileBulk(String environment, String mode, String loggedInUsername, String excelPath, String path, String institutionOrLPName, String dragFromFolder, UploadFileActions uploadFileAddTo, UploadFileActions uploadUpdate, Workspace workspace, PageName pageName, int timeOut){
 		String institutionName=null;
 		String limitedPartner=null;
 		boolean flag = false;
@@ -8119,7 +8134,16 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		int count =0;
 		String dropImage = "DropLoc.JPG";
 		CommonLib compare = new CommonLib();
-		switchToFrame(driver, timeOut, getFrame(pageName, timeOut));
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			if(switchToFrame(driver, 30, getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
+				
+			}else {
+				appLog.error("Not able to switch in Lightning frame so cannot upload/Update document in "+workspace);
+				return false;
+			}
+		}else {
+			switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
+		}
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" view.");
 		if(institutionOrLPName!=null){
 			if(workspace.toString().equalsIgnoreCase(Workspace.FundraisingWorkspace.toString())){
@@ -8171,7 +8195,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								driver.switchTo().window(parentWin);
 								if (pageName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
 									System.out.println("Searching for the frame");
-									switchToFrame(driver, 30, getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
 								}
 								if (count > 1) {
 									appLog.error("Upload window is not open so cannot select Add to Multiple Institutions radio button so cannot continue upload file");
@@ -8204,7 +8228,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								driver.switchTo().window(parentWin);
 								if (pageName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
 									System.out.println("Searching for the frame");
-									switchToFrame(driver, 30, getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, getFrame( PageName.FundsPage, 30));
 								}
 								if (counter > 1) {
 									appLog.error(
@@ -8384,7 +8408,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			String documentPath, String fileName, String boxUserName, String boxPassword,OnlineImportFileAddTo onlineImportFileAddTo,
 			WorkSpaceAction WorkSpaceAction, FolderType FolderType, PageName pageName, Workspace workspace,int timeOut) {
 		if (pageName.toString().equalsIgnoreCase(pageName.FundsPage.toString())) {
-			switchToFrame(driver, 60, getFrame(pageName.FundsPage, 60));
+			switchToFrame(driver, 60, getFrame( pageName.FundsPage, 60));
 		}
 		String parentID = null;
 		if (FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {

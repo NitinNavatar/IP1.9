@@ -21,6 +21,7 @@ import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 
 import java.nio.channels.InterruptedByTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * @author Parul Singh
@@ -1136,6 +1137,60 @@ public abstract class BasePage {
 	  return ele; 
 	 }
 	 
+	 //Lightning Method..........
+	 
+	 /**
+	  * @author Ankit Jaiswal
+	  * @param pageName
+	  * @param timeOut
+	  * @return webelement/null
+	  */
+	 public WebElement getFrame(String environment, String mode,PageName pageName,int timeOut) {
+	  WebElement ele=null;
+	  if(pageName.toString().equalsIgnoreCase(PageName.InstitutionsPage.toString())) {
+		  if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			  ele=getNIMTabParentFrame_Lightning(pageName);
+		  }else {
+			  ele=isDisplayed(driver, institutionPageFrame, "Visibility", timeOut, pageName+" frame");
+		  }
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.ContactsPage.toString())) {
+		  if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			  ele=getNIMTabParentFrame_Lightning(pageName);
+		  }else {
+			  ele=isDisplayed(driver, contactPageFrame, "Visibility", timeOut, pageName+" frame");
+		  }
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
+		  if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			  ele=getNIMTabParentFrame_Lightning(pageName);
+		  }else {
+			  ele=isDisplayed(driver, fundPageFrame, "Visibility", timeOut, pageName+" frame");
+		}
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.CommitmentsPage.toString())) {
+		  if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			  ele=getNIMTabParentFrame_Lightning(pageName);
+		  }else {
+			  ele=isDisplayed(driver, commitmentPageFrame, "Visibility", timeOut, pageName+" frame");
+		  }
+	  }else if(pageName.toString().equalsIgnoreCase(PageName.HomePage.toString())){
+		  if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			  ele=getNIMTabParentFrame_Lightning(pageName);
+		  }else {
+			  ele=isDisplayed(driver, homePageAlertsFrame, "Visibility", timeOut, pageName+" frame");
+		}
+	  }else if(pageName.toString().equalsIgnoreCase(PageName.NavatarInvestorAddOnsPage.toString())){
+		  ele=isDisplayed(driver, navatarInvestorAddOnFrame, "Visibility", timeOut, pageName+" frame");
+	  } else if (pageName.toString().equalsIgnoreCase(PageName.NavatarInvestorManager.toString())){
+		  ele=isDisplayed(driver, NIMTabFrame, "Visibility", timeOut, "NIM Frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.LimitedPartnerPage.toString())) {
+		  if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			  ele=getNIMTabParentFrame_Lightning(pageName);
+		  }else {
+			  ele=isDisplayed(driver, institutionPageFrame, "Visibility", timeOut, pageName+" frame");
+		  }
+	  }
+	  return ele; 
+	 }
+	 
 	 @FindBy(xpath="//div[@class='pbHeader']//input[@title='Edit']")
 	 private WebElement editButton;
 	
@@ -1998,7 +2053,8 @@ public abstract class BasePage {
 
 		String workSpaceXpath = null;
 		WebElement ele = null;
-		String searchIconXpath = "a[title=Search]";//"//a[@title='Search']";
+		
+		String searchIconXpath = "a[title='Search']";//"//a[@title='Search']";
 		String fullXPath;
 
 		if (pName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
@@ -2036,8 +2092,10 @@ public abstract class BasePage {
 
 			fullXPath = workSpaceXpath +" "+ searchIconXpath;
 			appLog.info("Css FullXpath : "+fullXPath);
+			scrollDownThroughWebelement(driver,getWorkspaceSectionView(workspace, 60),workspace + " View.");
 		//	ele = FindElement(driver, fullXPath, "Search Icon", action.SCROLLANDBOOLEAN, timeOut);
 			 ele= BaseLib.edriver.findElement(By.cssSelector(fullXPath));
+			 
 
 		} else {
 			appLog.info(" Xpath Not Found for Seacrh Icon for " + pName.toString() + " : " + workspace.toString());
@@ -3305,15 +3363,20 @@ public abstract class BasePage {
 		
 	}
 	
-	public WebElement getNIMTabParentFrame_Lightning(){
-		List<WebElement> lst = FindElements(driver, "//div[@data-aura-class='lafPageHost']//div[contains(@class,'iframe-paren')]/iframe", "NIM Page iFrame List");
-		if(!lst.isEmpty()) {
-			for (int i = 0; i < lst.size(); i++) {
-				if(isDisplayed(driver, lst.get(i), "visibility",2, "NIM Page iFrame")!=null) {
-					return lst.get(i);
-				}else {
-					if(i==lst.size()-1) {
-						return null;
+	public WebElement getNIMTabParentFrame_Lightning(PageName pageName){
+		List<WebElement> lst = new ArrayList<WebElement>();
+		lst = FindElements(driver, "//div[@data-aura-class='lafPageHost']//div[contains(@class,'iframe-paren')]/iframe", "NIM Page iFrame List");
+		if(pageName.toString().equalsIgnoreCase(PageName.InstitutionsPage.toString())) {
+			return lst.get(1);
+		}else {
+			if(!lst.isEmpty()) {
+				for (int i = 0; i < lst.size(); i++) {
+					if(isDisplayed(driver, lst.get(i), "visibility",2, "NIM Page iFrame")!=null) {
+						return lst.get(i);
+					}else {
+						if(i==lst.size()-1) {
+							return null;
+						}
 					}
 				}
 			}

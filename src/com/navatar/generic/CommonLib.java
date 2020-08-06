@@ -1276,7 +1276,7 @@ public class CommonLib implements Comparator<String> {
 							}
 						}
 					}
-				} else if (e.getMessage().contains("is not clickable at point") || e.getMessage().contains("Other element would receive the click")){
+				} else if (e.getMessage().contains("is not clickable at point") || e.getMessage().contains("Other element would receive the click") || e.getMessage().contains("stale element")){
 					String xpath = getXpath(element);
 					if(xpath!=null){
 						WebElement ele = FindElement(driver, xpath, elementName, action, 10);

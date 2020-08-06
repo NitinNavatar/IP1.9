@@ -513,6 +513,95 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 				}
 			}
 
+	//Lightning Method...
+	
+	public boolean clickOnCreatedContact(String environment, String mode,String contactFirstName,String contactLastName,String emailId){
+		int i =1;
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			String xpath="";
+			if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text").equalsIgnoreCase("All Contacts")) {
+				if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+				}
+				else {
+					appLog.error("Go button not found");
+					return false;
+				}
+			}
+			else{
+				if (selectVisibleTextFromDropDown(driver, getViewDropdown(60),"View dropdown","All Contacts") ){
+				}
+				else {
+					appLog.error("All Contacts  not found in dropdown");
+					return false;
+				}
+
+			}
+			if(emailId!=null) {
+				xpath="//div[@class='x-panel-bwrap']//td//span[text()='"+emailId+"']/../../../preceding-sibling::td//span[contains(text(),'"
+						+ contactLastName + ", " + contactFirstName + "')]";
+			}else {
+				xpath="//div[@class='x-panel-bwrap']//a//span[contains(text(),'"
+						+ contactLastName + ", " + contactFirstName + "')]";
+			}
+
+			WebElement contactName = FindElement(driver,xpath, "Contact Name", action.BOOLEAN, 5);
+			if (contactName != null) {
+				if (click(driver, contactName, "Contact Name", action.SCROLLANDBOOLEAN)) {
+					appLog.info(
+							"Clicked on created contact successfully :" + contactFirstName + " " + contactLastName);
+					return true;
+
+				} else {
+					appLog.error("Not able to click on created contact");
+					return false;
+				}
+			} else {
+				while (true) {
+					appLog.error("Contact is not Displaying on "+i+ " Page: " + contactLastName + ", " + contactFirstName);
+					if (click(driver, getNextImageonPage(10), "Contact Page Next Button",
+							action.SCROLLANDBOOLEAN)) {
+
+						appLog.info("Clicked on Next Button");
+						if(emailId!=null) {
+							xpath="//div[@class='x-panel-bwrap']//td//span[text()='"+emailId+"']/../../../preceding-sibling::td//span[contains(text(),'"
+									+ contactLastName + ", " + contactFirstName + "')]";
+						}else {
+							xpath="//div[@class='x-panel-bwrap']//a//span[contains(text(),'"
+									+ contactLastName + ", " + contactFirstName + "')]";
+						}
+						contactName = FindElement(driver,xpath, "Contact Name", action.BOOLEAN, 5);
+						if (contactName != null) {
+							if (click(driver, contactName, contactLastName + ", " + contactFirstName, action.SCROLLANDBOOLEAN)) {
+								appLog.info("Clicked on Contact name : " + contactLastName + ", " + contactFirstName);
+								return true;
+
+							}
+						}
+					} else {
+						appLog.error("Contact Not Available : " + contactLastName + ", " + contactFirstName);
+						return false;
+					}
+					i++;
+				}
+			}
+		}else{
+			String concatFullName;
+			if(contactFirstName==null){
+				concatFullName=contactLastName;
+			} else {
+				concatFullName=contactFirstName+" "+contactLastName;
+			}
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, concatFullName, 30)){
+				appLog.info("Clicked on Contact name : " + concatFullName);
+				return true;
+			}else{
+				appLog.error("Contact Not Available : " + concatFullName);	
+			}
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * @author Parul Singh
 	 * @param ContactName

@@ -15,6 +15,7 @@ import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.investorSideWorkSpace;
+import com.navatar.generic.SmokeCommonVariable;
 
 import static com.navatar.generic.CommonLib.*;
 /**
@@ -280,7 +281,43 @@ public class FundsPage extends BasePageBusinessLayer {
 	public WebElement getContactAccessIcon(Workspace workspace,int timeOut) {
 		int i=1;
 		if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
-			i=0;
+			if(SmokeCommonVariable.mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				List<WebElement> lst = FindElements(driver, "//div[@id='frworkspace']//a[@title='Contact Access']", "contact access icon in FR");
+				if(!lst.isEmpty()) {
+					for(int j=0;j<lst.size();j++) {
+						if(isDisplayed(driver, lst.get(j), "visibility", 1, "")!=null) {
+							return lst.get(j);
+						}else {
+							if(j==lst.size()-1) {
+								return null;
+							}
+						}
+					}
+				}else {
+					return null;
+				}
+			}else {
+				i=0;
+			}
+		}else {
+			if(SmokeCommonVariable.mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				List<WebElement> lst = FindElements(driver, "//div[@id='invworkspace']//a[@title='Contact Access']", "contact access icon in FR");
+				if(!lst.isEmpty()) {
+					for(int j=0;j<lst.size();j++) {
+						if(isDisplayed(driver, lst.get(j), "visibility", 1, "")!=null) {
+							return lst.get(j);
+						}else {
+							if(j==lst.size()-1) {
+								return null;
+							}
+						}
+					}
+				}else {
+					return null;
+				}
+			}else {
+				i=1;
+			}
 		}
 		return isDisplayed(driver, contactAccessIcon.get(i), "Visibility", timeOut, "Contact Access Icon of "+workspace);
 	} 

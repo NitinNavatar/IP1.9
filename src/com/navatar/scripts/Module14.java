@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -58,7 +59,7 @@ import static com.navatar.generic.CommonLib.*;
 public class Module14 extends BaseLib {
 
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc001_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -196,7 +197,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc002_1_buildFWRWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -229,15 +230,15 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc002_2_validateDealRoomAnalyticsUIInFWR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc002_2_validateDealRoomAnalyticsUIInFWR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace,30), "workspace Section");
 		if (click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "Deal Room Analytics Icon", action.SCROLLANDBOOLEAN)) {
 			String parentid = switchOnWindow(driver);
@@ -444,15 +445,15 @@ public class Module14 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc002_3_verifyMostViewedAndMostActiveLink() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc002_3_verifyMostViewedAndMostActiveLink(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace,30), "workspace Section");
 				if (click(driver, fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -748,7 +749,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc003_inviteContactInFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -787,7 +788,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact from fundraising workspace: "+M14Contact2FirstName+" "+M14Contact2LastName+" from "+sharedfolderpath);
 					sa.assertTrue(false, "Not able to invite contact from fundraising workspace: "+M14Contact2FirstName+" "+M14Contact2LastName+" from "+sharedfolderpath);
 				}
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -830,7 +831,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc004_1_uploadFilesInFWRAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -846,7 +847,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -858,7 +859,7 @@ public class Module14 extends BaseLib {
 				}
 				if(fp.uploadFile(standardfolderpath,M14Institution1+"<break>"+M14Institution2, stddocpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+standardfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						 stdfilesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -887,7 +888,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(sharedfolderpath,null, shrddocpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+sharedfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						 shrdfileName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -916,7 +917,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(commonfolderpath,null, commondocpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+commonfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						 CommonfileName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -945,7 +946,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(internalfolderpath,null, internaldocpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+internalfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -1012,7 +1013,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc005_1_registerContact1() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1022,7 +1023,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -1131,7 +1132,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc005_2_registerContact2() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1188,7 +1189,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc005_3_verifyIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1202,7 +1203,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -1335,7 +1336,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc006_1_uploadFilesInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1348,7 +1349,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -1414,7 +1415,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc006_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1426,7 +1427,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -1485,7 +1486,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc007_accessDocFromCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1505,7 +1506,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -1515,7 +1516,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M14Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.FundraisingWorkspace, stdfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+stdfilesName);
@@ -1528,7 +1529,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(commonfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.FundraisingWorkspace, commonfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+commonfilesName);
@@ -1541,7 +1542,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+commonfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+commonfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.FundraisingWorkspace, shrdfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+shrdfilesName);
@@ -1554,7 +1555,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+sharedfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+sharedfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M14Institution2, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.FundraisingWorkspace, stdfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+stdfilesName);
@@ -1567,7 +1568,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					String childWindowID = null;
@@ -1719,7 +1720,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc008_1_viewDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1735,7 +1736,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -1810,7 +1811,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc008_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1825,7 +1826,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -1937,7 +1938,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc008_3_changeEmailAndDeleteContactAtCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1964,7 +1965,7 @@ public class Module14 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver, fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "ip analtyics icon", action.SCROLLANDBOOLEAN)) {
 					String parentid=switchOnWindow(driver);
 					ThreadSleep(3000);
@@ -2090,7 +2091,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc009_1_downloadDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2104,7 +2105,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -2172,7 +2173,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc009_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2182,7 +2183,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -2229,7 +2230,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc010_1_UpdateFileInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2242,7 +2243,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -2293,7 +2294,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc010_2_updateFilesInFWRAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2313,7 +2314,7 @@ public class Module14 extends BaseLib {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
 				if(fp.uploadFile(standardfolderpath,M14Institution1+"<break>"+M14Institution2, stddocpath,null,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+standardfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -2338,7 +2339,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(sharedfolderpath,null, shrddocpath,null,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+sharedfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileShared);
@@ -2363,7 +2364,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(commonfolderpath,null, commondocpath,null,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+commonfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
@@ -2388,7 +2389,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(internalfolderpath,null, internaldocpath,null,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+internalfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
@@ -2455,7 +2456,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc011_1_viewUpdatedDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2466,7 +2467,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -2520,7 +2521,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc011_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2530,7 +2531,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -2577,7 +2578,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc012_updateDocWIthDiffNameAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2605,7 +2606,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -2617,7 +2618,7 @@ public class Module14 extends BaseLib {
 				}
 				if(fp.updateFile(stdfolderpath, uploadstdfilesName, M14Institution1, null, FolderType.Standard,docPath+UpdatestdfilesName.split("<break>")[0], multiInstance.ThisInvestorOnly, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadstdfilesName+" in :"+stdfolderpath+" to "+UpdatestdfilesName.split("<break>")[0]);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,UpdatestdfilesName.split("<break>")[0],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2638,7 +2639,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(stdfolderpath, uploadInvestorSidestdfilesName.split("<break>")[0], M14Institution1, null, FolderType.Standard,docPath+UpdatestdfilesName.split("<break>")[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadInvestorSidestdfilesName.split("<break>")[0]+" in :"+stdfolderpath+" to "+UpdatestdfilesName.split("<break>")[1]);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,UpdatestdfilesName.split("<break>")[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2659,7 +2660,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(commonfolderpath, uploadcommonfilesName, null, null, FolderType.Standard,docPath+UpdatecommonfilesName, null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadcommonfilesName+" in :"+commonfolderpath+" to "+UpdatecommonfilesName);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,UpdatecommonfilesName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2680,7 +2681,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(internalfolderpath, uploadinternalfilesName, null, null, FolderType.Standard,docPath+updateinternalfilesName, null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadinternalfilesName+" in :"+internalfolderpath+" to "+updateinternalfilesName);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,updateinternalfilesName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2701,7 +2702,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(sharedfolderpath, uploadshrdfilesName, null, null, FolderType.Shared,docPath+updateshrdfilesName, null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadshrdfilesName+" in :"+sharedfolderpath+" to "+updateshrdfilesName);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,updateshrdfilesName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2764,7 +2765,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc013_1_viewDiffNameUpdatedDocFromInvestorSide() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2775,7 +2776,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -2837,7 +2838,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc013_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2847,7 +2848,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -2894,7 +2895,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc014_activateManageApprovalsSettings() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -2922,8 +2923,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc015_onlineImportDocInFRW() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc015_onlineImportDocInFRW(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String sharedfolderpath=ExcelUtils.readData("Filepath", excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.SharedPath);
@@ -2941,7 +2942,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -2951,9 +2952,9 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.onlineImport(M14Institution1, null, M14Institution2,standardfolderpath,DocPath,uploadstdfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M14Institution1,null,M14Institution2,standardfolderpath, DocPath, uploadstdfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadstdfileName+" in :"+standardfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadstdfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2969,9 +2970,9 @@ public class Module14 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+uploadstdfileName+" in :"+standardfolderpath);
 				}
 				switchToDefaultContent(driver);
-				if(fp.onlineImport(null, null, null,commonfolderpath,DocPath,uploadcommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,commonfolderpath, DocPath, uploadcommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadcommonfileName+" in :"+commonfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadcommonfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2987,9 +2988,9 @@ public class Module14 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+uploadcommonfileName+" in :"+commonfolderpath);
 				}
 				switchToDefaultContent(driver);
-				if(fp.onlineImport(null, null, null,sharedfolderpath,DocPath,uploadsharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,sharedfolderpath, DocPath, uploadsharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadsharedfileName+" in :"+sharedfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadsharedfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3005,9 +3006,9 @@ public class Module14 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+uploadsharedfileName+" in :"+sharedfolderpath);
 				}
 				switchToDefaultContent(driver);
-				if(fp.onlineImport(null, null, null,internalfolderpath,DocPath,uploadinternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,internalfolderpath, DocPath, uploadinternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadinternalfileName+" in :"+internalfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadinternalfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3067,7 +3068,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc016_approvePendingDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3081,7 +3082,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -3091,7 +3092,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 					if(fp.selectPendingFilesToApproveAndCountApprovedFiles(driver, uploadstdfileName+"<break>"+uploadcommonfileName+"<break>"+uploadsharedfileName).isEmpty()) {
 						if(click(driver, fp.getManageApprovalsApproveBtn(30), "approve button", action.SCROLLANDBOOLEAN)) {
@@ -3113,7 +3114,7 @@ public class Module14 extends BaseLib {
 									sa.assertTrue(false, "Not able to click on manage approvals close button so cannot close manage approvals pop up");
 									switchToDefaultContent(driver);
 									driver.navigate().refresh();
-									switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+									switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 								}
 							}else {
 								appLog.error("Not able to click on manage approvals confirm yes button so cannot approve pending files");
@@ -3189,7 +3190,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc017_1_viewOnlineImportDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3206,7 +3207,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -3310,7 +3311,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc017_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3327,7 +3328,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -3374,14 +3375,14 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc018_verifySortingInAnalyticsPopUps() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -3606,7 +3607,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc019_deleteDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3630,7 +3631,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -3640,7 +3641,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.Delete,uploadsharedfileName,Workspace.FundraisingWorkspace, 60,
 							"Yes")) {
@@ -3722,7 +3723,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.clickOnTab(TabName.ContactTab)) {
 					if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
-						switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 						String[] InsName= {M14Institution1,M14Institution2};
 						for(int i=0; i<2; i++) {
 						if(fp.verifyFolderPathdummy(standardfolderpath,InsName[i], null, M14FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 20)) {
@@ -3778,7 +3779,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.clickOnTab(TabName.FundsTab)) {
 					if(fp.clickOnCreatedFund(M14FundName1)) {
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 							String parentid = switchOnWindow(driver);
 							List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -3832,7 +3833,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc020_inviteContact3AndDeleteSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3850,7 +3851,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -3866,7 +3867,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact from fundraising workspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+sharedfolderpath);
 					sa.assertTrue(false, "Not able to invite contact from fundraising workspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+sharedfolderpath);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					String id=null;
 					id=fp.getCreatedFolderId(sharedfolderpath, PageName.ManageFolderPopUp, 20);
@@ -4023,7 +4024,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc021_removeInvestorFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4041,7 +4042,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4051,7 +4052,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage investor icon");
 					ThreadSleep(3000);
@@ -4131,7 +4132,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc022_addInvestorFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4149,7 +4150,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4159,7 +4160,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage investor icon");
 					ThreadSleep(3000);
@@ -4188,7 +4189,7 @@ public class Module14 extends BaseLib {
 						appLog.error("Not able to invite contact from fundraising workspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+sharedfolderpath);
 						sa.assertTrue(false, "Not able to invite contact from fundraising workspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					}else {
 						appLog.error("Not able to click on manage investor icon so cannot add institution : "+M14Institution2);
 						sa.assertTrue(false, "Not able to click on manage investor icon so cannot add institution : "+M14Institution2);
@@ -4239,7 +4240,7 @@ public class Module14 extends BaseLib {
 	}
 	
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc024_removeContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4256,7 +4257,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4266,7 +4267,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy("", M14Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if(fp.revokeContactAccess(M14Contact1EmailId, Workspace.FundraisingWorkspace)) {
 						appLog.info(M14Contact1EmailId+ " contact access is removed from contact access.");
@@ -4337,8 +4338,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc025_reInviteContactAccessAndCheckImpact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc025_reInviteContactAccessAndCheckImpact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc015_onlineImportDocInFRW";
@@ -4354,7 +4355,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4380,7 +4381,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					sa.assertTrue(false, "Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -4426,7 +4427,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc026_removeContactAccessFromContactPageAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4444,7 +4445,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4465,7 +4466,7 @@ public class Module14 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(con.clickOnTab(TabName.ContactTab)) {
 			if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
-				switchToFrame(driver, 30,con.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,con.getFrame( PageName.ContactsPage, 30));
 				if(con.removeContactAccessFromContactPage(M14FundName1, Workspace.FundraisingWorkspace)) {
 					appLog.info(M14Contact1FirstName+" "+M14Contact1LastName+" Contact Access is removed");
 					FRW_UniqueDocument=FRW_UniqueDocument+2;
@@ -4493,7 +4494,7 @@ public class Module14 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -4544,8 +4545,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc027_reInviteContactAccessAndCheckImpact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc027_reInviteContactAccessAndCheckImpact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc015_onlineImportDocInFRW";
@@ -4561,7 +4562,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4587,7 +4588,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					sa.assertTrue(false, "Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -4633,7 +4634,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc028_closeFundRaisingWorkSpaceAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4647,7 +4648,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4673,7 +4674,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.closeWorkSpace(Workspace.FundraisingWorkspace, 60)) {
 					appLog.info("Fundraising Workspace is closed");
 					FRW_UniqueDocument=FRW_UniqueDocument+2;
@@ -4706,7 +4707,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -4751,8 +4752,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M14tc029_againInviteContactAccessAndCheckImpact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc029_againInviteContactAccessAndCheckImpact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc015_onlineImportDocInFRW";
@@ -4768,7 +4769,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -4794,7 +4795,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					sa.assertTrue(false, "Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -4840,14 +4841,14 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc030_downloadReportFromExportTabInIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					System.err.println("Parent wind ID: "+parentid);
@@ -5047,7 +5048,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc031_clearFundraisingWorkspaceAndBuildAgain() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5062,7 +5063,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.FundraisingWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -5088,7 +5089,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.clearWorkSpace(Workspace.FundraisingWorkspace, 60)) {
 					appLog.info("Fundraising Workspace is cleared");
 					FRW_UniqueDocument=0;
@@ -5138,7 +5139,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to bulid fundraising workspace on fund: "+M14FundName1);
 					sa.assertTrue(false, "Not able to bulid fundraising workspace on fund: "+M14FundName1);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -5183,7 +5184,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc032_inviteContactInFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5197,7 +5198,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact from fundraising workspace: "+M14Contact1FirstName+" "+M14Contact1LastName+" from "+M14Institution1);
 					sa.assertTrue(false, "Not able to invite contact from fundraising workspace: "+M14Contact1FirstName+" "+M14Contact1LastName+" from "+M14Institution1);
 				}
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.FundraisingWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(FRW_UniqueDocument, FRW_DocumentViews,
@@ -5240,7 +5241,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc033_deactivateManageApprovalsSettings() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -5269,7 +5270,7 @@ public class Module14 extends BaseLib {
 
 	//
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc034_1_buildINVWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5302,15 +5303,15 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc034_2_validateDealRoomAnalyticsUIInINV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc034_2_validateDealRoomAnalyticsUIInINV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getWorkspaceSectionView(Workspace.InvestorWorkspace,30), "workspace Section");
 		if (click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "Deal Room Analytics Icon", action.SCROLLANDBOOLEAN)) {
 			String parentid = switchOnWindow(driver);
@@ -5517,15 +5518,15 @@ public class Module14 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc034_3_verifyMostViewedAndMostActiveLink() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc034_3_verifyMostViewedAndMostActiveLink(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getWorkspaceSectionView(Workspace.InvestorWorkspace,30), "workspace Section");
 				if (click(driver, fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -5815,7 +5816,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc035_inviteContactInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5854,7 +5855,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact from Investor workspace: "+M14Contact2FirstName+" "+M14Contact2LastName+" from "+sharedfolderpath);
 					sa.assertTrue(false, "Not able to invite contact from Investor workspace: "+M14Contact2FirstName+" "+M14Contact2LastName+" from "+sharedfolderpath);
 				}
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -5897,7 +5898,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc036_uploadFilesInINVAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5916,7 +5917,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -5928,7 +5929,7 @@ public class Module14 extends BaseLib {
 				}
 				if(fp.uploadFile(standardfolderpath,M14Institution1+"/"+M14LimitedPartner1+"<break>"+M14Institution2+"/"+M14LimitedPartner2, stddocpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+standardfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						 stdfileName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -5957,7 +5958,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(sharedfolderpath,null, shrddocpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+sharedfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						shrdfileName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -5986,7 +5987,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(commonfolderpath,null, commondocpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+commonfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						commonFileName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -6015,7 +6016,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(internalfolderpath,null, internaldocpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+internalfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -6082,14 +6083,14 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc037_verifySortingInAnalyticsPopUpsInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -6208,7 +6209,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc038_1_uploadFilesInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6221,7 +6222,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -6289,7 +6290,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc038_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6301,7 +6302,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -6360,7 +6361,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc039_accessDocFromCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6380,7 +6381,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -6390,7 +6391,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M14Institution1, M14LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.InvestorWorkspace, stdfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+stdfilesName);
@@ -6403,7 +6404,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(commonfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.InvestorWorkspace, commonfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+commonfilesName);
@@ -6416,7 +6417,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+commonfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+commonfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.InvestorWorkspace, shrdfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+shrdfilesName);
@@ -6429,7 +6430,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+sharedfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+sharedfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(stdfolderpath, M14Institution2, M14LimitedPartner2, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if (bp.verifyDownloadFunctionality(PageName.FundsPage, Workspace.InvestorWorkspace, stdfilesName, false, false, false)) {
 						appLog.info("clicked on upload file successfully: "+stdfilesName);
@@ -6442,7 +6443,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 					sa.assertTrue(false, "Not able to click on folder: "+stdfolderpath+" so cannot click on uploaded file");
 				}
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					String childWindowID = null;
@@ -6595,7 +6596,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc040_1_viewDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6611,7 +6612,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -6686,7 +6687,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc040_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6701,7 +6702,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -6814,7 +6815,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc041_changeEmailAndDeleteContactAtCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6839,7 +6840,7 @@ public class Module14 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver, fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "ip analtyics icon", action.SCROLLANDBOOLEAN)) {
 					String parentid=switchOnWindow(driver);
 					ThreadSleep(3000);
@@ -6964,7 +6965,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc042_1_downloadDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6978,7 +6979,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -7046,7 +7047,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc042_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7056,7 +7057,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -7103,7 +7104,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc043_1_UpdateFileInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7116,7 +7117,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -7167,7 +7168,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc043_2_updateFilesInINVAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7187,7 +7188,7 @@ public class Module14 extends BaseLib {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
 				if(fp.uploadFile(standardfolderpath,M14Institution1+"/"+M14LimitedPartner1+"<break>"+M14Institution2+"/"+M14LimitedPartner2, stddocpath,null,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+standardfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -7212,7 +7213,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(sharedfolderpath,null, shrddocpath,null,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+sharedfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileShared);
@@ -7237,7 +7238,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(commonfolderpath,null, commondocpath,null,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+commonfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
@@ -7262,7 +7263,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.uploadFile(internalfolderpath,null, internaldocpath,null,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly in folder: "+internalfolderpath);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
@@ -7329,7 +7330,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc044_1_viewUpdatedDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7340,7 +7341,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -7395,7 +7396,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc044_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7405,7 +7406,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -7452,7 +7453,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc045_updateDocWIthDiffNameAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7480,7 +7481,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -7492,7 +7493,7 @@ public class Module14 extends BaseLib {
 				}
 				if(fp.updateFile(stdfolderpath, uploadstdfilesName, M14Institution1, M14LimitedPartner1, FolderType.Standard,docPath+UpdatestdfilesName.split("<break>")[0], multiInstance.AllInvestor, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadstdfilesName+" in :"+stdfolderpath+" to "+UpdatestdfilesName.split("<break>")[0]);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,UpdatestdfilesName.split("<break>")[0],fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7513,7 +7514,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(stdfolderpath, uploadInvestorSidestdfilesName.split("<break>")[0], M14Institution1, M14LimitedPartner1, FolderType.Standard,docPath+UpdatestdfilesName.split("<break>")[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadInvestorSidestdfilesName.split("<break>")[0]+" in :"+stdfolderpath+" to "+UpdatestdfilesName.split("<break>")[1]);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,UpdatestdfilesName.split("<break>")[1],fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7534,7 +7535,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(commonfolderpath, uploadcommonfilesName, null, null, FolderType.Standard,docPath+UpdatecommonfilesName, null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadcommonfilesName+" in :"+commonfolderpath+" to "+UpdatecommonfilesName);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,UpdatecommonfilesName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7555,7 +7556,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(internalfolderpath, uploadinternalfilesName, null, null, FolderType.Standard,docPath+updateinternalfilesName, null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadinternalfilesName+" in :"+internalfolderpath+" to "+updateinternalfilesName);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,updateinternalfilesName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7576,7 +7577,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.updateFile(sharedfolderpath, uploadshrdfilesName, null, null, FolderType.Shared,docPath+updateshrdfilesName, null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+uploadshrdfilesName+" in :"+sharedfolderpath+" to "+updateshrdfilesName);
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,updateshrdfilesName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7639,7 +7640,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc046_1_viewDiffNameUpdatedDocFromInvestorSide() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7653,7 +7654,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -7728,7 +7729,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc046_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7738,7 +7739,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -7785,7 +7786,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc047_activateManageApprovalsSettings() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -7813,8 +7814,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc048_onlineImportDocInINV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc048_onlineImportDocInINV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String sharedfolderpath=ExcelUtils.readData("Filepath", excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.SharedPath);
@@ -7832,7 +7833,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -7842,9 +7843,9 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				if(fp.onlineImport(M14Institution1, M14LimitedPartner1, M14LimitedPartner2,standardfolderpath,DocPath,uploadstdfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M14Institution1,M14LimitedPartner1,M14LimitedPartner2,standardfolderpath, DocPath, uploadstdfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadstdfileName+" in :"+standardfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadstdfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7860,9 +7861,9 @@ public class Module14 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+uploadstdfileName+" in :"+standardfolderpath);
 				}
 				switchToDefaultContent(driver);
-				if(fp.onlineImport(null, null, null,commonfolderpath,DocPath,uploadcommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,commonfolderpath, DocPath, uploadcommonfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadcommonfileName+" in :"+commonfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"InvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadcommonfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7878,9 +7879,9 @@ public class Module14 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+uploadcommonfileName+" in :"+commonfolderpath);
 				}
 				switchToDefaultContent(driver);
-				if(fp.onlineImport(null, null, null,sharedfolderpath,DocPath,uploadsharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,sharedfolderpath, DocPath, uploadsharedfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadsharedfileName+" in :"+sharedfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadsharedfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7896,9 +7897,9 @@ public class Module14 extends BaseLib {
 					sa.assertTrue(false, "file is not imported: "+uploadsharedfileName+" in :"+sharedfolderpath);
 				}
 				switchToDefaultContent(driver);
-				if(fp.onlineImport(null, null, null,internalfolderpath,DocPath,uploadinternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,internalfolderpath, DocPath, uploadinternalfileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+uploadinternalfileName+" in :"+internalfolderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleListOnBasisOfTitle(driver,uploadinternalfileName,fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7958,7 +7959,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc049_approvePendingDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7972,7 +7973,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -7982,7 +7983,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 					if(fp.selectPendingFilesToApproveAndCountApprovedFiles(driver, uploadstdfileName+"<break>"+uploadcommonfileName+"<break>"+uploadsharedfileName).isEmpty()) {
 						if(click(driver, fp.getManageApprovalsApproveBtn(30), "approve button", action.SCROLLANDBOOLEAN)) {
@@ -8004,7 +8005,7 @@ public class Module14 extends BaseLib {
 									sa.assertTrue(false, "Not able to click on manage approvals close button so cannot close manage approvals pop up");
 									switchToDefaultContent(driver);
 									driver.navigate().refresh();
-									switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+									switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 								}
 							}else {
 								appLog.error("Not able to click on manage approvals confirm yes button so cannot approve pending files");
@@ -8080,7 +8081,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc050_1_viewOnlineImportDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8097,7 +8098,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -8201,7 +8202,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc050_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8218,7 +8219,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -8265,14 +8266,14 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc051_verifySortingInAnalyticsPopUpsInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
@@ -8461,7 +8462,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc052_deleteDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8482,7 +8483,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -8492,7 +8493,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy(sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.Delete,SplitedSharedFileName[0],Workspace.InvestorWorkspace, 60,
 							"Yes")) {
@@ -8573,7 +8574,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.clickOnTab(TabName.ContactTab)) {
 					if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
-						switchToFrame(driver, 30,fp.getFrame(PageName.ContactsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 						String[] LPName= {M14LimitedPartner1,M14LimitedPartner2};
 						for(int i=0; i<2; i++) {
 						if(fp.verifyFolderPathdummy(standardfolderpath,LPName[i], null, M14FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 20)) {
@@ -8629,7 +8630,7 @@ public class Module14 extends BaseLib {
 				switchToDefaultContent(driver);
 				if(fp.clickOnTab(TabName.FundsTab)) {
 					if(fp.clickOnCreatedFund(M14FundName1)) {
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 							String parentid = switchOnWindow(driver);
 							List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -8685,7 +8686,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc053_inviteContact3AndDeleteSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8703,7 +8704,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -8719,7 +8720,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact from InvestorWorkspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+sharedfolderpath);
 					sa.assertTrue(false, "Not able to invite contact from InvestorWorkspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+sharedfolderpath);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					String id=null;
 					id=fp.getCreatedFolderId(sharedfolderpath, PageName.ManageFolderPopUp, 20);
@@ -8877,7 +8878,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc054_removeLPFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8894,7 +8895,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -8904,7 +8905,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage investor icon");
 					ThreadSleep(3000);
@@ -8984,7 +8985,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc055_addLPFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9001,7 +9002,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9011,7 +9012,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage investor icon");
 					ThreadSleep(3000);
@@ -9040,7 +9041,7 @@ public class Module14 extends BaseLib {
 						appLog.error("Not able to invite contact from fundraising workspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+M14Institution2+"/"+M14LimitedPartner2);
 						sa.assertTrue(false, "Not able to invite contact from fundraising workspace: "+M14Contact3FirstName+" "+M14Contact3LastName+" from "+M14Institution2+"/"+M14LimitedPartner2);
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					}else {
 						appLog.error("Not able to click on manage investor icon so cannot add institution : "+M14Institution2);
 						sa.assertTrue(false, "Not able to click on manage investor icon so cannot add institution : "+M14Institution2);
@@ -9090,7 +9091,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc056_removeContactAccessFromContactPageAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9108,7 +9109,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9129,7 +9130,7 @@ public class Module14 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(con.clickOnTab(TabName.ContactTab)) {
 			if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
-				switchToFrame(driver, 30,con.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,con.getFrame( PageName.ContactsPage, 30));
 				if(con.removeContactAccessFromContactPage(M14FundName1, Workspace.InvestorWorkspace)) {
 					appLog.info(M14Contact1FirstName+" "+M14Contact1LastName+" Contact Access is removed");
 					INV_UniqueDocument=INV_UniqueDocument+2;
@@ -9157,7 +9158,7 @@ public class Module14 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -9208,8 +9209,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc057_reInviteContactAccessAndCheckImpact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc057_reInviteContactAccessAndCheckImpact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc048_onlineImportDocInINV";
@@ -9225,7 +9226,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9251,7 +9252,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					sa.assertTrue(false, "Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -9297,7 +9298,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc058_removeContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9314,7 +9315,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9324,7 +9325,7 @@ public class Module14 extends BaseLib {
 						sa.assertTrue(false, lst.get(i));
 					}
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.verifyFolderPathdummy("", M14Institution1, M14LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if(fp.revokeContactAccess(M14Contact1EmailId, Workspace.InvestorWorkspace)) {
 						appLog.info(M14Contact1EmailId+ " contact access is removed from contact access.");
@@ -9395,8 +9396,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc059_reInviteContactAccessAndCheckImpact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc059_reInviteContactAccessAndCheckImpact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc048_onlineImportDocInINV";
@@ -9412,7 +9413,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9438,7 +9439,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					sa.assertTrue(false, "Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -9483,7 +9484,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc060_closeInvestorWorkSpaceAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9497,7 +9498,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9523,7 +9524,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.closeWorkSpace(Workspace.InvestorWorkspace, 60)) {
 					appLog.info("Fundraising Workspace is closed");
 					INV_UniqueDocument=INV_UniqueDocument+2;
@@ -9556,7 +9557,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -9601,8 +9602,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M14tc061_againInviteContactAccessAndCheckImpact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M14tc061_againInviteContactAccessAndCheckImpact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc048_onlineImportDocInINV";
@@ -9618,7 +9619,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9644,7 +9645,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 					sa.assertTrue(false, "Not able to invite contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -9690,14 +9691,14 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc062_downloadReportFromExportTabInIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					System.err.println("Parent wind ID: "+parentid);
@@ -9898,7 +9899,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc063_clearInvestorWorkspaceAndBuildAgain() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9913,7 +9914,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				List<String> lst=fp.readIPAnalyticsCount(Workspace.InvestorWorkspace);
 				if(lst.isEmpty()) {
 					appLog.info("IP Analytics all count is read and write in excel sheet succesfully");
@@ -9939,7 +9940,7 @@ public class Module14 extends BaseLib {
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M14FundName1)) {
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(fp.clearWorkSpace(Workspace.InvestorWorkspace, 60)) {
 					appLog.info("InvestorWorkspace is cleared");
 					INV_UniqueDocument=0;
@@ -9988,7 +9989,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to bulid InvestorWorkspace on fund: "+M14FundName1);
 					sa.assertTrue(false, "Not able to bulid InvestorWorkspace on fund: "+M14FundName1);
 				}
-				switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,
@@ -10033,7 +10034,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M14tc064_inviteContactInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10047,7 +10048,7 @@ public class Module14 extends BaseLib {
 					appLog.error("Not able to invite contact from InvestorWorkspace: "+M14Contact1FirstName+" "+M14Contact1LastName+" from "+M14Institution1);
 					sa.assertTrue(false, "Not able to invite contact from InvestorWorkspace: "+M14Contact1FirstName+" "+M14Contact1LastName+" from "+M14Institution1);
 				}
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 				if(click(driver,fp.getIPAnalyticsIcon(Workspace.InvestorWorkspace), "IP Analytics Icon", action.SCROLLANDBOOLEAN)) {
 					String parentid = switchOnWindow(driver);
 					List<String> result = fp.verifyIPAnalyticsTargetValues(INV_UniqueDocument, INV_DocumentViews,

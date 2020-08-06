@@ -15,6 +15,7 @@ import org.apache.poi.util.Internal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
@@ -48,7 +49,7 @@ import static com.navatar.generic.CommonLib.*;
 public class Module5 extends BaseLib {
 
 //	Scanner scn = new Scanner(System.in);
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc001_Module5_preCondition(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 //		if(lp.preCondition(superAdminUserName, CRMUser1FirstName+" "+CRMUser1LastName, CRMUser1EmailID, EnableDisable.Disable, EnableDisable.Disable, accessType.AdminUserAccess)){
@@ -260,7 +261,7 @@ public class Module5 extends BaseLib {
 		
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.createFolderTemplate("FolderTemp",folderTemplateName,folderTemplateName, 60)){	
 				appLog.info("Folder template created successfully.");
 			} else {
@@ -276,7 +277,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc002_CreateFundraisingWorkspaceAndVerifyManageFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
@@ -285,7 +286,7 @@ public class Module5 extends BaseLib {
 			if(fp.clickOnCreatedFund(M5F1)){
 				String[] step1Of3Data = {"2100","2015","abc","987654321","abc@abc.com","Dummy description"};
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.WITHOUTEMPLATE, null, null, null, Workspace.FundraisingWorkspace, 60)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 60), "Manage Folder Icon", action.BOOLEAN)){
 						if(click(driver, fp.getManageFolderCrossIcon(Workspace.FundraisingWorkspace, 30), "Cross icon", action.BOOLEAN)){
 							ThreadSleep(1500);
@@ -378,7 +379,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc003_CreateInvestorWorkspaceAndVerifyManageFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -389,7 +390,7 @@ public class Module5 extends BaseLib {
 			if(fp.clickOnCreatedFund(M5F2)){
 				String[] step1Of3Data = {"2100","2015","abc","987654321","abc@abc.com","Dummy description"};
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.CREATEFOLDERTEMPLATE, null, "FolderTemp", M5I1+"/"+M5LP1+"<break>"+M5I2+"/"+M5LP2, Workspace.InvestorWorkspace, 60)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 60), "Manage Folder Icon", action.BOOLEAN)){
 						if(trim(getText(driver, fp.getManageFolderHeader(Workspace.InvestorWorkspace, 30), "Manage Folder header", action.BOOLEAN)).equalsIgnoreCase("Manage Folders")){
 							appLog.info("Manage folder header is verified.");
@@ -427,7 +428,7 @@ public class Module5 extends BaseLib {
 					switchToDefaultContent(driver);
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
 						if(instiPage.clickOnCreatedInstitution(M5I1)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, M5LP1, M5F2, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
@@ -447,7 +448,7 @@ public class Module5 extends BaseLib {
 					
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
 						if(instiPage.clickOnCreatedInstitution(M5I2)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, M5LP2, M5F2, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on instituion page of '"+M5I2+"'.");
@@ -467,7 +468,7 @@ public class Module5 extends BaseLib {
 					
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
 						if(instiPage.clickOnCreatedLP(M5LP1)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, null, M5F2, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
@@ -487,7 +488,7 @@ public class Module5 extends BaseLib {
 					
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
 						if(instiPage.clickOnCreatedLP(M5LP2)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, null, M5F2, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on LP page of '"+M5LP2+"'.");
@@ -507,7 +508,7 @@ public class Module5 extends BaseLib {
 					
 					if(fp.clickOnTab(TabName.CommitmentsTab)){
 						if(com.clickOnCreatedCommitmentId(M5CMT2)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.CommitmentsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.CommitmentsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, M5LP1, null, Workspace.InvestorWorkspace, PageName.CommitmentsPage, 30)){
 								appLog.info("Folder structure is verified on commitment page of '"+M5CMT2+"'.");
@@ -527,7 +528,7 @@ public class Module5 extends BaseLib {
 					
 					if(fp.clickOnTab(TabName.CommitmentsTab)){
 						if(com.clickOnCreatedCommitmentId(M5CMT3)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.CommitmentsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.CommitmentsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, M5LP2, null, Workspace.InvestorWorkspace, PageName.CommitmentsPage, 30)){
 								appLog.info("Folder structure is verified on commitment page of '"+M5CMT3+"'.");
@@ -561,7 +562,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc004_CreateFundriasingWorkspaceAndVerifyManageFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -572,7 +573,7 @@ public class Module5 extends BaseLib {
 			if(fp.clickOnCreatedFund(M5F2)){
 				String[] step1Of3Data = {"2100","2015","abc","987654321","abc@abc.com","Dummy description"};
 				if(fp.buildWorkspace(step1Of3Data, WorkSpaceAction.IMPORTFOLDERTEMPLATE,folderTemplateName, null, M5I1+"<break>"+M5I2, Workspace.FundraisingWorkspace, 60)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 60), "Manage Folder Icon", action.BOOLEAN)){
 						if(trim(getText(driver, fp.getManageFolderHeader(Workspace.FundraisingWorkspace, 30), "Manage Folder header", action.BOOLEAN)).equalsIgnoreCase("Manage Folders")){
 							appLog.info("Manage folder header is verified.");
@@ -610,7 +611,7 @@ public class Module5 extends BaseLib {
 					switchToDefaultContent(driver);
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
 						if(instiPage.clickOnCreatedInstitution(M5I1)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, null, M5F2, Workspace.FundraisingWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
@@ -630,7 +631,7 @@ public class Module5 extends BaseLib {
 					
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
 						if(instiPage.clickOnCreatedInstitution(M5I2)){
-							switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, null, M5F2, Workspace.FundraisingWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on instituion page of '"+M5I2+"'.");
@@ -665,8 +666,8 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M5tc005_InviteContactAndVerifyFolderAtContactPage(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M5tc005_InviteContactAndVerifyFolderAtContactPage(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer con = new ContactPageBusinessLayer(driver);
@@ -732,7 +733,7 @@ public class Module5 extends BaseLib {
 		
 		if(lp.clickOnTab(TabName.ContactTab)){
 			if(con.clickOnCreatedContact(M5CFN1, M5CLN1, null)){
-				switchToFrame(driver, 30, con.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, con.getFrame( PageName.ContactsPage, 30));
 				if(fp.VerifyFolderStructure("FolderTemp", M5I1, null, M5F2, Workspace.FundraisingWorkspace, PageName.ContactsPage, 30)){
 					appLog.info("Folder strucutre is verified on contact page for fund '"+M5F2+"' on contact page of "+M5CFN1 +" "+ M5CLN1);
 				} else {
@@ -768,7 +769,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc005_InviteContactAndVerifyFolderAtInvestorSide(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -873,7 +874,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc006_VerifyAddAFolderPopUpFundraisingWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -882,7 +883,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(click(driver, fp.getAllFolderAddIcon(Workspace.FundraisingWorkspace, 30), "Add folder button", action.BOOLEAN)){
@@ -1109,7 +1110,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)){
 			if(instiPage.clickOnCreatedInstitution(M5I1)){
-				switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 				scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace+" View.");
 				if(fp.verifyFolderPathdummy("Standard Folder New", null, null, M5F2, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
@@ -1135,7 +1136,7 @@ public class Module5 extends BaseLib {
 		
 		if(lp.clickOnTab(TabName.ContactTab)){
 			if(con .clickOnCreatedContact(M5CFN1, M5CLN1, null)){
-				switchToFrame(driver, 30, con.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, con.getFrame( PageName.ContactsPage, 30));
 				if(fp.verifyFolderPathdummy("Standard Folder New", M5I1, null, M5F2, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Folder strucutre is verified on contact page for fund '"+M5F2+"' on contact page of "+M5CFN1 +" "+ M5CLN1);
 				} else {
@@ -1160,7 +1161,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc006_VerifyAddAFolderPopUpFundraisingWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -1185,7 +1186,7 @@ public class Module5 extends BaseLib {
 		}
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc007_1_VerifyAddASubFolderPopUpFundraisingWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1198,7 +1199,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(fp.verifyAddRenameDeleteButton(null, FolderType.Common, YesNo.Yes, Workspace.FundraisingWorkspace, 30)){
@@ -1451,7 +1452,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)){
 			if(ins.clickOnCreatedInstitution(M5I1)){
-				switchToFrame(driver, 30, ins.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ins.getFrame( PageName.InstitutionsPage, 30));
 				scrollDownThroughWebelement(driver, ins.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace+" View.");
 				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
@@ -1515,7 +1516,7 @@ public class Module5 extends BaseLib {
 		}
 		if(lp.clickOnTab(TabName.ContactTab)){
 			if(con .clickOnCreatedContact(M5CFN1, M5CLN1, null)){
-				switchToFrame(driver, 30, con.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, con.getFrame( PageName.ContactsPage, 30));
 				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
@@ -1554,7 +1555,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc007_2_VerifyAddAFolderPopUpFundraisingWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -1596,7 +1597,7 @@ public class Module5 extends BaseLib {
 		}
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc008_verifyErrorMsgOnParentLevel() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1608,7 +1609,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(click(driver, fp.getAllFolderAddIcon(Workspace.FundraisingWorkspace, 30), "Add folder button", action.BOOLEAN)){
@@ -1920,7 +1921,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc009_verifyErrorMsgOnSubLevel() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1936,7 +1937,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 						//String[] radioBtn= {STDFolderName,commonFolderName,SHRDFolderName,InternalFolderName};
@@ -2197,7 +2198,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc010_1_verifyEditFolderAndUpdateFolderName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2211,7 +2212,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 						//String[] radioBtn= {STDFolderName,commonFolderName,SHRDFolderName,InternalFolderName};
@@ -2537,7 +2538,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc010_2_verifyUpdateFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2550,7 +2551,7 @@ public class Module5 extends BaseLib {
 		String STDPath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M5tc010_verifyEditUpdatedChildFolder",excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M5I1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.InstitutionsPage,Workspace.FundraisingWorkspace, 60)) {
 						appLog.info(CommonPath+" is verified on institution page: "+M5I1);
@@ -2606,7 +2607,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M5CFN1, M5CLN1, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.ContactsPage,Workspace.FundraisingWorkspace, 60)) {
 						appLog.info(CommonPath+" is verified on Contact page: "+M5I1);
@@ -2653,7 +2654,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc010_3_verifyUpdatedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -2704,7 +2705,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc011_1_verifyDeleteFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2712,7 +2713,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(!commonFolderName.isEmpty() && !commonFolderName.equalsIgnoreCase("Commonpath")) {
@@ -2833,7 +2834,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc011_2_verifyDeletedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2846,7 +2847,7 @@ public class Module5 extends BaseLib {
 		String updateSTDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M5tc011_1_verifyDeleteFolder",excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M5I1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 					if(!fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.InstitutionsPage,Workspace.FundraisingWorkspace, 10)) {
 						appLog.info(updateCommonFolder[0]+" is not available on institution page: "+M5I1);
 					}else {
@@ -2889,7 +2890,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M5CFN1, M5CLN1, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if(!fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.ContactsPage,Workspace.FundraisingWorkspace, 10)) {
 					appLog.info(updateCommonFolder[0]+" is not available on Contact page: "+M5I1);
 				}else {
@@ -2934,7 +2935,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc011_3_verifyDeletedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -2976,14 +2977,14 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc012_1_deleteInvitedFolderFromManageFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					String updateSTDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.StandardPath);
@@ -3030,7 +3031,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc012_2_verifyDeleteInvitedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3040,7 +3041,7 @@ public class Module5 extends BaseLib {
 		String updateSTDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M5tc012_1_deleteInvitedFolderFromManageFolder",excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M5I1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 					if(!fp.verifyFolderPathdummy(updateSTDFolder, null, null, M5F2, PageName.InstitutionsPage,Workspace.FundraisingWorkspace,5)) {
 						appLog.info(updateSTDFolder+" is not available on institution page: "+M5I1);
 					}else {
@@ -3058,7 +3059,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M5CFN1, M5CLN1, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if(!fp.verifyFolderPathdummy(updateSTDFolder, null, null, M5F2, PageName.ContactsPage,Workspace.FundraisingWorkspace,5)) {
 					appLog.info(updateSTDFolder+" is not available on Contact page: "+M5I1);
 				}else {
@@ -3078,7 +3079,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc012_3_verifyDeleteInvitedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3100,7 +3101,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc013_1_VerifyAddAFolderPopUpInvestorWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -3110,7 +3111,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(click(driver, fp.getAllFolderAddIcon(Workspace.InvestorWorkspace, 30), "Add folder button", action.BOOLEAN)){
@@ -3319,7 +3320,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)){
 			if(instiPage.clickOnCreatedInstitution(M5I1)){
-				switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 				scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 				if(fp.verifyFolderPathdummy("Standard Folder New", null, M5LP1, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
@@ -3344,7 +3345,7 @@ public class Module5 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.InstituitonsTab)){
 			if(instiPage.clickOnCreatedLP(M5LP1)){
-				switchToFrame(driver, 30, instiPage.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
 				scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 				if(fp.verifyFolderPathdummy("Standard Folder New", null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5LP1+"'.");
@@ -3370,7 +3371,7 @@ public class Module5 extends BaseLib {
 		
 		if(lp.clickOnTab(TabName.ContactTab)){
 			if(con .clickOnCreatedContact(M5CFN1, M5CLN1, null)){
-				switchToFrame(driver, 30, con.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, con.getFrame( PageName.ContactsPage, 30));
 				if(fp.verifyFolderPathdummy("Standard Folder New", M5I1, M5LP1, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder strucutre is verified on contact page for fund '"+M5F2+"' on contact page of "+M5CFN1 +" "+ M5CLN1);
 				} else {
@@ -3395,7 +3396,7 @@ public class Module5 extends BaseLib {
 		
 		if(fp.clickOnTab(TabName.CommitmentsTab)){
 			if(com.clickOnCreatedCommitmentId(M5CMT2)){
-				switchToFrame(driver, 30, instiPage.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, instiPage.getFrame( PageName.CommitmentsPage, 30));
 				scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 				if(fp.verifyFolderPathdummy("Standard Folder New", null, M5LP1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Standard Folder New Folder structure is verified on commitment page of '"+M5CMT2+"'.");
@@ -3423,7 +3424,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc013_2_VerifyAddAFolderPopUpInvestorWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -3450,7 +3451,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc014_1_VerifyAddASubFolderPopUpInvestorWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3466,7 +3467,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(fp.verifyAddRenameDeleteButton(null, FolderType.Common, YesNo.Yes, Workspace.InvestorWorkspace, 30)){
@@ -3719,7 +3720,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)){
 			if(ins.clickOnCreatedInstitution(M5I1)){
-				switchToFrame(driver, 30, ins.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ins.getFrame( PageName.InstitutionsPage, 30));
 				scrollDownThroughWebelement(driver, ins.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
@@ -3783,7 +3784,7 @@ public class Module5 extends BaseLib {
 		}
 		if(lp.clickOnTab(TabName.ContactTab)){
 			if(con .clickOnCreatedContact(M5CFN1, M5CLN1, null)){
-				switchToFrame(driver, 30, con.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, con.getFrame( PageName.ContactsPage, 30));
 				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
@@ -3821,7 +3822,7 @@ public class Module5 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
@@ -3884,7 +3885,7 @@ public class Module5 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
 			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
 				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
@@ -3950,7 +3951,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc014_2_VerifyAddAFolderPopUpInvestorWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -3992,7 +3993,7 @@ public class Module5 extends BaseLib {
 		}
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc015_verifyErrorMsgOnParentLevelInInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4005,7 +4006,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(click(driver, fp.getAllFolderAddIcon(Workspace.InvestorWorkspace, 30), "Add folder button", action.BOOLEAN)){
@@ -4317,7 +4318,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc016_verifyErrorMsgOnSubLevelInInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4334,7 +4335,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 						//String[] radioBtn= {STDFolderName,commonFolderName,SHRDFolderName,InternalFolderName};
@@ -4592,7 +4593,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc017_1_verifyEditFolderAndUpdateFolderNameInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4606,7 +4607,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 						//String[] radioBtn= {STDFolderName,commonFolderName,SHRDFolderName,InternalFolderName};
@@ -4931,7 +4932,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc017_2_verifyUpdateFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4945,7 +4946,7 @@ public class Module5 extends BaseLib {
 		String STDPath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M5tc017_verifyEditUpdatedChildFolder",excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M5I1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace, 60)) {
 						appLog.info(CommonPath+" is verified on institution page: "+M5I1);
@@ -5001,7 +5002,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace, 60)) {
 						appLog.info(CommonPath+" is verified on LP page: "+M5I1);
@@ -5057,7 +5058,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M5CFN1, M5CLN1, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.ContactsPage,Workspace.InvestorWorkspace, 60)) {
 						appLog.info(CommonPath+" is verified on Contact page: "+M5I1);
@@ -5102,7 +5103,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
 			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.CommitmentsPage,Workspace.InvestorWorkspace, 60)) {
 						appLog.info(CommonPath+" is verified on Commitment page: "+M5LP1);
@@ -5160,7 +5161,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc017_3_verifyUpdatedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5211,7 +5212,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc018_1_verifyDeleteFolderInInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5219,7 +5220,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(!commonFolderName.isEmpty() && !commonFolderName.equalsIgnoreCase("Commonpath")) {
@@ -5340,7 +5341,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc018_2_verifyDeletedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5355,7 +5356,7 @@ public class Module5 extends BaseLib {
 		String updateSTDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,dependOntc,excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M5I1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 					if(!fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace, 5)) {
 						appLog.info(updateCommonFolder[0]+" is not available on institution page: "+M5I1);
 					}else {
@@ -5398,7 +5399,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 					if(!fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace, 5)) {
 						appLog.info(updateCommonFolder[0]+" is not available on LP page: "+M5LP1);
 					}else {
@@ -5441,7 +5442,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M5CFN1, M5CLN1, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if(!fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.ContactsPage,Workspace.InvestorWorkspace, 5)) {
 					appLog.info(updateCommonFolder[0]+" is not available on Contact page: "+M5I1);
 				}else {
@@ -5484,7 +5485,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
 			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
 					if(fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.CommitmentsPage,Workspace.InvestorWorkspace, 5)) {
 						appLog.info(updateCommonFolder[0]+" is verified on Commitment page: "+M5LP1);
 						sa.assertTrue(false, updateCommonFolder[0]+" is verified on Commitment page: "+M5LP1);
@@ -5524,7 +5525,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc018_3_verifyDeletedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5573,14 +5574,14 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc019_1_deleteInvitedFolderFromManageFolderInInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					String updateSTDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.StandardPath);
@@ -5627,7 +5628,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc019_2_verifyDeleteInvitedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5638,7 +5639,7 @@ public class Module5 extends BaseLib {
 		String updateSTDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M5tc019_1_deleteInvitedFolderFromManageFolderInInvestorWorkspace",excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(M5I1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 					if(!fp.verifyFolderPathdummy(updateSTDFolder, null, M5LP1, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace,5)) {
 						appLog.info(updateSTDFolder+" is not available on institution page: "+M5I1);
 					}else {
@@ -5656,7 +5657,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 					if(!fp.verifyFolderPathdummy(updateSTDFolder, null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace,5)) {
 						appLog.info(updateSTDFolder+" is not available on LP page: "+M5LP1);
 					}else {
@@ -5674,7 +5675,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(M5CFN1, M5CLN1, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if(!fp.verifyFolderPathdummy(updateSTDFolder, null, M5LP1, M5F2, PageName.ContactsPage,Workspace.InvestorWorkspace,5)) {
 					appLog.info(updateSTDFolder+" is not available on Contact page: "+M5I1);
 				}else {
@@ -5692,7 +5693,7 @@ public class Module5 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
 			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
 					if(fp.verifyFolderPathdummy(updateSTDFolder, null, M5LP1, null, PageName.CommitmentsPage,Workspace.InvestorWorkspace, 5)) {
 						appLog.info(updateSTDFolder+" is available on Commitment page: "+M5CMT2);
 						sa.assertTrue(false, updateSTDFolder+" is available on Commitment page: "+M5CMT2);
@@ -5712,7 +5713,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc019_3_verifyDeleteInvitedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5740,8 +5741,8 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M5tc020_1_createWorkSpaceAndAddAditionalFolders() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M5tc020_1_createWorkSpaceAndAddAditionalFolders(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] STDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.StandardPath).split(",");
@@ -5752,7 +5753,7 @@ public class Module5 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M5F1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					String[] folders= {STDFolder[0],SHRDFolder[0],InternalFolder[0]};
@@ -5835,7 +5836,7 @@ public class Module5 extends BaseLib {
 					sa.assertTrue(false, "Invstor Workspace is not build :"+M5F1);
 					
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					if(fp.createFolderStructure(CommonFolder[0], FolderType.Common, Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 30).isEmpty()){
 						appLog.info(CommonFolder[0]+ " folder structure is created.");
@@ -5917,7 +5918,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc020_2_verifyInvitedFolderStructureAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5965,7 +5966,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M5tc021_PostConditionForAll() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);

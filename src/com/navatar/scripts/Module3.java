@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 /**
@@ -44,7 +45,7 @@ import org.testng.annotations.Test;
  */
 public class Module3 extends BaseLib {
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc001_Module3_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -185,7 +186,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc002_buildFWRAndINVWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -224,15 +225,15 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc003_inviteContactFromWorkSpace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc003_inviteContactFromWorkSpace(String environment, String mode) {
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 			BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 			lp.CRMLogin(CRMUser1EmailID,adminPassword);
 			if(fp.clickOnTab(TabName.FundsTab)) {
 				if(fp.clickOnCreatedFund(M3FundName1)) {
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 					if(fp.inviteContact(environment,mode, M3Institution1, M3Contact1EmailId,ExcelUtils.readData("FilePath",0, 4, currentlyExecutingTC), FolderType.Standard,"Upload","Yes", "Yes","All Folders", Workspace.FundraisingWorkspace, M3Contact1EmailId)) {
 						appLog.info("contact is invites successfully from fundraising workspace: "+M3Contact1FirstName+" "+M3Contact1LastName);
 					}else {
@@ -271,7 +272,7 @@ public class Module3 extends BaseLib {
 			sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc004_registerM3Contact1(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -328,7 +329,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc005_validate_DashboardUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -388,7 +389,7 @@ public class Module3 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc006_validateFirmAlertUIAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -513,7 +514,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc007_validateAllDocumentUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -647,7 +648,7 @@ public class Module3 extends BaseLib {
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc008_1_uploadDocInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -681,7 +682,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -729,7 +730,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc008_2_verifyDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -801,7 +802,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc009_1_uploadDocInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -836,7 +837,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -883,7 +884,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc009_2_verifyDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -955,7 +956,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc010_1_uploadDocInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -990,7 +991,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -1038,7 +1039,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc010_2_verifyDocAlertForShaedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1110,7 +1111,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc011_1_uploadDocInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1145,7 +1146,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -1186,7 +1187,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc011_2_verifyDocAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1289,7 +1290,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc012_1_updateDocInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1323,7 +1324,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -1369,7 +1370,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc012_2_verifyUpdateDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1421,7 +1422,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc013_1_updateDocInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1455,7 +1456,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
@@ -1499,7 +1500,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc013_2_verifyUpdateDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1551,7 +1552,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc014_1_updateDocInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1585,7 +1586,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Shared1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileShared);
@@ -1630,7 +1631,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc014_2_verifyUpdateDocAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1682,7 +1683,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc015_1_updateDocInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1716,7 +1717,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Internal1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
@@ -1756,7 +1757,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc015_2_verifyUpdateDocAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1808,8 +1809,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Test
-	public void M3tc016_1_onlineImportInFWRSTDFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc016_1_onlineImportInFWRSTDFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -1841,9 +1842,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(M3Institution1, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M3Institution1,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -1883,7 +1884,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc016_2_verifyOnlineImportDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1955,8 +1956,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc017_1_onlineImportInFWRCommonFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc017_1_onlineImportInFWRCommonFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -1988,9 +1989,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2030,7 +2031,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc017_2_verifyOnlineImportDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2102,8 +2103,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc018_1_onlineImportInFWRSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc018_1_onlineImportInFWRSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2135,9 +2136,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2180,7 +2181,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc018_2_verifyOnlineImportDocAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2252,8 +2253,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Test
-	public void M3tc019_1_onlineImportInFWRInternalFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc019_1_onlineImportInFWRInternalFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2285,9 +2286,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2323,7 +2324,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc019_2_verifyOnlineImportDocAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2396,8 +2397,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc020_1_updateImportInFWRSTDFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc020_1_updateImportInFWRSTDFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2429,9 +2430,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(M3Institution1, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword,OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M3Institution1,null,null,folderpath, docPath, fileName,BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2472,7 +2473,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc020_2_verifyUpdateImportInFWRSTDFolderAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2524,8 +2525,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc021_1_updateOnlineImportInFWRCommonFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc021_1_updateOnlineImportInFWRCommonFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2557,9 +2558,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Common,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2597,7 +2598,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc021_2_verifyOnlineImportUpdateAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2649,8 +2650,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc022_1_onlineImportUpdateInFWRSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc022_1_onlineImportUpdateInFWRSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2682,9 +2683,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Shared,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2725,7 +2726,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc022_2_verifyOnlineImportUpdateAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2777,8 +2778,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc023_1_onlineImportUpdateInFWRInternalFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc023_1_onlineImportUpdateInFWRInternalFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2810,9 +2811,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Internal,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2845,7 +2846,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc023_2_verifyOnlineImportUpdateAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2897,7 +2898,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc024_1_updateDiffNameDocInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -2932,7 +2933,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, null, FolderType.Standard,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2972,7 +2973,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc024_2_verifyUpdateDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3044,7 +3045,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc025_1_updateDiffNameDocInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3079,7 +3080,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3119,7 +3120,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc025_2_verifyUpdateDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3191,7 +3192,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc026_1_updateDiffNameDocInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3226,7 +3227,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3266,7 +3267,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc026_2_verifyUpdateDocAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3338,7 +3339,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc027_1_updateDiffNameDocInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3373,7 +3374,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3406,7 +3407,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc027_2_verifyUpdateDocAlertForInertnalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3478,7 +3479,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc028_1_updateDocViaManageVersionInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3513,7 +3514,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, null, FolderType.Standard,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3553,7 +3554,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc028_2_verifyUpdateDocViaManageVersionAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3625,7 +3626,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc029_1_updateDocViaManageVersionInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3660,7 +3661,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3700,7 +3701,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc029_2_verifyUpdateDocViaManageVersionAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3772,7 +3773,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc030_1_updateDocViamanageversionInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3807,7 +3808,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3847,7 +3848,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc030_2_verifyUpdateDocViamanageVersionAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3919,7 +3920,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc031_1_updateDocViaManageversionInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3954,7 +3955,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3987,7 +3988,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc031_2_verifyUpdateDocViaManageVersionAlertForInertnalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4059,8 +4060,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc032_1_changeDocViaManageVersoinInCommonFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc032_1_changeDocViaManageVersoinInCommonFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -4091,7 +4092,7 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.makeCurrentversionDocViaManageVersion(null, null, folderpath, fileName[0], fileName[1], Workspace.FundraisingWorkspace,30)) {
+				if(fp.makeCurrentversionDocViaManageVersion(environment, mode, null, null, folderpath, fileName[0],fileName[1], Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("file is successfully make current: "+fileName[1]+" in :"+folderpath);
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
@@ -4137,7 +4138,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc032_2_verifyAlertsCountsAtInvestorSideAfterMakeCurrentDoc() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -4172,7 +4173,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc033_1_uploadFilesInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4207,7 +4208,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1+"<break>"+M3Institution2+"/"+M3LimitedPartner2, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -4252,7 +4253,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc033_2_verifyUploadDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4327,7 +4328,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc034_1_uploadFilesInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4361,7 +4362,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -4406,7 +4407,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc034_2_verifyUploadDoccommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4481,7 +4482,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc035_1_uploadFilesInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4516,7 +4517,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -4561,7 +4562,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc035_2_verifyUploadDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4636,7 +4637,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc036_1_uploadFilesInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4671,7 +4672,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -4710,7 +4711,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc036_2_verifyUploadDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4792,7 +4793,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc037_1_updateFilesInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4826,7 +4827,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\UploadUpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -4871,7 +4872,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc037_2_verifyUdateDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4935,7 +4936,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc038_1_updateFilesInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4969,7 +4970,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\UploadUpdateFiles\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
@@ -5013,7 +5014,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc038_2_verifyUdateDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5077,7 +5078,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc039_1_updateFilesInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5112,7 +5113,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileShared);
@@ -5156,7 +5157,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc039_2_verifyUdateDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5220,7 +5221,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc040_1_updateFilesInINVSInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5254,7 +5255,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\UploadUpdateFiles\\Internal1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
@@ -5295,7 +5296,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc040_2_verifyUdateDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5363,8 +5364,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc041_1_onlineImportInINVSTDFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc041_1_onlineImportInINVSTDFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5395,9 +5396,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(M3Institution1, M3LimitedPartner1, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M3Institution1,M3LimitedPartner1,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5435,7 +5436,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc041_2_verifyImportedDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5510,8 +5511,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc042_1_onlineImportInINVCommonFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc042_1_onlineImportInINVCommonFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5542,9 +5543,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5582,7 +5583,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc042_2_verifyImportedDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5657,8 +5658,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc043_1_onlineImportInINVSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc043_1_onlineImportInINVSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5689,9 +5690,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5728,7 +5729,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc043_2_verifyImportedDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5803,8 +5804,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc044_1_onlineImportInINVInternalFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc044_1_onlineImportInINVInternalFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5835,9 +5836,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5870,7 +5871,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc044_2_verifyImportedDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5948,8 +5949,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc045_1_updateImporedDoctInINVSTDFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc045_1_updateImporedDoctInINVSTDFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5980,9 +5981,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(M3Institution1, M3LimitedPartner1, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, M3Institution1,M3LimitedPartner1,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6018,7 +6019,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc045_2_verifyUpdateDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6083,8 +6084,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc046_1_updateImportDocInINVCommonFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc046_1_updateImportDocInINVCommonFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -6115,9 +6116,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Common,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6153,7 +6154,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc046_2_verifyUpdateImportedDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6218,8 +6219,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc047_1_updateImportDocInINVSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc047_1_updateImportDocInINVSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -6250,9 +6251,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Shared,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6288,7 +6289,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc047_2_verifyUpdateImportedDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6353,8 +6354,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc048_1_updateImportDocInINVInternalFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc048_1_updateImportDocInINVInternalFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -6385,9 +6386,9 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				if(fp.onlineImport(null, null, null,folderpath,docPath,fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace,20)) {
+				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6420,7 +6421,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc048_2_verifyImportedDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6498,7 +6499,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc049_1_updateDiffNameDocInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -6534,7 +6535,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, M3LimitedPartner1, FolderType.Standard,docPath+fileName[1], multiInstance.ThisInvestorOnly, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6581,7 +6582,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc049_2_verifyDiffNameUpdateDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6655,7 +6656,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc050_1_updateDiffNameDocInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -6691,7 +6692,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6738,7 +6739,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc050_2_verifyDiffNameUpdateDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6812,7 +6813,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc051_1_updateDiffNameDocInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -6848,7 +6849,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6895,7 +6896,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc051_2_verifyDiffNameUpdateDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6969,7 +6970,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc052_1_updateDiffNameDocInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7005,7 +7006,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7050,7 +7051,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc052_2_verifyDiffNameUpdateDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7127,7 +7128,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc053_1_updateDocViaManageVersionInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7161,7 +7162,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, M3LimitedPartner1, FolderType.Standard,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7208,8 +7209,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc053_2_verifyUpdateDocViaManageVersionAlertForSTDInINVAtInvestorSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc053_2_verifyUpdateDocViaManageVersionAlertForSTDInINVAtInvestorSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7282,8 +7283,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc054_1_updateDocViaManageVersionInINVCommonFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc054_1_updateDocViaManageVersionInINVCommonFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -7316,7 +7317,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7363,7 +7364,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc054_2_verifyUpdateDocViaManageVersionAlertForCommonInINVAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7437,7 +7438,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc055_1_updateDocViaManageVersionInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7471,7 +7472,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7518,7 +7519,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc055_2_verifyUpdateDocViaManageVersionAlertForSharedInINVAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7592,7 +7593,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc056_1_updateDocViaManageVersionInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7626,7 +7627,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7671,7 +7672,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc056_2_verifyUpdateDocViaManageVersionAlertForInternalInINVAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7748,7 +7749,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc057_1_updateMyProfileAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7788,7 +7789,7 @@ public class Module3 extends BaseLib {
 		String linkedin =ExcelUtils.readData("Users",excelLabel.Variable_Name, "User1", excelLabel.Linkedin);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30,bp.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30,bp.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if(nim.clickOnEditIcon()) {
 					if(sendKeys(driver,nim.getMyProfileFirstName(60),fristName,"first name text box", action.BOOLEAN)) {
@@ -7887,7 +7888,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc057_2_updateMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7908,7 +7909,7 @@ public class Module3 extends BaseLib {
 		String phone=ExcelUtils.readData("Users",excelLabel.Variable_Name, "AdminUser", excelLabel.Phone);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30,bp.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30,bp.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if(nim.clickOnEditIcon()) {
 					if(sendKeys(driver,nim.getMyFirmProfileNameTextBox(60), firmName+"Updated", "my firm profile name", action.SCROLLANDBOOLEAN)) {
@@ -8039,7 +8040,7 @@ public class Module3 extends BaseLib {
 	sa.assertAll();
 }
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc057_3_verifyProfileAlertsAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -8123,8 +8124,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc058_inviteM3Contact2FromBothWrokSpace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc058_inviteM3Contact2FromBothWrokSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -8171,7 +8172,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc059_registerM3Contact2(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -8292,7 +8293,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc060_buildFund2WorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8331,8 +8332,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc061_inviteM3Contact1FromFund2() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc061_inviteM3Contact1FromFund2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -8401,7 +8402,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc062_1_uploadDocInSTDInFWRforFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -8434,7 +8435,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\M3Fund2\\FWR\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -8478,7 +8479,7 @@ public class Module3 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc062_2_uploadDocInSTDInINVforFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8489,7 +8490,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\M3Fund2\\INV\\Standard1";				
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -8535,7 +8536,7 @@ public class Module3 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc062_3_verifyUploadDocSTDFolderAlertAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -8641,7 +8642,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc063_1_updateDocInSTDInFWRForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -8674,7 +8675,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\M3Fund2\\FWR\\UploadUpdateDoc\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -8716,7 +8717,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc063_2_updateDocInSTDInINVForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8728,7 +8729,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -8770,7 +8771,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc063_3_verifyUpdateDocInSTDFolderAlertAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -8855,7 +8856,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc064_1_preConditionForOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8969,7 +8970,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc064_2_buildFWRAndINVWorkSpaceInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9008,8 +9009,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc065_inviteContactFromOrg2() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc065_inviteContactFromOrg2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(Org2CRMUser1EmailID,adminPassword);
@@ -9053,7 +9054,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc066_1_uploadDocInSTDFolderInFWRAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -9100,7 +9101,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\FWR\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -9148,7 +9149,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc066_2_uploadDocInSTDFolderInINVAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9159,7 +9160,7 @@ public class Module3 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\INV\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1+"/"+M3Org2LimitedPartner1, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -9206,7 +9207,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc066_3_verifyUploadDocAlertForSTDAtInvestorSideForOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -9317,7 +9318,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc067_1_updateDocInSTDFolderInFWRAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -9364,7 +9365,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\FWR\\UpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1, FWR_docpath,null,UploadFileActions.Update,Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -9410,7 +9411,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc067_2_updateDocInSTDFolderInINVAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9421,7 +9422,7 @@ public class Module3 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\INV\\UpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1+"/"+M3Org2LimitedPartner1, INV_docpath,null,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -9466,7 +9467,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc067_3_verifyUpdateDocAlertForSTDAtInvestorSideForOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -9558,7 +9559,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc068_validateFirmsNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -9601,7 +9602,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc069_checkVeriousOperationOnAllDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fpb = new FundsPageBusinessLayer(driver);
@@ -9861,7 +9862,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc070_veriousOperationOnFirmAlertGridAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fpb = new FundsPageBusinessLayer(driver);
@@ -10375,7 +10376,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc071_veriousOperationOnAllFirmAlertGridAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -10889,14 +10890,14 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc072_1_uploadLogoForAdmin1AtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim= new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if(nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 						String logoName = ExcelUtils.readData("FilePath",0,19,currentlyExecutingTC);
@@ -10919,31 +10920,31 @@ public class Module3 extends BaseLib {
 												appLog.error("Upload Confirmation alert pop is not displayed for : "+logoName);
 												driver.close();
 												driver.switchTo().window(parentID);
-												switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+												switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 												sa.assertTrue(false, "Upload Confirmation alert pop is not displayed for : "+logoName);
 											}
 											appLog.info("Successfully uploaded logo format : "+logoName);
-											switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+											switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 											
 										}else {
 											appLog.error("save Button is not working for : "+logoName+" so cannot check the functionality.");
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+											switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 											sa.assertTrue(false, "Crop Button is not working for: "+logoName+" so cannot check the functionality.");
 										}
 									}else {
 										appLog.error("Save Button is not working so cannot check the functionality.");
 										driver.close();
 										driver.switchTo().window(parentID);
-										switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+										switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 										sa.assertTrue(false, "Save Button is not working so cannot check the functionality.");
 									}
 								}else {
 									appLog.error("Broswe Button is not working so cannot check functionality.");
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+									switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 									sa.assertTrue(false, "Broswe Button is not working so cannot check functionality.");
 								}
 							}else {
@@ -10972,14 +10973,14 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc072_2_uploadLogoForAdmin2AtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim= new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg2UserName, adminPasswordOrg2);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if(nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 						String logoName = ExcelUtils.readData("FilePath",0,19,currentlyExecutingTC);
@@ -11002,31 +11003,31 @@ public class Module3 extends BaseLib {
 												appLog.error("Upload Confirmation alert pop is not displayed for : "+logoName);
 												driver.close();
 												driver.switchTo().window(parentID);
-												switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+												switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 												sa.assertTrue(false, "Upload Confirmation alert pop is not displayed for : "+logoName);
 											}
 											appLog.info("Successfully uploaded logo format : "+logoName);
-											switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+											switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 											
 										}else {
 											appLog.error("save Button is not working for : "+logoName+" so cannot check the functionality.");
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+											switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 											sa.assertTrue(false, "Crop Button is not working for: "+logoName+" so cannot check the functionality.");
 										}
 									}else {
 										appLog.error("Save Button is not working so cannot check the functionality.");
 										driver.close();
 										driver.switchTo().window(parentID);
-										switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+										switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 										sa.assertTrue(false, "Save Button is not working so cannot check the functionality.");
 									}
 								}else {
 									appLog.error("Broswe Button is not working so cannot check functionality.");
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 10));
+									switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 10));
 									sa.assertTrue(false, "Broswe Button is not working so cannot check functionality.");
 								}
 							}else {
@@ -11054,7 +11055,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc072_3_verifyUploadedLogoAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11126,7 +11127,7 @@ public class Module3 extends BaseLib {
 	
 
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc073_1_deleteUploadedDocInSTDFolderInFWRAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -11170,7 +11171,7 @@ public class Module3 extends BaseLib {
 			lp.CRMLogin(CRMUser1EmailID,adminPassword);
 			if(fp.clickOnTab(TabName.FundsTab)) {
 				if(fp.clickOnCreatedFund(M3FundName1)) {
-					switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 					if(fp.verifyFolderPathdummy(path, M3Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 						List<WebElement> lst=fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage);
 						if(!lst.isEmpty()) {
@@ -11231,7 +11232,7 @@ public class Module3 extends BaseLib {
 
 
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc073_2_deleteUploadedDocInSTDFolderInINVAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11239,7 +11240,7 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.verifyFolderPathdummy(path, M3Institution1, M3LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					List<WebElement> lst=fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage);
 					if(!lst.isEmpty()) {
@@ -11300,7 +11301,7 @@ public class Module3 extends BaseLib {
 		}
 	
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc073_3_verifyDeletedDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11456,7 +11457,7 @@ public class Module3 extends BaseLib {
 	
 
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc074_1_deleteInvitedFolderInSTDFolderInFWRAtCRMSide() {
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11465,7 +11466,7 @@ public class Module3 extends BaseLib {
 			lp.CRMLogin(CRMUser1EmailID,adminPassword);
 			if(fp.clickOnTab(TabName.FundsTab)) {
 				if(fp.clickOnCreatedFund(M3FundName1)) {
-					switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 					if(click(driver,fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 20), "manage folder icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on manage foler icon");
 						ThreadSleep(3000);
@@ -11534,7 +11535,7 @@ public class Module3 extends BaseLib {
 	
 
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc074_2_deleteInvitedFolderInSTDFolderInINVAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11543,7 +11544,7 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 				if(fp.clickOnTab(TabName.FundsTab)) {
 					if(fp.clickOnCreatedFund(M3FundName1)) {
-						switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 						if(click(driver,fp.getManageFolderIcon(Workspace.InvestorWorkspace, 20), "manage folder icon", action.SCROLLANDBOOLEAN)) {
 							appLog.info("clicked on manage foler icon");
 							ThreadSleep(3000);
@@ -11608,7 +11609,7 @@ public class Module3 extends BaseLib {
 		}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc074_3_verifyDeletedFolderFirmsNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11674,7 +11675,7 @@ public class Module3 extends BaseLib {
 	
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc075_1_createDeletedFolderInSTDFolderInFWRAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11685,7 +11686,7 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(click(driver,fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 20), "manage folder icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage foler icon");
 					ThreadSleep(3000);
@@ -11806,8 +11807,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc075_2_inviteAgianM3Contact1AndUploadDocInFWR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc075_2_inviteAgianM3Contact1AndUploadDocInFWR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -11823,7 +11824,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Standard1";
 				if(fp.uploadFile(STDFolderpath,M3Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -11858,8 +11859,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc075_3_inviteAgianM3Contact1AndUploadDocInINV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc075_3_inviteAgianM3Contact1AndUploadDocInINV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -11875,7 +11876,7 @@ public class Module3 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\Standard1";
 				if(fp.uploadFile(STDFolderpath,M3Institution1+"/"+M3LimitedPartner1, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -11910,7 +11911,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc075_4_verifyUploadedDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11971,14 +11972,14 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc076_1_removeInstitutionAndLPFromManageTargetAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(click(driver,fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage investor icon");
 					ThreadSleep(3000);
@@ -12044,7 +12045,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc076_2_verifyDeletedAccountFirmsNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12108,15 +12109,15 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M3tc077_1_addInstitutionFromManageTargetAndUploadDocInFWRAtCRMSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc077_1_addInstitutionFromManageTargetAndUploadDocInFWRAtCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String STDFolderpath=ExcelUtils.readData("FilePath",0, 4, currentlyExecutingTC);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(click(driver,fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage investor icon");
 					ThreadSleep(3000);
@@ -12140,7 +12141,7 @@ public class Module3 extends BaseLib {
 							String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Standard1";
 							if(fp.uploadFile(STDFolderpath,M3Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 								appLog.info("File is upload successfullly");
-								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+								switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 								scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 								if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 									String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -12189,15 +12190,15 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Test
-	public void M3tc077_2_addLPFromManageTargetAndUploadDocInINVAtCRMSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc077_2_addLPFromManageTargetAndUploadDocInINVAtCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String STDFolderpath=ExcelUtils.readData("FilePath",0, 4, currentlyExecutingTC);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(click(driver,fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage investor icon");
 					ThreadSleep(3000);
@@ -12221,7 +12222,7 @@ public class Module3 extends BaseLib {
 							String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\Standard1";
 							if(fp.uploadFile(STDFolderpath,M3Institution1+"/"+M3LimitedPartner1, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 								appLog.info("File is upload successfullly");
-								switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+								switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 								scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 								if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 									String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -12270,7 +12271,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc077_3_verifyUploadedDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12332,14 +12333,14 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc078_1_closeFRWAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.closeWorkSpace(Workspace.FundraisingWorkspace,60)) {
 					appLog.info("fundraising workspace is close succesfully.");
 				}else {
@@ -12360,7 +12361,7 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc078_2_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12457,14 +12458,14 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc078_3_closeINVAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.closeWorkSpace(Workspace.InvestorWorkspace,60)) {
 					appLog.info("investor workspace is close succesfully.");
 				}else {
@@ -12484,7 +12485,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc078_4_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12589,8 +12590,8 @@ public class Module3 extends BaseLib {
 	}
 
 	
-	@Test
-	public void M3tc079_1_againInviteContactAndCheckImpactInvestorSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc079_1_againInviteContactAndCheckImpactInvestorSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -12621,7 +12622,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc079_2_againInviteContactAndCheckImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12684,14 +12685,14 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc080_1_clearWorkspaceAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.clearWorkSpace(Workspace.FundraisingWorkspace,60)) {
 					appLog.info("fundraising workspace is close succesfully.");
 				}else {
@@ -12700,7 +12701,7 @@ public class Module3 extends BaseLib {
 				}
 				switchToDefaultContent(driver);
 				driver.navigate().refresh();
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), "fundraising workspace view section");
 				if(fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 20)!=null) {
 					appLog.info("build fundraising workspace button is displayed");
@@ -12722,7 +12723,7 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc080_2_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12825,14 +12826,14 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc080_3_clearINVAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if(fp.clearWorkSpace(Workspace.InvestorWorkspace,60)) {
 					appLog.info("investor workspace is close succesfully.");
 				}else {
@@ -12841,7 +12842,7 @@ public class Module3 extends BaseLib {
 				}
 				switchToDefaultContent(driver);
 				driver.navigate().refresh();
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), "fundraising workspace view section");
 				if(fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace,20)!=null) {
 					appLog.info("build investor workspace button is displayed");
@@ -12862,7 +12863,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc080_4_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12964,8 +12965,8 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Test
-	public void M3tc081_1_buildAgainFWRINVWorkSpaceAndCheckImpactInvestorSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M3tc081_1_buildAgainFWRINVWorkSpaceAndCheckImpactInvestorSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13014,7 +13015,7 @@ public class Module3 extends BaseLib {
 		switchToDefaultContent(driver);
 		// Azhar Addition
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (nim.clickOnEditIcon()) {
 					if (sendKeys(driver, nim.getMyProfileFirstName(60), CRMUser1FirstName, "first name text box",
@@ -13058,7 +13059,7 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc081_2_buildAgainFWRINVWorkSpaceAndCheckImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -13122,7 +13123,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M3tc082_PostConditionForAll() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);

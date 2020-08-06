@@ -6,13 +6,10 @@ package com.navatar.pageObjects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.CommonLib.action;
-
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.CommonLib.*;
-
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -562,4 +559,59 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 		return false;
 	}
 	
+	//Lightning Mrthod...
+	public boolean clickOnCreatedCommitmentId(String environment,String mode,String commitmentID) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		int i =1;
+		if (click(driver, getGoButton(60), "go button", action.BOOLEAN)) {
+			WebElement commitment = FindElement(driver,
+					"//div[@class='x-panel-bwrap']//span[text()='" + commitmentID + "']", "Commitment ID",
+					action.BOOLEAN, 20);
+			if (commitment != null) {
+				if (click(driver, commitment, "Commitment Id", action.SCROLLANDBOOLEAN)) {
+					appLog.error("Clicked on Commitment ID successfully." + commitmentID);
+					return true;
+				} else {
+					appLog.error("Not able to click on commitment ID." + commitmentID);
+				}
+			} else {
+				while (true) {
+					appLog.error("Commitment is not Displaying on "+i+ " Page: " + commitmentID);
+					if (click(driver, getNextImageonPage(10), "Commitment Page Next Button",
+							action.SCROLLANDBOOLEAN)) {
+
+						appLog.info("Clicked on Next Button");
+						commitment = FindElement(driver,
+					"//div[@class='x-panel-bwrap']//span[text()='" + commitmentID + "']", "Commitment ID",
+					action.BOOLEAN, 60);
+						if (commitment != null) {
+							if (click(driver, commitment, commitmentID, action.SCROLLANDBOOLEAN)) {
+								appLog.info("Clicked on Commitment name : " + commitmentID);
+								return true;
+								
+							}
+						}
+
+						
+
+					} else {
+						appLog.error("Commitment Not Available : " + commitmentID);
+						return false;
+					}
+					i++;
+				}
+			}
+		} else {
+			appLog.error("Not able to click on go button so cannot click on commitment ID");
+		}
+		}else{
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.CommitmentsTab, commitmentID, 30)){
+				appLog.info("Clicked on Commitment name : " + commitmentID);
+				return true;
+			}else{
+				appLog.error("Commitment Not Available : " + commitmentID);	
+			}
+		}
+		return false;
+	}
 }

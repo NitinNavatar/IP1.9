@@ -4,6 +4,7 @@
 package com.navatar.scripts;
 
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
@@ -46,7 +47,7 @@ import java.util.List;
 public class Module6 extends BaseLib {
 	static String filterPath = System.getProperty("user.dir") + "/TestCases_Filter.xlsx";
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc001_Module6_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -150,7 +151,7 @@ public class Module6 extends BaseLib {
 			sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc002_BuildWorkspaceAndImportFolderTemplateAndValidateManageInvestorUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -166,7 +167,7 @@ public class Module6 extends BaseLib {
 				if (fp.buildWorkspace(step1of3, WorkSpaceAction.IMPORTFOLDERTEMPLATE, folderTemplateName, null, null,
 						Workspace.FundraisingWorkspace, 60)) {
 					appLog.info("Workspace is created successfully");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60),
 							"Manage Investor icon", action.SCROLLANDBOOLEAN)) {
 						if (fp.getManageInvestorHeader(Workspace.FundraisingWorkspace, 60) != null) {
@@ -229,7 +230,7 @@ public class Module6 extends BaseLib {
 																		action.BOOLEAN));
 											}
 											switchToDefaultContent(driver);
-											switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+											switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 											if (click(driver,
 													fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
 													"Done Button", action.SCROLLANDBOOLEAN)) {
@@ -291,7 +292,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc003_CheckManageInvestorWithFundraisingDone() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -326,7 +327,7 @@ public class Module6 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor icon",
 						action.SCROLLANDBOOLEAN)) {
 					List<WebElement> institutions = fp.getManageInvestorPopupInstitutionList();
@@ -407,7 +408,7 @@ public class Module6 extends BaseLib {
 							"Institution 1 checkbox	", action.SCROLLANDBOOLEAN, 60);
 					if (click(driver, ele, "Institution 1 checkbox", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (fp.getManageInvestorAddedPopupHeader(Workspace.FundraisingWorkspace, 60) != null) {
 							appLog.info("Confirmation popup is displaying");
 							if (bp.verifyErrorMessageOnPage(FundsPageErrorMessage.manageInvestorAddedPopupMessage,
@@ -462,7 +463,7 @@ public class Module6 extends BaseLib {
 							"Institution 2 checkbox	", action.SCROLLANDBOOLEAN, 60);
 					if (click(driver, ele, "Institution 2 checkbox", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (fp.getManageInvestorAddedPopupHeader(Workspace.FundraisingWorkspace, 60) != null) {
 							appLog.info("Confirmation popup is displaying");
 							if (bp.verifyErrorMessageOnPage(FundsPageErrorMessage.manageInvestorAddedPopupMessage,
@@ -631,8 +632,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M6tc004_ProvideContactAccess() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M6tc004_ProvideContactAccess(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -654,7 +655,7 @@ public class Module6 extends BaseLib {
 					appLog.info("Not able to invite contact");
 					saa.assertTrue(false, "Not able to invite contact");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				if (fp.sendInvitationMail(Workspace.FundraisingWorkspace, M6Contact1EmailId, "All Folders", null)) {
 					appLog.info("Mail sent succesfully to user 1");
 				} else {
@@ -865,8 +866,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M6tc005_RenameInvestorNameFromInstitutionPageAndCheckOnManageInvestorSection() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M6tc005_RenameInvestorNameFromInstitutionPageAndCheckOnManageInvestorSection(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
@@ -887,7 +888,7 @@ public class Module6 extends BaseLib {
 								ThreadSleep(2000);
 								if (bp.clickOnTab(TabName.FundsTab)) {
 									if (fp.clickOnCreatedFund(M6FundName1)) {
-										switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+										switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 										scrollDownThroughWebelement(driver,
 												fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 												"FundraisingWorkspace View.");
@@ -978,7 +979,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -987,7 +988,7 @@ public class Module6 extends BaseLib {
 							"Institution 1 checkbox", action.SCROLLANDBOOLEAN, 60);
 					if (click(driver, ele, "Instituition 1 checkbox", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (fp.getManageInvestorDeletedPopupHeader(Workspace.FundraisingWorkspace, 60) != null) {
 							appLog.info("Confirmation popup is displaying");
 							if (bp.verifyErrorMessageOnPage(FundsPageErrorMessage.manageInvestorDeletedPopupMessage,
@@ -1042,7 +1043,7 @@ public class Module6 extends BaseLib {
 											"Institution 1 checkbox", action.SCROLLANDBOOLEAN, 60);
 									if (click(driver, ele, "Institution 1 checkbox", action.SCROLLANDBOOLEAN)) {
 										switchToDefaultContent(driver);
-										switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+										switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 										if (click(driver,
 												fp.getManageInvestorAddedPopupCloseButton(
 														Workspace.FundraisingWorkspace, 60),
@@ -1051,7 +1052,7 @@ public class Module6 extends BaseLib {
 													fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
 													"Done button", action.SCROLLANDBOOLEAN)) {
 												switchToDefaultContent(driver);
-												switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+												switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 												if (fp.clickOnInstituionFolder(M6Institution1 + "Renamed",
 														Workspace.FundraisingWorkspace, 60)) {
 													appLog.info("Renamed Institution is dipslaying");
@@ -1118,7 +1119,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc006_RenameInvestorNameFromManageInvestorWindow() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1130,7 +1131,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -1142,7 +1143,7 @@ public class Module6 extends BaseLib {
 						appLog.info("Rename icon is not visible for institution" + M6Institution3);
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (fp.clickOnRenameManageTargetInstitution(M6Institution1 + "Renamed")) {
 						appLog.info("Rename icon is visible for institution" + M6Institution1);
 
@@ -1189,7 +1190,7 @@ public class Module6 extends BaseLib {
 									fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
 									M6Institution1 + "Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver,
 										fp.getManageInvestorRenamePopupCancelButton(Workspace.FundraisingWorkspace, 60),
 										"Cancel button", action.SCROLLANDBOOLEAN)) {
@@ -1227,14 +1228,14 @@ public class Module6 extends BaseLib {
 						saa.assertTrue(false, "Rename icon is visible for institution" + M6Institution1);
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (fp.clickOnRenameManageTargetInstitution(M6Institution1 + "Renamed")) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
 								M6Institution1 + "Update&*", "Text Box ", action.SCROLLANDBOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							boolean cssFlag=false;
 							String cssSelectorPath="div#instpopupMINFR a[title=Apply]";
 							cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Manage Investor Rename Popup Apply Button");
@@ -1250,7 +1251,7 @@ public class Module6 extends BaseLib {
 									saa.assertTrue(false, "Alert text is not veriifed");
 								}
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 								fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60).clear();
 								if (click(driver,
@@ -1287,16 +1288,16 @@ public class Module6 extends BaseLib {
 							saa.assertTrue(false, "Not able to enter value in text box");
 						}
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
 								M6Institution1 + "Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							if (click(driver,
 									fp.getManageInvestorRenamePopupCrossIcon(Workspace.FundraisingWorkspace, 60),
 									"Cross Icon", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								institutionList.clear();
 								List<WebElement> institutionName = fp.getManageInvestorPopupInstitutionList();
 								for (int i = 0; i < institutionName.size(); i++) {
@@ -1304,7 +1305,7 @@ public class Module6 extends BaseLib {
 									System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>" + institutionList);
 								}
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (institutionList.contains(M6Institution1 + "Renamed")) {
 									appLog.info("Old institution Name is displaying");
 								} else {
@@ -1331,14 +1332,14 @@ public class Module6 extends BaseLib {
 						saa.assertTrue(false, "Not able to click on rename icon ");
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (fp.clickOnRenameManageTargetInstitution(M6Institution1 + "Renamed")) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
 								M6Institution1 + "Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							if (click(driver,
 									fp.getManageInvestorRenamePopupApplyButton(Workspace.FundraisingWorkspace, 60),
 									"Apply button", action.SCROLLANDBOOLEAN)) {
@@ -1348,7 +1349,7 @@ public class Module6 extends BaseLib {
 									institutionList.add(institutionName.get(i).getText().trim());
 								}
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (institutionList.contains(M6Institution1 + "Renamed")) {
 									appLog.info("Old institution Name is displaying");
 									saa.assertTrue(false, "Old institution Name is  displaying");
@@ -1356,7 +1357,7 @@ public class Module6 extends BaseLib {
 									appLog.info("Old institution Name is not displaying");
 								}
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (institutionList.contains(M6Institution1 + "Update")) {
 									appLog.info("Renamed institution Name is displaying");
 								} else {
@@ -1364,11 +1365,11 @@ public class Module6 extends BaseLib {
 									saa.assertTrue(false, "Renamed institution Name is  not displaying");
 								}
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver, fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
 										"Done Button", action.SCROLLANDBOOLEAN)) {
 									switchToDefaultContent(driver);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 									if (fp.clickOnInstituionFolder(M6Institution1 + "Update",
 											Workspace.FundraisingWorkspace, 60)) {
 										appLog.info("Institution 1 with rename is dipslaying");
@@ -1390,7 +1391,7 @@ public class Module6 extends BaseLib {
 									}
 									if (bp.clickOnTab(TabName.ContactTab)) {
 										if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-											switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+											switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 											scrollDownThroughWebelement(driver,
 													fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 													"FundraisingWorkspace View.");
@@ -1465,7 +1466,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc007_EditInvestorNameFromInstitutionsPageWhoseFolderStructureNotCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1511,7 +1512,7 @@ public class Module6 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -1544,7 +1545,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc008_UncheckInvestorFromManageInvestorPopupAndCheckFolderStructureAndContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1556,13 +1557,13 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
 						action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							"FundraisingWorkspace View.");
 					ele = FindElement(driver, "//div[@title='" + M6Institution1 + "Update" + "']/../..//input",
@@ -1574,10 +1575,10 @@ public class Module6 extends BaseLib {
 						saa.assertTrue(false, "Institution 1 checkbox is not selected");
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (click(driver, ele, "Institution1 checkbox", action.BOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						scrollDownThroughWebelement(driver,
 								fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 								"FundraisingWorkspace View.");
@@ -1585,14 +1586,14 @@ public class Module6 extends BaseLib {
 								fp.getManageInvestorDeletedPopupCloseButton(Workspace.FundraisingWorkspace, 60),
 								"Manage Investor Deleted popup Close Button", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									"FundraisingWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
 									"Fundraising workspace", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 										"FundraisingWorkspace View.");
@@ -1631,7 +1632,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M6Institution1 + "Renamed")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.InstitutionsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 
@@ -1652,7 +1653,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (ip.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60) != null) {
@@ -1703,7 +1704,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -1711,23 +1712,23 @@ public class Module6 extends BaseLib {
 					ele = FindElement(driver, "//div[@title='" + M6Institution1 + "Renamed" + "']/../..//input",
 							"Institution 1 checkbox", action.SCROLLANDBOOLEAN, 60);
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							"FundraisingWorkspace View.");
 					if (click(driver, ele, "Institution1 checkbox", action.BOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (click(driver, fp.getManageInvestorAddedPopupCloseButton(Workspace.FundraisingWorkspace, 60),
 								"Manage Investor Added popup Close Button", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									"FundraisingWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
 									"Fundraising workspace", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (fp.verifyFolderPathdummy("", M6Institution1 + "Renamed", null, M6FundName1,
 										PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 									appLog.info("Institution 1 folder is displaying in folder Structure");
@@ -1763,7 +1764,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M6Institution1 + "Renamed")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.InstitutionsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (fp.verifyFolderPathdummy("", null, null, M6FundName1, PageName.InstitutionsPage,
@@ -1784,7 +1785,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (ip.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60) != null) {
@@ -1828,8 +1829,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M6tc009_AddContactAccessAgainToNewlyAddedInstitution() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M6tc009_AddContactAccessAgainToNewlyAddedInstitution(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1848,7 +1849,7 @@ public class Module6 extends BaseLib {
 				}
 				if (bp.clickOnTab(TabName.InstituitonsTab)) {
 					if (ip.clickOnCreatedInstitution(M6Institution1 + "Renamed")) {
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.InstitutionsPage, 60));
 						scrollDownThroughWebelement(driver,
 								fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 								"FundraisingWorkspace View.");
@@ -1870,7 +1871,7 @@ public class Module6 extends BaseLib {
 				switchToDefaultContent(driver);
 				if (bp.clickOnTab(TabName.ContactTab)) {
 					if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 						scrollDownThroughWebelement(driver,
 								fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 								"FundraisingWorkspace View.");
@@ -1932,7 +1933,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc010_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasCreatedInWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1956,14 +1957,14 @@ public class Module6 extends BaseLib {
 					}
 					if (bp.clickOnTab(TabName.FundsTab)) {
 						if (fp.clickOnCreatedFund(M6FundName1)) {
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									"FundraisingWorkspace View.");
 							if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60),
 									"Manage Investor Icon", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 										"FundraisingWorkspace View.");
@@ -2007,7 +2008,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc011_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasNotCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2031,14 +2032,14 @@ public class Module6 extends BaseLib {
 					}
 					if (bp.clickOnTab(TabName.FundsTab)) {
 						if (fp.clickOnCreatedFund(M6FundName1)) {
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									"FundraisingWorkspace View.");
 							if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60),
 									"Manage Investor Icon", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 										"FundraisingWorkspace View.");
@@ -2082,7 +2083,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc012_AddStandardFolderFromManageFoldersAndThenAddInstitutionFromManageInvestors() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2091,7 +2092,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 60), "Manage Approval Icon",
@@ -2103,7 +2104,7 @@ public class Module6 extends BaseLib {
 								action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(2000);
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									"FundraisingWorkspace View.");
@@ -2143,7 +2144,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc013_BuildWorkspaceAndImportFolderTemplateAndCheckManageInvestorUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2159,7 +2160,7 @@ public class Module6 extends BaseLib {
 				if (fp.buildWorkspace(step1of3, WorkSpaceAction.IMPORTFOLDERTEMPLATE, folderTemplateName, null, null,
 						Workspace.InvestorWorkspace, 60)) {
 					appLog.info("Workspace is created successfully");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor icon",
 							action.SCROLLANDBOOLEAN)) {
 						if (fp.getManageInvestorHeader(Workspace.InvestorWorkspace, 60) != null) {
@@ -2200,7 +2201,7 @@ public class Module6 extends BaseLib {
 											saa.assertTrue(false, "Done Button is not displaying");
 										}
 										switchToDefaultContent(driver);
-										switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+										switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 										if (click(driver,
 												fp.getManageInvestorDoneButton(Workspace.InvestorWorkspace, 60),
 												"Done Button", action.SCROLLANDBOOLEAN)) {
@@ -2257,7 +2258,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc014_CheckManageInvestorWithCommitmentAndPartnershipDone() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2386,7 +2387,7 @@ public class Module6 extends BaseLib {
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor workspace view");
@@ -2523,7 +2524,7 @@ public class Module6 extends BaseLib {
 											Workspace.InvestorWorkspace, 60),
 									"LP 1 Checkbox", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 										"Investor workspace view");
@@ -2545,7 +2546,7 @@ public class Module6 extends BaseLib {
 																"Investor Added Message ", action.BOOLEAN));
 									}
 									switchToDefaultContent(driver);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 									scrollDownThroughWebelement(driver,
 											fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 											"Investor workspace view");
@@ -2577,7 +2578,7 @@ public class Module6 extends BaseLib {
 							saa.assertTrue(false, "Not able to click on Institution 1");
 						}
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 								"Investor workspace view");
 						if (fp.verifyLPStructureInManageInvestor(M6Institution2, M6LimitedPartner2)) {
@@ -2586,7 +2587,7 @@ public class Module6 extends BaseLib {
 											Workspace.InvestorWorkspace, 60),
 									"LP 2 Checkbox", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (fp.getManageInvestorAddedPopupHeader(Workspace.InvestorWorkspace, 60) != null) {
 									appLog.info("Confirmation popup is displaying");
 									if (bp.verifyErrorMessageOnPage(
@@ -2633,7 +2634,7 @@ public class Module6 extends BaseLib {
 						}
 
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 								"Investor workspace view");
 						if (fp.verifyLPStructureInManageInvestor(M6Institution3, M6LimitedPartner4)) {
@@ -2642,7 +2643,7 @@ public class Module6 extends BaseLib {
 											Workspace.InvestorWorkspace, 60),
 									"LP 4 Checkbox", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (fp.getManageInvestorAddedPopupHeader(Workspace.InvestorWorkspace, 60) != null) {
 									appLog.info("Confirmation popup is displaying");
 									if (bp.verifyErrorMessageOnPage(
@@ -2691,7 +2692,7 @@ public class Module6 extends BaseLib {
 						if (click(driver, fp.getManageInvestorPopupCrossIcon(Workspace.InvestorWorkspace, 60),
 								"Investor popup cross icon", action.SCROLLANDBOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									"Investor workspace view");
@@ -2793,8 +2794,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M6tc015_ProvideContactAccess() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M6tc015_ProvideContactAccess(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2817,7 +2818,7 @@ public class Module6 extends BaseLib {
 					appLog.info("Not able to invite contact");
 					saa.assertTrue(false, "Not able to invite contact");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				if (fp.sendInvitationMail(Workspace.InvestorWorkspace, M6Contact1EmailId, "All Folders", null)) {
 					appLog.info("Mail sent succesfully to user 1");
 				} else {
@@ -2915,8 +2916,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M6tc016_RenamLPNameFromInstitutionPageAndCheckOnManageInvestorSectionWhoseFolderStructureCreated() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M6tc016_RenamLPNameFromInstitutionPageAndCheckOnManageInvestorSectionWhoseFolderStructureCreated(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
@@ -2936,7 +2937,7 @@ public class Module6 extends BaseLib {
 								ThreadSleep(2000);
 								if (bp.clickOnTab(TabName.FundsTab)) {
 									if (fp.clickOnCreatedFund(M6FundName1)) {
-										switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+										switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 										scrollDownThroughWebelement(driver,
 												fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 												"InvestorWorkspace View.");
@@ -3014,7 +3015,7 @@ public class Module6 extends BaseLib {
 																			"Done Button", action.SCROLLANDBOOLEAN)) {
 																		switchToDefaultContent(driver);
 																		switchToFrame(driver, 30,
-																				bp.getFrame(PageName.FundsPage, 60));
+																				bp.getFrame( PageName.FundsPage, 60));
 																		scrollDownThroughWebelement(driver,
 																				fp.getWorkspaceSectionView(
 																						Workspace.InvestorWorkspace,
@@ -3119,7 +3120,7 @@ public class Module6 extends BaseLib {
 		saa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc017_RenameInvestorNameFromManageInvestorWindowWhoseFolderStructureCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3130,7 +3131,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
@@ -3185,7 +3186,7 @@ public class Module6 extends BaseLib {
 									fp.getManageInvestorRenamePopupTextBox(Workspace.InvestorWorkspace, 60),
 									M6LimitedPartner1+"Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver,
 										fp.getManageInvestorRenamePopupCancelButton(Workspace.InvestorWorkspace, 60),
 										"Cancel button", action.SCROLLANDBOOLEAN)) {
@@ -3232,7 +3233,7 @@ public class Module6 extends BaseLib {
 									saa.assertTrue(false, "Alert text is not veriifed");
 								}
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 								fp.getManageInvestorRenamePopupTextBox(Workspace.InvestorWorkspace, 60).clear();
 								if (click(driver,
@@ -3269,15 +3270,15 @@ public class Module6 extends BaseLib {
 							saa.assertTrue(false, "Not able to enter value in text box");
 						}
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.InvestorWorkspace, 60),
 								M6LimitedPartner1 + "Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							if (click(driver, fp.getManageInvestorRenamePopupCrossIcon(Workspace.InvestorWorkspace, 60),
 									"Cross Icon", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (fp.verifyLPStructureInManageInvestor(M6Institution1,
 										M6LimitedPartner1 + "Renamed")) {
 									appLog.info("Old Limited Partner 1 name is displaying under institution1");
@@ -3316,7 +3317,7 @@ public class Module6 extends BaseLib {
 								if (click(driver, fp.getManageInvestorDoneButton(Workspace.InvestorWorkspace, 60),
 										"done button", action.SCROLLANDBOOLEAN)) {
 									switchToDefaultContent(driver);
-									switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+									switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 									scrollDownThroughWebelement(driver,
 											fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 											"Investor workspace view");
@@ -3343,7 +3344,7 @@ public class Module6 extends BaseLib {
 									}
 									if (bp.clickOnTab(TabName.ContactTab)) {
 										if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-											switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+											switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 											scrollDownThroughWebelement(driver,
 													fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 													"InvestorWorkspace View.");
@@ -3373,7 +3374,7 @@ public class Module6 extends BaseLib {
 											if (ele != null) {
 												if (click(driver, ele, "CommitmentId", action.SCROLLANDBOOLEAN)) {
 													switchToFrame(driver, 30,
-															bp.getFrame(PageName.CommitmentsPage, 60));
+															bp.getFrame( PageName.CommitmentsPage, 60));
 													scrollDownThroughWebelement(driver,
 															fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 															"InvestorWorkspace View.");
@@ -3462,7 +3463,7 @@ public class Module6 extends BaseLib {
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc018_UncheckInvestorFromManageInvestorAndCheckContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3473,13 +3474,13 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
 						action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							"InvestorWorkspace View.");
 
@@ -3501,14 +3502,14 @@ public class Module6 extends BaseLib {
 						if (click(driver, fp.getManageInvestorDeletedPopupCloseButton(Workspace.InvestorWorkspace, 60),
 								"Manage Investor Deleted popup Close Button", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									"InvestorWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.InvestorWorkspace, 60),
 									"Invetsor workspace", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 										"InvestorWorkspace View.");
@@ -3547,7 +3548,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M6LimitedPartner1 + "Renamed")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.InstitutionsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (ip.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60) != null) {
@@ -3567,7 +3568,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (ip.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60) != null) {
@@ -3623,7 +3624,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
@@ -3631,22 +3632,22 @@ public class Module6 extends BaseLib {
 					if (click(driver, fp.getLimitedPartnerCheckBox(M6Institution1, M6LimitedPartner1 + "Renamed",
 							Workspace.InvestorWorkspace, 60), "LP1 checkbox", action.SCROLLANDBOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 								" InvestorWorkspace View.");
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (click(driver, fp.getManageInvestorAddedPopupCloseButton(Workspace.InvestorWorkspace, 60),
 								"Manage Investor Added popup Close Button", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									"InvestorWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.InvestorWorkspace, 60),
 									"InvestorWorkspace workspace", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (fp.verifyFolderPathdummy("", M6Institution1, M6LimitedPartner1 + "Renamed",
 										M6FundName1, PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 									appLog.info("Limited Partner 1 folder is displaying in folder Structure");
@@ -3683,7 +3684,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M6LimitedPartner1 + "Renamed")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.InstitutionsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (fp.verifyFolderPathdummy("", null, null, M6FundName1, PageName.InstitutionsPage,
@@ -3704,7 +3705,7 @@ public class Module6 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (ip.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60) != null) {
@@ -3753,8 +3754,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M6tc019_AddContactAccessAgainToNewlyAddedLP() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M6tc019_AddContactAccessAgainToNewlyAddedLP(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3773,7 +3774,7 @@ public class Module6 extends BaseLib {
 				}
 				if (bp.clickOnTab(TabName.InstituitonsTab)) {
 					if (ip.clickOnCreatedInstitution(M6Institution1)) {
-						switchToFrame(driver, 30, bp.getFrame(PageName.InstitutionsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.InstitutionsPage, 60));
 						scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 								"investorWorkspace View.");
 						if (fp.verifyFolderPathdummy("", null, M6LimitedPartner1 + "Renamed", M6FundName1,
@@ -3794,7 +3795,7 @@ public class Module6 extends BaseLib {
 				switchToDefaultContent(driver);
 				if (bp.clickOnTab(TabName.ContactTab)) {
 					if (cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)) {
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 						scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 								"InvestorWorkspace View.");
 						if (fp.verifyFolderPathdummy("", null, M6LimitedPartner1 + "Renamed", M6FundName1,
@@ -3856,7 +3857,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc020_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3898,7 +3899,7 @@ public class Module6 extends BaseLib {
 											}
 											if (bp.clickOnTab(TabName.FundsTab)) {
 												if (fp.clickOnCreatedFund(M6FundName1)) {
-													switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+													switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 													scrollDownThroughWebelement(driver,
 															fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 															"InvestorWorkspace View.");
@@ -3906,7 +3907,7 @@ public class Module6 extends BaseLib {
 															fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60),
 															"Manage Investor Icon", action.SCROLLANDBOOLEAN)) {
 														switchToDefaultContent(driver);
-														switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+														switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 														scrollDownThroughWebelement(driver,
 																fp.getWorkspaceSectionView(Workspace.InvestorWorkspace,
 																		60),
@@ -3937,7 +3938,7 @@ public class Module6 extends BaseLib {
 								switchToDefaultContent(driver);
 								if(bp.clickOnTab(TabName.ContactTab)){
 									if(cp.clickOnCreatedContact(M6Contact1FirstName, M6Contact1LastName, null)){
-										switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+										switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 										scrollDownThroughWebelement(driver,
 												fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 												"InvestorWorkspace View.");	
@@ -4002,7 +4003,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc021_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasNotBeenCreated(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4043,7 +4044,7 @@ public class Module6 extends BaseLib {
 											}
 											if (bp.clickOnTab(TabName.FundsTab)) {
 												if (fp.clickOnCreatedFund(M6FundName1)) {
-													switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+													switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 													scrollDownThroughWebelement(driver,
 															fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 															"InvestorWorkspace View.");
@@ -4051,7 +4052,7 @@ public class Module6 extends BaseLib {
 															fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60),
 															"Manage Investor Icon", action.SCROLLANDBOOLEAN)) {
 														switchToDefaultContent(driver);
-														switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+														switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 														scrollDownThroughWebelement(driver,
 																fp.getWorkspaceSectionView(Workspace.InvestorWorkspace,
 																		60),
@@ -4125,7 +4126,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc022_AddStandardFolderFromManageFoldersAndThenAddInstitutionFromManageInvestors(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4134,7 +4135,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M6FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 60), "Manage Approval Icon",
@@ -4146,7 +4147,7 @@ public class Module6 extends BaseLib {
 								action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(2000);
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									"InvestorWorkspace View.");
@@ -4219,7 +4220,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc023_CreatePreconditionData() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
@@ -4585,7 +4586,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc024_BuildWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4624,7 +4625,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc025_CheckUIOfManageInvestorPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4638,7 +4639,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -4714,7 +4715,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc026_CheckFunctionalityOfAddRowButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4723,7 +4724,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -4797,7 +4798,7 @@ public class Module6 extends BaseLib {
 						saa.assertTrue(false, "10 rows are not added successfully after clicking on add row link");
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							"FundraisingWorkspace View.");
 					ThreadSleep(4000);
@@ -4851,7 +4852,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc027_CheckFunctionalityOfClearButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4860,7 +4861,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -4997,7 +4998,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc028_CheckFilterValidationOnManageInvestorPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5006,7 +5007,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -5339,7 +5340,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc029_VerifyFilterAsPerFilterSingleRowFilterInvestorAndMultipleRowFilterInvestorSheetInManageInvestor(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5350,7 +5351,7 @@ public class Module6 extends BaseLib {
 		for (int i = 0; i < 2; i++) {
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
@@ -5393,7 +5394,7 @@ public class Module6 extends BaseLib {
 	sa.assertAll();
 }
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc030_CheckUIOfManageInvestorPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5407,7 +5408,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
@@ -5483,7 +5484,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc031_CheckFunctionalityOfAddRowButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5492,7 +5493,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
@@ -5565,7 +5566,7 @@ public class Module6 extends BaseLib {
 						saa.assertTrue(false, "10 rows are not added successfully after clicking on add row link");
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							"InvestorWorkspace View.");
 					ThreadSleep(4000);
@@ -5618,7 +5619,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc032_CheckFunctionalityOfClearButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5627,7 +5628,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
@@ -5764,7 +5765,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc033_CheckFilterValidationOnManageInvestorPopUp(){
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5773,7 +5774,7 @@ public class Module6 extends BaseLib {
 	lp.CRMLogin(CRMUser1EmailID,adminPassword);
 	if(bp.clickOnTab(TabName.FundsTab)){
 		if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					"InvestorWorkspace View.");
 			if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
@@ -5828,7 +5829,7 @@ public class Module6 extends BaseLib {
 					saa.assertTrue(false, "Not able to click on clear button");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
 				if (selectVisibleTextFromDropDown(driver,
@@ -5882,7 +5883,7 @@ public class Module6 extends BaseLib {
 					saa.assertTrue(false, "Not able to click on clear button");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
 				if (selectVisibleTextFromDropDown(driver,
@@ -5937,7 +5938,7 @@ public class Module6 extends BaseLib {
 					saa.assertTrue(false, "Not able to click on clear button");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
 				if (selectVisibleTextFromDropDown(driver,
@@ -5990,7 +5991,7 @@ public class Module6 extends BaseLib {
 					saa.assertTrue(false, "Not able to click on clear button");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"Investor Workspace View.");
 				if (selectVisibleTextFromDropDown(driver,
@@ -6048,7 +6049,7 @@ public class Module6 extends BaseLib {
 				if (click(driver, fp.getManageInvestorFilterAddRowLink(Workspace.InvestorWorkspace, 60),
 						"Add Row Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							"Investor Workspace View.");
 					if (click(driver, fp.getManageInvestorFilterApplyButton(Workspace.InvestorWorkspace, 60),
@@ -6110,7 +6111,7 @@ public class Module6 extends BaseLib {
 	sa.assertAll();
 }
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc034_VerifyFilterAsPerFilterSingleRowFilterInvestorMultipleRowFilterInvestorSheetInManageInvestorPopup(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6121,7 +6122,7 @@ public class Module6 extends BaseLib {
 		for (int i = 0; i < 2; i++) {
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(ExcelUtils.readData(filterPath,"Funds", 1, 0))) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"FundraisingWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
@@ -6165,7 +6166,7 @@ public class Module6 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M6tc035_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

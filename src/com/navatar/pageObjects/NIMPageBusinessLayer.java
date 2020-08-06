@@ -150,7 +150,7 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 	 */
 	public boolean NIMRegistration(userType adminOrUser, String userFirstName, String userLastName) {
 		
-		switchToFrame(driver, 60, getFrame(PageName.NavatarInvestorManager,30));
+		switchToFrame(driver, 60, getFrame(PageName.NavatarInvestorManager, 30));
 		// if admin only then start button is displayed
 		if (adminOrUser == userType.SuperAdmin) {
 			if (click(driver, getStartButton(60), "Start button", action.BOOLEAN)) {
@@ -228,7 +228,7 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 			appLog.error("Not able to switch to NIM Tab Parent Frame so cannot register "+adminOrUser.toString());
 			return false;
 		}
-		switchToFrame(driver, 60, getFrame(PageName.NavatarInvestorManager,30));
+		switchToFrame(driver, 60, getFrame(PageName.NavatarInvestorManager, 30));
 		// if admin only then start button is displayed
 		if (adminOrUser == userType.SuperAdmin) {
 			if (click(driver, getStartButton(60), "Start button", action.BOOLEAN)) {

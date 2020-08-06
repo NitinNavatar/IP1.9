@@ -5,6 +5,7 @@ package com.navatar.scripts;
 
 
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -53,7 +54,7 @@ import java.util.List;
 	 static String excelPath=System.getProperty("user.dir") + "/Bulk.xlsx";
 	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc001_RunPreconditionScenario(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim=new NIMPageBusinessLayer(driver);
@@ -157,7 +158,7 @@ import java.util.List;
 		saa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc002_CreateFolderTemplate(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim=new NIMPageBusinessLayer(driver);
@@ -253,7 +254,7 @@ import java.util.List;
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc003_VerifyErrorMessageForMaximumNumberOfFolders(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -398,7 +399,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc004_1_BuildWorkspaceForFund1(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -408,7 +409,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName1)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund1", excelLabel.Fund_Size);
@@ -581,7 +582,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc004_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -630,7 +631,7 @@ import java.util.List;
 			sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc005_1_BuildWorkspaceForFund2(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -640,7 +641,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName2)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund2", excelLabel.Fund_Size);
@@ -813,7 +814,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc005_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -862,7 +863,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc006_1_BuildWorkspaceForFund3(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -872,7 +873,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName3)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund3", excelLabel.Fund_Size);
@@ -1044,7 +1045,7 @@ import java.util.List;
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc006_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1094,7 +1095,7 @@ import java.util.List;
 			sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc007_1_BuildWorkspaceForFund4(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1104,7 +1105,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName4)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund4", excelLabel.Fund_Size);
@@ -1276,7 +1277,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc007_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1325,7 +1326,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc008_1_BuildWorkspacForFund5(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1335,7 +1336,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName5)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 					String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund5", excelLabel.Fund_Size);
@@ -1492,7 +1493,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc008_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1542,7 +1543,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc009_1_BuildWorkspaceForFund6(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1552,7 +1553,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName6)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 					String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund6", excelLabel.Fund_Size);
@@ -1709,7 +1710,7 @@ import java.util.List;
 		sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc009_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1757,7 +1758,7 @@ import java.util.List;
 			sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc010_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1774,7 +1775,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName5)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if (fp.verifyFolderPathdummy(stdPath,inst1 , null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload file button", action.BOOLEAN)) {
@@ -1845,7 +1846,7 @@ import java.util.List;
 					appLog.error(stdPath+" is not found on folder structure");
 					sa.assertTrue(false, stdPath+" is not found on folder structure");
 					}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");	
 		if(click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage investor icon", action.SCROLLANDBOOLEAN)){
 			for (int i = 175; i < institutionname.size(); i++) {
@@ -1911,7 +1912,7 @@ import java.util.List;
 				sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc010_2_verifyFolderStructure() {
 		String uploadedFile="Test123.pdf";
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc010_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp", excelLabel.StandardPath);
@@ -1936,8 +1937,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc011_0_uploadFiles() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc011_0_uploadFiles(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1949,8 +1950,8 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M15FundName3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
-				if(fp.uploadFileBulk(CRMUser1EmailID, dropImage, stdPath, createStringOutOfList(institutionList), folderpath1, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, dropImage, stdPath, createStringOutOfList(institutionList), folderpath1, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded file to "+stdPath);
 				} else {
 					appLog.error("Not able to upload file in "+stdPath);
@@ -1966,7 +1967,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc011_1_verifyUpload() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -2037,7 +2038,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc011_2_renameFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2048,7 +2049,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M15FundName3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath,inst1 , null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "manage folder icon", action.SCROLLANDBOOLEAN)) {
 						String stdId = fp.getCreatedFolderIdFullTraverse(stdPath, PageName.ManageFolderPopUp, 30);
@@ -2133,7 +2134,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc011_3_verifyRenameFolder() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc011_0_uploadFiles", excelLabel.StandardPath).split(",")[0];
@@ -2157,7 +2158,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc011_4_deleteFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2170,7 +2171,7 @@ import java.util.List;
 			if (fp.clickOnCreatedFund(M15FundName3)) {
 				stdPath += "UP";
 				
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath,inst1 , null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "manage folder icon", action.SCROLLANDBOOLEAN)) {
 						String stdId = fp.getCreatedFolderIdFullTraverse(stdPath, PageName.ManageFolderPopUp, 30);
@@ -2225,7 +2226,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc011_5_verifydeletedFolder() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath8 = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc011_0_uploadFiles", excelLabel.StandardPath).split(",")[0];
@@ -2250,7 +2251,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc012_1_VerifyAdditionOfFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2261,7 +2262,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M15FundName3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver,fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					String id =bp.getCreatedFolderIdFullTraverse(stdPath, PageName.FundsPage, 30);
 					if (bp.clickOnAddFolderButton(id)) {
@@ -2336,7 +2337,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc012_2_verifyAdditionOfFolders() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc012_1_VerifyAdditionOfFolders", excelLabel.StandardPath).split(",")[0];
@@ -2362,14 +2363,14 @@ import java.util.List;
 		sa.assertAll();
 	}
  
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc015_Invite1KContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(fp.clickOnInstituionFolder(M15Institution1, Workspace.FundraisingWorkspace, 30)){
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "Contact access icon", action.BOOLEAN)){
@@ -2524,14 +2525,14 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc016_sendInvitationMailTo200Contacts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				List<WebElement> allTheContactsInGrid = null;
 				if(click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 30), "Manage email", action.BOOLEAN)){
@@ -2619,7 +2620,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc017_RegisterConact1(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2707,7 +2708,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc018_UploadBigSizeFilesInCommon(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2716,7 +2717,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace view");
 				if(fp.verifyFolderPathdummy(commonFolderPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					if(click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "Upload Icon", action.BOOLEAN)){
@@ -2758,7 +2759,7 @@ import java.util.List;
 					appLog.error(commonFolderPath+" Folder is not present, so cannot verify 100 file drop error message.");
 					sa.assertTrue(false,commonFolderPath+" Folder is not present, so cannot verify 100 file drop error message.");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy(commonFolderPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					if(click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "Upload Icon", action.BOOLEAN)){
 						String parentWin = switchOnWindow(driver);
@@ -2827,7 +2828,7 @@ import java.util.List;
 								sa.assertTrue(false,"Drag and drop is not successful, So cannot verify more than 100 files error message.");
 							}
 							driver.switchTo().window(parentWin);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 								List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 								List<String> filesInGrid = new ArrayList<String>();
@@ -2882,8 +2883,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc019_UpdateBigSizeFilesInCommon(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc019_UpdateBigSizeFilesInCommon(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -2892,13 +2893,13 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName1)){
 //				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 //				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace view");
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, commonFolderPath, null, "UploadFiles\\BulkFiles\\Common_BigSizeFilesUpdate", UploadFileActions.Update, UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, commonFolderPath, null, "UploadFiles\\BulkFiles\\Common_BigSizeFilesUpdate", UploadFileActions.Update, UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Files updated successfully.");
 				} else {
 					appLog.error("Files are not updated.");
 					sa.assertTrue(false,"Files are not updated.");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 					List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 					List<String> filesInGrid = new ArrayList<String>();
@@ -2940,7 +2941,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc020_UploadBigSizeFilesInInternal(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2949,7 +2950,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace view");
 				if(fp.verifyFolderPathdummy(InternalFolderPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					if(click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "Upload Icon", action.BOOLEAN)){
@@ -3019,7 +3020,7 @@ import java.util.List;
 								sa.assertTrue(false,"Drag and drop is not successful, So cannot verify more than 100 files error message.");
 							}
 							driver.switchTo().window(parentWin);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 								List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 								List<String> filesInGrid = new ArrayList<String>();
@@ -3074,8 +3075,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc021_UpdateBigSizeFilesInInternal(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc021_UpdateBigSizeFilesInInternal(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String InternalFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.InternalPath);
@@ -3084,13 +3085,13 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName1)){
 //				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 //				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace view");
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, InternalFolderPath, null, "UploadFiles\\BulkFiles\\Internal_BigSizeFilesUpdate", UploadFileActions.Update, UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, InternalFolderPath, null, "UploadFiles\\BulkFiles\\Internal_BigSizeFilesUpdate", UploadFileActions.Update, UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Files updated successfully.");
 				} else {
 					appLog.error("Files are not updated.");
 					sa.assertTrue(false,"Files are not updated.");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 					List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 					List<String> filesInGrid = new ArrayList<String>();
@@ -3132,7 +3133,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc022_OnlineImportFilesInCommonFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3147,7 +3148,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, CommonFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -3192,7 +3193,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc023_OnlineImportFilesInCommonFolderUpdate(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3207,7 +3208,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, CommonFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -3252,7 +3253,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc024_OnlineImportFilesInInternalFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3267,7 +3268,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, InternalFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -3312,7 +3313,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc025_OnlineImportFilesInInternalFolderUpdate(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3327,7 +3328,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, InternalFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.FundraisingWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -3372,8 +3373,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc026_0_UploadFileInStandardFolder(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc026_0_UploadFileInStandardFolder(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -3382,7 +3383,7 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName1)){
 				List<String> institutions = getValueBasedOnLabel(excelPath, "Institutions", excelLabel.Institutions_Name, 0);
 				String institutionOrLPName = createStringOutOfList(institutions);
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath,institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultipleInstiFile", UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID,excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultipleInstiFile", UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("File is uploaded successfully in "+StandardFolderPath);
 					
 				} else {
@@ -3402,7 +3403,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc026_1_verifyUpload() {
 		String dependOnTc="M15tc026_0_UploadFileInStandardFolder";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -3476,7 +3477,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc026_2_verifyUploadFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3505,8 +3506,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc027_0_OnlineImportFileInStandardFolder(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc027_0_OnlineImportFileInStandardFolder(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -3517,7 +3518,7 @@ import java.util.List;
 				String institutionOrLPName = createStringOutOfListUsingComma(institutions);
 				List<String> files = listFilesForFolder(new java.io.File(System.getProperty("user.dir")+"\\UploadFiles\\BulkFiles\\Standard_MultipleInstiFile"));
 				String fileName = createStringOutOfList(files);
-				if(fp.onlineImport(M15Institution1, null, institutionOrLPName, StandardFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
+				if(fp.onlineImport(environment, mode, M15Institution1, null, institutionOrLPName, StandardFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					lp.CRMlogout();
 					ExcelUtils.writeData(excelPath, fileName, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 				
@@ -3539,7 +3540,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc027_1_verifyOnlineImportfileInBox() {
 		String dependOnTc="M15tc027_0_OnlineImportFileInStandardFolder";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -3613,7 +3614,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc027_2_verifyOnlineImportedFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3642,13 +3643,13 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc028_TurnOnManageApproval(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc028_TurnOnManageApproval(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.ManageApprovals)){
 				List<String> aa = nim.activateManageApprovalsSettings(CRMUser1FirstName+" "+CRMUser1LastName);
 				if(aa.isEmpty()){
@@ -3670,8 +3671,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc029_UploadFilesUnderCommonFolder(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc029_UploadFilesUnderCommonFolder(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String CommonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -3679,9 +3680,9 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalFiles", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalFiles", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Files uploaded successfully.");
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						CommonFolderFiles = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
 						for(int i = 0; i < CommonFolderFiles.split("<break>").length; i++){
@@ -3713,7 +3714,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc030_ApproveDocumentAndVerifyStatus(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3724,7 +3725,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "Manage Approval Icon", action.SCROLLANDBOOLEAN)){
 					if(click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30), "Select all check box", action.BOOLEAN)){
 						if(click(driver, fp.getManageApprovalsApproveBtn(30), "Approve button", action.BOOLEAN)){
@@ -3736,7 +3737,7 @@ import java.util.List;
 								} else {
 									switchToDefaultContent(driver);
 									refresh(driver);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspaec view");
 								}
 								if(fp.verifyFolderPathdummy(CommonFolderPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
@@ -3810,8 +3811,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc031_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessage(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc031_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessage(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependsOn = "M15tc029_UploadFilesUnderCommonFolder";
@@ -3819,8 +3820,8 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalUpdateFiles", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalUpdateFiles", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "Manage Approval Icon", action.SCROLLANDBOOLEAN)){
 						if(click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30), "Select all check box", action.BOOLEAN)){
 							if(click(driver, fp.getManageApprovalsApproveBtn(30), "Approve button", action.BOOLEAN)){
@@ -3875,8 +3876,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc032_1_UploadFilesInStandardFolder(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc032_1_UploadFilesInStandardFolder(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -3885,7 +3886,7 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName1)){
 				List<String> institutions = getValueBasedOnLabel(excelPath, "Institutions", excelLabel.Institutions_Name, 0).subList(0, 11);
 				String institutionOrLPName = createStringOutOfList(institutions);
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_ManageApprovalFiles", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_ManageApprovalFiles", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("File is Uploaded successfully");
 				} else {
 					appLog.error("Not able to upload file in folder, So cannot continue with the tc.");
@@ -3904,7 +3905,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc032_2_verifyUploadedFilesInBox() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -3982,14 +3983,14 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc033_VerifyErrorMessageForMoreThan100Files(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "Manage Approval Icon", action.SCROLLANDBOOLEAN)){
 					if(click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30), "Select all check box", action.BOOLEAN)){
 						if(click(driver, fp.getManageApprovalsApproveBtn(30), "Approve button", action.BOOLEAN)){
@@ -4032,7 +4033,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc034_ApproveFileOfStandardFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4046,7 +4047,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "Manage Approval icon", action.SCROLLANDBOOLEAN)){
 					if(selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "Pending documents", "All Pending Documents")){
 						List<String> institutions = institutionList.subList(0, 10);
@@ -4079,7 +4080,7 @@ import java.util.List;
 									} else {
 									}
 									refresh(driver);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Investor Workspaec view");
 									flag = true;
 								} else {
@@ -4133,7 +4134,7 @@ import java.util.List;
 									} else {
 									}
 									refresh(driver);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Investor Workspaec view");
 									flag = true;
 								} else {
@@ -4173,7 +4174,7 @@ import java.util.List;
 										}
 									}
 										refresh(driver);
-										switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+										switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Workspace view.");
 										
 								} else {
@@ -4257,13 +4258,13 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc035_0_DeactivateManageApproval(){
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.deactivateManageApprovalsSetting()){
 				appLog.info("Manage approval is deactivated successfully.");
 			} else {
@@ -4279,7 +4280,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc035_1_UpdateFileWithDifferentNameInStandardFolderFWR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4310,7 +4311,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc035_2_verifyUpdatedFileInBox() {
 		String dependOnTc="M15tc035_1_UpdateFileWithDifferentNameInStandardFolderFWR";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -4384,8 +4385,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc036_InviteContactFrom10Institutions(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc036_InviteContactFrom10Institutions(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4455,7 +4456,7 @@ import java.util.List;
 				}
 				if(fp.clickOnTab(TabName.ContactTab)){
 					if(cp.clickOnCreatedContact(M15CFN1, M15CLN1, M15C1EmailId)){
-						switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+						switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 						scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Workspace view.");
 						if(fp.verifyFolderPathdummy("", M15Institution1, null, M15FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)){
 							appLog.info(M15Institution1+" folder is verified.");
@@ -4538,8 +4539,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc037_Generate10000AlertsFromCRMSide(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc037_Generate10000AlertsFromCRMSide(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -4549,29 +4550,29 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName1)){
 				List<String> institutions = getValueBasedOnLabel(excelPath, "Institutions", excelLabel.Institutions_Name, 0).subList(0, 10);
 				String institutionOrLPName = createStringOutOfList(institutions);
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert10", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert10", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert2", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert2", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert3", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert3", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert4", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert4", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
@@ -4580,35 +4581,35 @@ import java.util.List;
 					}
 					
 					
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert5", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert5", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert6", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert6", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert7", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert7", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert8", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert8", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert9", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert9", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
@@ -4707,7 +4708,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc038_Create10000AlertFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		boolean flag = false;
@@ -4827,7 +4828,7 @@ import java.util.List;
 		if(flag){
 			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 			lp.CRMLogin(CRMUser1EmailID, adminPassword);
-			switchToFrame(driver, 30, lp.getFrame(PageName.HomePage, 30));
+			switchToFrame(driver, 30, lp.getFrame( PageName.HomePage, 30));
 			if(lp.getRecordCountOnHomePage(30)!=null){
 				String text = getText(driver, lp.getRecordCountOnHomePage(30), "record count", action.BOOLEAN);
 				if(text.trim().equalsIgnoreCase("Records: 1999+")){
@@ -4862,7 +4863,7 @@ import java.util.List;
 			switchToDefaultContent(driver);
 			if(lp.clickOnTab(TabName.FundsTab)){
 				if(fp.clickOnCreatedFund(M15FundName1)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspaec view");
 					if(click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 30), "Alert history link", action.BOOLEAN)){
 						ThreadSleep(3000);
@@ -4915,7 +4916,7 @@ import java.util.List;
 			ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 			if (lp.clickOnTab(TabName.ContactTab)) {
 				if(cp.clickOnCreatedContact(M15CFN1, M15CLN1, M15C1EmailId)){
-					switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 					if(click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 30), "Alert history link", action.BOOLEAN)){
 						ThreadSleep(5000);
 						if(fp.getRecordCountAlertHistoryPopUp(Workspace.FundraisingWorkspace, 20)!=null){
@@ -4970,7 +4971,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc039_InviteContactFromSharedFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4979,7 +4980,7 @@ import java.util.List;
 		boolean flag = false;
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(fp.verifyFolderPathdummy(folderPath[0], null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "Contact access icon", action.BOOLEAN)){
@@ -5199,7 +5200,7 @@ import java.util.List;
 		
 		if(flag){
 			refresh(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 			if(fp.verifyFolderPathdummy(folderPath[4], null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)){
 				if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "Contact access icon", action.BOOLEAN)){
@@ -5227,8 +5228,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc040_InviteContactFromDifferentLevel(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc040_InviteContactFromDifferentLevel(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath).split("<break>");
@@ -5315,15 +5316,15 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc041_upload100FilesInSharedFolder(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc041_upload100FilesInSharedFolder(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName2)){
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, folderPath, null, "UploadFiles\\BulkFiles\\Shared_100Files", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, folderPath, null, "UploadFiles\\BulkFiles\\Shared_100Files", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded files.");
 				} else {
 					appLog.error("Not able to upload 100 file.");
@@ -5377,7 +5378,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc043_1_BuildWorkspaceForFund1(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -5387,7 +5388,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName1)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Build investor workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund1", excelLabel.Fund_Size);
@@ -5562,7 +5563,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc043_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -5618,7 +5619,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc044_1_BuildWorkspaceForFund2(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -5628,7 +5629,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName2)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Build Investor workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund2", excelLabel.Fund_Size);
@@ -5803,7 +5804,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc044_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -5865,7 +5866,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc045_1_BuildWorkspaceForFund3(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -5875,7 +5876,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName3)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Build investor workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund3", excelLabel.Fund_Size);
@@ -6049,7 +6050,7 @@ import java.util.List;
 		sa.assertAll();				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc045_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6109,7 +6110,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc046_1_BuildWorkspaceForFund4(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6119,7 +6120,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M15FundName4)){
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 			if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 				String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund4", excelLabel.Fund_Size);
@@ -6293,7 +6294,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc046_2_verifyStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6352,7 +6353,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc047_1_BuildWorkspaceForFund5(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6362,7 +6363,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName5)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Build Investor workspace button", action.BOOLEAN)){
 					String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund5", excelLabel.Fund_Size);
@@ -6520,7 +6521,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc047_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6578,7 +6579,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc048_1_BuildWorkspaceForFund6(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6588,7 +6589,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName6)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30), "Build fundraising workspace button", action.BOOLEAN)){
 					String Size=ExcelUtils.readData(excelPath,"Funds",excelLabel.Variable_Name, "M15Fund6", excelLabel.Fund_Size);
@@ -6796,7 +6797,7 @@ import java.util.List;
 //		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc048_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6849,8 +6850,8 @@ import java.util.List;
 		sa.assertAll();	
 	}
  
-	@Test
-	public void M15tc049_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc049_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp(String environment, String mode){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -6863,15 +6864,15 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName5)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
-				if(fp.uploadFileBulk(CRMUser1EmailID, dropImage, stdPath, M15Institution1+"/"+LimitedPartner1, folderpath1, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 130)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, dropImage, stdPath, M15Institution1+"/"+LimitedPartner1, folderpath1, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 130)){
 					appLog.info("Successfully uploaded file to "+stdPath);
 				} else {
 					appLog.error("Not able to upload file in "+stdPath);
 					sa.assertTrue(false,"Not able to upload file in "+stdPath);
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");	
 				if(click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage investor icon", action.SCROLLANDBOOLEAN)){
 					for (int i = 0; i < institutionname.length; i++) {
@@ -6930,7 +6931,7 @@ import java.util.List;
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc049_2_verifyFolderStructure() {
 		List<String> investorList = new ArrayList<String>();
 		List<String> limitedPartnerList = new ArrayList<String>();
@@ -7003,8 +7004,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc051_0_uploadDocumentInMultiInvestorInINV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc051_0_uploadDocumentInMultiInvestorInINV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7023,7 +7024,7 @@ import java.util.List;
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M15FundName3)) {
 				
-				if(fp.uploadFileBulk(CRMUser1EmailID, dropImage, stdPath, createStringOutOfList(InsAndLpList), folderpath1, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 130)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, dropImage, stdPath, createStringOutOfList(InsAndLpList), folderpath1, UploadFileActions.SelectAll, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 130)){
 					appLog.info("Successfully uploaded file to "+stdPath);
 				} else {
 					appLog.error("Not able to upload file in "+stdPath);
@@ -7039,7 +7040,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc051_1_verifyFolderStructureInBox() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -7116,7 +7117,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc051_2_renameFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7128,7 +7129,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M15FundName3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath,inst1 , lp1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "manage folder icon", action.SCROLLANDBOOLEAN)) {
 						String stdId = fp.getCreatedFolderIdFullTraverse(stdPath, PageName.ManageFolderPopUp, 30);
@@ -7213,7 +7214,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc051_3_verifyRenameFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc051_0_uploadDocumentInMultiInvestorInINV", excelLabel.StandardPath).split(",")[0];
@@ -7249,7 +7250,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc051_4_deleteFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7262,7 +7263,7 @@ import java.util.List;
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M15FundName3)) {
 				stdPath += "UP";
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath,inst1 , lp1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "manage folder icon", action.SCROLLANDBOOLEAN)) {
 						String stdId = fp.getCreatedFolderIdFullTraverse(stdPath, PageName.ManageFolderPopUp, 30);
@@ -7320,7 +7321,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc051_5_verifydeletedFolders() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -7380,7 +7381,7 @@ import java.util.List;
 		sa.assertAll();
 	}
  
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc052_1_VerifyAdditionOfFoldersInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7393,7 +7394,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M15FundName3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver,fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					String id =bp.getCreatedFolderIdFullTraverse(stdPath, PageName.FundsPage, 30);
 					if (bp.clickOnAddFolderButton(id)) {
@@ -7472,7 +7473,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc052_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc052_1_VerifyAdditionOfFoldersInvestor", excelLabel.StandardPath).split(",")[0];
@@ -7500,14 +7501,14 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc055_sendInvitationMailTo200Contacts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				List<WebElement> allTheContactsInGrid = null;
 				if(click(driver, fp.getmanageEmails(Workspace.InvestorWorkspace, 30), "Manage email", action.BOOLEAN)){
@@ -7595,14 +7596,14 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc054_Invite1KContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(fp.clickOnLimitedPartnerFolder(M15Institution1, M15LP1, Workspace.InvestorWorkspace, 30)){
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "Contact access icon", action.BOOLEAN)){
@@ -7757,7 +7758,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc056_RegisterConact1(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -7792,7 +7793,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc057_UploadBigSizeFilesInCommonInvestorWS(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7801,7 +7802,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace view");
 				if(fp.verifyFolderPathdummy(commonFolderPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					if(click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "Upload Icon", action.BOOLEAN)){
@@ -7841,7 +7842,7 @@ import java.util.List;
 					appLog.error(commonFolderPath+" Folder is not present, so cannot verify 100 file drop error message.");
 					sa.assertTrue(false,commonFolderPath+" Folder is not present, so cannot verify 100 file drop error message.");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy(commonFolderPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					if(click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "Upload Icon", action.BOOLEAN)){
 						String parentWin = switchOnWindow(driver);
@@ -7910,7 +7911,7 @@ import java.util.List;
 								sa.assertTrue(false,"Drag and drop is not successful, So cannot verify more than 100 files error message.");
 							}
 							driver.switchTo().window(parentWin);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 								List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 								List<String> filesInGrid = new ArrayList<String>();
@@ -7965,8 +7966,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc058_UpdateBigSizeFilesInCommonInvestorWS(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc058_UpdateBigSizeFilesInCommonInvestorWS(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -7975,13 +7976,13 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName1)){
 //				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 //				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace view");
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, commonFolderPath, null, "UploadFiles\\BulkFiles\\Common_BigSizeFilesUpdateInvestorWorkspace", UploadFileActions.Update, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, commonFolderPath, null, "UploadFiles\\BulkFiles\\Common_BigSizeFilesUpdateInvestorWorkspace", UploadFileActions.Update, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Files updated successfully.");
 				} else {
 					appLog.error("Files are not updated.");
 					sa.assertTrue(false,"Files are not updated.");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 					List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 					List<String> filesInGrid = new ArrayList<String>();
@@ -8023,7 +8024,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc059_UploadBigSizeFilesInInternalInvestorWS(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8032,7 +8033,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace view");
 				if(fp.verifyFolderPathdummy(InternalFolderPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					if(click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "Upload Icon", action.BOOLEAN)){
@@ -8102,7 +8103,7 @@ import java.util.List;
 								sa.assertTrue(false,"Drag and drop is not successful, So cannot verify more than 100 files error message.");
 							}
 							driver.switchTo().window(parentWin);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 								List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 								List<String> filesInGrid = new ArrayList<String>();
@@ -8157,8 +8158,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc060_UpdateBigSizeFilesInInternalInvestorWS(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc060_UpdateBigSizeFilesInInternalInvestorWS(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String InternalFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.InternalPath);
@@ -8167,13 +8168,13 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName1)){
 //				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 //				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace view");
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, InternalFolderPath, null, "UploadFiles\\BulkFiles\\Internal_BigSizeFilesUpdateInvestorWorkspace", UploadFileActions.Update, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, InternalFolderPath, null, "UploadFiles\\BulkFiles\\Internal_BigSizeFilesUpdateInvestorWorkspace", UploadFileActions.Update, UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Files updated successfully.");
 				} else {
 					appLog.error("Files are not updated.");
 					sa.assertTrue(false,"Files are not updated.");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 					List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 					List<String> filesInGrid = new ArrayList<String>();
@@ -8215,7 +8216,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc061_OnlineImportFilesInCommonFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8230,7 +8231,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, CommonFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -8275,7 +8276,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc062_OnlineImportFilesInCommonFolderUpdateINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8290,7 +8291,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, CommonFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -8335,7 +8336,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc063_OnlineImportFilesInInternalFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8350,7 +8351,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, InternalFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -8395,7 +8396,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc064_OnlineImportFilesInInternalFolderUpdateINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8410,7 +8411,7 @@ import java.util.List;
 				if(fp.onlineImportBulk(CRMUser1EmailID, null, null, null, InternalFolderPath, ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.OnlineImportPath), fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Online import successful.");
 					ExcelUtils.writeData(excelPath, fileName, "filePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						List<WebElement> filesInGridEle = fp.getContentGridDocNameListOnBasisOfTitle(Workspace.InvestorWorkspace, PageName.FundsPage);
 						List<String> filesInGrid = new ArrayList<String>();
@@ -8455,8 +8456,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc065_1_UploadFileInStandardFolderINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc065_1_UploadFileInStandardFolderINV(String environment, String mode){
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8471,7 +8472,7 @@ import java.util.List;
 					instilp.add(institutions.get(i)+"/"+lpName.get(i));
 				}
 				String institutionOrLPName = createStringOutOfList(instilp);
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultipleInstiFileInvestorWorkspace", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultipleInstiFileInvestorWorkspace", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("File is Uploaded Successfully in  "+StandardFolderPath);
 					
 				} else {
@@ -8491,7 +8492,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc065_2_verifyUploadedFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8520,7 +8521,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc065_3_verifyUploadFileInBox() {
 		String dependOnTc="M15tc066_1_OnlineImportFileInStandardFolderINV";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -8595,8 +8596,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc066_1_OnlineImportFileInStandardFolderINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc066_1_OnlineImportFileInStandardFolderINV(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -8613,7 +8614,7 @@ import java.util.List;
 				String institutionOrLPName = createStringOutOfList(instilp);
 				List<String> files = listFilesForFolder(new java.io.File(System.getProperty("user.dir")+"\\UploadFiles\\BulkFiles\\Standard_MultipleInstiFileInvestorWorkspace"));
 				String fileName = createStringOutOfList(files);
-				if(fp.onlineImport(M15Institution1, M15LP1, institutionOrLPName, StandardFolderPath,importpath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.onlineImport(environment, mode, M15Institution1, M15LP1,institutionOrLPName, StandardFolderPath, importpath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("File is imported successfully");
 					ExcelUtils.writeData(excelPath, fileName, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 					
@@ -8634,7 +8635,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc066_2_verifyOnlineImportedFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8663,7 +8664,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc066_3_verifyOnlineImportfileInBox() {
 		String dependOnTc="M15tc066_1_OnlineImportFileInStandardFolderINV";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -8738,13 +8739,13 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc067_TurnOnManageApprovalInvestorWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.ManageApprovals)){
 				List<String> aa = nim.activateManageApprovalsSettings(CRMUser1FirstName+" "+CRMUser1LastName);
 				if(aa.isEmpty()){
@@ -8766,8 +8767,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc068_UploadFilesUnderCommonFolderInvestorWorkspace(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc068_UploadFilesUnderCommonFolderInvestorWorkspace(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String CommonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -8775,9 +8776,9 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalFilesInvestorWorkspace", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalFilesInvestorWorkspace", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Files uploaded successfully.");
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "Refresh BUtton", action.BOOLEAN)){
 						CommonFolderFiles = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
 						for(int i = 0; i < CommonFolderFiles.split("<break>").length; i++){
@@ -8809,7 +8810,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc069_ApproveDocumentAndVerifyStatusINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8820,7 +8821,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "Manage Approval Icon", action.SCROLLANDBOOLEAN)){
 					if(click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30), "Select all check box", action.BOOLEAN)){
 						if(click(driver, fp.getManageApprovalsApproveBtn(30), "Approve button", action.BOOLEAN)){
@@ -8831,7 +8832,7 @@ import java.util.List;
 									flag = true;
 								} else {
 									refresh(driver);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspaec view");
 								}
 								if(fp.verifyFolderPathdummy(CommonFolderPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
@@ -8905,8 +8906,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc070_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessageINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc070_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessageINV(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependsOn = "M15tc068_UploadFilesUnderCommonFolderInvestorWorkspace";
@@ -8914,8 +8915,8 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalUpdateFilesINV", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, CommonFolderPath, null, "UploadFiles\\BulkFiles\\Common_ManageApprovalUpdateFilesINV", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "Manage Approval Icon", action.SCROLLANDBOOLEAN)){
 						if(click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30), "Select all check box", action.BOOLEAN)){
 							if(click(driver, fp.getManageApprovalsApproveBtn(30), "Approve button", action.BOOLEAN)){
@@ -8970,8 +8971,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Test
-	public void M15tc071_1_UploadFilesInStandardFolderINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc071_1_UploadFilesInStandardFolderINV(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -8985,7 +8986,7 @@ import java.util.List;
 					instilp.add(institutions.get(i)+"/"+lpName.get(i));
 				}
 				String institutionOrLPName = createStringOutOfList(instilp);
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_ManageApprovalFilesInvestorWorkspace", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 60)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_ManageApprovalFilesInvestorWorkspace", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 60)){
 					appLog.info("File is uploaded Successfully in "+StandardFolderPath);
 				} else {
 					appLog.error("Not able to upload file in folder, So cannot continue with the tc.");
@@ -9004,7 +9005,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc071_2_verifyUploadedFileInBox() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -9086,14 +9087,14 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc072_VerifyErrorMessageForMoreThan100FilesINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "Manage Approval Icon", action.SCROLLANDBOOLEAN)){
 					if(click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30), "Select all check box", action.BOOLEAN)){
 						if(click(driver, fp.getManageApprovalsApproveBtn(30), "Approve button", action.BOOLEAN)){
@@ -9136,7 +9137,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc073_ApproveFileOfStandardFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9151,7 +9152,7 @@ import java.util.List;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if(click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "Manage Approval icon", action.SCROLLANDBOOLEAN)){
 					if(selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "Pending documents", "All Pending Documents")){
 						List<String> institutions = institutionNameList.subList(0, 10);
@@ -9187,7 +9188,7 @@ import java.util.List;
 									} else {
 									}
 									refresh(driver);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspaec view");
 									flag = true;
 								} else {
@@ -9247,7 +9248,7 @@ import java.util.List;
 									} else {
 									}
 									refresh(driver);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 									scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspaec view");
 									flag = true;
 								} else {
@@ -9289,7 +9290,7 @@ import java.util.List;
 											
 										}
 										refresh(driver);
-										switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+										switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Workspace view.");
 										
 								} else {
@@ -9378,13 +9379,13 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc074_0_DeactivateManageApprovalINV(){
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.deactivateManageApprovalsSetting()){
 				appLog.info("Manage approval is deactivated successfully.");
 			} else {
@@ -9401,7 +9402,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc074_1_UpdateFileWithDifferentNameInStandardFolderINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9432,7 +9433,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc074_2_verifyUpdatedFileInBox() {
 		String dependOnTc="M15tc074_1_UpdateFileWithDifferentNameInStandardFolderINV";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -9508,8 +9509,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc075_InviteContactFrom10InstitutionsINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc075_InviteContactFrom10InstitutionsINV(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -9578,7 +9579,7 @@ import java.util.List;
 				}
 				if(fp.clickOnTab(TabName.ContactTab)){
 					if(cp.clickOnCreatedContact(M15CFN1, M15CLN1, null)){
-						switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+						switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 						scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Workspace view.");
 						
 						if(fp.verifyFolderPathdummy("", lpName.get(0), null, M15FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
@@ -9662,8 +9663,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc076_Generate10000AlertsFromCRMSideINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc076_Generate10000AlertsFromCRMSideINV(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -9678,64 +9679,64 @@ import java.util.List;
 					instilp.add(institutions.get(i)+"/"+lpName.get(i));
 				}
 				String institutionOrLPName = createStringOutOfList(instilp);
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert10", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert10", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert2", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert2", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert3", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert3", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert4", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert4", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert5", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert5", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAler6t", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAler6t", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert7", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert7", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert8", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert8", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
 						sa.assertTrue(false,"Not able to upload file so 10000 alerts cannot be generated.");
 						flag = false;
 					}
-					if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert9", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+					if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, StandardFolderPath, institutionOrLPName, "UploadFiles\\BulkFiles\\Standard_MultiInstitutionsAlert9", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Upload successful.");
 					} else {
 						appLog.error("Not able to upload file so 10000 alerts cannot be generated.");
@@ -9833,7 +9834,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc077_Create10000AlertFromInvestorSideINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		boolean flag = false;
@@ -9952,7 +9953,7 @@ import java.util.List;
 		if(flag){
 			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 			lp.CRMLogin(CRMUser1EmailID, adminPassword);
-			switchToFrame(driver, 30, lp.getFrame(PageName.HomePage, 30));
+			switchToFrame(driver, 30, lp.getFrame( PageName.HomePage, 30));
 			if(lp.getRecordCountOnHomePage(30)!=null){
 				ThreadSleep(5000);
 				String text = getText(driver, lp.getRecordCountOnHomePage(30), "record count", action.BOOLEAN);
@@ -9989,7 +9990,7 @@ import java.util.List;
 			switchToDefaultContent(driver);
 			if(lp.clickOnTab(TabName.FundsTab)){
 				if(fp.clickOnCreatedFund(M15FundName1)){
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspaec view");
 					if(click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 30), "Alert history link", action.BOOLEAN)){
 						ThreadSleep(5000);
@@ -10041,7 +10042,7 @@ import java.util.List;
 			ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 			if (lp.clickOnTab(TabName.ContactTab)) {
 				if(cp.clickOnCreatedContact(M15CFN1, M15CLN1, null)){
-					switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 					if(click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 30), "Alert history link", action.BOOLEAN)){
 						ThreadSleep(5000);
 						if(fp.getRecordCountAlertHistoryPopUp(Workspace.InvestorWorkspace, 20)!=null){
@@ -10096,7 +10097,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M15tc078_InviteContactFromSharedFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10105,7 +10106,7 @@ import java.util.List;
 		boolean flag = false;
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M15FundName2)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(fp.verifyFolderPathdummy(folderPath[0], null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "Contact access icon", action.BOOLEAN)){
@@ -10325,7 +10326,7 @@ import java.util.List;
 		
 		if(flag){
 			refresh(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 			if(fp.verifyFolderPathdummy(folderPath[4], null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)){
 				if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "Contact access icon", action.BOOLEAN)){
@@ -10353,8 +10354,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc079_InviteContactFromDifferentLevelINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc079_InviteContactFromDifferentLevelINV(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath).split("<break>");
@@ -10441,8 +10442,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M15tc080_upload100FilesInSharedFolderINV(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M15tc080_upload100FilesInSharedFolderINV(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
@@ -10451,7 +10452,7 @@ import java.util.List;
 			if(fp.clickOnCreatedFund(M15FundName2)){
 //				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 //				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
-				if(fp.uploadFileBulk(CRMUser1EmailID, excelPath, folderPath, null, "UploadFiles\\BulkFiles\\Shared_100Files", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
+				if(fp.uploadFileBulk(environment, mode, CRMUser1EmailID, excelPath, folderPath, null, "UploadFiles\\BulkFiles\\Shared_100Files", UploadFileActions.Upload, UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)){
 					appLog.info("Successfully uploaded files.");
 				} else {
 					appLog.error("Not able to upload 100 file.");

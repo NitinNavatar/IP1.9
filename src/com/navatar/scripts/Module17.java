@@ -5,6 +5,7 @@ package com.navatar.scripts;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.BaseLib;
@@ -60,7 +61,7 @@ import static com.navatar.generic.CommonLib.*;
  */
 public class Module17 extends BaseLib {
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc001_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -255,8 +256,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc002_buildFRW() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc002_buildFRW(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -278,7 +279,7 @@ public class Module17 extends BaseLib {
 				
 				if(fp.buildWorkspace(data,WorkSpaceAction.IMPORTFOLDERTEMPLATE,templateName,null,M17Institution1+"<break>"+M17Institution2, Workspace.FundraisingWorkspace,60)) {
 					appLog.info("FundRaising work is build successfully on fund : "+M17FundName1);
-					switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+					switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 					if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 						if(fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 20)!=null) {
 							appLog.info("Contact access icon is displaying in "+M17Institution1);
@@ -355,8 +356,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc003_VerifySharedFolderContactAccessInFR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc003_VerifySharedFolderContactAccessInFR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -366,7 +367,7 @@ public class Module17 extends BaseLib {
 		String shdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-		switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getFundRaisingWorkSpaceSection(30) , "Fundraising workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("clicked on shared folder");
@@ -547,8 +548,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc004_verifyFunctionalityOfAddSelectBtn() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc004_verifyFunctionalityOfAddSelectBtn(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 //		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -558,7 +559,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy(sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if(fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 20)!=null) {
 						appLog.info("Contact access icon is displaying in "+sharedfolderpath);
@@ -923,7 +924,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc005_VerifyStandardFolderContactAccessInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -935,7 +936,7 @@ public class Module17 extends BaseLib {
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
 		
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("clicked on std folder");
@@ -1124,8 +1125,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc006_verifyContactAccessPopUpOnSTDFolderInFR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc006_verifyContactAccessPopUpOnSTDFolderInFR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		//		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -1136,7 +1137,7 @@ public class Module17 extends BaseLib {
 		WebElement remove=null;
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if(fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 20)!=null) {
 						appLog.info("Contact access icon is displaying in "+M17Institution1);
@@ -1500,8 +1501,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc007_inviteContactAndSendEMailToContact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc007_inviteContactAndSendEMailToContact(String environment, String mode) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -1566,7 +1567,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc008_1_registerM3Contact1(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1661,7 +1662,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc008_2_VerifyContentGridFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1672,7 +1673,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,  adminPassword);
 		if (lp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(cmnPath.split(",")[0], null, null, M17FundName1, PageName.ContactsPage,
@@ -1730,7 +1731,7 @@ public class Module17 extends BaseLib {
 		}
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					if (click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -1831,7 +1832,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc009_1_LoginWithHubToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1883,7 +1884,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc009_2_LoginWithHunToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -1983,7 +1984,7 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc009_3_VerifyUpdatedInfoAndRemoveFunctionalityCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1993,7 +1994,7 @@ public class Module17 extends BaseLib {
 	
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					if (click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -2102,7 +2103,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (lp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				
 				msg=ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace;
 				if (cp.verifyErrorMessageOnPage(msg,
@@ -2134,7 +2135,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc009_4_CheckEffectAfterRemovingContactAccessInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -2156,8 +2157,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc010_deleteContactAndCheckImpactInContactAccessInFR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc010_deleteContactAndCheckImpactInContactAccessInFR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -2171,7 +2172,7 @@ public class Module17 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 60), "Contact Access Icon of "+Workspace.FundraisingWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -2222,7 +2223,7 @@ public class Module17 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 60), "Contact Access Icon of "+Workspace.FundraisingWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -2318,8 +2319,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc011_1_deleteFolderAndInviteSameContactFormContactAccess() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc011_1_deleteFolderAndInviteSameContactFormContactAccess(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2333,7 +2334,7 @@ public class Module17 extends BaseLib {
 		String[] folders = {commonPath,shrdPath};
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					for (int i=0; i<folders.length; i++) {
@@ -2381,7 +2382,7 @@ public class Module17 extends BaseLib {
 					}
 					if (lp.clickOnTab(TabName.FundsTab)) {
 						if (fp.clickOnCreatedFund(M17FundName1)) {
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 							if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 								appLog.info("clicked on folder "+M17Institution1);
@@ -2416,7 +2417,7 @@ public class Module17 extends BaseLib {
 					if(flag) {
 						if (lp.clickOnTab(TabName.FundsTab)) {
 							if (fp.clickOnCreatedFund(M17FundName1)) {
-								switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 								if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 									if(fp.createFolderStructure(folders[0], FolderType.Common, Workspace.FundraisingWorkspace, PageName.ManageFolderPopUp, 30).isEmpty()){
@@ -2460,7 +2461,7 @@ public class Module17 extends BaseLib {
 						switchToDefaultContent(driver);
 						if(contact.clickOnTab(TabName.ContactTab)) {
 							if(contact.clickOnCreatedContact(M17Contact1FirstName,M17Contact1LastName, null)) {
-								switchToFrame(driver, 30, contact.getFrame(PageName.ContactsPage, 30));
+								switchToFrame(driver, 30, contact.getFrame( PageName.ContactsPage, 30));
 								if(fp.verifyFolderPathdummy(folders[0], null, null, M17FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)){
 									appLog.info("Folder structure is verified on Contact page of '"+M17Institution1+"'.");
 								} else {
@@ -2492,7 +2493,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc011_2_verifyFolderStructureAtAtargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2525,8 +2526,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc012_SearchAlreadyInvitedContactandTrytosendinvitationInFR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc012_SearchAlreadyInvitedContactandTrytosendinvitationInFR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -2535,7 +2536,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					String[] ss ={FundsPageErrorMessage.alreadyInvitedContactAlertMsg,FundsPageErrorMessage.AllContactSelectErrorMsg};
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -2664,8 +2665,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc013_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc013_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2674,7 +2675,7 @@ public class Module17 extends BaseLib {
 		
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 60), "Contact Access Icon of "+Workspace.FundraisingWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -2835,7 +2836,7 @@ public class Module17 extends BaseLib {
 		String cmnPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.CommonPath);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 			if (fp.verifyFolderPathdummy(cmnPath, null, null, M17FundName1, PageName.ContactsPage,
@@ -2897,8 +2898,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc015_1_updateUploadPermissionForInvitedContactInFR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc015_1_updateUploadPermissionForInvitedContactInFR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2908,7 +2909,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 60), "Contact Access Icon of "+Workspace.FundraisingWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -2963,7 +2964,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (lp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M17FundName1, PageName.ContactsPage,Workspace.FundraisingWorkspace, 60)) {
 					if ( cp.getUploadAccessIcon(Workspace.FundraisingWorkspace, 5)==null) {
@@ -3005,7 +3006,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc015_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3047,8 +3048,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc016_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc016_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -3059,7 +3060,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+M17Institution1+"/"+stdPath);
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -3222,8 +3223,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 
-	@Test
-	public void M17tc017_inviteContactAndCreateSubFolderCheckPermission() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc017_inviteContactAndCreateSubFolderCheckPermission(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] stdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.StandardPath).split(",");
@@ -3234,7 +3235,7 @@ public class Module17 extends BaseLib {
 				if(fp.inviteContact(environment,mode,M17Institution1, M17Contact1EmailId,stdPath[0], FolderType.Standard, "Upload", "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 60), "Contact Access Icon of "+Workspace.FundraisingWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						String contactDetails= "Remove<break>"+M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName+"<break>"+getDateAccToTimeZone("America/New_York", "MM/dd/YYYY")+"<break>"+M17Contact1EmailId+"<break>"+M17Contact1UpdatedFirmName;
@@ -3372,8 +3373,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc018_1_VerifyAccessFromAddedChildFolderCRMSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc018_1_VerifyAccessFromAddedChildFolderCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -3387,7 +3388,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(allFolders[2], M17Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+M17Institution1+"/"+allFolders[2]);
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -3523,7 +3524,7 @@ public class Module17 extends BaseLib {
 	
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 			
@@ -3612,7 +3613,7 @@ public class Module17 extends BaseLib {
 	
 }
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc018_2_VerifyAccessFromAddedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3803,7 +3804,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc019_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3820,7 +3821,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(stdFolder[0], M17Institution1, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					appLog.error("folder path verified : "+M17Institution1+"/"+stdFolder[0]);
@@ -3984,7 +3985,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				
@@ -4051,7 +4052,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc019_2_RemoveTheAccessFromInvitedParentFolderImpcatInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4205,8 +4206,8 @@ public class Module17 extends BaseLib {
 	}
 	
 	
-	@Test
-	public void M17tc020_1_InviteContactFromParentAndRemoveAccessFromChild() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc020_1_InviteContactFromParentAndRemoveAccessFromChild(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4236,7 +4237,7 @@ public class Module17 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot invite contact from parent and remove access from child folder");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from parent and remove access from child folder");
 		}
-		switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 		scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 		if (fp.verifyFolderPathdummy(stdPath[1], M17Institution1, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 			if(fp.revokeContactAccess(M17Contact1EmailId, Workspace.FundraisingWorkspace)) {
@@ -4305,7 +4306,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 			for (int i=0;i<allFolders.length;i++) {
 				
@@ -4364,7 +4365,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc020_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4547,7 +4548,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc021_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4561,7 +4562,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(stdFolder[0], M17Institution1, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					appLog.error("folder path verified : "+M17Institution1+"/"+stdFolder[0]);
@@ -4655,7 +4656,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				
 				ele=cp.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60);
@@ -4691,7 +4692,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc021_2_RemoveTheAccessFromInvitedParentFolderImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -4711,8 +4712,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc022_1_inviteContactFromMultiFolders() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc022_1_inviteContactFromMultiFolders(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4742,7 +4743,7 @@ public class Module17 extends BaseLib {
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+stdPath[2]);
 				}
 				
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				for (int i = 0; i < allFolders.length; i++) {
 					if (fp.verifyFolderPathdummy(allFolders[i], M17Institution1, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
@@ -4790,7 +4791,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 			for (int i=0;i<allFolders.length;i++) {
 				
@@ -4851,7 +4852,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc022_2_inviteContactFromMultiFoldersImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5019,7 +5020,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc023_1_AddSharedFolderFromManageFolderAndInviteContact(){
 	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5028,7 +5029,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),"Investor Workspace.");
 				if(fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30)!=null){
 					if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage Folder icon", action.SCROLLANDBOOLEAN)){
@@ -5080,8 +5081,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc023_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc023_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(String environment, String mode){
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5094,7 +5095,7 @@ public class Module17 extends BaseLib {
 				if (fp.inviteContact(environment, mode, M17Institution1, M17Contact1EmailId, shdPath[0], FolderType.Shared, null, "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//Verify data in Selected Contacts grid.
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on Contact Access Icon");
@@ -5177,7 +5178,7 @@ public class Module17 extends BaseLib {
 				//Sending Mail to contact
 				boolean mail_Status = false;
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30,fp. getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,fp. getFrame( PageName.FundsPage, 30));
 				ThreadSleep(10000);
 				if (fp.sendInvitationMail(Workspace.FundraisingWorkspace, M17Contact1EmailId, shdPath[0] , M17Contact1LastName)) {
 					appLog.info("contact "+M17Contact1LastName+ " has been sent email for invitation");
@@ -5230,7 +5231,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc024_1_InvestorUserLoginAndVerifyFolderStructure() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5286,8 +5287,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc024_2_VerifyPermissionAtContactDetailPage() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc024_2_VerifyPermissionAtContactDetailPage(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5309,7 +5310,7 @@ public class Module17 extends BaseLib {
 		
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 			
@@ -5395,7 +5396,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath.split(",")[0], null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath.split(",")[0]);
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -5540,7 +5541,7 @@ public class Module17 extends BaseLib {
 	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc025_1_CheckFunctionalityOfRemoveLinkUnderActionColumn() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5553,7 +5554,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					appLog.error("folder path verified : "+shdPath);
@@ -5635,7 +5636,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(commonPath, null, null, M17FundName1, PageName.ContactsPage,Workspace.FundraisingWorkspace, 60)) {
@@ -5668,7 +5669,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc025_2_CheckFunctionalityOfRemoveLinkImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5747,8 +5748,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc026_CheckValidationWhenUserHasNoEmailAddressINFR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc026_CheckValidationWhenUserHasNoEmailAddressINFR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -5762,7 +5763,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Click on Contact Access Icon");
@@ -5867,7 +5868,7 @@ public class Module17 extends BaseLib {
 				switchToDefaultContent(driver);
 				if (fp.inviteContact(environment, mode, null, M17Contact1EmailId, shdPath, FolderType.Shared, null, "Yes", "No", "Shared", Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1FirstName+" "+M17Contact1LastName+" contact has been given access successfully and invite has been sent to mail");
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//Verify data in Selected Contacts grid.
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on Contact Access Icon");
@@ -6037,8 +6038,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc027_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc027_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -6064,7 +6065,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath);
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -6148,7 +6149,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				for (int i = 0; i < allFolders.length; i++) {
 					String ins = null;
 				if (i==1) {
@@ -6179,7 +6180,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc027_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6268,7 +6269,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc028_1_ProvideDownloadPermissionToTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6277,7 +6278,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,  adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -6322,7 +6323,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 
 
@@ -6373,7 +6374,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc028_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6507,8 +6508,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc029_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc029_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -6521,7 +6522,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath);
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -6700,8 +6701,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc030_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc030_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] shdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.SharedPath).split(",");
@@ -6716,7 +6717,7 @@ public class Module17 extends BaseLib {
 				if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[0], FolderType.Shared, "download", "Yes", null,null, Workspace.FundraisingWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 60), "Contact Access Icon of "+Workspace.FundraisingWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -6939,8 +6940,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc031_1_VerifyAccessFromAddedSharedChildFolderCRMSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc031_1_VerifyAccessFromAddedSharedChildFolderCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -6950,7 +6951,7 @@ public class Module17 extends BaseLib {
 		String grantedAccessOn=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "FundraisingWorkspace view.");
 				if (fp.verifyFolderPathdummy(shdPath[1], null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath[1]);
@@ -7058,7 +7059,7 @@ public class Module17 extends BaseLib {
 
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 
@@ -7132,7 +7133,7 @@ public class Module17 extends BaseLib {
 
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc031_2_VerifyAccessFromAddedSharedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7322,7 +7323,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc032_1_ChangePermissionToSharedFolderTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7332,7 +7333,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				for (int i = shdPath.length-2; i >= 0; i--) {
 
@@ -7383,7 +7384,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 
 				for (int i = 0; i < shdPath.length; i++) {
@@ -7432,7 +7433,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc032_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7597,7 +7598,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc033_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7614,7 +7615,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(shdPath[0], null, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					appLog.error("folder path verified : "+shdPath[0]);
@@ -7731,7 +7732,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 			if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 
 				for (int i=0;i<allFolder.length;i++) {
@@ -7792,7 +7793,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc033_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7889,8 +7890,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc034_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc034_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -7907,7 +7908,7 @@ public class Module17 extends BaseLib {
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+shdPath[0]);
 				}
 
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fund page investor workspace section");
 
 				if (fp.verifyFolderPathdummy(shdPath[1], null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
@@ -7994,7 +7995,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 				for (int i=0;i<shdPath.length;i++) {
 
@@ -8046,7 +8047,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc034_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8177,7 +8178,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc035_1_RemoveContactAccessActionFromContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -8190,7 +8191,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Workspace Section view");
 				if (click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60),
@@ -8205,7 +8206,7 @@ public class Module17 extends BaseLib {
 							ThreadSleep(2000);
 							refresh(driver);
 							ThreadSleep(2000);
-							switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+							switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 							scrollDownThroughWebelement(driver,bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),Workspace.FundraisingWorkspace+" Workspace Section view");
 							ele=cp.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60);
 							
@@ -8248,7 +8249,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					appLog.error("folder path verified : "+shdPath);
@@ -8304,7 +8305,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc035_2_RemoveContactAccessImpactonInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -8328,8 +8329,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc036_1_buildFundraisingWorkspaceAndInviteContactForFund2() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc036_1_buildFundraisingWorkspaceAndInviteContactForFund2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -8397,7 +8398,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc036_2_LoginWithHubToEnableBulkDownLoadForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8449,7 +8450,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc037_1_RemoveTheAccessOfContact4FromFund1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8458,7 +8459,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact4FirstName+" "+M17Contact4LastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(M17Institution1, null, null, null, PageName.FundsPage,Workspace.FundraisingWorkspace,60)) {
 					appLog.error("folder path verified : "+M17Institution1);
@@ -8521,7 +8522,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc037_2_registerM17Contact4(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -8634,7 +8635,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc038_1_UploadFileAtSharedCommonFolderAndRenameSharedCommonFolderName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8666,7 +8667,7 @@ public class Module17 extends BaseLib {
 					if (fp.uploadFile(folders[i], null, docpath, null, UploadFileActions.Upload,Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 
 						appLog.info("File is upload successfullly in  "+folders[i]);
-						switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 20));
 						scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),"Investor workspace view");
 
 						if (click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"FFundraisingWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
@@ -8700,7 +8701,7 @@ public class Module17 extends BaseLib {
 
 				// Rename Folder 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),"Investor workspace view");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 
@@ -8781,7 +8782,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact4FirstName, M17Contact4LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "contact page investor workspace section");
 
 				for (int i=0;i<updatedFolderNames.length;i++) {
@@ -8813,7 +8814,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc038_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8881,8 +8882,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc039_CheckFunctionalityofsearchtextfieldonContactAccessFundraisingWorkspace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc039_CheckFunctionalityofsearchtextfieldonContactAccessFundraisingWorkspace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -8893,7 +8894,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution2, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
@@ -9096,15 +9097,15 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc040_CheckSortingOfColumnsForSelectContactsGrid() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc040_CheckSortingOfColumnsForSelectContactsGrid(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "FundraisingWorkspace contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
@@ -9144,8 +9145,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc041_CheckSortingOfColumnsForSelectedContactsGrid() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc041_CheckSortingOfColumnsForSelectedContactsGrid(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -9153,7 +9154,7 @@ public class Module17 extends BaseLib {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 		
 			switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "FundraisingWorkspace contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
@@ -9247,15 +9248,15 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc042_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc042_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "FundraisingWorkspace contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
@@ -9548,8 +9549,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc043_buildInvestorWorkSpace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc043_buildInvestorWorkSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -9572,7 +9573,7 @@ public class Module17 extends BaseLib {
 				if(fp.buildWorkspace(data,WorkSpaceAction.IMPORTFOLDERTEMPLATE,templateName,null,M17Institution1 + "/" + M17LimitedPartner1 + "<break>" + M17Institution2 + "/" + M17LimitedPartner2, Workspace.InvestorWorkspace,60)) {
 
 					appLog.info("FundRaising work is build successfully on fund : "+M17FundName1);
-					switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+					switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 					if(fp.verifyFolderPathdummy("", M17Institution1, M17LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 						if(fp.getContactAccessIcon(Workspace.InvestorWorkspace, 20)!=null) {
 							appLog.info("Contact access icon is displaying in "+M17Institution1+"/" + M17LimitedPartner1);
@@ -9650,7 +9651,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc044_VerifySharedFolderContactAccess_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9661,7 +9662,7 @@ public class Module17 extends BaseLib {
 		String shdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-		switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("clicked on shared folder");
@@ -9801,8 +9802,8 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Test
-	public void M17tc045_verifyFunctionalityOfAddSelectBtnInvestorWorkSpace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc045_verifyFunctionalityOfAddSelectBtnInvestorWorkSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 //		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -9812,7 +9813,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy(sharedfolderpath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if(fp.getContactAccessIcon(Workspace.InvestorWorkspace, 20)!=null) {
 						appLog.info("Contact access icon is displaying in "+sharedfolderpath);
@@ -10177,7 +10178,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc046_VerifyStandardFolderContactAccess_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10189,7 +10190,7 @@ public class Module17 extends BaseLib {
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
 		
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("clicked on std folder");
@@ -10378,8 +10379,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc047_verifyContactAccessPopUpOnSTDFolderInInvestorWorkSpace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc047_verifyContactAccessPopUpOnSTDFolderInInvestorWorkSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		//		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -10390,7 +10391,7 @@ public class Module17 extends BaseLib {
 		WebElement remove=null;
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if(fp.getContactAccessIcon(Workspace.InvestorWorkspace, 20)!=null) {
 						appLog.info("Contact access icon is displaying in "+M17Institution1);
@@ -10754,8 +10755,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc048_inviteContactAndSendEMailToContact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc048_inviteContactAndSendEMailToContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -10823,7 +10824,7 @@ public class Module17 extends BaseLib {
 			sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc049_1_VerifyContentGridInvestorSide_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10876,7 +10877,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc049_2_VerifyContentGridInvestorSide_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10889,7 +10890,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,  adminPassword);
 		if (lp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				appLog.info(cmnPath.split(",")[0]);
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(cmnPath.split(",")[0], null, null, M17FundName1, PageName.ContactsPage,
@@ -10947,7 +10948,7 @@ public class Module17 extends BaseLib {
 		}
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					if (click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -11052,7 +11053,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc050_1_LoginWithHubToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11105,7 +11106,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc050_2_LoginWithHubToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11156,7 +11157,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc050_3_LoginWithHunToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -11256,7 +11257,7 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc050_4_VerifyUpdatedInfoAndRemoveFunctionalityCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11266,7 +11267,7 @@ public class Module17 extends BaseLib {
 	
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					if (click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -11375,7 +11376,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (lp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				
 				msg=ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace;
 				if (cp.verifyErrorMessageOnPage(msg,
@@ -11407,7 +11408,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc050_5_CheckEffectAfterRemovingContactAccessInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -11431,8 +11432,8 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Test
-	public void M17tc051_deleteContactAndCheckImpactInContactAccessInINV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc051_deleteContactAndCheckImpactInContactAccessInINV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -11446,7 +11447,7 @@ public class Module17 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -11497,7 +11498,7 @@ public class Module17 extends BaseLib {
 		}
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -11592,8 +11593,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc052_1_deleteFolderAndInviteSameContactFormContactAccess() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc052_1_deleteFolderAndInviteSameContactFormContactAccess(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -11605,7 +11606,7 @@ public class Module17 extends BaseLib {
 		String[] folders = {commonPath,shrdPath};
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 					for (int i=0; i<folders.length; i++) {
@@ -11653,7 +11654,7 @@ public class Module17 extends BaseLib {
 					}
 					if (lp.clickOnTab(TabName.FundsTab)) {
 						if (fp.clickOnCreatedFund(M17FundName1)) {
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 							if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 								appLog.info("clicked on folder "+M17Institution1);
@@ -11688,7 +11689,7 @@ public class Module17 extends BaseLib {
 					if(flag) {
 						if (lp.clickOnTab(TabName.FundsTab)) {
 							if (fp.clickOnCreatedFund(M17FundName1)) {
-								switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								scrollDownThroughWebelement(driver,fp.getInvestorWorkSpaceSection(30) , "investor workspace section");
 								if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 									if(fp.createFolderStructure(folders[0], FolderType.Common, Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 30).isEmpty()){
@@ -11732,7 +11733,7 @@ public class Module17 extends BaseLib {
 						switchToDefaultContent(driver);
 						if(contact.clickOnTab(TabName.ContactTab)) {
 							if(contact.clickOnCreatedContact(M17Contact1FirstName,M17Contact1LastName, null)) {
-								switchToFrame(driver, 30, contact.getFrame(PageName.ContactsPage, 30));
+								switchToFrame(driver, 30, contact.getFrame( PageName.ContactsPage, 30));
 								if(fp.verifyFolderPathdummy(folders[0], null, null, M17FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
 									appLog.info("Folder structure is verified on Contact page of '"+M17Institution1+"'.");
 								} else {
@@ -11764,7 +11765,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc052_2_verifyFolderStructureAtAtargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11797,8 +11798,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc053_SearchAlreadyInvitedContactandTrytosendinvitationInINV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc053_SearchAlreadyInvitedContactandTrytosendinvitationInINV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -11807,7 +11808,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					String[] ss ={FundsPageErrorMessage.alreadyInvitedContactAlertMsg,FundsPageErrorMessage.AllContactSelectErrorMsg};
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -11936,8 +11937,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 
-	@Test
-	public void M17tc054_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc054_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -11946,7 +11947,7 @@ public class Module17 extends BaseLib {
 		
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -12107,7 +12108,7 @@ public class Module17 extends BaseLib {
 		String cmnPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.CommonPath);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 			if (fp.verifyFolderPathdummy(cmnPath, null, null, M17FundName1, PageName.ContactsPage,
@@ -12169,7 +12170,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc055_VerifyFolderStructureAndBulkDownloadInvestorside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -12199,8 +12200,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc056_1_updateUploadPermissionForInvitedContactInFR() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc056_1_updateUploadPermissionForInvitedContactInFR(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -12208,7 +12209,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if(fp.verifyFolderPathdummy("", M17Institution1, null, null, PageName.FundsPage, Workspace.InvestorWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -12263,7 +12264,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (lp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M17FundName1, PageName.ContactsPage,Workspace.InvestorWorkspace, 60)) {
 					if ( cp.getUploadAccessIcon(Workspace.InvestorWorkspace, 5)==null) {
@@ -12305,7 +12306,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc056_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12347,8 +12348,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc057_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc057_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -12359,7 +12360,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M17Institution1, M17LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+M17Institution1+"/"+M17LimitedPartner1+"/"+stdPath);
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -12522,8 +12523,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc058_inviteContactAndCreateSubFolderCheckPermission() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc058_inviteContactAndCreateSubFolderCheckPermission(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] stdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.StandardPath).split(",");
@@ -12534,7 +12535,7 @@ public class Module17 extends BaseLib {
 				if(fp.inviteContact(environment,mode,M17Institution1+"/"+M17LimitedPartner1, M17Contact1EmailId,stdPath[0], FolderType.Standard, "Upload", "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view.");
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						String contactDetails= "Remove<break>"+M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName+"<break>"+getDateAccToTimeZone("America/New_York", "MM/dd/YYYY")+"<break>"+M17Contact1EmailId+"<break>"+M17Contact1UpdatedFirmName;
@@ -12673,8 +12674,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc059_1_VerifyAccessFromAddedChildFolderCRMSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc059_1_VerifyAccessFromAddedChildFolderCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -12688,7 +12689,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(allFolders[2], M17Institution1, M17LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+M17Institution1+"/"+M17LimitedPartner1+"/"+allFolders[2]);
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -12824,7 +12825,7 @@ public class Module17 extends BaseLib {
 	
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 			
@@ -12913,7 +12914,7 @@ public class Module17 extends BaseLib {
 	
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc059_2_VerifyAccessFromAddedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13105,7 +13106,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc060_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13122,7 +13123,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(stdFolder[0], M17Institution1, M17LimitedPartner1, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					appLog.error("folder path verified : "+M17Institution1+"/"+M17LimitedPartner1+"/"+stdFolder[0]);
@@ -13286,7 +13287,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				
@@ -13359,7 +13360,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc060_2_RemoveTheAccessFromInvitedParentFolderImpcatInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13512,8 +13513,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc061_1_InviteContactFromParentAndRemoveAccessFromChild() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc061_1_InviteContactFromParentAndRemoveAccessFromChild(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -13543,7 +13544,7 @@ public class Module17 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot invite contact from parent and remove access from child folder");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from parent and remove access from child folder");
 		}
-		switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 		scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 		if (fp.verifyFolderPathdummy(stdPath[1], M17Institution1, M17LimitedPartner1, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 			if(fp.revokeContactAccess(M17Contact1EmailId, Workspace.InvestorWorkspace)) {
@@ -13612,7 +13613,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 			for (int i=0;i<allFolders.length;i++) {
 				
@@ -13671,7 +13672,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc061_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13851,7 +13852,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc062_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13865,7 +13866,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(stdFolder[0], M17Institution1, M17LimitedPartner1, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					appLog.error("folder path verified : "+M17Institution1+"/"+M17LimitedPartner1+"/"+stdFolder[0]);
@@ -13965,7 +13966,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				
 				ele=cp.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60);
@@ -14005,7 +14006,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc062_2_RemoveTheAccessFromInvitedParentFolderImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -14029,8 +14030,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc063_1_inviteContactFromMultiFolders() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc063_1_inviteContactFromMultiFolders(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14060,7 +14061,7 @@ public class Module17 extends BaseLib {
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+stdPath[2]);
 				}
 				
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				for (int i = 0; i < allFolders.length; i++) {
 					if (fp.verifyFolderPathdummy(allFolders[i], M17Institution1, M17LimitedPartner1, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
@@ -14108,7 +14109,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 			for (int i=0;i<allFolders.length;i++) {
 				
@@ -14169,7 +14170,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc063_2_inviteContactFromMultiFoldersImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14337,7 +14338,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc064_1_AddSharedFolderFromManageFolderAndInviteContact(){
 	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -14347,7 +14348,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),"Investor Workspace.");
 				if(fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30)!=null){
 					if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage Folder icon", action.SCROLLANDBOOLEAN)){
@@ -14399,8 +14400,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc064_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc064_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(String environment, String mode){
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14413,7 +14414,7 @@ public class Module17 extends BaseLib {
 				if (fp.inviteContact(environment, mode, M17Institution1, M17Contact1EmailId, shdPath[0], FolderType.Shared, null, "Yes", "No", "Shared", Workspace.InvestorWorkspace, null)) {
 					appLog.info("contact has been given access successfully and invite has been sent to mail");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//Verify data in Selected Contacts grid.
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on Contact Access Icon");
@@ -14496,7 +14497,7 @@ public class Module17 extends BaseLib {
 				//Sending Mail to contact
 				boolean mail_Status = false;
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30,fp. getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30,fp. getFrame( PageName.FundsPage, 30));
 				ThreadSleep(10000);
 				if (fp.sendInvitationMail(Workspace.InvestorWorkspace, M17Contact1EmailId, shdPath[0] , M17Contact1LastName)) {
 					appLog.info("contact "+M17Contact1LastName+ " has been sent email for invitation");
@@ -14549,7 +14550,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc065_1_InvestorUserLoginAndVerifyFolderStructure() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14605,8 +14606,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc065_2_VerifyPermissionAtContactDetailPage() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc065_2_VerifyPermissionAtContactDetailPage(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14628,7 +14629,7 @@ public class Module17 extends BaseLib {
 		
 		if (cp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-			switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 			
 			scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 			
@@ -14714,7 +14715,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath.split(",")[0], null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath.split(",")[0]);
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -14859,7 +14860,7 @@ public class Module17 extends BaseLib {
 	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc066_1_CheckFunctionalityOfRemoveLinkUnderActionColumn() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14872,7 +14873,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					appLog.error("folder path verified : "+shdPath);
@@ -14954,7 +14955,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(commonPath, null, null, M17FundName1, PageName.ContactsPage,Workspace.InvestorWorkspace, 60)) {
@@ -14987,7 +14988,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc066_2_CheckFunctionalityOfRemoveLinkImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15066,8 +15067,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc067_CheckValidationWhenUserHasNoEmailAddressININV() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc067_CheckValidationWhenUserHasNoEmailAddressININV(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -15081,7 +15082,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Click on Contact Access Icon");
@@ -15186,7 +15187,7 @@ public class Module17 extends BaseLib {
 				switchToDefaultContent(driver);
 				if (fp.inviteContact(environment, mode, null, M17Contact1EmailId, shdPath, FolderType.Shared, null, "Yes", "No", "Shared", Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1FirstName+" "+M17Contact1LastName+" contact has been given access successfully and invite has been sent to mail");
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//Verify data in Selected Contacts grid.
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on Contact Access Icon");
@@ -15356,8 +15357,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc068_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc068_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15383,7 +15384,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath);
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -15467,7 +15468,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				for (int i = 0; i < allFolders.length; i++) {
 					String ins = null;
 					String lmp = null;
@@ -15498,7 +15499,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc068_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15587,7 +15588,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc069_1_ProvideDownloadPermissionToTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15596,7 +15597,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,  adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -15641,7 +15642,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 
 
@@ -15692,7 +15693,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc069_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15827,8 +15828,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc070_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc070_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -15841,7 +15842,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath);
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
@@ -16020,8 +16021,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc071_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc071_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] shdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.SharedPath).split(",");
@@ -16036,7 +16037,7 @@ public class Module17 extends BaseLib {
 				if(fp.inviteContact(environment,mode,null, M17Contact1EmailId,shdPath[0], FolderType.Shared, "download", "Yes", null,null, Workspace.InvestorWorkspace, null)) {
 					appLog.info(M17Contact1EmailId+" Contact is selected successfully ");
 					ThreadSleep(2000);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view.");
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 60), "Contact Access Icon of "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
@@ -16259,8 +16260,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M17tc072_1_VerifyAccessFromAddedSharedChildFolderCRMSide() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc072_1_VerifyAccessFromAddedSharedChildFolderCRMSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -16270,7 +16271,7 @@ public class Module17 extends BaseLib {
 		String grantedAccessOn=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "InvestorWorkspace view.");
 				if (fp.verifyFolderPathdummy(shdPath[1], null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("Folder Structure Verified  "+shdPath[1]);
@@ -16378,7 +16379,7 @@ public class Module17 extends BaseLib {
 
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 
@@ -16452,7 +16453,7 @@ public class Module17 extends BaseLib {
 
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc072_2_VerifyAccessFromAddedSharedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16642,7 +16643,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc073_1_ChangePermissionToSharedFolderTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16652,7 +16653,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				for (int i = shdPath.length-2; i >= 0; i--) {
 
@@ -16703,7 +16704,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 
 				for (int i = 0; i < shdPath.length; i++) {
@@ -16752,7 +16753,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc073_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16917,7 +16918,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc074_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16934,7 +16935,7 @@ public class Module17 extends BaseLib {
 		String contactFullName=M17Contact1UpdatedFirstName+" "+M17Contact1UpdatedLastName;
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(shdPath[0], null, null, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					appLog.error("folder path verified : "+shdPath[0]);
@@ -17051,7 +17052,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 			if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 
 				for (int i=0;i<allFolder.length;i++) {
@@ -17112,7 +17113,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc074_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17209,8 +17210,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc075_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc075_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -17227,7 +17228,7 @@ public class Module17 extends BaseLib {
 					sa.assertTrue(false, "Not able to invite contact from parent folder "+shdPath[0]);
 				}
 
-				switchToFrame(driver, 30, cp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fund page investor workspace section");
 
 				if (fp.verifyFolderPathdummy(shdPath[1], null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
@@ -17314,7 +17315,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 				for (int i=0;i<shdPath.length;i++) {
 
@@ -17366,7 +17367,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc075_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17497,7 +17498,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc076_1_RemoveContactAccessActionFromContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -17510,7 +17511,7 @@ public class Module17 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Fundraising Workspace Section view");
 				if (click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60),
@@ -17525,7 +17526,7 @@ public class Module17 extends BaseLib {
 							ThreadSleep(2000);
 							refresh(driver);
 							ThreadSleep(2000);
-							switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+							switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 							scrollDownThroughWebelement(driver,bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),Workspace.InvestorWorkspace+" Workspace Section view");
 							ele=cp.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60);
 							msg=ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace;
@@ -17569,7 +17570,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M17FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage,Workspace.InvestorWorkspace,60)) {
 					appLog.error("folder path verified : "+shdPath);
@@ -17625,7 +17626,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc076_2_RemoveContactAccessImpactonInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -17649,8 +17650,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Test
-	public void M17tc077_1_buildInvestorWorkSpaceAndInviteContactForFund2() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc077_1_buildInvestorWorkSpaceAndInviteContactForFund2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -17696,7 +17697,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc077_2_registerM17Contact3(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -17766,7 +17767,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc077_3_LoginWithHubToEnableBulkDownLoadForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17817,7 +17818,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc078_1_UploadFileAtSharedCommonFolderAndRenameSharedCommonFolderName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17849,7 +17850,7 @@ public class Module17 extends BaseLib {
 					if (fp.uploadFile(folders[i], null, docpath, null, UploadFileActions.Upload,Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 
 						appLog.info("File is upload successfullly in  "+folders[i]);
-						switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 20));
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 20));
 						scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),"Investor workspace view");
 
 						if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"FInvestorWorkspace refresh button", action.SCROLLANDBOOLEAN)) {
@@ -17883,7 +17884,7 @@ public class Module17 extends BaseLib {
 
 				// Rename Folder 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),"Investor workspace view");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 
@@ -17964,7 +17965,7 @@ public class Module17 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (cp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M17Contact3FirstName, M17Contact3LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, cp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "contact page investor workspace section");
 
 				for (int i=0;i<updatedFolderNames.length;i++) {
@@ -17996,7 +17997,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M17tc078_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -18064,8 +18065,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M17tc079_CheckFunctionalityofsearchtextfieldonContactAccessInvestorWorkSpace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc079_CheckFunctionalityofsearchtextfieldonContactAccessInvestorWorkSpace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -18076,7 +18077,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution2, "", null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "investor contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
@@ -18280,15 +18281,15 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc080_CheckSortingOfColumnsForSelectContactsGrid() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc080_CheckSortingOfColumnsForSelectContactsGrid(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "InvestorWorkspace contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
@@ -18327,8 +18328,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test
-	public void M17tc081_CheckSortingOfColumnsForSelectedContactsGrid() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc081_CheckSortingOfColumnsForSelectedContactsGrid(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -18337,7 +18338,7 @@ public class Module17 extends BaseLib {
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M17Institution1, M17LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "InvestorWorkspace contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
@@ -18425,15 +18426,15 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 
-	@Test
-	public void M17tc082_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M17tc082_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
+				switchToFrame(driver, 60,fp.getFrame(environment,mode, PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.InvestorWorkspace, 30), "InvestorWorkspace contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");

@@ -92,7 +92,7 @@ public class SmokeCommonVariable {
 	public static String SmokePhoneMyFirm,SmokeEmailMyFirm;
 	public static String SmokeInvestorURL;
 	public static String SmokeProfilephone,SmokeContact1IndustryDropdown,SmokeContact1BillingCity,Smoketitle,Smokephone;
-	
+	public static String environment,mode;
 	
 	
 	public SmokeCommonVariable(Object obj) {
@@ -110,8 +110,8 @@ public class SmokeCommonVariable {
 		SmoketargetLoginURL = ExcelUtils.readDataFromPropertyFile("TargetURL");
 		SmokeInvestorRegistrationURL = ExcelUtils.readDataFromPropertyFile("TargetRegistrationURL");
 		SmokeInvestorURL = ExcelUtils.readDataFromPropertyFile("InvestorURL");
-
-
+		environment = ExcelUtils.readDataFromPropertyFile("Environment");
+		mode=ExcelUtils.readDataFromPropertyFile("Mode");
 
 
 		SmokeAdminFirstName= ExcelUtils.readData(smokeExcelPath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name); 

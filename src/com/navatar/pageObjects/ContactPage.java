@@ -179,11 +179,12 @@ public class ContactPage extends BasePageBusinessLayer{
 	public WebElement getRemoveContactAccessButton(Workspace workspace, int timeOut){
 		String workspaceSelector = "";
 		if(workspace.toString().equalsIgnoreCase(Workspace.FundraisingWorkspace.toString())){
-			workspaceSelector = "Fr";
+			workspaceSelector = "idfundr";
 		} else {
-			workspaceSelector = "Inv";
+			workspaceSelector = "idInves";
 		}
-		return isDisplayed(driver, FindElement(driver, "//div[@id='div"+workspaceSelector+"Workspace']//a[contains(@title,'Remove Contact')]", workspace+" Remove contact access button", action.BOOLEAN, 30), "visibility", 60, workspace+" Remove contact access button");
+//		return isDisplayed(driver, FindElement(driver, "//div[@id='div"+workspaceSelector+"Workspace']//a[contains(text(),'Remove Contact') and contains(text(),'Access')]", workspace+" Remove contact access button", action.BOOLEAN, 30), "visibility", 60, workspace+" Remove contact access button");
+		return isDisplayed(driver, FindElement(driver, "//a[@id='"+workspaceSelector+"']", workspace+" Remove contact access button", action.BOOLEAN, 30), "visibility", 60, workspace+" Remove contact access button");
 	}
 
 	public WebElement getRemoveContactAccessPopupCloseButton(Workspace workspace, int timeOut){

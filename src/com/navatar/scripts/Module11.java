@@ -424,7 +424,7 @@ public class Module11 extends BaseLib {
 		NIMPage nim = new NIMPage(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FolderTemplates)) {
 				if (np.deleteAllFolderTemplates()) {
 					appLog.info("successfully deleted folder template");
@@ -494,7 +494,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 
 				// Verifying Visibility of both "My profile" & "My Firm's
@@ -620,7 +620,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 
 				// Verifying Editing My Profile Page
@@ -781,7 +781,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (click(driver, nim.getmyprofileediticon(60), "Edit icon", action.SCROLLANDBOOLEAN)){
 					sendKeys(driver, nim.myprofileinputboxes().get(0), M11UpFname, "First Name", action.SCROLLANDBOOLEAN);
@@ -861,7 +861,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (click(driver, nim.getmyprofileediticon(60), "Edit icon", action.SCROLLANDBOOLEAN)){
 
@@ -929,7 +929,7 @@ public class Module11 extends BaseLib {
 																				}
 																				driver.close();
 																				driver.switchTo().window(parentId);
-																				switchToFrame(driver, 10, nim.getFrame(PageName.NavatarInvestorManager, 10));
+																				switchToFrame(driver, 10, nim.getFrame( PageName.NavatarInvestorManager, 10));
 																			} else {
 																				appLog.error("LinkedIn Link is not opened in New tab.");
 																				sa.assertTrue(false, "LinkedIn Link is not opened in New tab.");
@@ -1029,7 +1029,7 @@ public class Module11 extends BaseLib {
 		
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 
 				// Verify Profile header
@@ -1229,7 +1229,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (click(driver, nim.getmyprofileediticon(30), "Edit icon", action.SCROLLANDBOOLEAN)) {
 					if (nim.getmyprofileediticon(20) == null) {
@@ -1543,7 +1543,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (click(driver, nim.getmyprofileediticon(30), "Edit icon", action.SCROLLANDBOOLEAN)) {
 					if (nim.getInsufficientPermissionHeader(60, sideMenu.MyFirmProfile) != null) {
@@ -1659,7 +1659,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(superAdminOrg3UserName,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (click(driver, nim.getmyprofileediticon(30), "Edit icon", action.SCROLLANDBOOLEAN)) {
 					if(nim.getMyFirmProfileNameTextBox(30)!=null){
@@ -1770,7 +1770,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(superAdminOrg3UserName,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (click(driver, nim.getmyprofileediticon(10), "Edit icon", action.SCROLLANDBOOLEAN)) {
 					if(sendKeys(driver, nim.getMyFirmProfileNameTextBox(10), Org3UpdatedFirmName+"UP", "Firm Name", action.SCROLLANDBOOLEAN)){
@@ -1968,7 +1968,7 @@ public class Module11 extends BaseLib {
 																		}
 																		driver.close();
 																		driver.switchTo().window(parentId);
-																		switchToFrame(driver, 10, nim.getFrame(PageName.NavatarInvestorManager, 10));
+																		switchToFrame(driver, 10, nim.getFrame( PageName.NavatarInvestorManager, 10));
 
 																	} else {
 																		appLog.error("WebSite is not opened in New tab.");
@@ -2049,7 +2049,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (click(driver, nim.getmyprofileediticon(10), "Edit icon", action.SCROLLANDBOOLEAN)) {
 					//verify Save and cancel button
@@ -2107,7 +2107,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (click(driver, nim.getmyprofileediticon(60), "Edit icon", action.SCROLLANDBOOLEAN)){
 					if(sendKeys(driver, nim.getMyProfileFirstName(30), Org3CRMUser2UpdatedFirstName1+"Fname", "FirstName", action.SCROLLANDBOOLEAN)){
@@ -2165,7 +2165,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(superAdminOrg3UserName,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if(click(driver, nim.getChangeLogoLink(30), "Change Logo Link", action.SCROLLANDBOOLEAN)){
 					String parentID = switchOnWindow(driver);
@@ -2185,7 +2185,7 @@ public class Module11 extends BaseLib {
 
 						driver.close();
 						driver.switchTo().window(parentID);
-						switchToFrame(driver,10,nim.getFrame(PageName.NavatarInvestorManager, 20));
+						switchToFrame(driver,10,nim.getFrame( PageName.NavatarInvestorManager, 20));
 						if(nim.getsubmitButtonFirmLogo(10)==null) {
 							appLog.info("browse pop is closed Successfully.");
 						}else {
@@ -2223,7 +2223,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(superAdminOrg3UserName,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if(click(driver, nim.getChangeLogoLink(30), "Change Logo Link", action.SCROLLANDBOOLEAN)){
 					String parentID = switchOnWindow(driver);
@@ -2233,12 +2233,12 @@ public class Module11 extends BaseLib {
 								appLog.info("Successfully Verified Error message after clicking Upload button."+"Expected:>>"+NIMPageErrorMessage.myFirmProfileLogoErrorMessage+"Actual:>>"+nim.getsubmitButtonError(30).getText().trim());
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 20));
+								switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 20));
 
 							}else{
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 20));
+								switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 20));
 								appLog.error("Error message is not verified after clicking Upload button.");
 								sa.assertTrue(false,"Error message is not verified after clicking Upload button."+"Expected:>>"+NIMPageErrorMessage.myFirmProfileLogoErrorMessage+"Actual:>>"+nim.getsubmitButtonError(30).getText().trim());
 							}
@@ -2276,7 +2276,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(superAdminOrg3UserName,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if(click(driver, nim.getChangeLogoLink(30), "Change Logo Link", action.SCROLLANDBOOLEAN)){
 					String[] UploadImage = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Logo_Name).split(",");
@@ -2314,7 +2314,7 @@ public class Module11 extends BaseLib {
 					}
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+					switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 				}else{
 					appLog.error("Change Logo link is not clickable.");
 					sa.assertTrue(false, "Change Logo link is not clickable.");
@@ -2341,7 +2341,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(superAdminOrg3UserName,adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if (nim.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 
 				String[] UploadImage = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Logo_Name).split(",");
@@ -2383,46 +2383,46 @@ public class Module11 extends BaseLib {
 												appLog.info("Succesffuly accepted Alert while uploading logo and Logo is Upload successfully for."+UploadImage[length-1]);
 												ThreadSleep(10000);
 												driver.switchTo().window(parentID);
-												switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+												switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 											} else{
 												driver.close();
 												driver.switchTo().window(parentID);
-												switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+												switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 												appLog.error("Alert is not accepted.for."+UploadImage[length-1]);
 												sa.assertTrue(false, "Alert is not accepted.for."+UploadImage[length-1]);
 											}
 										}else{
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+											switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 											appLog.error("Alert is not available after clicking on Save button so not able to upload logo for."+UploadImage[length-1]);
 											sa.assertTrue(false,"Alert is not available after clicking on Save button so not able to upload logofor."+UploadImage[length-1]);
 										}
 									}else{
 										driver.close();
 										driver.switchTo().window(parentID);
-										switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+										switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 										appLog.error("Save button is not clicked.");
 										sa.assertTrue(false,"Save button is not clicked.");
 									}
 								}else{
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+									switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 									appLog.error("Submit button is not working right.");
 									sa.assertTrue(false,"Submit button is not working right.");
 								}
 							}else{
 								driver.close();
 								driver.switchTo().window(parentID);
-								switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+								switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 								appLog.error("Broswe Button is not working, Can not proceed.");
 								sa.assertTrue(false, "Broswe Button is not working so cannot check functionality.");
 							}
 						}else{
 							driver.close();
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+							switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 							appLog.info("Change logo link is not working so cannot check the functionality.");
 							sa.assertTrue(false, "Change logo link is not working so cannot check the functionality.");
 						}
@@ -2458,7 +2458,7 @@ public class Module11 extends BaseLib {
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			
 			if (np.getFolderTemplatesHead(30)!=null) {
 				appLog.info("successfully verified default side menu opened is folder templates");
@@ -2656,7 +2656,7 @@ public class Module11 extends BaseLib {
 		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
 		WebElement ele;
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (click(driver, np.getAddFolderTemplateButton(30), "add folder template button", action.BOOLEAN)) {
 				if (click(driver, np.getCancelFolderTemplateButton(30), "cancel button", action.BOOLEAN)) {
 					if (getText(driver, np.getCancelTextAddFolder(30), "cancel window text", action.BOOLEAN).trim().contains(NIMPageErrorMessage.addFolderCancelPopup)) {
@@ -2886,7 +2886,7 @@ public class Module11 extends BaseLib {
 		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
 		WebElement ele;
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (click(driver, np.getAddFolderTemplateButton(30), "add folder template button", action.BOOLEAN)) {
 				if (sendKeys(driver,np.getFolderTemplateNameTextBox(30), folderTemplateName+"T1"+"U2", "folder temp name", action.BOOLEAN)) {
 					
@@ -3234,7 +3234,7 @@ public class Module11 extends BaseLib {
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (click(driver, np.getAddFolderTemplateButton(30), "add folder template button", action.BOOLEAN)) {
 				if (sendKeys(driver,np.getFolderTemplateNameTextBox(30), folderTemplateName+"T2"+"U2", "folder temp name", action.BOOLEAN)) {
 					
@@ -3361,7 +3361,7 @@ public class Module11 extends BaseLib {
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FolderTemplates)) {
 				if (click(driver, np.getfoldertemplatelink(folderTemplateName+"T2"+"U2",30), "folder template link", action.BOOLEAN)) {
 					if (np.getGoBackLink(30)!=null) {
@@ -3715,7 +3715,7 @@ public class Module11 extends BaseLib {
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (click(driver, np.getfoldertemplatelink(folderTemplateName+"T2"+"U2UP", 30), "template link", action.BOOLEAN)) {
 				if (click(driver, np.getEditIcon(30), "edit icon", action.BOOLEAN)) {
 					String id = fp.getCreatedFolderId(cmnPath, PageName.NavatarInvestorManager, 30);
@@ -4037,7 +4037,7 @@ public class Module11 extends BaseLib {
 		//Verifying Editing Folder Template and Folder.
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.FolderTemplates)){
 				if(selectVisibleTextFromDropDown(driver,nim.getDropdownTempType(30),"All Templates" , "All Templates")){
 					if(click(driver, nim.getfoldertemplatelink(folderTemplateName+"T2"+"U2UP",20), "Folder Template link", action.SCROLLANDBOOLEAN)){
@@ -4481,7 +4481,7 @@ public class Module11 extends BaseLib {
 		
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.FolderTemplates)){
 				if(selectVisibleTextFromDropDown(driver,nim.getDropdownTempType(30),"All Templates" , "All Templates")){
 					if(click(driver, nim.getfoldertemplatelink(folderTemplateName+"T2"+"U2UP",20), "Folder Template link", action.SCROLLANDBOOLEAN)){
@@ -4773,7 +4773,7 @@ public class Module11 extends BaseLib {
 		SoftAssert sa = new SoftAssert();
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.FolderTemplates)){
 			if (nim.getdefaultFolderTemplateMessage(20).getText().trim().equalsIgnoreCase(NIMPageErrorMessage.FolderTemplatenoDataToDisplay)) {
 				appLog.info(NIMPageErrorMessage.FolderTemplatenoDataToDisplay+"is successfully verified.");
@@ -4892,7 +4892,7 @@ public class Module11 extends BaseLib {
 		
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(selectVisibleTextFromDropDown(driver,nim.getDropdownTempType(30),"Other Users' Templates" , "Other Users' Templates")){
 				if(click(driver, nim.getfoldertemplatelink(folderTemplateName+"U1",20), "Folder Template link", action.SCROLLANDBOOLEAN)){
 					//verify click on template link.
@@ -5043,7 +5043,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.FolderTemplates)){
 				if(selectVisibleTextFromDropDown(driver,nim.getDropdownTempType(30),"All Templates" , "All Templates")){
 
@@ -5176,7 +5176,7 @@ public class Module11 extends BaseLib {
 		
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.FolderTemplates)){
 				if(selectVisibleTextFromDropDown(driver,nim.getDropdownTempType(30),"All Templates" , "All Templates")){
 					if(click(driver, nim.getfoldertemplatelink(folderTemplateName+"T2"+"U2UP",20), "Folder Template link", action.SCROLLANDBOOLEAN)){
@@ -5242,7 +5242,7 @@ public class Module11 extends BaseLib {
 
 		lp.CRMLogin(Org3CRMUser2EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.FolderTemplates)){
 				if(selectVisibleTextFromDropDown(driver,nim.getDropdownTempType(30),"All Templates" , "All Templates")){
 					if(click(driver, nim.getfoldertemplatelink(folderTemplateName+"T2"+"U2UP",20), "Folder Template link", action.SCROLLANDBOOLEAN)){
@@ -5535,7 +5535,7 @@ public class Module11 extends BaseLib {
 		
 		lp.CRMLogin(Org3CRMUser3EmailID, adminPassword);
 		if (nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.FolderTemplates)){
 				if(selectVisibleTextFromDropDown(driver,nim.getDropdownTempType(30),"All Templates" , "All Templates")){
 					if(click(driver, nim.getfoldertemplatelink(folderTemplateName+"T1"+"U2",20), "Folder Template link", action.SCROLLANDBOOLEAN)){

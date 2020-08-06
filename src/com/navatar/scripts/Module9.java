@@ -7,6 +7,7 @@ import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.BaseLib;
@@ -63,7 +64,7 @@ import static com.navatar.generic.CommonLib.*;
  */
 public class Module9 extends BaseLib{
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc001_precondition() {
 		//Prerequisite: all users present with no NIM access
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -258,7 +259,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc002_ManageApprovalWithoutAccess() {
 		//prerequisite: 1. Manage Approval Deactivated. 2. No user should be given nim user access
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -269,7 +270,7 @@ public class Module9 extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword);
 
 	if (bp.clickOnTab(TabName.NIMTab)) {
-	switchToFrame(driver, 30, bp.getFrame(PageName.NavatarInvestorManager, 30));
+	switchToFrame(driver, 30, bp.getFrame( PageName.NavatarInvestorManager, 30));
 	if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 		if (np.getManageApprovalsHead(60).getText().trim().equals("Manage Approvals")) {
 			appLog.info("manage approval heading is successfully displayed on manage approval page");
@@ -463,7 +464,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc003_ManageApprovalWithAccessToInternalUser() {
 	//prerequisite: user2 will be given internal user access 2nd time
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -475,12 +476,12 @@ public class Module9 extends BaseLib{
 	System.out.println(userName3+" name of user3");
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	if (bp.clickOnTab(TabName.NIMTab)) {
-		switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+		switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 		if (np.clickOnSideMenusTab(sideMenu.InternalUsers)) {
 				switchToDefaultContent(driver);
 				if (np.giveAccessToUserInNIMTabFromAdmin(userName1, accessType.InternalUserAccess)) {
 					appLog.info("access has been successfully given to user "+userName1);
-					switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+					switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 					switchToDefaultContent(driver);
 				}
 				else {
@@ -489,7 +490,7 @@ public class Module9 extends BaseLib{
 				}
 				if (np.giveAccessToUserInNIMTabFromAdmin(userName2, accessType.InternalUserAccess)) {
 					appLog.info("access has been successfully given to user "+userName2);
-					switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+					switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 					switchToDefaultContent(driver);
 				}
 				else {
@@ -551,7 +552,7 @@ public class Module9 extends BaseLib{
 	
 	}
 	boolean user1flag=false, user2flag = false;
-	switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+	switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 	if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 		int size = np.getUserNamesManageApproval(60,EditViewMode.View).size();
 		for (int i=0;i<size;i++) {
@@ -655,7 +656,7 @@ public class Module9 extends BaseLib{
 
 }
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc004_VerifyActivationOfManageApprovalSetting() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -663,7 +664,7 @@ public class Module9 extends BaseLib{
 	String userName1 = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User1", excelLabel.User_First_Name)+" "+ExcelUtils.readData("Users",excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	if (bp.clickOnTab(TabName.NIMTab)) {
-		switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+		switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 		if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 			if (np.clickOnEditIcon()) {
 				if (click(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.Edit), "activate manage approval checkbox", action.SCROLLANDBOOLEAN)) {
@@ -825,7 +826,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc005_VerifyManageApprovalsUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -854,7 +855,7 @@ public class Module9 extends BaseLib{
 				}
 			}
 			
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if(isSelected(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.View),"manage approvals checkbox view mode")) {
 					appLog.info("manage approvals activate checkbox is selected and is disabled");
@@ -986,7 +987,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc006_VerifyingUncheckManageAppSettingForUser() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -996,7 +997,7 @@ public class Module9 extends BaseLib{
 		String userName2 = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.User_First_Name)+" "+ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if (np.clickOnEditIcon()) {
 					//if username 2 is not checked, then check it
@@ -1281,7 +1282,7 @@ public class Module9 extends BaseLib{
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 			scrollDownThroughWebelement(driver, fp.getFundRaisingWorkSpaceSection(60), "fundraising workspace section");
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30)!=null) {
 				appLog.info("manage approval icon is successfully present for user 1 in fundraising workspace");
 				WebElement ele= BaseLib.edriver.findElement(By.cssSelector("div#frworkspace a[title=\"Manage Approvals\"] > img"));
@@ -1389,7 +1390,7 @@ public class Module9 extends BaseLib{
 		*/if (np.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 				//for user 2, manage approval popup will be displayed
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30)!=null) {
 				appLog.info("manage approval icon is successfully present for user 2 in fundraising workspace");
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "fundraising workspace manage approval", action.SCROLLANDBOOLEAN)) {
@@ -1465,7 +1466,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc007_VerifyEditManageApprovalSettingDelegateAdmin() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1476,7 +1477,7 @@ public class Module9 extends BaseLib{
 		//user 2 is delegate admin
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if (np.clickOnEditIcon()) {
 					if (np.getGoBackLink(60)!=null) {
@@ -1756,7 +1757,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc008_VerifyUncheckingActivateManageApprovalCheckbox() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1767,7 +1768,7 @@ public class Module9 extends BaseLib{
 		//user 2 is delegate admin
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				appLog.info("task 1:");
 				if (np.clickOnEditIcon()) {
@@ -2013,7 +2014,7 @@ public class Module9 extends BaseLib{
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30) == null) {
 					appLog.info("manage approval icon is not present on fundraising workspace as expected");
 				}
@@ -2042,7 +2043,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30) == null) {
 					appLog.info("manage approval icon is not present on fundraising workspace as expected");
 				}
@@ -2072,7 +2073,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc009_VerifyCheckingManageApprovalSettingAgain() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2084,7 +2085,7 @@ public class Module9 extends BaseLib{
 		
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if (np.clickOnEditIcon()) {
 					if (!isSelected(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.Edit), "manage approval activate checkbox")) {
@@ -2166,7 +2167,7 @@ public class Module9 extends BaseLib{
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30)!=null) {
 					appLog.info("manage approvals icon is succesfully present on fundraising workspace");
 				}
@@ -2214,7 +2215,7 @@ public class Module9 extends BaseLib{
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30)!=null) {
 					appLog.info("manage approvals icon is succesfully present on fundraising workspace");
 				}
@@ -2244,7 +2245,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc010_VerifyActiveInactiveAndRemovingAccessFromInternalUser() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2263,7 +2264,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "could not deactivate user");
 		}
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if (np.verifyPresenceOfUsersInManageApprovalsMenu(userName1+" (inactive)", userName2, EditViewMode.View)) {
 					appLog.info(userName1+" is present as inactive in manage approvals page");
@@ -2394,7 +2395,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "could not reactivate first user");
 		}
 		if (np.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.InternalUsers)) {
 				if(np.clickOnEditIcon()) {
 					if (click(driver, np.findCheckboxForUserInternalUsers(userName1), "checkbox for user 1"+userName1, action.SCROLLANDBOOLEAN)) {
@@ -2566,7 +2567,7 @@ public class Module9 extends BaseLib{
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30)!=null) {
 					appLog.info("successfully found manage approvals icon on FundraisingWorkspace");
 				}
@@ -2592,7 +2593,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc011_VerifyUpdationOfName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2690,7 +2691,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "user menu tab is not clickable on home page");
 		}
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (np.clickOnEditIcon()) {
 					if (sendKeys(driver, np.getMyProfileFirstName(60),user2FirstName +"UP", "super admin first name", action.BOOLEAN)) {
@@ -2742,7 +2743,7 @@ public class Module9 extends BaseLib{
 		
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if(np.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (np.clickOnEditIcon()) {
 					if (sendKeys(driver, np.getMyProfileFirstName(60),superAdminFirstName +"UP", "super admin first name", action.BOOLEAN)) {
@@ -2795,7 +2796,7 @@ public class Module9 extends BaseLib{
 											
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc012_GiveManageApprovalAccessToUser1AndUser2() {
 		//register for nim close button
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2808,7 +2809,7 @@ public class Module9 extends BaseLib{
 		String user2LastName = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver,30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver,30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if (np.clickOnEditIcon()) {
 					if (!np.verifyCheckedOrNotManageApproval(EditViewMode.Edit, userName1)) {
@@ -2880,7 +2881,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc013_ManageApprovalPopUpFundsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2915,7 +2916,7 @@ public class Module9 extends BaseLib{
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon on fund/workspace", action.SCROLLANDBOOLEAN)) {
 					//verify manage approvals ui
 					if (fp.getManageAppHeadText(60).getText().trim().equals("Manage Approvals")) {
@@ -3256,8 +3257,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M9tc014_InviteContactAndRegister() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc014_InviteContactAndRegister(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3278,7 +3279,7 @@ public class Module9 extends BaseLib{
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.inviteContact(environment, mode,M9Institution1, M9Contact1EmailId, null, FolderType.Standard, "Upload", "Yes", "Yes", M9Institution1, Workspace.FundraisingWorkspace, null)) {
 					appLog.info("invited contact "+M9Contact1FirstName+" "+M9Contact1LastName+" for "+M9Institution1);
 				}
@@ -3333,7 +3334,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc015_UploadManageApprovalOn_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3359,7 +3360,7 @@ public class Module9 extends BaseLib{
 						Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfully");
 					filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon).split("<break>");
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesCommon[0],false )) {
 						appLog.info("filename and status is verified successfully files present in common folder");
@@ -3409,7 +3410,7 @@ public class Module9 extends BaseLib{
 					appLog.info("File is upload successfullly");
 					filesInternal = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal).split("<break>");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesInternal[0] ,true)) {
 						appLog.info("filename and status is verified "+filesInternal[0]+"present in Internal folder");
@@ -3454,7 +3455,7 @@ public class Module9 extends BaseLib{
 					appLog.info("File is upload successfullly");
 					filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared).split("<break>");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesShared[0],false )) {
 						appLog.info("filename and status is verified "+filesShared[0]+" successfully files present in Shared folder");
@@ -3503,7 +3504,7 @@ public class Module9 extends BaseLib{
 					appLog.info("File is upload successfullly");
 					filesStand = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard).split("<break>");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesStand[0] ,false)) {
 						appLog.info("filename and status is verified "+filesStand[0]+"successfully files present in Standard folder");
@@ -3657,7 +3658,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc015_UploadManageApprovalOn_ImpactCRM() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3680,7 +3681,7 @@ public class Module9 extends BaseLib{
 	lp.CRMLogin(CRMUser1EmailID, adminPassword);
 	if (fp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, filesCommon[0], false)) {
 						appLog.info("filename and status is correct for "+filesCommon[0]);
@@ -3778,7 +3779,7 @@ public class Module9 extends BaseLib{
 			if (ip.clickOnTab(TabName.ContactTab)) {
 				if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
 					
-					switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, ip.getWorkspaceSectionView(Workspace.FundraisingWorkspace,30),"fundraising workspace view");
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 						if (bp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.FundraisingWorkspace, filesCommon[0], false)) {
@@ -3872,7 +3873,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc015_UploadManageApprovalOn_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3991,8 +3992,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M9tc016_VerifyDeleteFunctionality() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc016_VerifyDeleteFunctionality(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4010,7 +4011,7 @@ public class Module9 extends BaseLib{
 		String docpath = "UploadFiles\\Module9\\";
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "fundraising manage approval icon", action.SCROLLANDBOOLEAN)) {
 						if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon for "+Workspace.FundraisingWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
@@ -4215,7 +4216,7 @@ public class Module9 extends BaseLib{
 			}
 			if (bp.clickOnTab(TabName.InstituitonsTab)) {
 				if (ip.clickOnCreatedInstitution(M9Institution1)) {
-					switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage,30));
+					switchToFrame(driver, 30, ip.getFrame(environment,mode, PageName.InstitutionsPage, 30));
 					//common folder
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 						if (!bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, filesToDel[0])) {
@@ -4276,7 +4277,7 @@ public class Module9 extends BaseLib{
 						Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfully");
 					String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesCommon,false )) {
 						appLog.info("filename and status is verified successfully files present in common folder");
@@ -4295,7 +4296,7 @@ public class Module9 extends BaseLib{
 						Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfully");
 					String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesShared,false )) {
 						appLog.info("filename and status is verified successfully files present in shared folder");
@@ -4315,7 +4316,7 @@ public class Module9 extends BaseLib{
 						Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfully");
 					String filesStd = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesStd,false )) {
 						appLog.info("filename and status is verified successfully files present in std folder");
@@ -4350,7 +4351,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc017_VerifyApprovingDocuments_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4368,7 +4369,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "workspace section view");
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
@@ -4849,8 +4850,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M9tc017_VerifyApprovingDocuments_Impact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc017_VerifyApprovingDocuments_Impact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4868,7 +4869,7 @@ public class Module9 extends BaseLib{
 		//Institution
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, filesToDel[0], true)) {
 						appLog.info(filesToDel[0] + " is successfully verified on content grid folder "+cmnPath);
@@ -4970,7 +4971,7 @@ public class Module9 extends BaseLib{
 		filesToDel = filesCommon.split("<break>");
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage,30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.FundraisingWorkspace, filesToDel[0], true)) {
 						appLog.info(filesToDel[0] + " is successfully verified on content grid folder "+cmnPath);
@@ -5072,7 +5073,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc017_VerifyApprovingDocuments_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5205,8 +5206,8 @@ public class Module9 extends BaseLib{
 
 	}
 	
-	@Test
-	public void M9tc018_VerifyOnlineImportManageApprovalOn_Action() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc018_VerifyOnlineImportManageApprovalOn_Action(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5227,9 +5228,9 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				if (fp.onlineImport(null, null, null, cmnPath, docPath, fileCommon, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, null, null, null, cmnPath, docPath, fileCommon, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+cmnPath);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesToImport[0] , false)) {
 						appLog.info(filesToImport[0] + " was successfully found on content grid");
@@ -5284,10 +5285,10 @@ public class Module9 extends BaseLib{
 				//internal
 				filesToImport = fileInternal.split("<break>");
 				switchToDefaultContent(driver);
-				if (fp.onlineImport(null, null, null, intPath, docPath, fileInternal, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, null, null, null, intPath, docPath, fileInternal, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+intPath);
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					
 					if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30),"manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 						click(driver, fp.getApprovedDocsTab(60), "approved documents tab", action.BOOLEAN);
@@ -5321,9 +5322,9 @@ public class Module9 extends BaseLib{
 				//shared
 				filesToImport = fileShared.split("<break>");
 				switchToDefaultContent(driver);
-				if (fp.onlineImport(null, null, null, shdPath, docPath, fileShared, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, null, null, null, shdPath, docPath, fileShared, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+shdPath);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesToImport[0] , false)) {
 						appLog.info(filesToImport[0] + " was successfully found on content grid");
@@ -5379,9 +5380,9 @@ public class Module9 extends BaseLib{
 				//standard
 				filesToImport = fileStandard.split("<break>");
 				switchToDefaultContent(driver);
-				if (fp.onlineImport(M9Institution1, null, M9Institution2, stdPath, docPath, fileStandard, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, M9Institution1, null, M9Institution2, stdPath, docPath, fileStandard, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+stdPath);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace,filesToImport[0] , false)) {
 						appLog.info(filesToImport[0] + " was successfully found on content grid");
@@ -5470,8 +5471,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M9tc018_VerifyOnlineImportManageApprovalOn_Impact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc018_VerifyOnlineImportManageApprovalOn_Impact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5489,7 +5490,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, filesToImport[0], false)) {
 						appLog.info(filesToImport[0] + " is successfully verified on content grid folder "+cmnPath);
@@ -5615,7 +5616,7 @@ public class Module9 extends BaseLib{
 		filesToImport = filesCommon.split("<break>");
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage,30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.FundraisingWorkspace, filesToImport[0], false)) {
 						appLog.info(filesToImport[0] + " is successfully verified on content grid folder "+cmnPath);
@@ -5712,7 +5713,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc019_VerifySearchingManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5759,7 +5760,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 					if (sendKeys(driver, fp.getSearchTextboxManageApp(ManageApprovalTabs.PendingDocuments, 30), filesToSearch[0], "search box pending tabs", action.BOOLEAN)) {
 						if (click(driver, fp.getSearchIconManageApprovalsPopup(ManageApprovalTabs.PendingDocuments, 30), "pending docs manage approvals", action.SCROLLANDBOOLEAN)) {
@@ -5774,7 +5775,7 @@ public class Module9 extends BaseLib{
 							if (click(driver,fp.getSearchIconCrossButtonManageApprovals(ManageApprovalTabs.PendingDocuments,60) , "search icon cross button", action.BOOLEAN)) {
 								
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+								switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								ThreadSleep(5000);
 								List<WebElement> ele = FindElements(driver, "//span[contains(@id,'pendingGrid-cell-1')]//a", "list of file names manage approvals");
 								size = ele.size();
@@ -6172,7 +6173,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc020_OpeningOfDocument() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6184,7 +6185,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					/*if (!fp.checkVisibilityOfDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesCommon.split("<break>")[0])) {
 						click(driver, fp.getDocumentNameManageApproval(ManageApprovalTabs.PendingDocuments,60), "document name column", action.SCROLLANDBOOLEAN);
@@ -6213,7 +6214,7 @@ public class Module9 extends BaseLib{
 				}
 				driver.close();
 				driver.switchTo().window(parentID);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				//clicking on 2nd document(shared)
 				if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesShared.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30))){
 				parentID = switchOnWindow(driver);
@@ -6237,7 +6238,7 @@ public class Module9 extends BaseLib{
 					driver.switchTo().window(parentID);
 				}
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				//click on 3rd document(standard)
 				if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesStandard.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30))){
 				parentID = switchOnWindow(driver);
@@ -6262,7 +6263,7 @@ public class Module9 extends BaseLib{
 				}
 				}
 				
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				ThreadSleep(5000);
 				//clicking on approved docs tab
 				if (click(driver, fp.getApprovedDocsTab(60), "approved docs tab", action.SCROLLANDBOOLEAN)) {
@@ -6288,7 +6289,7 @@ public class Module9 extends BaseLib{
 					}
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//clicking on 2nd document(shared)
 					if(fp.clickOnDocumentManageApprovals(ManageApprovalTabs.ApprovedDocuments, filesShared.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.ApprovedDocuments, 30))){
 					parentID = switchOnWindow(driver);
@@ -6312,7 +6313,7 @@ public class Module9 extends BaseLib{
 						driver.switchTo().window(parentID);
 					}
 					}
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//click on 3rd document(standard)
 					if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.ApprovedDocuments, filesStandard.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.ApprovedDocuments, 30))){
 						parentID = switchOnWindow(driver);
@@ -6366,7 +6367,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc021_DuplicateDocumentError() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6382,7 +6383,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "check all documents checkbox", action.SCROLLANDBOOLEAN)) {
 						if (click(driver, fp.getApproveBtnManageApprovals(60), "approve button on manage approvals window", action.SCROLLANDBOOLEAN)) {
@@ -6679,7 +6680,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc022_UpdateAllAndDuplicateDoc_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6696,7 +6697,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					if (click(driver,fp.getCheckAllDocsManageApprovals(60), "checkbox to select all boxes", action.BOOLEAN)) {
 						//uncheck checkbox in front of 2 common files
@@ -6875,7 +6876,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc022_UpdateAllAndDuplicateDoc_Impact1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6893,7 +6894,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, filesCommon.split("<break>")[2], true)) {
 						appLog.info(filesCommon.split("<break>")[2]+" is successfully found in content grid");
@@ -6943,7 +6944,7 @@ public class Module9 extends BaseLib{
 			}
 			if (ip.clickOnTab(TabName.ContactTab)) {
 				if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
-					switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 						if (fp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.FundraisingWorkspace, filesCommon.split("<break>")[2], true)) {
 							appLog.info(filesCommon.split("<break>")[2]+" is successfully found in content grid");
@@ -7008,7 +7009,7 @@ public class Module9 extends BaseLib{
 		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc022_UpdateAllAndDuplicateDoc_Impact2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7109,7 +7110,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc023_VerifyManageApprovalsAfterDeleteFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7121,7 +7122,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30),"manage folder icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					if(!cmnPath.isEmpty() && !cmnPath.equalsIgnoreCase("Commonpath")) {
 						String id=null;
@@ -7441,7 +7442,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc024_CreateSameNameFolderAndVerify() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7453,7 +7454,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M9FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 
@@ -7550,7 +7551,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc025_UploadFilesUser2AndVerify() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7588,7 +7589,7 @@ public class Module9 extends BaseLib{
 						appLog.error("documents could not be uploaded successfully");
 						sa.assertTrue(false, "documents could not be uploaded successfully");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 
 				String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -7779,7 +7780,7 @@ public class Module9 extends BaseLib{
 
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc026_PendingFilesVerifyDuplicatePopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7802,7 +7803,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.verifyFolderPathdummy(cmnPath,null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 				if (click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon", action.SCROLLANDBOOLEAN)) {
 					if (fp.verifyDuplicateWindowWhileUploading(Workspace.FundraisingWorkspace,M9Institution1+"<break>"+M9Institution2,cmnUpload, filesCommon, cmnPath,FolderType.Common, UpdateIgnore.Update)) {
@@ -7823,7 +7824,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, cmnPath+" could not be found in folder structure");
 			}
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.verifyFolderPathdummy(shdPath,null, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 				if (click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon", action.SCROLLANDBOOLEAN)) {
 					if (fp.verifyDuplicateWindowWhileUploading(Workspace.FundraisingWorkspace,M9Institution1+"<break>"+M9Institution2,shdUpload, filesShared, shdPath,FolderType.Shared, UpdateIgnore.Ignore)) {
@@ -7844,7 +7845,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, shdPath+" could not be found in folder structure");
 			}
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			for (int i = 0;i<filesShared.split("<break>").length;i++) {
 				if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace, filesShared.split("<break>")[i], false)) {
 					appLog.info("file "+filesShared.split("<break>")[i]+" is successfully found");
@@ -7884,7 +7885,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, stdPath+" could not be found in folder structure");
 			}
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 				if (selectVisibleTextFromDropDown(driver,fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "pending docs dropdown", "All Pending Documents")) {
 						for (int i = 0;i<4;i++) {
@@ -7959,7 +7960,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc027_VerifyFolderDeletedAndCountOfDocs() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7978,7 +7979,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 					for (int i = 2;i<4;i++) {
 						if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[i], M9FundName1+" > "+cmnPath, User2first+" "+User2last, Org1FirmName, date)) {
@@ -8176,7 +8177,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc028_1_UpdateFolderNameAndVerify() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8194,7 +8195,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 				String id=fp.getCreatedFolderId(shdPath, PageName.ManageFolderPopUp, 20);
 				if (id!=null) {
@@ -8355,7 +8356,7 @@ public class Module9 extends BaseLib{
 					appLog.error("edit button is not clickable");
 					sa.assertTrue(false, "edit button is not clickable");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.updateInvestorOrLPNameFromManageInvestor(Workspace.FundraisingWorkspace, M9Institution1, null, M9Institution1+"UP", "M9Institution1")) {
 					appLog.info("successfully updated institution1 name");
 				}
@@ -8412,7 +8413,7 @@ public class Module9 extends BaseLib{
 			}
 			if (bp.clickOnTab(TabName.FundsTab)) {
 				if (fp.clickOnCreatedFund(M9FundName1)) {
-					switchToFrame(driver,30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver,30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 						if (click(driver, fp.getPendingDocsTab(30), "pending documents manage approvals", action.SCROLLANDBOOLEAN)) {
 							//file is not present
@@ -8498,7 +8499,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc028_2_RevertRenameOfFundnameAndInstName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8555,7 +8556,7 @@ public class Module9 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1+"NUP")) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.updateInvestorOrLPNameFromManageInvestor(Workspace.FundraisingWorkspace, M9Institution1+"UP", null, M9Institution1, "M9Institution1")) {
 					appLog.info("successfully updated institution1 name");
 				}
@@ -8594,7 +8595,7 @@ public class Module9 extends BaseLib{
 					appLog.error("edit button is not clickable");
 					sa.assertTrue(false, "edit button is not clickable");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getInvestmentInfo(Workspace.FundraisingWorkspace), "investment info link", action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getInvestmentInfoEdit(30), "investment info edit", action.BOOLEAN)) {
 						if (sendKeys(driver, fp.getInvestmentInfoFundNameTxtbox(30), M9FundName1, "fund name textbox", action.BOOLEAN)) {
@@ -8634,7 +8635,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc029_VerifySortingManageApproval() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8643,7 +8644,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 				if (click(driver, fp.getApprovedDocsTab(30), "approved docs tab", action.BOOLEAN)) {
 					//uploaded on ascending
@@ -8831,7 +8832,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc030_UploadDocumentInvestorSide_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8867,7 +8868,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc030_UploadDocumentInvestorSide_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8883,7 +8884,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.verifyFolderPathdummy(stdPath+"UP", M9Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 				if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.FundraisingWorkspace, filesStandard,true)) {
 					appLog.info("investor side uploaded file is successfully found on content grid");
@@ -8962,7 +8963,7 @@ public class Module9 extends BaseLib{
 		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc031_VerifyRemovalAndAdditionOfInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8974,7 +8975,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 		if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 30), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 				if (fp.selectInstitutionOrLP(M9Institution2, Workspace.FundraisingWorkspace, 30)) {
 					appLog.info("deselected institution "+M9Institution2+" successfully");
@@ -9029,7 +9030,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc032_ManageApprovalsPopupInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9041,7 +9042,7 @@ public class Module9 extends BaseLib{
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 		
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon on fund/workspace", action.SCROLLANDBOOLEAN)) {
 					//verify manage approvals ui
 					if (fp.getManageAppHeadText(60).getText().trim().equals("Manage Approvals")) {
@@ -9400,8 +9401,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M9tc033_InviteContactInvestorWorkpsace() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc033_InviteContactInvestorWorkpsace(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
@@ -9449,7 +9450,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9476,7 +9477,7 @@ public class Module9 extends BaseLib{
 						Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfully");
 					filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon).split("<break>");
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesCommon[0],false )) {
 						appLog.info("filename and status is verified successfully files present in common folder");
@@ -9526,7 +9527,7 @@ public class Module9 extends BaseLib{
 					appLog.info("File is upload successfullly");
 					filesInternal = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal).split("<break>");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesInternal[0] ,true)) {
 						appLog.info("filename and status is verified "+filesInternal[0]+"present in Internal folder");
@@ -9571,7 +9572,7 @@ public class Module9 extends BaseLib{
 					appLog.info("File is upload successfullly");
 					filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared).split("<break>");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesShared[0],false )) {
 						appLog.info("filename and status is verified "+filesShared[0]+" successfully files present in Shared folder");
@@ -9620,7 +9621,7 @@ public class Module9 extends BaseLib{
 					appLog.info("File is upload successfullly");
 					filesStand = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard).split("<break>");
 					
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesStand[0] ,false)) {
 						appLog.info("filename and status is verified "+filesStand[0]+"successfully files present in Standard folder");
@@ -9766,7 +9767,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9788,7 +9789,7 @@ public class Module9 extends BaseLib{
 		//Institution
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesCommon[0], false)) {
 						appLog.info("filename and status is correct for "+filesCommon[0]);
@@ -9886,7 +9887,7 @@ public class Module9 extends BaseLib{
 			if (ip.clickOnTab(TabName.ContactTab)) {
 				if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
 					
-					switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, ip.getWorkspaceSectionView(Workspace.InvestorWorkspace,30),"fundraising workspace view");
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 						if (bp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.InvestorWorkspace, filesCommon[0], false)) {
@@ -9976,7 +9977,7 @@ public class Module9 extends BaseLib{
 			if (ip.clickOnTab(TabName.CommitmentsTab)) {
 				if (cmp.clickOnCreatedCommitmentId(M9Commitment1ID)) {
 					
-					switchToFrame(driver, 30, cp.getFrame(PageName.CommitmentsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.CommitmentsPage, 30));
 					scrollDownThroughWebelement(driver, ip.getWorkspaceSectionView(Workspace.InvestorWorkspace,30),"fundraising workspace view");
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 						if (bp.verifyFileinContentGrid(PageName.CommitmentsPage, Workspace.InvestorWorkspace, filesCommon[0], false)) {
@@ -10080,7 +10081,7 @@ public class Module9 extends BaseLib{
 			if (ip.clickOnTab(TabName.InstituitonsTab)) {
 				if (ip.clickOnCreatedLP(M9LimitedPartner1)) {
 					
-					switchToFrame(driver, 30, cp.getFrame(PageName.InstitutionsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.InstitutionsPage, 30));
 					scrollDownThroughWebelement(driver, ip.getWorkspaceSectionView(Workspace.InvestorWorkspace,30),"fundraising workspace view");
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 						if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesCommon[0], false)) {
@@ -10186,7 +10187,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10303,7 +10304,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc035_VerifyDeleteInvestorWorkspace_Action() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10316,7 +10317,7 @@ public class Module9 extends BaseLib{
 	lp.CRMLogin(CRMUser1EmailID, adminPassword);
 	if (bp.clickOnTab(TabName.FundsTab)) {
 		if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "fundraising manage approval icon", action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon for "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
@@ -10527,8 +10528,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M9tc035_VerifyDeleteInvestorWorkspace_Impact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc035_VerifyDeleteInvestorWorkspace_Impact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10547,7 +10548,7 @@ public class Module9 extends BaseLib{
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage,30));
+				switchToFrame(driver, 30, ip.getFrame(environment,mode, PageName.InstitutionsPage, 30));
 				//common folder
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (!bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesToDel[0])) {
@@ -10606,7 +10607,7 @@ public class Module9 extends BaseLib{
 		//Commitment
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M9Commitment1ID)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.CommitmentsPage,30));
+				switchToFrame(driver, 30, ip.getFrame(environment,mode, PageName.CommitmentsPage, 30));
 				//common folder
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (!bp.verifyFileinContentGrid(PageName.CommitmentsPage, Workspace.InvestorWorkspace, filesToDel[0])) {
@@ -10663,7 +10664,7 @@ public class Module9 extends BaseLib{
 		//LP
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M9LimitedPartner1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage,30));
+				switchToFrame(driver, 30, ip.getFrame(environment,mode, PageName.InstitutionsPage, 30));
 				//common folder
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (!bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesToDel[0])) {
@@ -10729,7 +10730,7 @@ public class Module9 extends BaseLib{
 					Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 				appLog.info("File is upload successfully");
 				String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 				if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesCommon,false )) {
 					appLog.info("filename and status is verified successfully files present in common folder");
@@ -10748,7 +10749,7 @@ public class Module9 extends BaseLib{
 					Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 				appLog.info("File is upload successfully");
 				String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 				if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesShared,false )) {
 					appLog.info("filename and status is verified successfully files present in shared folder");
@@ -10768,7 +10769,7 @@ public class Module9 extends BaseLib{
 					Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 				appLog.info("File is upload successfully");
 				String filesStd = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 				if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesStd,false )) {
 					appLog.info("filename and status is verified successfully files present in std folder");
@@ -10798,7 +10799,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc036_VerifyApprovingDocumentsInvestors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10816,7 +10817,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section view");
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
@@ -11287,8 +11288,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M9tc036_VerifyApprovingDocumentsInvestors_Impact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc036_VerifyApprovingDocumentsInvestors_Impact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11307,7 +11308,7 @@ public class Module9 extends BaseLib{
 		//Institution
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 30));
 				
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesToDel[0], true)) {
@@ -11411,7 +11412,7 @@ public class Module9 extends BaseLib{
 		filesToDel = filesCommon.split("<break>");
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage,30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					for (int i = 0;i<filesToDel.length;i++) {
 						if (bp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.InvestorWorkspace, filesToDel[i], true)) {
@@ -11487,7 +11488,7 @@ public class Module9 extends BaseLib{
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M9Commitment1ID)) {
 				
-				switchToFrame(driver, 30, fp.getFrame(PageName.CommitmentsPage,30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					for (int i = 0;i<filesToDel.length;i++) {
 						if (bp.verifyFileinContentGrid(PageName.CommitmentsPage, Workspace.InvestorWorkspace, filesToDel[i], true)) {
@@ -11546,7 +11547,7 @@ public class Module9 extends BaseLib{
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M9LimitedPartner1)) {
 				filesToDel = filesCommon.split("<break>");
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage,30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					for (int i = 0;i<filesToDel.length;i++) {
 						if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesToDel[i], true)) {
@@ -11607,7 +11608,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc036_VerifyApprovingDocumentsInvestors_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11728,8 +11729,8 @@ public class Module9 extends BaseLib{
 		
 	}
 
-	@Test
-	public void M9tc037_VerifyOnlineImportInvestors_Action() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc037_VerifyOnlineImportInvestors_Action(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11750,9 +11751,9 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				if (fp.onlineImport(null, null, null, cmnPath, docPath, fileCommon, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, null, null, null, cmnPath, docPath, fileCommon, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+cmnPath);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesToImport[0] , false)) {
 						appLog.info(filesToImport[0] + " was successfully found on content grid");
@@ -11806,10 +11807,10 @@ public class Module9 extends BaseLib{
 				//internal
 				filesToImport = fileInternal.split("<break>");
 				switchToDefaultContent(driver);
-				if (fp.onlineImport(null, null, null, intPath, docPath, fileInternal, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, null, null, null, intPath, docPath, fileInternal, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+intPath);
 
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30),"manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 						click(driver, fp.getApprovedDocsTab(60), "approved documents tab", action.BOOLEAN);
@@ -11843,9 +11844,9 @@ public class Module9 extends BaseLib{
 				//shared
 				filesToImport = fileShared.split("<break>");
 				switchToDefaultContent(driver);
-				if (fp.onlineImport(null, null, null, shdPath, docPath, fileShared, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, null, null, null, shdPath, docPath, fileShared, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+shdPath);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesToImport[0] , false)) {
 						appLog.info(filesToImport[0] + " was successfully found on content grid");
@@ -11901,9 +11902,9 @@ public class Module9 extends BaseLib{
 				//standard
 				filesToImport = fileStandard.split("<break>");
 				switchToDefaultContent(driver);
-				if (fp.onlineImport(M9Institution1, M9LimitedPartner1, M9LimitedPartner2, stdPath, docPath, fileStandard, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
+				if (fp.onlineImport(environment, mode, M9Institution1, M9LimitedPartner1, M9LimitedPartner2, stdPath, docPath, fileStandard, BoxUserName, BoxPassword, OnlineImportFileAddTo.MultipleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("online import is done successfully for "+stdPath);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "content grid refresh button", action.SCROLLANDBOOLEAN);
 					if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace,filesToImport[0] , false)) {
 						appLog.info(filesToImport[0] + " was successfully found on content grid");
@@ -11992,8 +11993,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M9tc037_VerifyOnlineImportInvestors_Impact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M9tc037_VerifyOnlineImportInvestors_Impact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12011,7 +12012,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, ip.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesToImport[0], false)) {
 						appLog.info(filesToImport[0] + " is successfully verified on content grid folder "+cmnPath);
@@ -12137,7 +12138,7 @@ public class Module9 extends BaseLib{
 		filesToImport = filesCommon.split("<break>");
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage,30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					if (bp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.InvestorWorkspace, filesToImport[0], false)) {
 						appLog.info(filesToImport[0] + " is successfully verified on content grid folder "+cmnPath);
@@ -12234,7 +12235,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc038_VerifySearchingManageApprovalsInvestor() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12281,7 +12282,7 @@ public class Module9 extends BaseLib{
 	lp.CRMLogin(CRMUser1EmailID, adminPassword);
 	if (bp.clickOnTab(TabName.FundsTab)) {
 		if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 				if (sendKeys(driver, fp.getSearchTextboxManageApp(ManageApprovalTabs.PendingDocuments, 30), filesToSearch[0], "search box pending tabs", action.BOOLEAN)) {
 					if (click(driver, fp.getSearchIconManageApprovalsPopup(ManageApprovalTabs.PendingDocuments, 30), "pending docs manage approvals", action.SCROLLANDBOOLEAN)) {
@@ -12296,7 +12297,7 @@ public class Module9 extends BaseLib{
 						if (click(driver,fp.getSearchIconCrossButtonManageApprovals(ManageApprovalTabs.PendingDocuments,60) , "search icon cross button", action.BOOLEAN)) {
 							
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							ThreadSleep(5000);
 							List<WebElement> ele = FindElements(driver, "//span[contains(@id,'pendingGrid-cell-1')]//a", "list of file names manage approvals");
 							size = ele.size();
@@ -12693,7 +12694,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc039_OpeningOfDocsInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12705,7 +12706,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					/*if (!fp.checkVisibilityOfDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesCommon.split("<break>")[0])) {
 						click(driver, fp.getDocumentNameManageApproval(ManageApprovalTabs.PendingDocuments,60), "document name column", action.SCROLLANDBOOLEAN);
@@ -12734,7 +12735,7 @@ public class Module9 extends BaseLib{
 				}
 				driver.close();
 				driver.switchTo().window(parentID);
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				//clicking on 2nd document(shared)
 				if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesShared.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30))){
 				parentID = switchOnWindow(driver);
@@ -12758,7 +12759,7 @@ public class Module9 extends BaseLib{
 					driver.switchTo().window(parentID);
 				}
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				//click on 3rd document(standard)
 				if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.PendingDocuments, filesStandard.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30))){
 				parentID = switchOnWindow(driver);
@@ -12783,7 +12784,7 @@ public class Module9 extends BaseLib{
 				}
 				}
 				
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				ThreadSleep(5000);
 				//clicking on approved docs tab
 				if (click(driver, fp.getApprovedDocsTab(60), "approved docs tab", action.SCROLLANDBOOLEAN)) {
@@ -12809,7 +12810,7 @@ public class Module9 extends BaseLib{
 					}
 					driver.close();
 					driver.switchTo().window(parentID);
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//clicking on 2nd document(shared)
 					if(fp.clickOnDocumentManageApprovals(ManageApprovalTabs.ApprovedDocuments, filesShared.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.ApprovedDocuments, 30))){
 					parentID = switchOnWindow(driver);
@@ -12833,7 +12834,7 @@ public class Module9 extends BaseLib{
 						driver.switchTo().window(parentID);
 					}
 					}
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					//click on 3rd document(standard)
 					if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.ApprovedDocuments, filesStandard.split("<break>")[0], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.ApprovedDocuments, 30))){
 						parentID = switchOnWindow(driver);
@@ -12887,7 +12888,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc040_VerifyDuplicateDocsInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12903,7 +12904,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "check all documents checkbox", action.SCROLLANDBOOLEAN)) {
 						if (click(driver, fp.getApproveBtnManageApprovals(60), "approve button on manage approvals window", action.SCROLLANDBOOLEAN)) {
@@ -13200,7 +13201,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc041_UpdateAllAndDuplicateDoc_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13217,7 +13218,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
 					if (click(driver,fp.getCheckAllDocsManageApprovals(60), "checkbox to select all boxes", action.BOOLEAN)) {
 						//uncheck checkbox in front of 2 common files
@@ -13396,7 +13397,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc041_UpdateAllAndDuplicateDoc_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13414,7 +13415,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M9Institution1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesCommon.split("<break>")[2], true)) {
 						appLog.info(filesCommon.split("<break>")[2]+" is successfully found in content grid");
@@ -13464,7 +13465,7 @@ public class Module9 extends BaseLib{
 			}
 			if (ip.clickOnTab(TabName.ContactTab)) {
 				if (cp.clickOnCreatedContact(M9Contact1FirstName, M9Contact1LastName, null)) {
-					switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.ContactsPage, 30));
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 						if (fp.verifyFileinContentGrid(PageName.ContactsPage, Workspace.InvestorWorkspace, filesCommon.split("<break>")[2], true)) {
 							appLog.info(filesCommon.split("<break>")[2]+" is successfully found in content grid");
@@ -13528,7 +13529,7 @@ public class Module9 extends BaseLib{
 		}
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc041_UpdateAllAndDuplicateDoc_ImpactInvestor() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13629,7 +13630,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc042_VerifyManageApprovalAfterDelete() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13641,7 +13642,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30),"manage folder icon on InvestorWorkspace", action.SCROLLANDBOOLEAN)) {
 					if(!cmnPath.isEmpty() && !cmnPath.equalsIgnoreCase("Commonpath")) {
 						String id=null;
@@ -13960,7 +13961,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc043_CreateSameNameFolderAndVerifyInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13970,7 +13971,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M9FundName1)){
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
 
@@ -14067,7 +14068,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc044_UploadFilesCRMUser2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14109,7 +14110,7 @@ public class Module9 extends BaseLib{
 						appLog.error("documents could not be uploaded successfully");
 						sa.assertTrue(false, "documents could not be uploaded successfully");
 					}
-					switchToFrame(driver, 30,fp.getFrame(PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
 					//scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "fundraising workspace view");
 
 				String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -14301,7 +14302,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc045_VerifyPendingFilesDuplicateDocPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14325,7 +14326,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.verifyFolderPathdummy(cmnPath,null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 				if (click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon", action.SCROLLANDBOOLEAN)) {
 					if (fp.verifyDuplicateWindowWhileUploading(Workspace.InvestorWorkspace,null,cmnUpload, filesCommon, cmnPath,FolderType.Common, UpdateIgnore.Update)) {
@@ -14346,7 +14347,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, cmnPath+" could not be found in folder structure");
 			}
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.verifyFolderPathdummy(shdPath,null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 				if (click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon", action.SCROLLANDBOOLEAN)) {
 					if (fp.verifyDuplicateWindowWhileUploading(Workspace.InvestorWorkspace,null,shdUpload, filesShared, shdPath,FolderType.Shared, UpdateIgnore.Ignore)) {
@@ -14367,7 +14368,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, shdPath+" could not be found in folder structure");
 			}
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			for (int i = 0;i<filesShared.split("<break>").length;i++) {
 				if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace, filesShared.split("<break>")[i], false)) {
 					appLog.info("file "+filesShared.split("<break>")[i]+" is successfully found");
@@ -14407,7 +14408,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, stdPath+" could not be found in folder structure");
 			}
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 				if (selectVisibleTextFromDropDown(driver,fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "pending docs dropdown", "All Pending Documents")) {
 						for (int i = 0;i<4;i++) {
@@ -14485,7 +14486,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc046_VerifyFolderDeletedAndCountOfDocs() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14503,7 +14504,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
 				for (int i = 2;i<4;i++) {
 					if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[i], M9FundName1+" > "+cmnPath, User2first+" "+User2last, Org1FirmName, date)) {
@@ -14701,7 +14702,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc047_1_UpdateFolderNameAndVerify_InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14719,7 +14720,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 				String id=fp.getCreatedFolderId(shdPath, PageName.ManageFolderPopUp, 20);
 				if (id!=null) {
@@ -14880,7 +14881,7 @@ public class Module9 extends BaseLib{
 					appLog.error("edit button is not clickable on funds page");
 					sa.assertTrue(false, "edit button is not clickable on funds page");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.updateInvestorOrLPNameFromManageInvestor(Workspace.InvestorWorkspace, M9Institution1, M9LimitedPartner1, M9LimitedPartner1+"UP", "M9Institution1")) {
 					appLog.info("successfully updated institution1 name");
 				}
@@ -14937,7 +14938,7 @@ public class Module9 extends BaseLib{
 			}
 			if (bp.clickOnTab(TabName.FundsTab)) {
 				if (fp.clickOnCreatedFund(M9FundName1)) {
-					switchToFrame(driver,30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver,30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 						if (click(driver, fp.getPendingDocsTab(30), "pending documents manage approvals", action.SCROLLANDBOOLEAN)) {
 						
@@ -15023,7 +15024,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc047_2_RevertRenameInvestorAndFundName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15086,7 +15087,7 @@ public class Module9 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1+"NUP")) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.updateInvestorOrLPNameFromManageInvestor(Workspace.InvestorWorkspace, M9Institution1, M9LimitedPartner1+"UP",M9LimitedPartner1 , "M9Institution1")) {
 					appLog.info("successfully updated institution1 name");
 				}
@@ -15129,7 +15130,7 @@ public class Module9 extends BaseLib{
 			
 			
 			
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getInvestmentInfo(Workspace.InvestorWorkspace), "investment info link", action.SCROLLANDBOOLEAN)) {
 				if (click(driver, fp.getInvestmentInfoEdit(30), "investment info edit", action.BOOLEAN)) {
 					if (sendKeys(driver, fp.getInvestmentInfoFundNameTxtbox(30), M9FundName1, "fund name textbox", action.BOOLEAN)) {
@@ -15167,7 +15168,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test	
+	@Parameters({ "environment", "mode" }) @Test	
 	public void M9tc048_VerifySortingManageApprovalInvWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15178,7 +15179,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getApprovedDocsTab(30), "approved docs tab", action.BOOLEAN)) {
 						//uploaded on ascending
@@ -15368,7 +15369,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc049_UploadDocumentInvestorSide_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15406,7 +15407,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc049_UploadDocumentInvestorSide_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15422,7 +15423,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (fp.verifyFolderPathdummy(stdPath+"UP", M9Institution1, M9LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 				if (fp.verifyFileinContentGrid(PageName.FundsPage, Workspace.InvestorWorkspace, filesStandard,true)) {
 					appLog.info("investor side uploaded file is successfully found on content grid");
@@ -15501,7 +15502,7 @@ public class Module9 extends BaseLib{
 		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc050_VerifyRemovalAndAdditionOfInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15513,7 +15514,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 		if (fp.clickOnCreatedFund(M9FundName1)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 30), "manage investor icon", action.SCROLLANDBOOLEAN)) {
 				if (fp.selectInstitutionOrLP(M9Institution2+"/"+M9LimitedPartner2, Workspace.InvestorWorkspace, 30)) {
 					appLog.info("deselected institution,LP "+M9LimitedPartner2+" successfully");
@@ -15568,7 +15569,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M9tc051_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

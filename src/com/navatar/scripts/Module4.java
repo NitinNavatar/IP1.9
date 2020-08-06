@@ -4,6 +4,7 @@
 package com.navatar.scripts;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import static com.navatar.generic.CommonVariables.*;
 import java.awt.AWTException;
@@ -58,7 +59,7 @@ public class Module4 extends BaseLib{
 
 	public String passwordResetLink = null;
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc000_CreateCRMUser1InstallPackageAndThenCreatePassword() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -184,7 +185,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc001_VerifyErrorMsgOnNavetarInvestorAddOnsTab(){
 		LoginPageBusinessLayer lp= new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
@@ -216,7 +217,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc002_VerifyErrorMessageAfterVFPageAccess(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -302,7 +303,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc003_ProvideAccessToCRMUser1AndVerifyNIAddOn(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -385,7 +386,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc004_CheckDisclaimerUI(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -520,7 +521,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc005_PreConditionData(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
@@ -704,7 +705,7 @@ public class Module4 extends BaseLib{
 		
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
 			if(nim.createFolderTemplate("FolderTemp", folderTemplateName, "abc", 60)){	
 				appLog.info("Folder template created successfully.");
 			} else {
@@ -720,7 +721,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc006_VerifyNIAddOnAfterCreatingFund(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -855,8 +856,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M4tc007_BuildWorkspaceForF1AndVerifyNIAddOn(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc007_BuildWorkspaceForF1AndVerifyNIAddOn(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] stdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath).split(",");
@@ -975,7 +976,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc007_BuildWorkspaceForF1AndVerifyNIAddOnCheckImpact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -1110,7 +1111,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc008_VerifyFunctionalityOfNewDisclaimerButtonAndErrorMsg(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -1418,7 +1419,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc009_VerifyDisclaimerNameLink(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -1493,7 +1494,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc010_VerifyViewLinkPopUpUIAndDownloadReport(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -1673,7 +1674,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc011_VerifyActivationOfADisclaimerAndItsImpact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -1905,7 +1906,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc012_VerifyPendingDisclaimerAtInvestorFirmHomeAllDocumentPage(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2202,7 +2203,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc013_VerifyPendingDisclaimerPopAtFirmPageAllDocument(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2312,7 +2313,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc014_VerifyPendingDisclaimerPopAtFirmPageRecentActivities(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2427,7 +2428,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc015_VerifyPendingDisclaimerPopUpOnFirmPage(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2625,7 +2626,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc016_VerifyPendingDisclaimerPopAtAllFirm(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2808,7 +2809,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc017_VerifyPendingDisclaimerPopAtPotentialInvestmentWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2946,7 +2947,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownload(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -3121,7 +3122,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownloadCheckImpactCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -3173,7 +3174,7 @@ public class Module4 extends BaseLib{
 		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc019_VerifyAccessDeniedPopUpForFilesUploadedByInvestor(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -3300,8 +3301,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 }
 
-	@Test
-	public void M4tc020_VerifyDeactivateDisclaimer() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc020_VerifyDeactivateDisclaimer(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -3713,8 +3714,8 @@ public class Module4 extends BaseLib{
 
 	}
 	
-	@Test
-	public void M4tc026_CreateBothWorkspaceForFund2AndVerifySelectFundPicklist() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc026_CreateBothWorkspaceForFund2AndVerifySelectFundPicklist(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4125,7 +4126,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc027_CreateDisclaimerForFund2AndActivateItAndVerifyItsImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -4255,7 +4256,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc027_CreateDisclaimerForFund2AndActivateItAndVerifyItsImpactOnInvestorside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -4431,7 +4432,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc028_VerifyPendingDisclaimerFromBothInvestmentPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4637,7 +4638,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc029_AcceptDisclaimerForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4789,7 +4790,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc030_RemoveCompleteAccessForContact1AndContact2ForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4801,7 +4802,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundRaising View.");
 				if (fp.verifyFolderPathdummy(stdPath[0], M4I1, null, M4F2, PageName.FundsPage,
@@ -4841,7 +4842,7 @@ public class Module4 extends BaseLib{
 					sa.assertTrue(false, "Folder structure is not verified");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (fp.verifyFolderPathdummy(stdPath[0], M4I3, M4LP1, M4F2, PageName.FundsPage,
@@ -4894,7 +4895,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc030_RemoveCompleteAccessForContact1AndContact2ForFund2AndVerifyNavatarInvestorAddOnsTab() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -5027,8 +5028,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M4tc031_AgainInviteSameContactsForFund2() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc031_AgainInviteSameContactsForFund2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5108,7 +5109,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc031_AgainInviteSameContactsForFund2andCheckImpactatContact1InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5179,7 +5180,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc031_AgainInviteSameContactsForFund2andCheckImpactatContact2InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5244,7 +5245,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc031_AgainInviteSameContactsForFund2andCheckImpactatAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -5377,7 +5378,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc032_ManageInvestorsForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5387,7 +5388,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundRaising View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage investor icon",
@@ -5395,10 +5396,10 @@ public class Module4 extends BaseLib{
 					ele = FindElement(driver, "//div[@title='" + M4I1 + "']/../..//input", "Institution 1 checkbox",
 							action.SCROLLANDBOOLEAN, 60);
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (click(driver, ele, "Institution1 checkbox", action.BOOLEAN)) {
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						scrollDownThroughWebelement(driver,
 								fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 								"FundraisingWorkspace View.");
@@ -5406,14 +5407,14 @@ public class Module4 extends BaseLib{
 								fp.getManageInvestorDeletedPopupCloseButton(Workspace.FundraisingWorkspace, 60),
 								"Manage Investor Deleted popup Close Button", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									"FundraisingWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
 									"Fundraising workspace", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 										"FundraisingWorkspace View.");
@@ -5442,13 +5443,13 @@ public class Module4 extends BaseLib{
 					sa.assertTrue(false, "Not able to click on manage investor icon");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
 						action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							"InvestorWorkspace View.");
 					if (click(driver, fp.getLimitedPartnerCheckBox(M4I3, M4LP1, Workspace.InvestorWorkspace, 60),
@@ -5456,14 +5457,14 @@ public class Module4 extends BaseLib{
 						if (click(driver, fp.getManageInvestorDeletedPopupCloseButton(Workspace.InvestorWorkspace, 60),
 								"Manage Investor Deleted popup Close Button", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									"InvestorWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.InvestorWorkspace, 60),
 									"Invetsor workspace", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 										"InvestorWorkspace View.");
@@ -5503,7 +5504,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc032_ManageInvestorsForFund2AndCheckImpactOnAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -5636,8 +5637,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M4tc033_ManageInvestorsForFund2AndInviteContacts() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc033_ManageInvestorsForFund2AndInviteContacts(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5677,13 +5678,13 @@ public class Module4 extends BaseLib{
 					sa.assertTrue(false, "Not able to provide access to contact '" + M4CFN2 + " " + M4CLN2 + "'.");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						"InvestorWorkspace View.");
 				if (click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Manage Investor Icon",
 						action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							"InvestorWorkspace View.");
 					if (click(driver, fp.getLimitedPartnerCheckBox(M4I3, M4LP1, Workspace.InvestorWorkspace, 60),
@@ -5691,14 +5692,14 @@ public class Module4 extends BaseLib{
 						if (click(driver, fp.getManageInvestorAddedPopupCloseButton(Workspace.InvestorWorkspace, 60),
 								"Manage Investor added popup Close Button", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver,
 									fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									"InvestorWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.InvestorWorkspace, 60),
 									"Investor workspace", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
 										fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 										"InvestorWorkspace View.");
@@ -5771,7 +5772,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc033_ManageInvestorsForFund2AndInviteContactsAndCheckImpactAtContact1Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5842,7 +5843,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc033_ManageInvestorsForFund2AndInviteContactsAndCheckImpactAtContact2Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5907,7 +5908,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc033_ManageInvestorsForFund2AndInviteContactsAndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -6040,7 +6041,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc021_verifyActivatDisclaimerAndAccept() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -6424,7 +6425,7 @@ public class Module4 extends BaseLib{
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc022_CreateDisclaimerAndVerfiyImpact() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6704,7 +6705,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc023_ActivateDisclaimerForFundAndVerifyImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -6975,7 +6976,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc024_VerifyStatusPicklistAndSearchResult() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -7575,7 +7576,7 @@ public class Module4 extends BaseLib{
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc025_VerifyLinksDisclaimerStatisticsPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -7692,7 +7693,7 @@ public class Module4 extends BaseLib{
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc034_CloseWorkspaceForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -7702,7 +7703,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (fp.closeWorkSpace(Workspace.FundraisingWorkspace, 60)) {
@@ -7711,7 +7712,7 @@ public class Module4 extends BaseLib{
 					appLog.info("Not able to close fundraising workspace");
 					sa.assertTrue(false, "Not able to click on close workspace");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (fp.closeWorkSpace(Workspace.InvestorWorkspace, 60)) {
@@ -7861,8 +7862,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M4tc035_AgainInviteContactsForFund2() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc035_AgainInviteContactsForFund2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7914,7 +7915,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc035_AgainInviteContactsForFund2AndCheckImpactAtContact1InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -7985,7 +7986,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc035_AgainInviteContactsForFund2AndCheckImpactAtContact2InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8050,7 +8051,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc035_AgainInviteContactsForFund2AndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8185,7 +8186,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc036_ClearWorkspaceForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8195,7 +8196,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Section view");
 				if (fp.clearWorkSpace(Workspace.FundraisingWorkspace, 60)) {
@@ -8204,7 +8205,7 @@ public class Module4 extends BaseLib{
 					appLog.info("Not able to clear fundraising workspace");
 					sa.assertTrue(false, "Not able to clear workspace");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor Section view");
 				if (fp.clearWorkSpace(Workspace.InvestorWorkspace, 60)) {
@@ -8254,7 +8255,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc037_CreateWorkspaceForFund2AndVerifySelectFundPicklist() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8396,8 +8397,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M4tc038_AgainInviteContactsForFund2AndAlsoVerifySearchingOfNonRegisteredContact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc038_AgainInviteContactsForFund2AndAlsoVerifySearchingOfNonRegisteredContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8442,7 +8443,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc038_AgainInviteContactsForFund2AndAndCheckImpactAtContact1Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8513,7 +8514,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc038_AgainInviteContactsForFund2AndAndCheckImpactAtContact2Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8578,7 +8579,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc038_AgainInviteContactsForFund2AndAndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8630,7 +8631,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc039_DeleteInvitedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8641,7 +8642,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 20), "manage folder icon",
 						action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage foler icon");
@@ -8696,7 +8697,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc039_DeleteInvitedFolderAndCheckImpactAtAdminUserside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8812,8 +8813,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M4tc040_CreateFolderAndInviteContacts() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc040_CreateFolderAndInviteContacts(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8824,7 +8825,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				switchToFrame(driver, 60, fp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 60, fp.getFrame( PageName.FundsPage, 60));
 				if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 20), "manage folder icon",
 						action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage foler icon");
@@ -8875,7 +8876,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc040_CreateFolderAndInviteContactsAndCheckImpactAtContact1Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8946,7 +8947,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc040_CreateFolderAndInviteContactsAndCheckImpactAtContact2Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -9011,7 +9012,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc040_CreateFolderAndInviteContactsAndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9127,7 +9128,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc041_RemoveContactAccessFromContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -9137,7 +9138,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M4CFN1, M4CLN1, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Workspace Section view");
 				if (click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60),
@@ -9150,7 +9151,7 @@ public class Module4 extends BaseLib{
 							ThreadSleep(5000);
 							switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 							driver.switchTo().window(ParentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+							switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 							scrollDownThroughWebelement(driver,
 									bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 									"Fundraising Workspace Section view");
@@ -9199,7 +9200,7 @@ public class Module4 extends BaseLib{
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M4CFN2, M4CLN2, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Workspace Section view");
 				if (click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60),
@@ -9212,7 +9213,7 @@ public class Module4 extends BaseLib{
 							ThreadSleep(5000);
 							switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 							driver.switchTo().window(ParentID);
-							switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+							switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 							scrollDownThroughWebelement(driver,
 									bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 									"Fundraising Workspace Section view");
@@ -9264,7 +9265,7 @@ public class Module4 extends BaseLib{
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc041_RemoveContactAccessFromContactDetailPageAndCheckImpactAtAdminUserside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9381,7 +9382,7 @@ public class Module4 extends BaseLib{
 	}
 
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc046_VerifySortingInDisclaimerGrid(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9520,7 +9521,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc047_VerifySortingInDisclaimerGrid(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9681,7 +9682,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc048_PreconditionOrg2(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer inst = new InstitutionPageBusinessLayer(driver);
@@ -9741,8 +9742,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M4tc049_BuildFundraisingWorkspaceAndCreateDisclaimer() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc049_BuildFundraisingWorkspaceAndCreateDisclaimer(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(Org2CRMUser1EmailID, adminPassword);
@@ -9836,7 +9837,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc049_BuildFundraisingWorkspaceAndCreateDisclaimerCheckImpactInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M4C2Email, adminPassword);
@@ -9959,8 +9960,8 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M4tc042_InviteContacts() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc042_InviteContacts(String environment, String mode) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9971,7 +9972,7 @@ public class Module4 extends BaseLib{
 			if (fp.clickOnCreatedFund(M4F2)) {
 				scrollDownThroughWebelement(driver, fp.getFundRaisingWorkSpaceSection(60),
 						"fundrasing workspace section");
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.inviteContact(environment, mode, M4I2, M4C1Email, stdPath, FolderType.Standard, "upload", "Yes",
 						"no", "Standard", Workspace.FundraisingWorkspace, M4C1Email)) {
 					appLog.info("contact is invited for fundraising workspace successfully :" + M4CFN1 + " " + M4CLN1);
@@ -10256,7 +10257,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc043_UpdateContactEmailidAndVerifyErrorMessage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -10659,7 +10660,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc044_UpdateInformationFromInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifpb = new InvestorFirmPageBusinesslayer(driver);
@@ -10793,7 +10794,7 @@ public class Module4 extends BaseLib{
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M4tc045_UpdateInvestmentAndFirmInformationAndVerifyItsImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10839,7 +10840,7 @@ public class Module4 extends BaseLib{
 		}
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getFundRaisingWorkSpaceSection(60),
 						"fundraising workspace section");
 				if (click(driver, fp.getInvestmentInfo(Workspace.FundraisingWorkspace), "Investment info",
@@ -10899,7 +10900,7 @@ public class Module4 extends BaseLib{
 				excelLabel.Updated_FirmName);*/
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (np.clickOnEditIcon()) {
 					if (sendKeys(driver, np.getMyFirmProfileNameTextBox(60), Org3UpdatedFirmName, "firm name textbox",
@@ -11064,7 +11065,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-//	@Test
+//	@Parameters({ "environment", "mode" }) @Test
 //	public void M4tc050PostConditionForAll() {
 //		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 //		lp.CRMLogin(superAdminOrg3UserName, adminPassword);

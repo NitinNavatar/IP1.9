@@ -18,6 +18,7 @@ import static com.navatar.generic.CommonLib.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import static com.navatar.generic.AppListeners.appLog;
 import com.navatar.generic.ExcelUtils;
@@ -67,7 +68,7 @@ import com.sun.mail.util.BASE64DecoderStream;
  */
 public class Module12 extends BaseLib {
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc001_CreatePreconditionDataFromSheet() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -247,7 +248,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc002_VerifyAlertsGridAtCRMHomePage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -255,8 +256,8 @@ public class Module12 extends BaseLib {
 		SoftAssert sa = new SoftAssert();
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
 		ThreadSleep(5000);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 //		String errMsg = hp.getErrorMessage(60).getText().trim();
 //		if (errMsg.equalsIgnoreCase(HomePageErrorMessage.nodataToDisplayErroMessage)) {
 //			appLog.info("Message Matched : " + HomePageErrorMessage.nodataToDisplayErroMessage);
@@ -273,7 +274,7 @@ public class Module12 extends BaseLib {
 			appLog.info("Navatar Investor Activities grid is not displaying");
 			sa.assertTrue(false, "Navatar Investor Activities grid is not displaying");
 		}
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (hp.getHeadingOfHomeAlert(60).getText().trim().equalsIgnoreCase("Alerts")) {
 			appLog.info("Heading is displaying as Alerts");
 		} else {
@@ -388,8 +389,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
-	public void M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -467,7 +468,7 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Not able to provide access to contact '" + M12Contact1FirstName + " "
 							+ M12Contact1LastName + "'.");
 				}
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.sendInvitationMail(Workspace.FundraisingWorkspace, M12Contact1EmailId, "All Folders",
 						M12Contact1LastName)) {
 					appLog.info("contact " + M12Contact1LastName + " has been sent email for invitation");
@@ -546,13 +547,13 @@ public class Module12 extends BaseLib {
 					appLog.error("Not able to upload files in '" + intPath[1] + "'");
 					saa.assertTrue(false, "Not able to upload files in '" + intPath[1] + "'");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					saa = fp.verifyALertHistoryUI(Workspace.FundraisingWorkspace);
@@ -579,13 +580,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, cp.getContactsTab(60), "Contact tab");
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					saa = fp.verifyALertHistoryUI(Workspace.FundraisingWorkspace);
@@ -615,7 +616,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc004_1_RegisterContact1UpdateMyProfileMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -918,7 +919,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc004_2_VerifyAlertAtCRMHomePage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -927,8 +928,8 @@ public class Module12 extends BaseLib {
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		SoftAssert sa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (hp.verifyAlertOnHomePage("Firm Profile Updated", null, null, null, M12Contact1UpdatedFirmName,
 				M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName, "date")) {
 			appLog.info("Grid data is veririfed for" + "Firm Profile Updated alert for contact"
@@ -962,13 +963,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 
@@ -1023,13 +1024,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact1UpdatedFirmName,
@@ -1085,7 +1086,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc005_VerifyFirmProfileUpdatedPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1097,8 +1098,8 @@ public class Module12 extends BaseLib {
 				+ M12Contact1IndustryDropdown + "<break>" + M12Contact1MaxInvestment + "<break>"
 				+ M12Contact1MinInvestment;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated",
 				M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName)) {
 			appLog.info("Clicked on activity type");
@@ -1232,13 +1233,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated",
@@ -1376,7 +1377,7 @@ public class Module12 extends BaseLib {
 						appLog.info("Not able to click on activity type");
 						sa.assertTrue(false, "Not able to click on activity type");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (click(driver,
@@ -1416,13 +1417,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (new ContactPageBusinessLayer(driver).clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (bp.clickOnActiivityTypeLinkBasedOnContact("Firm Profile Updated",
@@ -1563,7 +1564,7 @@ public class Module12 extends BaseLib {
 						appLog.info("Not able to click on activity type");
 						sa.assertTrue(false, "Not able to click on activity type");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (click(driver, bp.getFirmProfileUpdateCloseButton(Workspace.FundraisingWorkspace,
@@ -1604,7 +1605,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc006_VerifyContactProfileUpdatedPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1616,8 +1617,8 @@ public class Module12 extends BaseLib {
 				+ M12Contact1MailingStreet + "<break>" + M12Contact1MailingZip + "<break>" + M12Contact1Phone
 				+ "<break>" + M12Contact1Title + "";
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",
 				M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName)) {
 			appLog.info("Clicked on activity type");
@@ -1759,13 +1760,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",
@@ -1918,7 +1919,7 @@ public class Module12 extends BaseLib {
 						appLog.info("Not able to click on activity type");
 						sa.assertTrue(false, "Not able to click on activity type");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (click(driver,
@@ -1958,13 +1959,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (new ContactPageBusinessLayer(driver).clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated",
@@ -2118,7 +2119,7 @@ public class Module12 extends BaseLib {
 						appLog.info("Not able to click on activity type");
 						sa.assertTrue(false, "Not able to click on activity type");
 					}
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (click(driver, bp.getContactProfileUpdateCloseButton(Workspace.FundraisingWorkspace,
@@ -2159,7 +2160,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc007_1_RegisterContact2UpdateMyProfileMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2462,7 +2463,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc007_2_verifyContactProfileUpdatedAndFirmProfileUpdatedAlertAtCRMHomePage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2471,8 +2472,8 @@ public class Module12 extends BaseLib {
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		SoftAssert sa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (hp.verifyAlertOnHomePage("Firm Profile Updated", null, null, null, M12Contact2UpdatedFirmName,
 				M12Contact2UpdatedFirstName + " " + M12Contact2UpdatedLastName, "date")) {
 			appLog.info("Grid data is veririfed for" + "Firm Profile Updated alert for contact"
@@ -2526,13 +2527,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 
@@ -2607,13 +2608,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact2UpdatedFirmName,
@@ -2669,7 +2670,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc008_1_ViewDownloadDocumentFromAllFirms() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2803,7 +2804,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc008_2_verifyDocumentViewedDocumentDownloadedAlertAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2821,8 +2822,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(CommonDocument.length>1){
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1, "Fundraising",
 				CommonDocument[1], M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
@@ -2932,13 +2933,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -3068,13 +3069,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -3206,7 +3207,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc009_1_ViewDownloadDocumentFromPEFirmAllDocuments() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3335,7 +3336,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc009_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -3353,8 +3354,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(CommonDocument.length>1){
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1, "Fundraising",
 				CommonDocument[0], M12Contact2UpdatedFirstName + " " + M12Contact2UpdatedLastName,
@@ -3464,13 +3465,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -3600,13 +3601,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -3738,7 +3739,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc010_1_ViewDownloadDocumentFromPEFirmRecentDocuments() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3873,7 +3874,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc010_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -3891,8 +3892,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(CommonDocument.length>1){
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1, "Fundraising",
 				CommonDocument[3], M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
@@ -4003,13 +4004,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -4139,13 +4140,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -4277,7 +4278,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc011_1_ViewDownloadDocumentFromPEFirmPotentialInvestment(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4435,7 +4436,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc011_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4453,8 +4454,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(CommonDocument.length>1){
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1, "Fundraising",
 				CommonDocument[2], M12Contact2UpdatedFirstName + " " + M12Contact2UpdatedLastName,
@@ -4564,13 +4565,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -4700,13 +4701,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -4838,8 +4839,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 
-	@Test
-	public void M12tc012_CreateFundraisingWorkspaceForFund2AndInviteSameContact(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc012_CreateFundraisingWorkspaceForFund2AndInviteSameContact(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4971,7 +4972,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc013_1_ViewDownloadDocumentsFromInvestorSideForFund2(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5101,7 +5102,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc013_2_VerifyCreatedAlertsAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5119,8 +5120,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc012_CreateFundraisingWorkspaceForFund2AndInviteSameContact",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(CommonDocument.length>1){
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName2, "Fundraising",
 				CommonDocument[0], M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
@@ -5230,13 +5231,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName2)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -5366,13 +5367,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -5504,7 +5505,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc014_1_UploadDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5568,7 +5569,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc014_2_VerifyDocumentUploadedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5580,8 +5581,8 @@ public class Module12 extends BaseLib {
 		String StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc014_1_UploadDocumentFromInvestorSide",
 				excelLabel.UploadedFileStandard);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Uploaded", M12FundName1, "Fundraising",
 				StandardDocument, M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
 				M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -5606,13 +5607,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 
@@ -5658,13 +5659,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Uploaded", null, null,
@@ -5711,7 +5712,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc015_1_UpdateDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5766,7 +5767,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc015_2_VerifyDocumentUpdatedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5778,8 +5779,8 @@ public class Module12 extends BaseLib {
 		String StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc014_1_UploadDocumentFromInvestorSide",
 				excelLabel.UploadedFileStandard);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Updated", M12FundName1, "Fundraising",
 				StandardDocument, M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
 				M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -5804,13 +5805,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 
@@ -5856,13 +5857,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Updated", null, null,
@@ -5909,7 +5910,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc016_VerifyFundDocumentContactHyperlinkInAlerts(){
 	LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -5921,24 +5922,24 @@ public class Module12 extends BaseLib {
 	String StandardFilePath[]=ExcelUtils.readData("filepath", excelLabel.TestCases_Name, "M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage", excelLabel.UploadedFileStandard).split("<break>");
 	SoftAssert sa =new SoftAssert();
 	lp.CRMLogin(CRMUser1EmailID, adminPassword);
-	scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-	switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+	scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+	switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 		if(bp.clickOnfundNameInAlert(M12FundName1, hp.getHomeAlertScrollBox(60))){
 			appLog.info("Fund page is opening");			
 		}else{
 			appLog.info("Fund PAge is not opening");
 			sa.assertTrue(false,"Fund PAge is not opening");
 		}
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 		if(bp.clickOnContactNameInAlert(M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60),Workspace.FundraisingWorkspace)){
 			appLog.info("Contact page is opening");			
 		}else{
 			appLog.info("Contact Page is not opening");
 			sa.assertTrue(false,"Contact Page is not opening");
 		}
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));	
 		if(bp.clickOnDocumentNameInAlert(commonFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 				String ParentID = switchOnWindow(driver);
 				if (ParentID != null) {
@@ -5959,8 +5960,8 @@ public class Module12 extends BaseLib {
 			appLog.info("Document Page is not opening");
 			sa.assertTrue(false,"Document Page is not opening");
 		}
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));	
 		if(bp.clickOnDocumentNameInAlert(SharedFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 			String ParentID = switchOnWindow(driver);
 			if (ParentID != null) {
@@ -5981,8 +5982,8 @@ public class Module12 extends BaseLib {
 			appLog.info("Document Page is not opening");
 			sa.assertTrue(false,"Document Page is not opening");
 		}
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));	
 		if(bp.clickOnDocumentNameInAlert(StandardFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 			String ParentID = switchOnWindow(driver);
 			if (ParentID != null) {
@@ -6006,8 +6007,8 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 				if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 					if(bp.clickOnContactNameInAlert(M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName,bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace)){
 						appLog.info("Contact page is opening");			
@@ -6015,8 +6016,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Contact Page is not opening");
 						sa.assertTrue(false,"Contact Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 					if(bp.clickOnDocumentNameInAlert(commonFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 						String ParentID = switchOnWindow(driver);
 						if (ParentID != null) {
@@ -6037,8 +6038,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Document Page is not opening");
 						sa.assertTrue(false,"Document Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 					if(bp.clickOnDocumentNameInAlert(SharedFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 						String ParentID = switchOnWindow(driver);
 						if (ParentID != null) {
@@ -6059,8 +6060,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Document Page is not opening");
 						sa.assertTrue(false,"Document Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 					if(bp.clickOnDocumentNameInAlert(StandardFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 						String ParentID = switchOnWindow(driver);
 						if (ParentID != null) {
@@ -6081,8 +6082,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Document Page is not opening");
 						sa.assertTrue(false,"Document Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));		
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));		
 					if (click(driver, fp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 60),
 							"Alert history cross icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on alert history cross icon");
@@ -6105,8 +6106,8 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 				if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 					if(bp.clickOnContactNameInAlert(M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName,bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace)){
 						appLog.info("Contact page is opening");			
@@ -6114,8 +6115,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Contact Page is not opening");
 						sa.assertTrue(false,"Contact Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 					if(bp.clickOnDocumentNameInAlert(commonFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.ContactsPage, null, null)){
 						String ParentID = switchOnWindow(driver);
 						if (ParentID != null) {
@@ -6136,8 +6137,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Document Page is not opening");
 						sa.assertTrue(false,"Document Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 					if(bp.clickOnDocumentNameInAlert(SharedFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.ContactsPage, null, null)){
 						String ParentID = switchOnWindow(driver);
 						if (ParentID != null) {
@@ -6158,8 +6159,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Document Page is not opening");
 						sa.assertTrue(false,"Document Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 					if(bp.clickOnDocumentNameInAlert(StandardFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.ContactsPage, null, null)){
 						String ParentID = switchOnWindow(driver);
 						if (ParentID != null) {
@@ -6180,8 +6181,8 @@ public class Module12 extends BaseLib {
 						appLog.info("Document Page is not opening");
 						sa.assertTrue(false,"Document Page is not opening");
 					}
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));		
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));		
 					if (click(driver, fp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 60),
 							"Alert history cross icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on alert history cross icon");
@@ -6206,15 +6207,15 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc017_VerifyShowPicklistAtHomePage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
 		SoftAssert sa =new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropdown", "All Except Profile Updates")){
 			if(bp.verifyAlerts("Contact Profile Updated",hp.getHomeAlertScrollBox(60))){
 				appLog.info("Contact Profile Updated alerts are displaying");
@@ -6309,7 +6310,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc018_VerifyShowPicklistAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6318,12 +6319,12 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M12FundName1)){
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropdown", "All Except Profile Updates")){
 				if(bp.verifyAlerts("Contact Profile Updated",fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60))){
 					appLog.info("Contact Profile Updated alerts are displaying");
@@ -6437,7 +6438,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc019_VerifyShowPicklistAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6447,12 +6448,12 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)){
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropdown", "All Except Profile Updates")){
 				if(bp.verifyAlerts("Contact Profile Updated",fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60))){
 					appLog.info("Contact Profile Updated alerts are displaying");
@@ -6567,15 +6568,15 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc020_VerifySortingAtHomePage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
 		SoftAssert saa=new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 		if(bp.getDateSortIcon(60)!=null){
 			appLog.info("By dafault sort icon is dispalying at date label");
 		}else{
@@ -6636,7 +6637,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc021_VerifySortingAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6645,19 +6646,19 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 				saa=bp.verifySortingOnAllPagesInALert(PageName.FundsPage, Workspace.FundraisingWorkspace);
 				sa.combineAssertions(saa);
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropdown", "Document Viewed")){
@@ -6678,7 +6679,7 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to select show dropdown value ");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver,fp.getAlertHistoryPopupRangeDropdown(Workspace.FundraisingWorkspace, 60), "Range dropdown", "All Time")){
@@ -6723,7 +6724,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc022_VerifySortingAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6733,19 +6734,19 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 				saa=bp.verifySortingOnAllPagesInALert(PageName.ContactsPage, Workspace.FundraisingWorkspace);
 				sa.combineAssertions(saa);
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropdown", "Document Viewed")){
@@ -6766,7 +6767,7 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to select show dropdown value ");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver,fp.getAlertHistoryPopupRangeDropdown(Workspace.FundraisingWorkspace, 60), "Range dropdown", "All Time")){
@@ -6812,15 +6813,15 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc023_VerifySortingInContactProfileUpdatedFirmProfileUpdatedPopUpFromHomePage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer	hp=new HomePageBusineesLayer(driver);
 		SoftAssert saa=new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 		if(bp.clickOnActiivityTypeLinkBasedOnContact("Contact Profile Updated", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName)){
 			if(isDisplayed(driver, bp.getFieldLabelSortIconOnProfileUpdatedPopupAlert(60), "Visibility", 20, "field Label Sort Icon On Profile Updated Popup Alert ")!=null){
@@ -6876,7 +6877,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc024_VerifySortingInContactProfileUpdatedFirmProfileUpdatedPopUpFromFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6885,13 +6886,13 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
@@ -6919,7 +6920,7 @@ public class Module12 extends BaseLib {
 						saa.assertTrue(false, "Not able to select value from the show dropdown");
 					}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
@@ -6971,7 +6972,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc025_VerifySortingInContactProfileUpdatedFirmProfileUpdatedPopUpFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6981,13 +6982,13 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
@@ -7015,7 +7016,7 @@ public class Module12 extends BaseLib {
 						saa.assertTrue(false, "Not able to select value from the show dropdown");
 					}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
@@ -7067,7 +7068,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();			
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc026_DeleteContactUpdateEmailIdOfContactAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -7084,7 +7085,7 @@ public class Module12 extends BaseLib {
 					appLog.info("click on save button");
 					if(cp.getEmailIdViewMode(60).getText().trim().contains("test@gmail.com")){
 						appLog.info("Email id get changed successfully");
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 								Workspace.FundraisingWorkspace.toString() + " View.");
 						if (bp.verifyErrorMessageOnPage(
@@ -7151,8 +7152,8 @@ public class Module12 extends BaseLib {
 		saa.assertTrue(false, "Not able to click on contact tab");
 	}
 	if(bp.clickOnTab(TabName.HomeTab)){
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));	
 		//List<WebElement> ele=BaseLib.edriver.findElements(By.cssSelector("a[title='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']"));
 		List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
 		//if(click(driver, ele.get(0), "Contact1 name", action.SCROLLANDBOOLEAN)){
@@ -7265,13 +7266,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);	
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
@@ -7457,7 +7458,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	} 
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc027_DeleteDocumentFromCRMSideAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -7477,7 +7478,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 		if(fp.verifyFolderPathdummy(CommonfolderPath, null, null, M12FundName1, PageName.FundsPage, Workspace.FundraisingWorkspace, 60)){
@@ -7523,8 +7524,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));	
 			if(bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1, "Fundraising",CommonDocument[1],  M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")){
 				appLog.info("Document Viewed Alert is displaying for doc:"+CommonDocument[1]);				
 			}else{
@@ -7581,8 +7582,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document");
 				saa.assertTrue(false, "Not able to click on document");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(SharedDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 				String ParentID = switchOnWindow(driver);
 				if (ParentID != null) {
@@ -7603,8 +7604,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document");
 				saa.assertTrue(false, "Not able to click on document");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(StandardDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 				String ParentID = switchOnWindow(driver);
 				if (ParentID != null) {
@@ -7632,13 +7633,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(bp.verifyDocumentAlerts(PageName.FundsPage, "Document Viewed", null, null,CommonDocument[1],  M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, M12Contact1UpdatedFirmName,fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60),"Date")){
@@ -7697,7 +7698,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(SharedDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
@@ -7720,7 +7721,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(StandardDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
@@ -7743,7 +7744,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
@@ -7767,13 +7768,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,CommonDocument[1],  M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, M12Contact1UpdatedFirmName,fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60),"Date")){
@@ -7832,7 +7833,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(SharedDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
@@ -7855,7 +7856,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(StandardDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
@@ -7878,7 +7879,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
@@ -7904,7 +7905,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc028_1_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeleteddocument(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -8037,15 +8038,15 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc028_2_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeleteddocument(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.matchALertRecordCOunt(
 				ExcelUtils.readData("FilePath", excelLabel.TestCases_Name,
 						"M2tc025_CheckValuesInSelectboxesFirmProfilePage", excelLabel.HomePageAlertCount),
@@ -8059,13 +8060,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 				if (bp.matchALertRecordCOunt(
@@ -8099,13 +8100,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 				if (bp.matchALertRecordCOunt(
@@ -8141,7 +8142,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc029_UpdateDocumentFromCRMSideAndVerifyOpeningOfUpdatedDocumentFromAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -8159,11 +8160,11 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");	
 				if(fp.updateFile(CommonPath, CommonfileName, null, null, FolderType.Common,System.getProperty("user.dir")+"//UploadFiles/Module12/FWR/ExistingUpdate/Common//"+update_fileName[0], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");	
 					if (click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "refresh button on content grid", action.SCROLLANDBOOLEAN)) {
@@ -8184,7 +8185,7 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Common folder  file is not updated");
 				}
 						if(fp.updateFile(shdPath, SharedfileName, null, null, FolderType.Shared,System.getProperty("user.dir")+"//UploadFiles/Module12/FWR/ExistingUpdate/Shared//"+update_fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									Workspace.FundraisingWorkspace.toString() + " View.");	
 							if (click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "refresh button on content grid", action.SCROLLANDBOOLEAN)) {
@@ -8205,7 +8206,7 @@ public class Module12 extends BaseLib {
 							saa.assertTrue(false, "Shared folder  file is not updated");
 						}
 						if(fp.updateFile(StdPath, StandardfileName, M12Institution1, null, FolderType.Standard,System.getProperty("user.dir")+"//UploadFiles/Module12/FWR/ExistingUpdate/Standard//"+update_fileName[2], multiInstance.AllInvestor, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									Workspace.FundraisingWorkspace.toString() + " View.");	
 							if (click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30), "refresh button on content grid", action.SCROLLANDBOOLEAN)) {
@@ -8235,8 +8236,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);		
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(CommonfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -8328,8 +8329,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(SharedfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -8421,8 +8422,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(StandardfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1, "Fundraising")){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -8521,8 +8522,8 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				if(bp.clickOnDocumentNameInAlert(CommonfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
@@ -8615,8 +8616,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(bp.clickOnDocumentNameInAlert(SharedfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -8708,8 +8709,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(bp.clickOnDocumentNameInAlert(StandardfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -8801,8 +8802,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}		
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
 				appLog.info("Clicked on alert history cross icon");
 			}else{
@@ -8824,8 +8825,8 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				if(bp.clickOnDocumentNameInAlert(CommonfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.ContactsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
@@ -8918,8 +8919,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(bp.clickOnDocumentNameInAlert(SharedfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.ContactsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -9011,8 +9012,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(bp.clickOnDocumentNameInAlert(StandardfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -9104,8 +9105,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}		
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
 				appLog.info("Clicked on alert history cross icon");
 			}else{
@@ -9129,7 +9130,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc030_1_VerifyDocumentiewedDocumentDownloadedAertForUpdatedFile(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9245,7 +9246,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 		}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc030_2_VerifyDocumentAlertForUpdatedFileAndCheckImpactCRMSIde(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -9255,8 +9256,8 @@ public class Module12 extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		String[] update_fileName = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, "M12tc029_UpdateDocumentFromCRMSideAndVerifyOpeningOfUpdatedDocumentFromAlerts", excelLabel.KeyWord_For_Search).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1, "Fundraising",
 				update_fileName[0], M12Contact2UpdatedFirstName + " " + M12Contact2UpdatedLastName,
 				M12Contact2UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -9336,13 +9337,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 
@@ -9443,13 +9444,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						Workspace.FundraisingWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,
@@ -9551,7 +9552,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc031_UpdateContactNameAndAccountNameFromCRMSideAndVerifyAlerts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9652,8 +9653,8 @@ public class Module12 extends BaseLib {
 							appLog.info("Not able to click on edit button");
 							sa.assertTrue(false, "Not able to click on edit icon");				
 						}
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if (click(driver, fp.getInvestmentInfo(Workspace.FundraisingWorkspace), "Investment info",
 						action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getInvestmentInfoEdit(60), "investment info edit button",
@@ -9703,8 +9704,8 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			ThreadSleep(2000);
 			SoftAssert saa1=bp.verifyUpdatedNameinALerts(PageName.HomePage, M12FundName1+"UP",columnName.fundName, null);
 			sa.combineAssertions(saa1);	
@@ -9727,13 +9728,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Home Page alert Frame");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Home Page alert Frame");
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					ThreadSleep(2000);
 					WebElement ele =FindElement(driver, "//span[text()='Contact']", "contact column", action.SCROLLANDBOOLEAN, 30);
 					if(click(driver, ele, "", action.BOOLEAN));
@@ -9760,13 +9761,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP",M12Contact1LastName+"LNNP", null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					ThreadSleep(2000);
 					WebElement ele =FindElement(driver, "//span[text()='Contact']", "contact column", action.SCROLLANDBOOLEAN, 30);
 					if(click(driver, ele, "", action.BOOLEAN));
@@ -9794,7 +9795,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}	
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc032_VerifyRemovalOfContactProfileUpdateAndFirmProfileUpdatedAlertAfterRemovingCompleteAccess(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -9807,8 +9808,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
 			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
 			//ele=FindElement(driver,"//label[text()='"+M12FundName1+"UP"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
@@ -9818,7 +9819,7 @@ public class Module12 extends BaseLib {
 					ThreadSleep(5000);
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					driver.switchTo().window(ParentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace Section view");
 					if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access close button", action.SCROLLANDBOOLEAN)){
 						List<WebElement> listOfWorkspace=FindElements(driver, "//span[contains(@id,'ContactDetail_grid1-cell-1-')]//label", "WorkspacesName");
@@ -9860,8 +9861,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated", M12FundName1+"UP", "Fundraising", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact2 is displaying");
@@ -9915,12 +9916,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Home Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Home Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "ALert history link", action.SCROLLANDBOOLEAN)){
 					switchToDefaultContent(driver);
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Funds Page alert Frame");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Funds Page alert Frame");
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if(selectVisibleTextFromDropDown(driver,fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact2 is displaying");
@@ -9983,8 +9984,8 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				if (bp.verifyErrorMessageOnPage(ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace,
 						cp.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60),"Error Message after admin Registration on Contact page for fundraising Workspace")) {
 					appLog.info("Error Message is verified  on Contact page for fundraising workspace");
@@ -10005,7 +10006,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc033_RemoveContactsPartialAccessAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -10020,8 +10021,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
 				//ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
 				//if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
@@ -10032,7 +10033,7 @@ public class Module12 extends BaseLib {
 					ThreadSleep(5000);
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					driver.switchTo().window(ParentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace Section view");
 					if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access close button", action.SCROLLANDBOOLEAN)){
 						List<WebElement> listOfWorkspace=FindElements(driver, "//span[contains(@id,'ContactDetail_grid1-cell-1-')]//label", "WorkspacesName");
@@ -10075,7 +10076,7 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace Section view");
 				if(fp.clickOnInstituionFolder(M12Institution1, Workspace.FundraisingWorkspace, 60)){
 					if(fp.revokeContactAccess(M12Contact1EmailId, Workspace.FundraisingWorkspace)){
@@ -10098,8 +10099,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -10186,12 +10187,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 						appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -10273,12 +10274,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName2)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 						String errMsg = hp.getErrorMessage(60).getText().trim();
 						if (errMsg.equalsIgnoreCase(HomePageErrorMessage.nodataToDisplayErroMessage)) {
@@ -10340,12 +10341,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 						appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -10441,7 +10442,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc034_DeleteLastInvitedFolderAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -10455,8 +10456,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 60), "Manage folder icon", action.SCROLLANDBOOLEAN)){
 				String id=fp.getCreatedFolderId(shdPath, PageName.FundsPage,60);
 				if(id!=null) {
@@ -10496,8 +10497,8 @@ public class Module12 extends BaseLib {
 		}
 			switchToDefaultContent(driver);
 			if(bp.clickOnTab(TabName.HomeTab)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 				if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -10568,12 +10569,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -10642,8 +10643,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
-	public void M12tc035_AgainInviteContactAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc035_AgainInviteContactAndVerifyAlerts(String environment, String mode){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -10657,8 +10658,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				ThreadSleep(5000);
 				if(click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 60), "Manage folder", action.SCROLLANDBOOLEAN)){
 					if(click(driver, fp.getAllFolderAddIcon(Workspace.FundraisingWorkspace, 30), "Add folder button", action.BOOLEAN)){
@@ -10723,8 +10724,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");			
@@ -10807,12 +10808,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -10891,12 +10892,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 						appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -10977,7 +10978,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc036_CloseWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -10999,8 +11000,8 @@ public class Module12 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				ThreadSleep(5000);
 		if(fp.closeWorkSpace(Workspace.FundraisingWorkspace, 60)){
 			appLog.error("Workspace get closed successfully");
@@ -11029,8 +11030,8 @@ public class Module12 extends BaseLib {
 		String[] docNameFund1=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, "M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage", excelLabel.UploadedFileStandard).split("<break>");
 		String[] docNameFund2=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, "M12tc012_CreateFundraisingWorkspaceForFund2AndInviteSameContact", excelLabel.UploadedFileStandard).split("<break>");
 		String uploadedDoc=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, "M12tc014_1_UploadDocumentFromInvestorSide", excelLabel.UploadedFileStandard);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -11109,12 +11110,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 	if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 	if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 		switchToDefaultContent(driver);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -11195,8 +11196,8 @@ public class Module12 extends BaseLib {
 	sa.assertAll();			
 	}
 	
-	@Test
-	public void M12tc037_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc037_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(String environment, String mode){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -11250,8 +11251,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");			
@@ -11334,12 +11335,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact 1 is displaying ");
@@ -11418,12 +11419,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 						appLog.error("Contact profile related alert for contact 1 is displaying ");
@@ -11492,7 +11493,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc038_RemoveInvestorFromManageInvestorAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -11505,14 +11506,14 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Mange investor", action.SCROLLANDBOOLEAN)){
 		WebElement	ele = FindElement(driver, "//div[@title='" + M12Institution1 + "']/../..//input",
 					"Institution 1 checkbox", action.SCROLLANDBOOLEAN, 60);
 			if (click(driver, ele, "Instituition 1 checkbox", action.SCROLLANDBOOLEAN)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if (click(driver,fp.getManageInvestorDeletedPopupCrossIcon(Workspace.FundraisingWorkspace, 60),
 							"Cross icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Cross icon");
@@ -11545,8 +11546,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -11629,12 +11630,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 	if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 		switchToDefaultContent(driver);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 			if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -11719,8 +11720,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
-	public void M12tc039_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc039_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(String environment, String mode){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -11733,14 +11734,14 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Mange investor", action.SCROLLANDBOOLEAN)){
 		WebElement	ele = FindElement(driver, "//div[@title='" + M12Institution1+"NUP" + "']/../..//input",
 					"Institution 1 checkbox", action.SCROLLANDBOOLEAN, 60);
 			if (click(driver, ele, "Instituition 1 checkbox", action.SCROLLANDBOOLEAN)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if (click(driver,fp.getManageInvestorAddedPopupCrossIcon(Workspace.FundraisingWorkspace, 60),
 							"Cross icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Cross icon");
@@ -11780,8 +11781,8 @@ public class Module12 extends BaseLib {
 		}		
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");			
@@ -11864,12 +11865,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 			if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact 1 is displaying ");
@@ -11950,12 +11951,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 						appLog.error("Contact profile related alert for contact 1 is displaying ");
@@ -12037,7 +12038,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc040_ClearWorkspaceAndVerifyAlerts() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12058,8 +12059,8 @@ public class Module12 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				ThreadSleep(5000);
 				click(driver, fp.getWorkSpaceClearBtn(Workspace.FundraisingWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
 					
@@ -12090,8 +12091,8 @@ public class Module12 extends BaseLib {
 						driver.switchTo().window(parentID);
 					}
 					driver.navigate().refresh();
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (isDisplayed(driver, fp.getBuildFundraisinWorkspaceButton(60), "Visibility", 60,
 							"Build fundraising workspace button") != null) {
 						appLog.info("workspace get cleared successfully");
@@ -12126,8 +12127,8 @@ public class Module12 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				ThreadSleep(8000);
 				click(driver, fp.getWorkSpaceClearBtn(Workspace.FundraisingWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
 				
@@ -12160,8 +12161,8 @@ public class Module12 extends BaseLib {
 				
 				
 					driver.navigate().refresh();
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (isDisplayed(driver, fp.getBuildFundraisinWorkspaceButton(60), "Visibility", 60,
 							"Build fundraising workspace button") != null) {
 						appLog.info("workspace get cleared successfully");
@@ -12199,8 +12200,8 @@ public class Module12 extends BaseLib {
 		String uploadedDoc = ExcelUtils.readData("FilePath", excelLabel.TestCases_Name,
 				"M12tc014_1_UploadDocumentFromInvestorSide", excelLabel.UploadedFileStandard);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn",
 				"Contact Profile Updated")) {
 				if (hp.verifyAlertOnHomePage("Contact Profile Updated", null, null, null, M12Contact1UpdatedFirmName,
@@ -12299,8 +12300,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M12tc041_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc041_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12377,8 +12378,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if (selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn",
 					"Contact Profile Updated")) {
 					if (hp.verifyAlertOnHomePage("Contact Profile Updated", null, null, null, M12Contact1UpdatedFirmName,
@@ -12479,12 +12480,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact 1 is displaying ");
@@ -12563,12 +12564,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Fund Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Fund Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.FundraisingWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 						appLog.error("Contact profile related alert for contact 1 is displaying ");
@@ -12642,8 +12643,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				ThreadSleep(5000);
 		if(fp.closeWorkSpace(Workspace.FundraisingWorkspace, 60)){
 			appLog.error("Workspace get closed successfully");
@@ -12665,8 +12666,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Test
-	public void M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12797,13 +12798,13 @@ public class Module12 extends BaseLib {
 					appLog.error("Not able to upload files in '" + intPath[1] + "'");
 					saa.assertTrue(false, "Not able to upload files in '" + intPath[1] + "'");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 				SoftAssert	saa1 = fp.verifyALertHistoryUI(Workspace.InvestorWorkspace);
@@ -12831,13 +12832,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, cp.getContactsTab(60), "Contact tab");
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					SoftAssert	saa2 = fp.verifyALertHistoryUI(Workspace.InvestorWorkspace);
@@ -12864,8 +12865,8 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
 			ThreadSleep(5000);
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if (hp.getShowDropDownLabelONHomeAlert(60).getText().trim().equalsIgnoreCase("Show:")) {
 				appLog.info("Show Drop Down Label is Displayed");
 			} else {
@@ -12960,7 +12961,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc043_1_ViewDownloadDocumentFromAllFirms(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13094,7 +13095,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc043_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -13112,8 +13113,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 	if(CommonDocument.length>1){
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1+"UP", "Investor",
 				CommonDocument[1], M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
@@ -13223,13 +13224,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(StandardDocument.length>1){
@@ -13359,13 +13360,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,
@@ -13467,7 +13468,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc044_1_ViewDownloadDcumentFromPEFirmAllDocuments(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13596,7 +13597,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc044_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -13614,8 +13615,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1+"UP", "Investor",
 				CommonDocument[0], M12Contact2UpdatedFirstName + " " + M12Contact2UpdatedLastName,
 				M12Contact2UpdatedFirmName,hp.getHomeAlertScrollBox(60), "date")) {
@@ -13695,13 +13696,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 
@@ -13802,13 +13803,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,
@@ -13910,7 +13911,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc045_1_ViewDownloadDocumentFromPEFirmRecentDocuments(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14045,7 +14046,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc045_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14063,8 +14064,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1+"UP", "Investor",
 				CommonDocument[3], M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
 				M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -14144,13 +14145,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 
@@ -14251,13 +14252,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,
@@ -14359,7 +14360,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc046_1_ViewDownloadDocumentFromPEFirmCurrentInvestment(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14517,7 +14518,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc046_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14535,8 +14536,8 @@ public class Module12 extends BaseLib {
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,
 				"M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage",
 				excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1+"UP", "Investor",
 				CommonDocument[2], M12Contact2UpdatedFirstName + " " + M12Contact2UpdatedLastName,
 				M12Contact2UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -14616,13 +14617,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 
@@ -14723,13 +14724,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,
@@ -14831,8 +14832,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
-	public void M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14956,7 +14957,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc048_1_ViewDownloadDocumentsFromInvestorSideForFund2(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15080,7 +15081,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc048_2_VerifyCreatedAlertsAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15092,8 +15093,8 @@ public class Module12 extends BaseLib {
 		String[] CommonDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,"M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact",excelLabel.UploadedFileCommon).split("<break>");
 		String[] SharedDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,"M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact",excelLabel.UploadedFileShared).split("<break>");
 		String[] StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,"M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact",excelLabel.UploadedFileStandard).split("<break>");
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName2, "Investor",
 				CommonDocument[0], M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
 				M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -15173,13 +15174,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName2)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 
@@ -15280,13 +15281,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,
@@ -15388,7 +15389,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc049_1_UploadDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15450,7 +15451,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc049_2_verifyDocumentUploadedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15461,8 +15462,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		String StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,"M12tc049_1_UploadDocumentFromInvestorSide",
 				excelLabel.UploadedFileStandard);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Uploaded", M12FundName1+"UP", "Investor",
 				StandardDocument, M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
 				M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -15485,13 +15486,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 
@@ -15537,13 +15538,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Uploaded", null, null,
@@ -15590,7 +15591,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc050_1_UpdateDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15643,7 +15644,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc050_2_VerifyDocumentUpdatedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15653,8 +15654,8 @@ public class Module12 extends BaseLib {
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		String StandardDocument = ExcelUtils.readData("filepath", excelLabel.TestCases_Name,"M12tc049_1_UploadDocumentFromInvestorSide",excelLabel.UploadedFileStandard);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Updated", M12FundName1+"UP", "Investor",
 				StandardDocument, M12Contact1UpdatedFirstName + " " + M12Contact1UpdatedLastName,
 				M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -15679,13 +15680,13 @@ public class Module12 extends BaseLib {
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 
@@ -15731,13 +15732,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)) {
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"ALert history link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Updated", null, null,
@@ -15784,7 +15785,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc051_VerifyFundDocumentContactHyperlinkInAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -15797,7 +15798,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 				if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							"Investor Section view");
 					if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
@@ -15807,7 +15808,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Contact Page is not opening");
 							sa.assertTrue(false,"Contact Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");
 						if(bp.clickOnDocumentNameInAlert(commonFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -15830,7 +15831,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Document Page is not opening");
 							sa.assertTrue(false,"Document Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");	
 						if(bp.clickOnDocumentNameInAlert(SharedFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -15853,7 +15854,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Document Page is not opening");
 							sa.assertTrue(false,"Document Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");
 						if(bp.clickOnDocumentNameInAlert(StandardFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -15876,7 +15877,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Document Page is not opening");
 							sa.assertTrue(false,"Document Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");	
 						if (click(driver, fp.getAlertHistoryCrossIcon(Workspace.InvestorWorkspace, 60),
@@ -15901,7 +15902,7 @@ public class Module12 extends BaseLib {
 			switchToDefaultContent(driver);
 			if(bp.clickOnTab(TabName.ContactTab)){
 				if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							"Investor Section view");
 					if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
@@ -15911,7 +15912,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Contact Page is not opening");
 							sa.assertTrue(false,"Contact Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");	
 						if(bp.clickOnDocumentNameInAlert(commonFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.ContactsPage, null, null)){
@@ -15934,7 +15935,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Document Page is not opening");
 							sa.assertTrue(false,"Document Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");
 						if(bp.clickOnDocumentNameInAlert(SharedFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.ContactsPage, null, null)){
@@ -15957,7 +15958,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Document Page is not opening");
 							sa.assertTrue(false,"Document Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");	
 						if(bp.clickOnDocumentNameInAlert(StandardFilePath[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, bp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.ContactsPage, null, null)){
@@ -15980,7 +15981,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Document Page is not opening");
 							sa.assertTrue(false,"Document Page is not opening");
 						}
-						switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));	
+						switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));	
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 								"Investor Section view");		
 						if (click(driver, fp.getAlertHistoryCrossIcon(Workspace.InvestorWorkspace, 60),
@@ -16007,7 +16008,7 @@ public class Module12 extends BaseLib {
 			sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc052_VerifyShowPicklistAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16016,11 +16017,11 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-		switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+		switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 		scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropdown", "All Except Profile Updates")){
 				if(bp.verifyAlerts("Contact Profile Updated",fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60))){
@@ -16141,7 +16142,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc053_VerifyShowPicklistAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16151,11 +16152,11 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-		switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+		switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 		scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Contact Page Investor section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Contact Page Investor section view");
 			ThreadSleep(3000);
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropdown", "All Except Profile Updates")){
@@ -16278,7 +16279,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc054_VerifySortingAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16287,19 +16288,19 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.FundraisingWorkspace.toString() + " View.");
 			SoftAssert	saa1=bp.verifySortingOnAllPagesInALert(PageName.FundsPage, Workspace.InvestorWorkspace);
 				sa.combineAssertions(saa1);
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropdown", "Document Viewed")){
@@ -16320,7 +16321,7 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to select show dropdown value ");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver,fp.getAlertHistoryPopupRangeDropdown(Workspace.InvestorWorkspace, 60), "Range dropdown", "All Time")){
@@ -16365,7 +16366,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc055_VerifySortingAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16375,19 +16376,19 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					SoftAssert	saa1=bp.verifySortingOnAllPagesInALert(PageName.ContactsPage, Workspace.InvestorWorkspace);
 				sa.combineAssertions(saa1);
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropdown", "Document Viewed")){
@@ -16408,7 +16409,7 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "Not able to select show dropdown value ");
 				}
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if(selectVisibleTextFromDropDown(driver,fp.getAlertHistoryPopupRangeDropdown(Workspace.InvestorWorkspace, 60), "Range dropdown", "All Time")){
@@ -16453,7 +16454,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc056_DeleteContactUpdateEmailIDOfContactAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16470,7 +16471,7 @@ public class Module12 extends BaseLib {
 					appLog.info("click on save button");
 					if(cp.getEmailIdViewMode(60).getText().trim().contains("test@gmail.com")){
 						appLog.info("Email id get changed successfully");
-						switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+						switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 								Workspace.InvestorWorkspace.toString() + " View.");
 						if (bp.verifyErrorMessageOnPage(
@@ -16538,13 +16539,13 @@ public class Module12 extends BaseLib {
 	}
 	if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					List<WebElement> ele=FindElements(driver, "//a[text()='"+M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName+"']", "Contact name");		
@@ -16731,7 +16732,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc057_DeleteDocumentFromCRMSideAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16751,7 +16752,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 		if(fp.verifyFolderPathdummy(CommonfolderPath, null, null, M12FundName1+"UP", PageName.FundsPage, Workspace.InvestorWorkspace, 60)){
@@ -16797,8 +16798,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));	
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));	
 			if(bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1+"UP", "Investor",CommonDocument[1],  M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, M12Contact1UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")){
 				appLog.info("Document Viewed Alert is displaying for doc:"+CommonDocument[1]);				
 			}else{
@@ -16855,8 +16856,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document");
 				saa.assertTrue(false, "Not able to click on document");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(SharedDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1+"UP", "Investor")){
 				String ParentID = switchOnWindow(driver);
 				if (ParentID != null) {
@@ -16877,8 +16878,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document");
 				saa.assertTrue(false, "Not able to click on document");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30,bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30,bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(StandardDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1+"UP", "Investor")){
 				String ParentID = switchOnWindow(driver);
 				if (ParentID != null) {
@@ -16906,13 +16907,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(bp.verifyDocumentAlerts(PageName.FundsPage, "Document Viewed", null, null,CommonDocument[1],  M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, M12Contact1UpdatedFirmName,fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60),"Date")){
@@ -16971,7 +16972,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(SharedDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -16994,7 +16995,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-				switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(StandardDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -17017,7 +17018,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.InvestorWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
@@ -17041,13 +17042,13 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 						"Alert History Link", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,CommonDocument[1],  M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, M12Contact1UpdatedFirmName,fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60),"Date")){
@@ -17106,7 +17107,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(SharedDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -17129,7 +17130,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(bp.clickOnDocumentNameInAlert(StandardDocument[1], "Document Viewed", M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -17152,7 +17153,7 @@ public class Module12 extends BaseLib {
 						appLog.error("Not able to click on document");
 						saa.assertTrue(false, "Not able to click on document");
 					}
-					switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");
 					if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.InvestorWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
@@ -17178,7 +17179,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc058_1_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeletedDocument(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -17284,15 +17285,15 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc058_2_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeletedDocument(){
 	LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 	ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 	lp.CRMLogin(CRMUser1EmailID, adminPassword);
-	scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-	switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+	scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+	switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 	if (bp.matchALertRecordCOunt(
 			ExcelUtils.readData("FilePath", excelLabel.TestCases_Name,
 					"M2tc025_CheckValuesInSelectboxesFirmProfilePage", excelLabel.HomePageAlertCount),
@@ -17306,13 +17307,13 @@ public class Module12 extends BaseLib {
 	scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 	if (bp.clickOnTab(TabName.FundsTab)) {
 		if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");
 			if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 					"Alert History Link", action.SCROLLANDBOOLEAN)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 			if (bp.matchALertRecordCOunt(
@@ -17346,13 +17347,13 @@ public class Module12 extends BaseLib {
 	switchToDefaultContent(driver);
 	if (bp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)) {
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");
 			if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 					"ALert history link", action.SCROLLANDBOOLEAN)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 			if (bp.matchALertRecordCOunt(
@@ -17388,7 +17389,7 @@ public class Module12 extends BaseLib {
 	sa.assertAll();		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc059_UpdateDocumentFromCRMSideAndVerifyOpeningOfUpdatedDocumentFromAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -17406,11 +17407,11 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");	
 				if(fp.updateFile(CommonPath, CommonfileName, null, null, FolderType.Common,System.getProperty("user.dir")+"//UploadFiles/Module12/INV/ExistingUpdate/Common//"+update_fileName[0], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 							Workspace.InvestorWorkspace.toString() + " View.");	
 					if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "refresh button on content grid", action.SCROLLANDBOOLEAN)) {
@@ -17431,7 +17432,7 @@ public class Module12 extends BaseLib {
 					saa.assertTrue(false, "Common folder  file is not updated");
 				}
 						if(fp.updateFile(shdPath, SharedfileName, null, null, FolderType.Shared,System.getProperty("user.dir")+"//UploadFiles/Module12/INV/ExistingUpdate/Shared//"+update_fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									Workspace.InvestorWorkspace.toString() + " View.");	
 							if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "refresh button on content grid", action.SCROLLANDBOOLEAN)) {
@@ -17453,7 +17454,7 @@ public class Module12 extends BaseLib {
 							saa.assertTrue(false, "Shared folder  file is not updated");
 						}
 						if(fp.updateFile(StdPath, StandardfileName, M12Institution1+"NUP", M12LimitedPartner1, FolderType.Standard,System.getProperty("user.dir")+"//UploadFiles/Module12/INV/ExistingUpdate/Standard//"+update_fileName[2], multiInstance.AllInvestor, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
-							switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 									Workspace.InvestorWorkspace.toString() + " View.");	
 							if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "refresh button on content grid", action.SCROLLANDBOOLEAN)) {
@@ -17483,8 +17484,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);		
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(CommonfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1+"UP", "Investor")){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -17576,8 +17577,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(SharedfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1+"UP", "Investor")){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -17669,8 +17670,8 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(bp.clickOnDocumentNameInAlert(StandardfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, hp.getHomeAlertScrollBox(60), PageName.HomePage, M12FundName1+"UP", "Investor")){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -17769,12 +17770,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");	
 			if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");	
 				if(bp.clickOnDocumentNameInAlert(CommonfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -17868,7 +17869,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");	
 			if(bp.clickOnDocumentNameInAlert(SharedfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -17962,7 +17963,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");	
 			if(bp.clickOnDocumentNameInAlert(StandardfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -18056,7 +18057,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}		
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");	
 			
@@ -18081,12 +18082,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");	
 			if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if(bp.clickOnDocumentNameInAlert(CommonfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.ContactsPage, null, null)){
@@ -18180,7 +18181,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");	
 			if(bp.clickOnDocumentNameInAlert(SharedfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.ContactsPage, null, null)){
@@ -18274,7 +18275,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");	
 			if(bp.clickOnDocumentNameInAlert(StandardfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), PageName.FundsPage, null, null)){
@@ -18368,7 +18369,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Not able to click on document name");
 				saa.assertTrue(false, "Not able to click on document name");
 			}		
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");	
 			if(click(driver, bp.getAlertHistoryCrossIcon(Workspace.InvestorWorkspace, 60), "Alert history cross icon", action.SCROLLANDBOOLEAN)){
@@ -18394,7 +18395,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc060_1_VerifyDocumentViewedDocumentDownloadedAlertForUpdatedFile(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18511,7 +18512,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc060_2_VerifyDocumentViewedDocumentDownloadedAlertForUpdatedFile(){	
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -18521,8 +18522,8 @@ public class Module12 extends BaseLib {
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	lp.CRMLogin(CRMUser1EmailID, adminPassword);
 	String[] update_fileName = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, "M12tc059_UpdateDocumentFromCRMSideAndVerifyOpeningOfUpdatedDocumentFromAlerts", excelLabel.KeyWord_For_Search).split("<break>");
-	scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-	switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+	scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+	switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 	if (bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1+"UP", "Investor",
 			update_fileName[0], M12Contact2UpdatedFirstName + " " + M12Contact2UpdatedLastName,
 			M12Contact2UpdatedFirmName,hp.getHomeAlertScrollBox(60),"Date")) {
@@ -18600,13 +18601,13 @@ public class Module12 extends BaseLib {
 	scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
 	if (bp.clickOnTab(TabName.FundsTab)) {
 		if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");
 			if (click(driver, fp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60),
 					"Alert History Link", action.SCROLLANDBOOLEAN)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (bp.verifyDocumentAlerts(PageName.FundsPage, "Document Viewed", null, null, update_fileName[0],
@@ -18706,13 +18707,13 @@ public class Module12 extends BaseLib {
 	switchToDefaultContent(driver);
 	if (bp.clickOnTab(TabName.ContactTab)) {
 		if (cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)) {
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 					Workspace.InvestorWorkspace.toString() + " View.");
 			if (click(driver, cp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60),
 					"ALert history link", action.SCROLLANDBOOLEAN)) {
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 						Workspace.InvestorWorkspace.toString() + " View.");
 				if (bp.verifyDocumentAlerts(PageName.ContactsPage, "Document Viewed", null, null,
@@ -18814,7 +18815,7 @@ public class Module12 extends BaseLib {
 	sa.assertAll();	
 }
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc061_UpdateInvestmentInfoCRMSideAndVerifyAlerts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18827,8 +18828,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if (click(driver, fp.getInvestmentInfo(Workspace.InvestorWorkspace), "Investment info",
 						action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getInvestmentInfoEdit(60), "investment info edit button",
@@ -18878,8 +18879,8 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		if(bp.clickOnTab(TabName.HomeTab)){
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			 saa1=bp.verifyUpdatedNameinALerts(PageName.HomePage, M12FundName1+"UPINV",columnName.fundName, null);
 			sa.combineAssertions(saa1);	
 			ThreadSleep(3000);
@@ -18900,12 +18901,12 @@ public class Module12 extends BaseLib {
 			switchToDefaultContent(driver);
 			if(bp.clickOnTab(TabName.FundsTab)){
 				if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor section view");
 				if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor section view");
 					ThreadSleep(3000);
 					ele =FindElement(driver, "//span[text()='Contact']", "contact column", action.SCROLLANDBOOLEAN, 30);
@@ -18933,12 +18934,12 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP",M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor section view");
 				if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor section view");
 					ThreadSleep(3000);
 					ele =FindElement(driver, "//span[text()='Contact']", "contact column", action.SCROLLANDBOOLEAN, 30);
@@ -18968,7 +18969,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc062_VerifyRemovalOfContactProfileUpdateAndFirmProfileUpdatedAlertAfterRemovingCompleteAccessForAContact(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -18981,8 +18982,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
 			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
 			//	ele=FindElement(driver,"//label[text()='"+M12FundName1+"UPINV"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
@@ -18992,7 +18993,7 @@ public class Module12 extends BaseLib {
 					ThreadSleep(5000);
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					driver.switchTo().window(ParentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising Workspace Section view");
 					if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access close button", action.SCROLLANDBOOLEAN)){
 						List<WebElement> listOfWorkspace=FindElements(driver, "//span[contains(@id,'ContactDetail_grid1-cell-1-')]//label", "WorkspacesName");
@@ -19034,8 +19035,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			ThreadSleep(2000);
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated", M12FundName1+"UPINV", "Investor", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
@@ -19092,11 +19093,11 @@ public class Module12 extends BaseLib {
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor section view");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "ALert history link", action.SCROLLANDBOOLEAN)){
 					switchToDefaultContent(driver);
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor section view");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if(selectVisibleTextFromDropDown(driver,fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact2 is displaying");
@@ -19159,8 +19160,8 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contact Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contact Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				if (bp.verifyErrorMessageOnPage(ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace,
 						cp.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60),"Error Message after admin Registration on Contact page for Investor Workspace")) {
 					appLog.info("Error Message is verified  on Contact page for Investor workspace");
@@ -19181,7 +19182,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc063_RemoveContactPartialAccessAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -19196,8 +19197,8 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.ContactsPage, 60), "Contacts Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
 			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
 			//ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
@@ -19207,7 +19208,7 @@ public class Module12 extends BaseLib {
 					ThreadSleep(5000);
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					driver.switchTo().window(ParentID);
-					switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspace Section view");
 					if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access close button", action.SCROLLANDBOOLEAN)){
 						List<WebElement> listOfWorkspace=FindElements(driver, "//span[contains(@id,'ContactDetail_grid1-cell-1-')]//label", "WorkspacesName");
@@ -19250,7 +19251,7 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspace Section view");
 				if(fp.clickOnInstituionFolder(M12Institution1+"NUP", Workspace.InvestorWorkspace, 60)){
 					if(fp.revokeContactAccess(M12Contact1EmailId, Workspace.InvestorWorkspace)){
@@ -19273,8 +19274,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			ThreadSleep(3000);
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -19372,11 +19373,11 @@ public class Module12 extends BaseLib {
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspace Section view");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor Workspace Section view");
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					ThreadSleep(3000);
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -19469,11 +19470,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName2)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 						String errMsg = hp.getErrorMessage(60).getText().trim();
@@ -19536,11 +19537,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 				ThreadSleep(3000);
 				if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
@@ -19622,7 +19623,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc064_DeleteLastInvitedFolderAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -19636,7 +19637,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor section view");
 			if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 60), "Manage folder icon", action.SCROLLANDBOOLEAN)){
 				String id=fp.getCreatedFolderId(shdPath, PageName.FundsPage,60);
@@ -19677,8 +19678,8 @@ public class Module12 extends BaseLib {
 		}
 			switchToDefaultContent(driver);
 			if(bp.clickOnTab(TabName.HomeTab)){
-				scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-				switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+				scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+				switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			ThreadSleep(3000);
 				if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -19752,11 +19753,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				ThreadSleep(3000);
@@ -19829,8 +19830,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Test
-	public void M12tc065_AgainInviteContactAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc065_AgainInviteContactAndVerifyAlerts(String environment, String mode){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -19844,7 +19845,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 				ThreadSleep(5000);
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 60), "Manage folder", action.SCROLLANDBOOLEAN)){
@@ -19910,8 +19911,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");			
@@ -19996,11 +19997,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -20080,11 +20081,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -20166,7 +20167,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc066_CloseWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -20188,7 +20189,7 @@ public class Module12 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			ThreadSleep(5000);
 		if(fp.closeWorkSpace(Workspace.InvestorWorkspace, 60)){
@@ -20218,8 +20219,8 @@ public class Module12 extends BaseLib {
 		String[] docNameFund1=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, "M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage", excelLabel.UploadedFileStandard).split("<break>");
 		String[] docNameFund2=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, "M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact", excelLabel.UploadedFileStandard).split("<break>");
 		String uploadedDoc=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, "M12tc049_1_UploadDocumentFromInvestorSide", excelLabel.UploadedFileStandard);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			ThreadSleep(3000);
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -20302,11 +20303,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 	if(bp.clickOnTab(TabName.FundsTab)){
 		if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 	if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 		switchToDefaultContent(driver);
-		switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+		switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 			ThreadSleep(3000);
@@ -20391,8 +20392,8 @@ public class Module12 extends BaseLib {
 	sa.assertAll();					
 	}
 	
-	@Test
-	public void M12tc067_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc067_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(String environment, String mode){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -20446,8 +20447,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");			
@@ -20532,11 +20533,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -20616,11 +20617,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
@@ -20702,7 +20703,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc068_RemoveInvestorFromManageInvestorAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -20715,16 +20716,16 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Mange investor", action.SCROLLANDBOOLEAN)){
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if (fp.verifyLPStructureInManageInvestor(M12Institution1+"NUP",M12LimitedPartner1)) {
 				if (click(driver,fp.getLimitedPartnerCheckBox(M12Institution1+"NUP", M12LimitedPartner1,Workspace.InvestorWorkspace, 60),"LP 1 Checkbox", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 					if (click(driver,fp.getManageInvestorDeletedPopupCrossIcon(Workspace.InvestorWorkspace, 60),"Cross icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Cross icon");
@@ -20761,8 +20762,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -20850,11 +20851,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Manage investor section view");
 	if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 		switchToDefaultContent(driver);
-		switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+		switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Manage investor section view");
 		if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 			ThreadSleep(2000);
@@ -20940,8 +20941,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
-	public void M12tc069_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc069_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(String environment, String mode){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -20954,16 +20955,16 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60), "Mange investor", action.SCROLLANDBOOLEAN)){
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if (fp.verifyLPStructureInManageInvestor(M12Institution1+"NUP",M12LimitedPartner1)) {
 				if (click(driver,fp.getLimitedPartnerCheckBox(M12Institution1+"NUP", M12LimitedPartner1,Workspace.InvestorWorkspace, 60),"LP 1 Checkbox", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 					if (click(driver,fp.getManageInvestorAddedPopupCrossIcon(Workspace.InvestorWorkspace, 60),"Cross icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Cross icon");
@@ -21007,8 +21008,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
 				appLog.error("Contact profile related alert for contact 1 is displaying");
@@ -21097,11 +21098,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Manage investor section view");
 	if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 		switchToDefaultContent(driver);
-		switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+		switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 		scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Manage investor section view");
 		ThreadSleep(2000);
 		if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
@@ -21188,11 +21189,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			ThreadSleep(2000);
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
@@ -21276,7 +21277,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc070_ClearWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21297,7 +21298,7 @@ public class Module12 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace view");
 				ThreadSleep(5000);
 				click(driver, fp.getWorkSpaceClearBtn(Workspace.InvestorWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
@@ -21329,8 +21330,8 @@ public class Module12 extends BaseLib {
 						driver.switchTo().window(parentID);
 					}
 					driver.navigate().refresh();
-					scrollDownThroughWebelement(driver, bp.getFrame(PageName.FundsPage, 60), "Fund Page alert Frame");
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (isDisplayed(driver, fp.getBuildInvestorWorkspace(60), "Visibility", 60,
 							"Build Investor workspace button") != null) {
 						appLog.info("workspace get cleared successfully");
@@ -21365,7 +21366,7 @@ public class Module12 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 				ThreadSleep(5000);
 				click(driver, fp.getWorkSpaceClearBtn(Workspace.InvestorWorkspace, 10), "workspace clear button", action.SCROLLANDBOOLEAN);
@@ -21397,7 +21398,7 @@ public class Module12 extends BaseLib {
 						driver.switchTo().window(parentID);
 					}
 					driver.navigate().refresh();
-					switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 					if (isDisplayed(driver, fp.getBuildInvestorWorkspace(60), "Visibility", 60,
 							"Build Investor workspace button") != null) {
@@ -21430,8 +21431,8 @@ public class Module12 extends BaseLib {
 		String[] docNameFund2 = ExcelUtils.readData("FilePath", excelLabel.TestCases_Name,"M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact", excelLabel.UploadedFileStandard).split("<break>");
 		String uploadedDoc = ExcelUtils.readData("FilePath", excelLabel.TestCases_Name,"M12tc049_1_UploadDocumentFromInvestorSide", excelLabel.UploadedFileStandard);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-		switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+		scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+		switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		ThreadSleep(2000);
 		if (selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn","Contact Profile Updated")) {
 				if (hp.verifyAlertOnHomePage("Contact Profile Updated", null, null, null, M12Contact1UpdatedFirmName,
@@ -21523,8 +21524,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
-	public void M12tc071_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M12tc071_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -21601,8 +21602,8 @@ public class Module12 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.HomeTab)){
-			scrollDownThroughWebelement(driver, bp.getFrame(PageName.HomePage, 60), "Home Page alert Frame");
-			switchToFrame(driver, 30, bp.getFrame(PageName.HomePage, 60));
+			scrollDownThroughWebelement(driver, bp.getFrame( PageName.HomePage, 60), "Home Page alert Frame");
+			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 			ThreadSleep(2000);
 			if (selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn",
 					"Contact Profile Updated")) {
@@ -21712,11 +21713,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1+"NUP")){
-				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			ThreadSleep(2000);
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
@@ -21799,11 +21800,11 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 		if(click(driver, bp.getAlertHistoryLink(Workspace.InvestorWorkspace, PageName.ContactsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN))	{
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			ThreadSleep(2000);
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
@@ -21876,7 +21877,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M12tc072_postCondition(){
 	LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

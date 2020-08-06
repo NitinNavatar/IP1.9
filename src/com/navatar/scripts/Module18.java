@@ -4,6 +4,7 @@
 
 package com.navatar.scripts;
 
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -55,7 +56,7 @@ import java.util.List;
  */
 public class Module18 extends BaseLib {
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc001_CreatePreconditionData() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -229,7 +230,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc002_CreationOfFundraisingWorkSpace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -262,8 +263,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
-	public void M18tc003_GiveContactAccessAndSendInvitationEmailToCntactsAndVerifyContactDetailPage(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M18tc003_GiveContactAccessAndSendInvitationEmailToCntactsAndVerifyContactDetailPage(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -303,7 +304,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 				mouseOverOperation(driver, cp.getResetPasswordInactiveButton(Workspace.FundraisingWorkspace,60));
 				String text=cp.getResetPasswordInactiveButton(Workspace.FundraisingWorkspace,60).getAttribute("title");
@@ -327,7 +328,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc004_RegisterContactAndVerifyInvestorRegistrationPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);	
@@ -402,7 +403,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc005_VerifyContactDetailPageAndResetPasswordPopUpUIAfterInvestorContactRegisteredSuccessfully(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -410,7 +411,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 				mouseOverOperation(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60));
 				String text=cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60).getAttribute("title");
@@ -458,7 +459,7 @@ public class Module18 extends BaseLib {
 			switchToDefaultContent(driver);
 			if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact2FirstName, M18Contact2LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 				if(cp.getResetPasswordInactiveButton(Workspace.FundraisingWorkspace,60)!=null){
 				appLog.info("Reset password inactive button is displaying");
@@ -488,7 +489,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc006_CheckTheUIOfForgotPasswordPageErrorMessageAndClickHereLinkInErrorMessagae(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		String windowID;
@@ -769,7 +770,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc007_SendForgotPasswordEmailToRegisterInvestorContactAndVerifyTheReceivedEmail(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -823,7 +824,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
     
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc008_1_VerifySendingResetPasswordmailtoInvestorFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -831,7 +832,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp.getFrame(PageName.ContactsPage, 20));
+				switchToFrame(driver, 30,bp.getFrame( PageName.ContactsPage, 20));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+"Section View");
 				if(click(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace, 60), "Reset Password Active Button", action.SCROLLANDBOOLEAN)){
 					if(click(driver, cp.getResetPasswordPopupSendEMailButton(60), "Send Email", action.SCROLLANDBOOLEAN)){
@@ -913,7 +914,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc008_2_VerifySendingResetPasswordMailToTargetContactFromContactAccessTab(){
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1165,7 +1166,7 @@ public class Module18 extends BaseLib {
 	sa.assertAll();		
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc009_VerifyClickHereIfInvestorContactHasAlreadyResetThePassword(){
 		SoftAssert sa=new SoftAssert();
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);		
@@ -1221,7 +1222,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc010_1_UpdateTheEmailAddressOfTheContactCheckFunctionalityOfResetPasswordLink(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -1239,7 +1240,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc010_2_checkfunctionalityOfResetPasswordLinkFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1327,7 +1328,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc010_3_UpdateMailIDtoPreviousEmailidofRegisterTargetContact1(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -1344,7 +1345,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc011_1_DeleteTheEmailAddressOfTheContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -1360,7 +1361,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc011_2_ImpactAfterDeletingRegisterTargetContact1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1416,7 +1417,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc011_3_RestoreRegisterTargetContact1AndExternalAdmin3() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -1443,7 +1444,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc012_1_CloseFundRasingWorkspace(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -1452,7 +1453,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M18FundName1)){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			System.err.println("Switched to frame.");
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 		if(fp.closeWorkSpace(Workspace.FundraisingWorkspace, 60)){
@@ -1472,7 +1473,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 				if (bp.verifyErrorMessageOnPage(
@@ -1502,7 +1503,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	} 
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc012_2_ImpactAfterClosingDealRoom(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1557,8 +1558,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Test
-	public void M18tc013_AgainInviteContactsAndVerifyContactDetailPage(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M18tc013_AgainInviteContactsAndVerifyContactDetailPage(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1597,7 +1598,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in enabled mode");
@@ -1616,7 +1617,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact2FirstName, M18Contact2LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordInactiveButton(Workspace.FundraisingWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in disabled mode");
@@ -1637,7 +1638,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc014_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -1645,7 +1646,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID	, adminPassword);
 		if(cp.clickOnTab(TabName.ContactTab)){
 				if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-					switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 					if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60)!=null){
 						if(click(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){		
@@ -1717,7 +1718,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc014_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		driver.get(ExcelUtils.readData("Contacts", excelLabel.Variable_Name	, "M18Contact1", excelLabel.Click_HereLink));
@@ -1751,7 +1752,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc015_VerifyCopyLinkFunctionalityFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -1761,7 +1762,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(cp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 				if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60)!=null){
 					if(click(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){
@@ -1904,7 +1905,7 @@ public class Module18 extends BaseLib {
 	}
 	
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc016_1_UpdateFirstNameFromInvestorSide(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		InvestorProfileBusinessLayer ip=new InvestorProfileBusinessLayer(driver);
@@ -1940,7 +1941,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc016_2_UpdateFirstNameAndFirmNameAndVerifyMail(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim =new NIMPageBusinessLayer(driver);
@@ -2013,7 +2014,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 	if(cp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){	
-			switchToFrame(driver, 30,cp. getFrame(PageName.ContactsPage, 30));
+			switchToFrame(driver, 30,cp. getFrame( PageName.ContactsPage, 30));
 			scrollDownThroughWebelement(driver,cp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60)!=null){
 				if(click(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){
@@ -2058,7 +2059,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc017_1_ClearFundraisingWorkspace(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -2067,7 +2068,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M18FundName1)){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			System.err.println("Switched to frame.");
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 		if(fp.clearWorkSpace(Workspace.FundraisingWorkspace, 60)){
@@ -2087,7 +2088,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 60));
+				switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 				System.err.println("Switched to frame.");
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 				if (bp.verifyErrorMessageOnPage(
@@ -2117,7 +2118,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc017_2_CheckTheImpactWhenEnterRegisterInvestorContact(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -2172,8 +2173,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 
-	@Test
-	public void M18tc018_BuildTheInvestorWorkspaceAndInviteTheContacts(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M18tc018_BuildTheInvestorWorkspaceAndInviteTheContacts(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2223,7 +2224,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName, M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordActiveButton(Workspace.InvestorWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in enabled mode");
@@ -2242,7 +2243,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact2FirstName, M18Contact2LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordInactiveButton(Workspace.InvestorWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in disabled mode");
@@ -2263,7 +2264,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc019_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2271,7 +2272,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID	, adminPassword);
 		if(cp.clickOnTab(TabName.ContactTab)){
 				if(cp.clickOnCreatedContact(M18Contact1FirstName+"NUP", M18Contact1LastName, null)){
-					switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace.toString()+" Section view");
 					if(cp.getResetPasswordActiveButton(Workspace.InvestorWorkspace,60)!=null){
 						if(click(driver, cp.getResetPasswordActiveButton(Workspace.InvestorWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){		
@@ -2343,7 +2344,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc019_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2402,7 +2403,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc020_VerifyCopyLinkFunctionalityFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2411,7 +2412,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(cp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName+"NUP", M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace.toString()+" Section view");
 				if(cp.getResetPasswordActiveButton(Workspace.InvestorWorkspace,60)!=null){
 					if(click(driver, cp.getResetPasswordActiveButton(Workspace.InvestorWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){
@@ -2560,8 +2561,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 		}
 		
-	@Test
-	public void M18tc021_BuildTheFundraisingWorkspaceAndInviteTheContactsFromContactAccess(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M18tc021_BuildTheFundraisingWorkspaceAndInviteTheContactsFromContactAccess(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2611,7 +2612,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName+"NUP", M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in enabled mode");
@@ -2636,7 +2637,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact2FirstName, M18Contact2LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordInactiveButton(Workspace.FundraisingWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in disabled mode");
@@ -2663,7 +2664,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc022_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2671,7 +2672,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID	, adminPassword);
 		if(cp.clickOnTab(TabName.ContactTab)){
 				if(cp.clickOnCreatedContact(M18Contact1FirstName+"NUP", M18Contact1LastName, null)){
-					switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 					if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60)!=null){
 						if(click(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){		
@@ -2743,7 +2744,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc022_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2802,7 +2803,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc023_VerifyCopyLinkFunctionalityFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2811,7 +2812,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(cp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName+"NUP", M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 				if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60)!=null){
 					if(click(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){
@@ -2958,7 +2959,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc024_ClearFundraisingWorkspaceAndVerifyResetPasswordButtonOnContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -2967,7 +2968,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M18FundName1)){
-			switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
+			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			System.err.println("Switched to frame.");
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60), Workspace.FundraisingWorkspace.toString()+" View.");
 		if(fp.clearWorkSpace(Workspace.FundraisingWorkspace, 60)){
@@ -2987,7 +2988,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName+"NUP", M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordActiveButton(Workspace.InvestorWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in enabled mode");
@@ -3006,7 +3007,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact2FirstName, M18Contact2LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordInactiveButton(Workspace.InvestorWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in disabled mode");
@@ -3027,8 +3028,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 		}
 	
-	@Test
-	public void M18tc025_BuildTheFundraisingWorkspaceForFund2AndInviteContactsFromContactAccess(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M18tc025_BuildTheFundraisingWorkspaceForFund2AndInviteContactsFromContactAccess(String environment, String mode){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3078,7 +3079,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact1FirstName+"NUP", M18Contact1LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in enabled mode");
@@ -3103,7 +3104,7 @@ public class Module18 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M18Contact2FirstName, M18Contact2LastName, null)){
-				switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 			if(cp.getResetPasswordInactiveButton(Workspace.FundraisingWorkspace, 60)!=null){
 				appLog.info("Reset password button is displaying in disabled mode");
@@ -3130,7 +3131,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc026_CheckFunctionalityOfClickHereLinkWhenUnregisteredInvestorContactChangePassword(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer afp=new AllFirmsPageBusinesslayer(driver);
@@ -3280,7 +3281,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc027_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -3288,7 +3289,7 @@ public class Module18 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID	, adminPassword);
 		if(cp.clickOnTab(TabName.ContactTab)){
 				if(cp.clickOnCreatedContact(M18Contact2FirstName, M18Contact2LastName, null)){
-					switchToFrame(driver, 30,bp. getFrame(PageName.ContactsPage, 30));
+					switchToFrame(driver, 30,bp. getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), Workspace.FundraisingWorkspace.toString()+" Section view");
 					if(cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60)!=null){
 						if(click(driver, cp.getResetPasswordActiveButton(Workspace.FundraisingWorkspace,60), "Reset Pasword button", action.SCROLLANDBOOLEAN)){		
@@ -3360,7 +3361,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc027_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -3419,7 +3420,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M18tc028_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

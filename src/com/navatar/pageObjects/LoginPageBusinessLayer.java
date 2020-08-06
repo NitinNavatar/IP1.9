@@ -85,6 +85,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		}
 	}
 	
+	//Lightning Method....
 	/**
 	 * @author Akul Bhutani
 	 * return true/false
@@ -128,6 +129,33 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		}
 	}
 	return false;
+	}
+	
+	
+	
+	/**
+	 * @author Akul Bhutani
+	 * return true/false
+	 */
+	public boolean CRMlogout() {
+		if (click(driver, getUserMenuTab(60), "User menu", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getLogoutButton(60), "Log out button", action.BOOLEAN) ) {
+				if (matchTitle(driver, "Login | Salesforce", 20)) {
+					appLog.info("User successfully Logged Out");
+					return true;
+				}
+				else {
+					appLog.error("Not logged out");
+				}
+			}
+			else {
+				appLog.error("Log out button in user menu tab not found");
+			}
+		}
+		else {
+			appLog.error("User menu tab not found");
+		}
+		return false;
 	}
 	
 	

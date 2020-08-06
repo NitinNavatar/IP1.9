@@ -4,6 +4,7 @@
 package com.navatar.scripts;
 
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.BaseLib;
@@ -51,7 +52,7 @@ import java.util.Set;
  */
 public class Module16 extends BaseLib{
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc001_Precondition() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -119,7 +120,7 @@ public class Module16 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc002_CreatePreconditionData() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -314,13 +315,13 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc003_ActiveWatermarkingAndManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
 		if(nim.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 20, nim.getFrame(PageName.NavatarInvestorManager, 20));
+			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				String WatermarkingLabels=ExcelUtils.readData("FilePath",0,30,currentlyExecutingTC);
 				if(nim.activateWatermarking2(WatermarkingLabels).isEmpty()) {
@@ -334,7 +335,7 @@ public class Module16 extends BaseLib{
 				sa.assertTrue(false, "Not able to click on watermarking side menu so cannot activate watermarking settings");
 			}
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 30, nim.getFrame(PageName.NavatarInvestorManager, 10));
+			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 10));
 			if(nim.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				ThreadSleep(3000);
 				if(nim.activateManageApprovalsSettings(CRMUser1FirstName+" "+CRMUser1LastName).isEmpty()) {
@@ -356,7 +357,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc004_VerifyUIOfBulkUpload() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -369,7 +370,7 @@ public class Module16 extends BaseLib{
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FileDistributorSettings)) {
 				if (np.verifyFileDistributerUI(fileDistributor.BulkUpload)) {
 					appLog.info("successfully verified ui of bulk upload");
@@ -405,7 +406,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc005_VerifyUIOfFileSplitter() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -413,7 +414,7 @@ public class Module16 extends BaseLib{
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, fp.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, fp.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FileDistributorSettings)) {
 				if (np.clickOnSideMenusTab(sideMenu.FileSplitterOptions)) {
 					if (np.verifyFileDistributerUI(fileDistributor.FileSplitter)) {
@@ -458,8 +459,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M16tc006_BuildWorkspaceAndInvite() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc006_BuildWorkspaceAndInvite(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -521,7 +522,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test	
+	@Parameters({ "environment", "mode" }) @Test	
 	public void M16tc007_RegisterContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -555,7 +556,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc008_VerifyFileDistributor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -574,7 +575,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 						parentID = switchOnWindow(driver);
@@ -795,7 +796,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "could not drag and drop files");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 10));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 10));
 						}
 						else {
 							appLog.error("child window not found");
@@ -840,8 +841,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M16tc009_VerifyResolveIssuePopup() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc009_VerifyResolveIssuePopup(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -855,7 +856,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 						firstWindow = switchOnWindow(driver);
@@ -1010,7 +1011,7 @@ public class Module16 extends BaseLib{
 								}
 							}
 							driver.switchTo().window(firstWindow);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage,30));
+							switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.FundsPage, 30));
 						}
 						else {
 							appLog.error("could not switch to window");
@@ -1041,7 +1042,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc010_VerifyBulkUploadSuggestedNaming() {
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1059,7 +1060,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 						firstWindow = switchOnWindow(driver);
@@ -1263,7 +1264,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "could not find bulk upload radio button on upload window");
 							}
 							driver.switchTo().window(firstWindow);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						}
 						if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 							if (selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 10), "All Pending Documents", "All Pending Documents")) {
@@ -1324,7 +1325,7 @@ public class Module16 extends BaseLib{
 									
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc011_ApproveDocument_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1338,7 +1339,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30),"manage approval icon", action.SCROLLANDBOOLEAN)) {
 					if (selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "All Pending Documents", "All Pending Documents")) {
 						if (click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30),"all documents checkbox", action.BOOLEAN)) {
@@ -1392,7 +1393,7 @@ public class Module16 extends BaseLib{
 						appLog.error("could not verify download functionality");
 						sa.assertTrue(false, "could not verify download functionality");
 					}
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				}
 				else {
 					appLog.error("std path is not found on "+M16Institution1);
@@ -1450,7 +1451,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc011_ApproveDocument_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1549,7 +1550,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc012_DeactivateManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1562,7 +1563,7 @@ public class Module16 extends BaseLib{
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.deactivateManageApprovalsSetting()) {
 				
 			}
@@ -1578,7 +1579,7 @@ public class Module16 extends BaseLib{
 				
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc013_VerifyDuplicateDocumentsPopup_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1603,7 +1604,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon", action.BOOLEAN)) {
 						parentID = switchOnWindow(driver);
@@ -1670,7 +1671,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "bulk upload button is not clickable");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 
 
 						}
@@ -1752,7 +1753,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "bulk upload button is not clickable");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						}
 						else {
 							appLog.error("cannot find child window to switch");
@@ -1799,7 +1800,7 @@ public class Module16 extends BaseLib{
 		}
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc013_VerifyDuplicateDocumentsPopup_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1837,8 +1838,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M16tc014_ChangeBulkUploadSettings_Action() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc014_ChangeBulkUploadSettings_Action(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1855,7 +1856,7 @@ public class Module16 extends BaseLib{
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager,30));
+			switchToFrame(driver, 30, np.getFrame(environment,mode, PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FileDistributorSettings)) {
 				if (click(driver, np.getReverseNamingRadioButton(30), "reverse naming radio button", action.BOOLEAN)) {
 					if (click(driver,np.getFileDistributorSaveButton(fileDistributor.BulkUpload), "save button", action.SCROLLANDBOOLEAN)) {
@@ -1891,7 +1892,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver,fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon fund/ws", action.BOOLEAN)) {
 								parentID = switchOnWindow(driver);
@@ -2054,7 +2055,7 @@ public class Module16 extends BaseLib{
 										sa.assertTrue(false, "bulk upload or file splitter radio button on upload window is not clickable");
 									}
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 								else {
 									appLog.error("could not find new window to switch");
@@ -2136,8 +2137,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M16tc014_ChangeBulkUploadSettings_ImpactCRM() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc014_ChangeBulkUploadSettings_ImpactCRM(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2148,7 +2149,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, M16Institution1+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution1);
@@ -2178,7 +2179,7 @@ public class Module16 extends BaseLib{
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, M16Institution2+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution2);
@@ -2208,7 +2209,7 @@ public class Module16 extends BaseLib{
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, fp.reverseFileNameForFileDistributor(files[0], M16Institution3))) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution3);
@@ -2238,7 +2239,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M16Contact1FirstName, M16Contact1LastName, null)) {
-				switchToFrame(driver, 30, cp.getFrame(PageName.ContactsPage,30));
+				switchToFrame(driver, 30, cp.getFrame(environment,mode, PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, M16FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.ContactsPage, Workspace.FundraisingWorkspace, M16Institution1+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution1);
@@ -2302,7 +2303,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc014_ChangeBulkUploadSettings_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2350,7 +2351,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc015_VerifyUploadValidAndInvalidDelimeter_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2368,7 +2369,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-		switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver,fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon fund/ws", action.BOOLEAN)) {
 								parentID = switchOnWindow(driver);
@@ -2494,7 +2495,7 @@ public class Module16 extends BaseLib{
 										sa.assertTrue(false, "bulk upload radio button is not clickable");
 									}
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 								else {
 									appLog.error("could not find child window to switch");
@@ -2522,7 +2523,7 @@ public class Module16 extends BaseLib{
 											}
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+											switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										}
 									}
 									
@@ -2553,7 +2554,7 @@ public class Module16 extends BaseLib{
 											}
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+											switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										}
 									}
 								}
@@ -2583,7 +2584,7 @@ public class Module16 extends BaseLib{
 											}
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+											switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										}
 									}
 								}
@@ -2618,7 +2619,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc015_VerifyUploadValidAndInvalidDelimeter_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2636,7 +2637,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, M16Institution1+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution1);
@@ -2663,7 +2664,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, M16Institution2+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution2);
@@ -2690,7 +2691,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, M16Institution3+"_"+M16Institution4+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution3);
@@ -2717,7 +2718,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M16Contact1FirstName, M16Contact1LastName, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, M16FundName1, PageName.ContactsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.ContactsPage, Workspace.FundraisingWorkspace, M16Institution1+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution1);
@@ -2765,7 +2766,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc015_VerifyUploadValidAndInvalidDelimeter_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2831,7 +2832,7 @@ public class Module16 extends BaseLib{
 						}
 						driver.close();
 						driver.switchTo().window(parentID);
-						switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					}
 				}
 				else {
@@ -2860,7 +2861,7 @@ public class Module16 extends BaseLib{
 						}
 						driver.close();
 						driver.switchTo().window(parentID);
-						switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					}
 				}
 				else {
@@ -2889,7 +2890,7 @@ public class Module16 extends BaseLib{
 						}
 						driver.close();
 						driver.switchTo().window(parentID);
-						switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					}
 				}
 				else {
@@ -2910,8 +2911,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M16tc016_ChangeFileSplitterOptionsAndVerify_Action() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc016_ChangeFileSplitterOptionsAndVerify_Action(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2924,7 +2925,7 @@ public class Module16 extends BaseLib{
 		String dropImage="BulkUpload.jpg";
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager,30));
+			switchToFrame(driver, 30, np.getFrame(environment,mode, PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FileDistributorSettings)) {
 				if (np.clickOnSideMenusTab(sideMenu.FileSplitterOptions)) {
 					if (click(driver, np.getReverseNamingRadioButton(30), "reverse naming radio button", action.BOOLEAN)) {
@@ -2974,7 +2975,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if (click(driver,fp.getUploadIcon(Workspace.FundraisingWorkspace, 30), "upload icon fund/ws", action.BOOLEAN)) {
 						parentID = switchOnWindow(driver);
@@ -3043,7 +3044,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "bulk upload radio button is not clickable");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						}
 						else {
 							appLog.error("could not find child window to switch");
@@ -3071,7 +3072,7 @@ public class Module16 extends BaseLib{
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 							}
 							else {
@@ -3100,7 +3101,7 @@ public class Module16 extends BaseLib{
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 							}
 							else {
@@ -3134,7 +3135,7 @@ public class Module16 extends BaseLib{
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 							}
 							else {
@@ -3173,7 +3174,7 @@ public class Module16 extends BaseLib{
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc016_ChangeFileSplitterOptionsAndVerify_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3296,7 +3297,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc017_ActivateManageApprovalAndFileDistr() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3311,7 +3312,7 @@ public class Module16 extends BaseLib{
 		
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if (np.clickOnEditIcon()) {
 					if (click(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.Edit), "activate manage approval checkbox", action.SCROLLANDBOOLEAN)) {
@@ -3404,8 +3405,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M16tc018_BuildInvWorkspaceAndInviteContact() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc018_BuildInvWorkspaceAndInviteContact(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3467,7 +3468,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc019_VerifyFileDistributorInvestorWs() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3486,7 +3487,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, M16LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon InvestorWorkspace", action.SCROLLANDBOOLEAN)) {
 						parentID = switchOnWindow(driver);
@@ -3706,7 +3707,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "could not drag and drop files");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 10));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 10));
 						}
 						else {
 							appLog.error("child window not found");
@@ -3751,8 +3752,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
-	public void M16tc020_VerifyResolveIssuePopup_Investor() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc020_VerifyResolveIssuePopup_Investor(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3766,7 +3767,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, M16LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 						firstWindow = switchOnWindow(driver);
@@ -3921,7 +3922,7 @@ public class Module16 extends BaseLib{
 								}
 							}
 							driver.switchTo().window(firstWindow);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage,30));
+							switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.FundsPage, 30));
 						}
 						else {
 							appLog.error("could not switch to window");
@@ -3952,7 +3953,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc021_VerifyBulkUploadSuggestedNamingInvestor() {
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3968,7 +3969,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, M16LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon fundraising workspace", action.SCROLLANDBOOLEAN)) {
 						firstWindow = switchOnWindow(driver);
@@ -4170,7 +4171,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "could not find bulk upload radio button on upload window");
 							}
 							driver.switchTo().window(firstWindow);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						}
 						if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
 							if (selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 10), "All Pending Documents", "All Pending Documents")) {
@@ -4231,7 +4232,7 @@ public class Module16 extends BaseLib{
 									
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc022_ApproveDocumentInvestors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4245,7 +4246,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30),"manage approval icon", action.SCROLLANDBOOLEAN)) {
 					if (selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "All Pending Documents", "All Pending Documents")) {
 						if (click(driver, fp.getManageApprovalsAllDocumentSelectCheckBox(30),"all documents checkbox", action.BOOLEAN)) {
@@ -4299,7 +4300,7 @@ public class Module16 extends BaseLib{
 						appLog.error("could not verify download functionality for "+M16LimitedPartner1+"_"+files[1]);
 						sa.assertTrue(false, "could not verify download functionality for "+M16LimitedPartner1+"_"+files[1]);
 					}
-					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				}
 				else {
 					appLog.error("std path is not found on "+M16Institution1);
@@ -4356,7 +4357,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc022_ApproveDocumentInvestors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4460,7 +4461,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc023_DeactivateManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4473,7 +4474,7 @@ public class Module16 extends BaseLib{
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.deactivateManageApprovalsSetting()) {
 				appLog.info("successfully deactivated manage approvals");
 			}
@@ -4489,7 +4490,7 @@ public class Module16 extends BaseLib{
 				
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc024_VerifyDuplicateDocumentsPopup_Investors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4514,7 +4515,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, M16LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon", action.BOOLEAN)) {
 						parentID = switchOnWindow(driver);
@@ -4581,7 +4582,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "bulk upload button is not clickable");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 
 
 						}
@@ -4663,7 +4664,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "bulk upload button is not clickable");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						}
 						else {
 							appLog.error("cannot find child window to switch");
@@ -4710,7 +4711,7 @@ public class Module16 extends BaseLib{
 		}
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc024_VerifyDuplicateDocumentsPopup_Investors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4748,8 +4749,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M16tc025_ChangeBulkUploadSettingsInvestor_Action() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc025_ChangeBulkUploadSettingsInvestor_Action(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4766,7 +4767,7 @@ public class Module16 extends BaseLib{
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager,30));
+			switchToFrame(driver, 30, np.getFrame(environment,mode, PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FileDistributorSettings)) {
 				if (click(driver, np.getReverseNamingRadioButton(30), "reverse naming radio button", action.BOOLEAN)) {
 					if (click(driver,np.getFileDistributorSaveButton(fileDistributor.BulkUpload), "save button", action.SCROLLANDBOOLEAN)) {
@@ -4802,7 +4803,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, M16LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver,fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon fund/ws", action.BOOLEAN)) {
 								parentID = switchOnWindow(driver);
@@ -4965,7 +4966,7 @@ public class Module16 extends BaseLib{
 										sa.assertTrue(false, "bulk upload or file splitter radio button on upload window is not clickable");
 									}
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 								else {
 									appLog.error("could not find new window to switch");
@@ -5047,7 +5048,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc025_ChangeBulkUploadSettingsInvestor_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5061,7 +5062,7 @@ public class Module16 extends BaseLib{
 		
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M16Contact1FirstName,M16Contact1LastName, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16LimitedPartner1, null, M16FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.ContactsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner1);
@@ -5124,7 +5125,7 @@ public class Module16 extends BaseLib{
 		//inst
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner1, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner1);
@@ -5154,7 +5155,7 @@ public class Module16 extends BaseLib{
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner2, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner2);
@@ -5184,7 +5185,7 @@ public class Module16 extends BaseLib{
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner3, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, fp.reverseFileNameForFileDistributor(files[0], M16LimitedPartner3))) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution3);
@@ -5215,7 +5216,7 @@ public class Module16 extends BaseLib{
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M16LimitedPartner1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner1);
@@ -5245,7 +5246,7 @@ public class Module16 extends BaseLib{
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M16LimitedPartner2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner2);
@@ -5275,7 +5276,7 @@ public class Module16 extends BaseLib{
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M16LimitedPartner3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, fp.reverseFileNameForFileDistributor(files[0], M16LimitedPartner3))) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution3);
@@ -5308,7 +5309,7 @@ public class Module16 extends BaseLib{
 		//commitment
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId1)) {
-				switchToFrame(driver, 30, cmp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution1);
@@ -5330,7 +5331,7 @@ public class Module16 extends BaseLib{
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId2)) {
-				switchToFrame(driver, 30, cmp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner2, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner2);
@@ -5352,7 +5353,7 @@ public class Module16 extends BaseLib{
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId3)) {
-				switchToFrame(driver, 30, cmp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner3, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, fp.reverseFileNameForFileDistributor(files[0], M16LimitedPartner3))) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner3);
@@ -5376,7 +5377,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc026_VerifyUploadValidAndInvalidDelimeterInvestor_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5394,7 +5395,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-		switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+		switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, M16LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver,fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon fund/ws", action.BOOLEAN)) {
 								parentID = switchOnWindow(driver);
@@ -5519,7 +5520,7 @@ public class Module16 extends BaseLib{
 										sa.assertTrue(false, "bulk upload radio button is not clickable");
 									}
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 								else {
 									appLog.error("could not find child window to switch");
@@ -5547,7 +5548,7 @@ public class Module16 extends BaseLib{
 											}
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+											switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										}
 									}
 									
@@ -5578,7 +5579,7 @@ public class Module16 extends BaseLib{
 											}
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+											switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										}
 									}
 								}
@@ -5608,7 +5609,7 @@ public class Module16 extends BaseLib{
 											}
 											driver.close();
 											driver.switchTo().window(parentID);
-											switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+											switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 										}
 									}
 								}
@@ -5643,7 +5644,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc026_VerifyUploadValidAndInvalidDelimeterInvestor_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5661,7 +5662,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16LimitedPartner1, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution1);
@@ -5688,7 +5689,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16LimitedPartner2, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution2);
@@ -5715,7 +5716,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(M16Institution3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16LimitedPartner3, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution3);
@@ -5743,7 +5744,7 @@ public class Module16 extends BaseLib{
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M16LimitedPartner1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner1);
@@ -5770,7 +5771,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M16LimitedPartner2)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner2);
@@ -5797,7 +5798,7 @@ public class Module16 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(M16LimitedPartner3)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner3);
@@ -5825,7 +5826,7 @@ public class Module16 extends BaseLib{
 		
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M16Contact1FirstName, M16Contact1LastName, null)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.ContactsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.ContactsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16LimitedPartner1, null, M16FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.ContactsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution1);
@@ -5871,7 +5872,7 @@ public class Module16 extends BaseLib{
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId1)) {
-				switchToFrame(driver, 30, cmp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16Institution1);
@@ -5886,7 +5887,7 @@ public class Module16 extends BaseLib{
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId2)) {
-				switchToFrame(driver, 30, cmp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner2, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner2);
@@ -5901,7 +5902,7 @@ public class Module16 extends BaseLib{
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
 			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId3)) {
-				switchToFrame(driver, 30, cmp.getFrame(PageName.CommitmentsPage, 30));
+				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner3, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner3);
@@ -5918,7 +5919,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc026_VerifyUploadValidAndInvalidDelimeterInvestor_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6046,8 +6047,8 @@ public class Module16 extends BaseLib{
 	
 	}
 	
-	@Test
-	public void M16tc027_ChangeFileSplitterOptionsAndVerifyInvestors_Action() {
+	@Parameters({ "environment", "mode" }) @Test
+	public void M16tc027_ChangeFileSplitterOptionsAndVerifyInvestors_Action(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6060,7 +6061,7 @@ public class Module16 extends BaseLib{
 		String dropImage="BulkUpload.jpg";
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame(PageName.NavatarInvestorManager,30));
+			switchToFrame(driver, 30, np.getFrame(environment,mode, PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.FileDistributorSettings)) {
 				if (np.clickOnSideMenusTab(sideMenu.FileSplitterOptions)) {
 					if (click(driver, np.getReverseNamingRadioButton(30), "reverse naming radio button", action.BOOLEAN)) {
@@ -6110,7 +6111,7 @@ public class Module16 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M16FundName1)) {
-				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M16Institution1, M16LimitedPartner1, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver,fp.getUploadIcon(Workspace.InvestorWorkspace, 30), "upload icon fund/ws", action.BOOLEAN)) {
 						parentID = switchOnWindow(driver);
@@ -6178,7 +6179,7 @@ public class Module16 extends BaseLib{
 								sa.assertTrue(false, "bulk upload radio button is not clickable");
 							}
 							driver.switchTo().window(parentID);
-							switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						}
 						else {
 							appLog.error("could not find child window to switch");
@@ -6206,7 +6207,7 @@ public class Module16 extends BaseLib{
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 							}
 							else {
@@ -6235,7 +6236,7 @@ public class Module16 extends BaseLib{
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 							}
 							else {
@@ -6269,7 +6270,7 @@ public class Module16 extends BaseLib{
 									}
 									driver.close();
 									driver.switchTo().window(parentID);
-									switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
+									switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 								}
 							}
 							else {
@@ -6308,7 +6309,7 @@ public class Module16 extends BaseLib{
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test
 	public void M16tc027_ChangeFileSplitterOptionsAndVerifyInvestors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
