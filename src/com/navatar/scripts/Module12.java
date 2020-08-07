@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import static com.navatar.generic.CommonLib.*;
 
 import org.openqa.selenium.By;
@@ -68,7 +68,7 @@ import com.sun.mail.util.BASE64DecoderStream;
  */
 public class Module12 extends BaseLib {
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc001_CreatePreconditionDataFromSheet() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -248,7 +248,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc002_VerifyAlertsGridAtCRMHomePage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -389,8 +389,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage(String environment, String mode) {
+	@Test
+	public void M12tc003_BuildWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -616,7 +616,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc004_1_RegisterContact1UpdateMyProfileMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -919,7 +919,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc004_2_VerifyAlertAtCRMHomePage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1086,7 +1086,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc005_VerifyFirmProfileUpdatedPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1605,7 +1605,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc006_VerifyContactProfileUpdatedPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2160,7 +2160,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc007_1_RegisterContact2UpdateMyProfileMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2463,7 +2463,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc007_2_verifyContactProfileUpdatedAndFirmProfileUpdatedAlertAtCRMHomePage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2670,7 +2670,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc008_1_ViewDownloadDocumentFromAllFirms() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2804,7 +2804,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc008_2_verifyDocumentViewedDocumentDownloadedAlertAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -3207,7 +3207,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc009_1_ViewDownloadDocumentFromPEFirmAllDocuments() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3336,7 +3336,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc009_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -3739,7 +3739,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc010_1_ViewDownloadDocumentFromPEFirmRecentDocuments() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3874,7 +3874,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc010_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4278,7 +4278,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc011_1_ViewDownloadDocumentFromPEFirmPotentialInvestment(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4436,7 +4436,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc011_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4839,8 +4839,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc012_CreateFundraisingWorkspaceForFund2AndInviteSameContact(String environment, String mode){
+	@Test
+	public void M12tc012_CreateFundraisingWorkspaceForFund2AndInviteSameContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4972,7 +4972,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc013_1_ViewDownloadDocumentsFromInvestorSideForFund2(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5102,7 +5102,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc013_2_VerifyCreatedAlertsAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5505,7 +5505,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc014_1_UploadDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5569,7 +5569,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc014_2_VerifyDocumentUploadedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5712,7 +5712,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc015_1_UpdateDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5767,7 +5767,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc015_2_VerifyDocumentUpdatedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5910,7 +5910,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc016_VerifyFundDocumentContactHyperlinkInAlerts(){
 	LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6207,7 +6207,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc017_VerifyShowPicklistAtHomePage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6310,7 +6310,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc018_VerifyShowPicklistAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6438,7 +6438,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc019_VerifyShowPicklistAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6568,7 +6568,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc020_VerifySortingAtHomePage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6637,7 +6637,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc021_VerifySortingAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6724,7 +6724,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc022_VerifySortingAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6813,7 +6813,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc023_VerifySortingInContactProfileUpdatedFirmProfileUpdatedPopUpFromHomePage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6877,7 +6877,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc024_VerifySortingInContactProfileUpdatedFirmProfileUpdatedPopUpFromFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6972,7 +6972,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc025_VerifySortingInContactProfileUpdatedFirmProfileUpdatedPopUpFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -7068,7 +7068,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();			
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc026_DeleteContactUpdateEmailIdOfContactAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -7458,7 +7458,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	} 
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc027_DeleteDocumentFromCRMSideAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -7905,7 +7905,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc028_1_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeleteddocument(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -8038,7 +8038,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc028_2_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeleteddocument(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -8142,7 +8142,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc029_UpdateDocumentFromCRMSideAndVerifyOpeningOfUpdatedDocumentFromAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -9130,7 +9130,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc030_1_VerifyDocumentiewedDocumentDownloadedAertForUpdatedFile(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9246,7 +9246,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 		}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc030_2_VerifyDocumentAlertForUpdatedFileAndCheckImpactCRMSIde(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -9552,7 +9552,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc031_UpdateContactNameAndAccountNameFromCRMSideAndVerifyAlerts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9795,7 +9795,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}	
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc032_VerifyRemovalOfContactProfileUpdateAndFirmProfileUpdatedAlertAfterRemovingCompleteAccess(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -10006,7 +10006,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc033_RemoveContactsPartialAccessAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -10442,7 +10442,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc034_DeleteLastInvitedFolderAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -10643,8 +10643,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc035_AgainInviteContactAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc035_AgainInviteContactAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -10978,7 +10978,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc036_CloseWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -11196,8 +11196,8 @@ public class Module12 extends BaseLib {
 	sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc037_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc037_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -11493,7 +11493,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc038_RemoveInvestorFromManageInvestorAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -11720,8 +11720,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc039_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc039_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -12038,7 +12038,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc040_ClearWorkspaceAndVerifyAlerts() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12300,8 +12300,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc041_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc041_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12666,8 +12666,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage(String environment, String mode){
+	@Test
+	public void M12tc042_BuildInvestorWorkspaceAndInviteContactAndVerifyAlertHistoryAtFundPageContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12961,7 +12961,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc043_1_ViewDownloadDocumentFromAllFirms(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13095,7 +13095,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc043_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -13468,7 +13468,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc044_1_ViewDownloadDcumentFromPEFirmAllDocuments(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13597,7 +13597,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc044_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -13911,7 +13911,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc045_1_ViewDownloadDocumentFromPEFirmRecentDocuments(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14046,7 +14046,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc045_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14360,7 +14360,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc046_1_ViewDownloadDocumentFromPEFirmCurrentInvestment(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14518,7 +14518,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc046_2_VerifyDocumentViewedDocumentDownloadedAlertAtCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14832,8 +14832,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact(String environment, String mode){
+	@Test
+	public void M12tc047_CreateInvestorWorkspaceForFund2AndInviteSameContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14957,7 +14957,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc048_1_ViewDownloadDocumentsFromInvestorSideForFund2(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15081,7 +15081,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc048_2_VerifyCreatedAlertsAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15389,7 +15389,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc049_1_UploadDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15451,7 +15451,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc049_2_verifyDocumentUploadedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15591,7 +15591,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc050_1_UpdateDocumentFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15644,7 +15644,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc050_2_VerifyDocumentUpdatedAlertAtHomeFundContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15785,7 +15785,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc051_VerifyFundDocumentContactHyperlinkInAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16008,7 +16008,7 @@ public class Module12 extends BaseLib {
 			sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc052_VerifyShowPicklistAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16142,7 +16142,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc053_VerifyShowPicklistAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16279,7 +16279,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc054_VerifySortingAtFundPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16366,7 +16366,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc055_VerifySortingAtContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16454,7 +16454,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc056_DeleteContactUpdateEmailIDOfContactAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -16732,7 +16732,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc057_DeleteDocumentFromCRMSideAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -17179,7 +17179,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc058_1_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeletedDocument(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -17285,7 +17285,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();	
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc058_2_VerifyNoNewDocumentViewedAlertWhenInvestorTriesToAccessAlreadyDeletedDocument(){
 	LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -17389,7 +17389,7 @@ public class Module12 extends BaseLib {
 	sa.assertAll();		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc059_UpdateDocumentFromCRMSideAndVerifyOpeningOfUpdatedDocumentFromAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -18395,7 +18395,7 @@ public class Module12 extends BaseLib {
 		saa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc060_1_VerifyDocumentViewedDocumentDownloadedAlertForUpdatedFile(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18512,7 +18512,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc060_2_VerifyDocumentViewedDocumentDownloadedAlertForUpdatedFile(){	
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -18815,7 +18815,7 @@ public class Module12 extends BaseLib {
 	sa.assertAll();	
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc061_UpdateInvestmentInfoCRMSideAndVerifyAlerts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18969,7 +18969,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc062_VerifyRemovalOfContactProfileUpdateAndFirmProfileUpdatedAlertAfterRemovingCompleteAccessForAContact(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -19182,7 +19182,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc063_RemoveContactPartialAccessAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -19623,7 +19623,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc064_DeleteLastInvitedFolderAndVerifyAlerts(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -19830,8 +19830,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc065_AgainInviteContactAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc065_AgainInviteContactAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -20167,7 +20167,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc066_CloseWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -20392,8 +20392,8 @@ public class Module12 extends BaseLib {
 	sa.assertAll();					
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc067_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc067_AgainInviteContactAfterCloseWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -20703,7 +20703,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc068_RemoveInvestorFromManageInvestorAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -20941,8 +20941,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc069_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc069_AgainAddInvestorThroughManageInvestorInTheContactAndVerifyAlerts(){
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -21277,7 +21277,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc070_ClearWorkspaceAndVerifyAlerts(){
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21524,8 +21524,8 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M12tc071_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(String environment, String mode){
+	@Test
+	public void M12tc071_BuildWorkspaceAgainAndInviteContactAndVerifyAlerts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -21877,7 +21877,7 @@ public class Module12 extends BaseLib {
 		sa.assertAll();	
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M12tc072_postCondition(){
 	LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

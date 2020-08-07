@@ -7,7 +7,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
@@ -61,7 +61,7 @@ import static com.navatar.generic.CommonLib.*;
  */
 public class Module17 extends BaseLib {
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc001_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -256,8 +256,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc002_buildFRW(String environment, String mode) {
+	@Test
+	public void M17tc002_buildFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -356,8 +356,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc003_VerifySharedFolderContactAccessInFR(String environment, String mode) {
+	@Test
+	public void M17tc003_VerifySharedFolderContactAccessInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -548,8 +548,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc004_verifyFunctionalityOfAddSelectBtn(String environment, String mode) {
+	@Test
+	public void M17tc004_verifyFunctionalityOfAddSelectBtn() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 //		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -924,7 +924,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc005_VerifyStandardFolderContactAccessInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1125,8 +1125,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc006_verifyContactAccessPopUpOnSTDFolderInFR(String environment, String mode) {
+	@Test
+	public void M17tc006_verifyContactAccessPopUpOnSTDFolderInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		//		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -1501,8 +1501,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc007_inviteContactAndSendEMailToContact(String environment, String mode) {
+	@Test
+	public void M17tc007_inviteContactAndSendEMailToContact() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -1567,7 +1567,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc008_1_registerM3Contact1(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1662,7 +1662,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc008_2_VerifyContentGridFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1832,7 +1832,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc009_1_LoginWithHubToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1884,7 +1884,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc009_2_LoginWithHunToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -1984,7 +1984,7 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc009_3_VerifyUpdatedInfoAndRemoveFunctionalityCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2135,7 +2135,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc009_4_CheckEffectAfterRemovingContactAccessInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -2157,8 +2157,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc010_deleteContactAndCheckImpactInContactAccessInFR(String environment, String mode) {
+	@Test
+	public void M17tc010_deleteContactAndCheckImpactInContactAccessInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -2319,8 +2319,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc011_1_deleteFolderAndInviteSameContactFormContactAccess(String environment, String mode) {
+	@Test
+	public void M17tc011_1_deleteFolderAndInviteSameContactFormContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2493,7 +2493,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc011_2_verifyFolderStructureAtAtargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2526,8 +2526,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc012_SearchAlreadyInvitedContactandTrytosendinvitationInFR(String environment, String mode) {
+	@Test
+	public void M17tc012_SearchAlreadyInvitedContactandTrytosendinvitationInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -2665,8 +2665,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc013_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup(String environment, String mode) {
+	@Test
+	public void M17tc013_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2898,8 +2898,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc015_1_updateUploadPermissionForInvitedContactInFR(String environment, String mode) {
+	@Test
+	public void M17tc015_1_updateUploadPermissionForInvitedContactInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -3006,7 +3006,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc015_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3048,8 +3048,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc016_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder(String environment, String mode) {
+	@Test
+	public void M17tc016_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -3223,8 +3223,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc017_inviteContactAndCreateSubFolderCheckPermission(String environment, String mode) {
+	@Test
+	public void M17tc017_inviteContactAndCreateSubFolderCheckPermission() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] stdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.StandardPath).split(",");
@@ -3373,8 +3373,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc018_1_VerifyAccessFromAddedChildFolderCRMSide(String environment, String mode) {
+	@Test
+	public void M17tc018_1_VerifyAccessFromAddedChildFolderCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -3613,7 +3613,7 @@ public class Module17 extends BaseLib {
 	
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc018_2_VerifyAccessFromAddedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3804,7 +3804,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc019_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4052,7 +4052,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc019_2_RemoveTheAccessFromInvitedParentFolderImpcatInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4206,8 +4206,8 @@ public class Module17 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc020_1_InviteContactFromParentAndRemoveAccessFromChild(String environment, String mode) {
+	@Test
+	public void M17tc020_1_InviteContactFromParentAndRemoveAccessFromChild() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4365,7 +4365,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc020_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4548,7 +4548,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc021_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4692,7 +4692,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc021_2_RemoveTheAccessFromInvitedParentFolderImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -4712,8 +4712,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc022_1_inviteContactFromMultiFolders(String environment, String mode) {
+	@Test
+	public void M17tc022_1_inviteContactFromMultiFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4852,7 +4852,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc022_2_inviteContactFromMultiFoldersImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5020,7 +5020,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc023_1_AddSharedFolderFromManageFolderAndInviteContact(){
 	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5081,8 +5081,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc023_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(String environment, String mode){
+	@Test
+	public void M17tc023_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(){
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5231,7 +5231,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc024_1_InvestorUserLoginAndVerifyFolderStructure() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5287,8 +5287,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc024_2_VerifyPermissionAtContactDetailPage(String environment, String mode) {
+	@Test
+	public void M17tc024_2_VerifyPermissionAtContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5541,7 +5541,7 @@ public class Module17 extends BaseLib {
 	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc025_1_CheckFunctionalityOfRemoveLinkUnderActionColumn() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5669,7 +5669,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc025_2_CheckFunctionalityOfRemoveLinkImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5748,8 +5748,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc026_CheckValidationWhenUserHasNoEmailAddressINFR(String environment, String mode) {
+	@Test
+	public void M17tc026_CheckValidationWhenUserHasNoEmailAddressINFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -6038,8 +6038,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc027_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP(String environment, String mode) {
+	@Test
+	public void M17tc027_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -6180,7 +6180,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc027_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6269,7 +6269,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc028_1_ProvideDownloadPermissionToTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6374,7 +6374,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc028_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6508,8 +6508,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc029_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder(String environment, String mode) {
+	@Test
+	public void M17tc029_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -6701,8 +6701,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc030_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission(String environment, String mode) {
+	@Test
+	public void M17tc030_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] shdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.SharedPath).split(",");
@@ -6940,8 +6940,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc031_1_VerifyAccessFromAddedSharedChildFolderCRMSide(String environment, String mode) {
+	@Test
+	public void M17tc031_1_VerifyAccessFromAddedSharedChildFolderCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -7133,7 +7133,7 @@ public class Module17 extends BaseLib {
 
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc031_2_VerifyAccessFromAddedSharedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7323,7 +7323,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc032_1_ChangePermissionToSharedFolderTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7433,7 +7433,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc032_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7598,7 +7598,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc033_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7793,7 +7793,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc033_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7890,8 +7890,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc034_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder(String environment, String mode) {
+	@Test
+	public void M17tc034_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -8047,7 +8047,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc034_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8178,7 +8178,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc035_1_RemoveContactAccessActionFromContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -8305,7 +8305,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc035_2_RemoveContactAccessImpactonInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -8329,8 +8329,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc036_1_buildFundraisingWorkspaceAndInviteContactForFund2(String environment, String mode) {
+	@Test
+	public void M17tc036_1_buildFundraisingWorkspaceAndInviteContactForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -8398,7 +8398,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc036_2_LoginWithHubToEnableBulkDownLoadForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8450,7 +8450,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc037_1_RemoveTheAccessOfContact4FromFund1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8522,7 +8522,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc037_2_registerM17Contact4(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -8635,7 +8635,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc038_1_UploadFileAtSharedCommonFolderAndRenameSharedCommonFolderName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8814,7 +8814,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc038_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8882,8 +8882,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc039_CheckFunctionalityofsearchtextfieldonContactAccessFundraisingWorkspace(String environment, String mode) {
+	@Test
+	public void M17tc039_CheckFunctionalityofsearchtextfieldonContactAccessFundraisingWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -9097,8 +9097,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc040_CheckSortingOfColumnsForSelectContactsGrid(String environment, String mode) {
+	@Test
+	public void M17tc040_CheckSortingOfColumnsForSelectContactsGrid() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -9145,8 +9145,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc041_CheckSortingOfColumnsForSelectedContactsGrid(String environment, String mode) {
+	@Test
+	public void M17tc041_CheckSortingOfColumnsForSelectedContactsGrid() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -9248,8 +9248,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc042_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup(String environment, String mode) {
+	@Test
+	public void M17tc042_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -9549,8 +9549,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc043_buildInvestorWorkSpace(String environment, String mode) {
+	@Test
+	public void M17tc043_buildInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -9651,7 +9651,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc044_VerifySharedFolderContactAccess_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9802,8 +9802,8 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc045_verifyFunctionalityOfAddSelectBtnInvestorWorkSpace(String environment, String mode) {
+	@Test
+	public void M17tc045_verifyFunctionalityOfAddSelectBtnInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 //		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -10178,7 +10178,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc046_VerifyStandardFolderContactAccess_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10379,8 +10379,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc047_verifyContactAccessPopUpOnSTDFolderInInvestorWorkSpace(String environment, String mode) {
+	@Test
+	public void M17tc047_verifyContactAccessPopUpOnSTDFolderInInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		//		String standardfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -10755,8 +10755,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc048_inviteContactAndSendEMailToContact(String environment, String mode) {
+	@Test
+	public void M17tc048_inviteContactAndSendEMailToContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -10824,7 +10824,7 @@ public class Module17 extends BaseLib {
 			sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc049_1_VerifyContentGridInvestorSide_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10877,7 +10877,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc049_2_VerifyContentGridInvestorSide_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11053,7 +11053,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc050_1_LoginWithHubToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11106,7 +11106,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc050_2_LoginWithHubToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11157,7 +11157,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc050_3_LoginWithHunToEnableBulkDownLoad() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -11257,7 +11257,7 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc050_4_VerifyUpdatedInfoAndRemoveFunctionalityCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11408,7 +11408,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc050_5_CheckEffectAfterRemovingContactAccessInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -11432,8 +11432,8 @@ public class Module17 extends BaseLib {
 		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc051_deleteContactAndCheckImpactInContactAccessInINV(String environment, String mode) {
+	@Test
+	public void M17tc051_deleteContactAndCheckImpactInContactAccessInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -11593,8 +11593,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc052_1_deleteFolderAndInviteSameContactFormContactAccess(String environment, String mode) {
+	@Test
+	public void M17tc052_1_deleteFolderAndInviteSameContactFormContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -11765,7 +11765,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc052_2_verifyFolderStructureAtAtargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11798,8 +11798,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc053_SearchAlreadyInvitedContactandTrytosendinvitationInINV(String environment, String mode) {
+	@Test
+	public void M17tc053_SearchAlreadyInvitedContactandTrytosendinvitationInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -11937,8 +11937,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc054_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup(String environment, String mode) {
+	@Test
+	public void M17tc054_VerifyCheckboxFunctionalityforDownloadPrintDocumentsUnderContactAccesspopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -12170,7 +12170,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc055_VerifyFolderStructureAndBulkDownloadInvestorside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -12200,8 +12200,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc056_1_updateUploadPermissionForInvitedContactInFR(String environment, String mode) {
+	@Test
+	public void M17tc056_1_updateUploadPermissionForInvitedContactInFR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -12306,7 +12306,7 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc056_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12348,8 +12348,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc057_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder(String environment, String mode) {
+	@Test
+	public void M17tc057_TryToProvideAccessFromParentfolderWhenAccessAlreadyProvidedfromFirmAccountFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -12523,8 +12523,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc058_inviteContactAndCreateSubFolderCheckPermission(String environment, String mode) {
+	@Test
+	public void M17tc058_inviteContactAndCreateSubFolderCheckPermission() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] stdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.StandardPath).split(",");
@@ -12674,8 +12674,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc059_1_VerifyAccessFromAddedChildFolderCRMSide(String environment, String mode) {
+	@Test
+	public void M17tc059_1_VerifyAccessFromAddedChildFolderCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -12914,7 +12914,7 @@ public class Module17 extends BaseLib {
 	
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc059_2_VerifyAccessFromAddedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13106,7 +13106,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc060_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13360,7 +13360,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc060_2_RemoveTheAccessFromInvitedParentFolderImpcatInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13513,8 +13513,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc061_1_InviteContactFromParentAndRemoveAccessFromChild(String environment, String mode) {
+	@Test
+	public void M17tc061_1_InviteContactFromParentAndRemoveAccessFromChild() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -13672,7 +13672,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc061_2_verifyUploadpermissionAtTargetSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13852,7 +13852,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc062_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14006,7 +14006,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc062_2_RemoveTheAccessFromInvitedParentFolderImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -14030,8 +14030,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc063_1_inviteContactFromMultiFolders(String environment, String mode) {
+	@Test
+	public void M17tc063_1_inviteContactFromMultiFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14170,7 +14170,7 @@ public class Module17 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc063_2_inviteContactFromMultiFoldersImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14338,7 +14338,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc064_1_AddSharedFolderFromManageFolderAndInviteContact(){
 	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -14400,8 +14400,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc064_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(String environment, String mode){
+	@Test
+	public void M17tc064_2_InviteContactFromNewlyCreatedSharedFolderAndVerifyItsImpact(){
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14550,7 +14550,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc065_1_InvestorUserLoginAndVerifyFolderStructure() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14606,8 +14606,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc065_2_VerifyPermissionAtContactDetailPage(String environment, String mode) {
+	@Test
+	public void M17tc065_2_VerifyPermissionAtContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -14860,7 +14860,7 @@ public class Module17 extends BaseLib {
 	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc066_1_CheckFunctionalityOfRemoveLinkUnderActionColumn() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14988,7 +14988,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc066_2_CheckFunctionalityOfRemoveLinkImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15067,8 +15067,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc067_CheckValidationWhenUserHasNoEmailAddressININV(String environment, String mode) {
+	@Test
+	public void M17tc067_CheckValidationWhenUserHasNoEmailAddressININV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -15357,8 +15357,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc068_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP(String environment, String mode) {
+	@Test
+	public void M17tc068_1_UpdateAndRevertEmailAddressFromContactPageandCheckImpactAtContactAccessPopUP() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -15499,7 +15499,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc068_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15588,7 +15588,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc069_1_ProvideDownloadPermissionToTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15693,7 +15693,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc069_2_VerifyFolderStructureAndBulkDownloadInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -15828,8 +15828,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc070_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder(String environment, String mode) {
+	@Test
+	public void M17tc070_TryToProvideAccessFromChildFolderWhenAccessAlreadyProvidedFromParentLevelSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -16021,8 +16021,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc071_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission(String environment, String mode) {
+	@Test
+	public void M17tc071_inviteContactFromSubSharedFolderAndCreateSubFolderCheckPermission() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] shdPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,excelLabel.SharedPath).split(",");
@@ -16260,8 +16260,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc072_1_VerifyAccessFromAddedSharedChildFolderCRMSide(String environment, String mode) {
+	@Test
+	public void M17tc072_1_VerifyAccessFromAddedSharedChildFolderCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -16453,7 +16453,7 @@ public class Module17 extends BaseLib {
 
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc072_2_VerifyAccessFromAddedSharedChildFolderInvestoride() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16643,7 +16643,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc073_1_ChangePermissionToSharedFolderTheInvitedContactINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16753,7 +16753,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc073_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16918,7 +16918,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc074_1_RemoveTheAccessFromInvitedParentFolderActionCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17113,7 +17113,7 @@ public class Module17 extends BaseLib {
 		appLog.info("Pass");
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc074_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17210,8 +17210,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc075_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder(String environment, String mode) {
+	@Test
+	public void M17tc075_1_InviteContactFromSharedParentFolderAndRemoveAccessFromSubSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -17367,7 +17367,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc075_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17498,7 +17498,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc076_1_RemoveContactAccessActionFromContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -17626,7 +17626,7 @@ public class Module17 extends BaseLib {
 
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc076_2_RemoveContactAccessImpactonInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -17650,8 +17650,8 @@ public class Module17 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc077_1_buildInvestorWorkSpaceAndInviteContactForFund2(String environment, String mode) {
+	@Test
+	public void M17tc077_1_buildInvestorWorkSpaceAndInviteContactForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -17697,7 +17697,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc077_2_registerM17Contact3(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -17767,7 +17767,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc077_3_LoginWithHubToEnableBulkDownLoadForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17818,7 +17818,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc078_1_UploadFileAtSharedCommonFolderAndRenameSharedCommonFolderName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17997,7 +17997,7 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M17tc078_2_VerifyFolderStructureInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -18065,8 +18065,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc079_CheckFunctionalityofsearchtextfieldonContactAccessInvestorWorkSpace(String environment, String mode) {
+	@Test
+	public void M17tc079_CheckFunctionalityofsearchtextfieldonContactAccessInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -18281,8 +18281,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc080_CheckSortingOfColumnsForSelectContactsGrid(String environment, String mode) {
+	@Test
+	public void M17tc080_CheckSortingOfColumnsForSelectContactsGrid() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -18328,8 +18328,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc081_CheckSortingOfColumnsForSelectedContactsGrid(String environment, String mode) {
+	@Test
+	public void M17tc081_CheckSortingOfColumnsForSelectedContactsGrid() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -18426,8 +18426,8 @@ public class Module17 extends BaseLib {
 		sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M17tc082_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup(String environment, String mode) {
+	@Test
+	public void M17tc082_CheckFunctionalityHeaderCheckBoxInSelectContactsGridUnderContactAccessPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);

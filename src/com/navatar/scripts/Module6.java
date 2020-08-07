@@ -16,6 +16,7 @@ import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.WorkSpaceAction;
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.accessType;
 import com.navatar.generic.CommonLib.action;
@@ -47,7 +48,7 @@ import java.util.List;
 public class Module6 extends BaseLib {
 	static String filterPath = System.getProperty("user.dir") + "/TestCases_Filter.xlsx";
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc001_Module6_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -151,7 +152,7 @@ public class Module6 extends BaseLib {
 			sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc002_BuildWorkspaceAndImportFolderTemplateAndValidateManageInvestorUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -292,7 +293,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc003_CheckManageInvestorWithFundraisingDone() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -632,8 +633,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M6tc004_ProvideContactAccess(String environment, String mode) {
+	@Test
+	public void M6tc004_ProvideContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -866,8 +867,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M6tc005_RenameInvestorNameFromInstitutionPageAndCheckOnManageInvestorSection(String environment, String mode) {
+	@Test
+	public void M6tc005_RenameInvestorNameFromInstitutionPageAndCheckOnManageInvestorSection() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
@@ -1119,7 +1120,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc006_RenameInvestorNameFromManageInvestorWindow() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1466,7 +1467,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc007_EditInvestorNameFromInstitutionsPageWhoseFolderStructureNotCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1545,7 +1546,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc008_UncheckInvestorFromManageInvestorPopupAndCheckFolderStructureAndContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1829,8 +1830,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M6tc009_AddContactAccessAgainToNewlyAddedInstitution(String environment, String mode) {
+	@Test
+	public void M6tc009_AddContactAccessAgainToNewlyAddedInstitution() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1933,7 +1934,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc010_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasCreatedInWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2008,7 +2009,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc011_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasNotCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2083,7 +2084,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc012_AddStandardFolderFromManageFoldersAndThenAddInstitutionFromManageInvestors() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2144,7 +2145,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc013_BuildWorkspaceAndImportFolderTemplateAndCheckManageInvestorUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2258,7 +2259,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc014_CheckManageInvestorWithCommitmentAndPartnershipDone() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2794,8 +2795,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M6tc015_ProvideContactAccess(String environment, String mode) {
+	@Test
+	public void M6tc015_ProvideContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2916,8 +2917,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M6tc016_RenamLPNameFromInstitutionPageAndCheckOnManageInvestorSectionWhoseFolderStructureCreated(String environment, String mode) {
+	@Test
+	public void M6tc016_RenamLPNameFromInstitutionPageAndCheckOnManageInvestorSectionWhoseFolderStructureCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
@@ -3120,7 +3121,7 @@ public class Module6 extends BaseLib {
 		saa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc017_RenameInvestorNameFromManageInvestorWindowWhoseFolderStructureCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3463,7 +3464,7 @@ public class Module6 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc018_UncheckInvestorFromManageInvestorAndCheckContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3754,8 +3755,8 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M6tc019_AddContactAccessAgainToNewlyAddedLP(String environment, String mode) {
+	@Test
+	public void M6tc019_AddContactAccessAgainToNewlyAddedLP() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3857,7 +3858,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc020_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasCreated() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4003,7 +4004,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc021_DeleteInstitutionFromInstitutionsPageWhoseFolderStructureHasNotBeenCreated(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4126,7 +4127,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc022_AddStandardFolderFromManageFoldersAndThenAddInstitutionFromManageInvestors(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4220,7 +4221,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc023_CreatePreconditionData() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
@@ -4586,7 +4587,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc024_BuildWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4625,7 +4626,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc025_CheckUIOfManageInvestorPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4715,7 +4716,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc026_CheckFunctionalityOfAddRowButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4852,7 +4853,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc027_CheckFunctionalityOfClearButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4998,7 +4999,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc028_CheckFilterValidationOnManageInvestorPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5340,7 +5341,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc029_VerifyFilterAsPerFilterSingleRowFilterInvestorAndMultipleRowFilterInvestorSheetInManageInvestor(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5394,7 +5395,7 @@ public class Module6 extends BaseLib {
 	sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc030_CheckUIOfManageInvestorPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5484,7 +5485,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc031_CheckFunctionalityOfAddRowButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5619,7 +5620,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc032_CheckFunctionalityOfClearButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5765,7 +5766,7 @@ public class Module6 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc033_CheckFilterValidationOnManageInvestorPopUp(){
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6111,7 +6112,7 @@ public class Module6 extends BaseLib {
 	sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc034_VerifyFilterAsPerFilterSingleRowFilterInvestorMultipleRowFilterInvestorSheetInManageInvestorPopup(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6166,7 +6167,7 @@ public class Module6 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M6tc035_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

@@ -3,7 +3,7 @@
  */
 package com.navatar.scripts;
 import static com.navatar.generic.CommonVariables.*;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -59,7 +59,7 @@ import static com.navatar.generic.CommonLib.*;
 public class Module14 extends BaseLib {
 
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc001_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -197,7 +197,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc002_1_buildFWRWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -230,8 +230,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc002_2_validateDealRoomAnalyticsUIInFWR(String environment, String mode) {
+	@Test
+	public void M14tc002_2_validateDealRoomAnalyticsUIInFWR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
@@ -445,8 +445,8 @@ public class Module14 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc002_3_verifyMostViewedAndMostActiveLink(String environment, String mode) {
+	@Test
+	public void M14tc002_3_verifyMostViewedAndMostActiveLink() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
@@ -749,7 +749,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc003_inviteContactInFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -831,7 +831,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc004_1_uploadFilesInFWRAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1013,7 +1013,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc005_1_registerContact1() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1132,7 +1132,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc005_2_registerContact2() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1189,7 +1189,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc005_3_verifyIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1336,7 +1336,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc006_1_uploadFilesInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1415,7 +1415,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc006_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1486,7 +1486,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc007_accessDocFromCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1720,7 +1720,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc008_1_viewDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1811,7 +1811,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc008_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1938,7 +1938,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc008_3_changeEmailAndDeleteContactAtCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2091,7 +2091,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc009_1_downloadDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2173,7 +2173,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc009_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2230,7 +2230,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc010_1_UpdateFileInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2294,7 +2294,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc010_2_updateFilesInFWRAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2456,7 +2456,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc011_1_viewUpdatedDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2521,7 +2521,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc011_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2578,7 +2578,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc012_updateDocWIthDiffNameAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2765,7 +2765,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc013_1_viewDiffNameUpdatedDocFromInvestorSide() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2838,7 +2838,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc013_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2895,7 +2895,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc014_activateManageApprovalsSettings() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -2923,8 +2923,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc015_onlineImportDocInFRW(String environment, String mode) {
+	@Test
+	public void M14tc015_onlineImportDocInFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String sharedfolderpath=ExcelUtils.readData("Filepath", excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.SharedPath);
@@ -3068,7 +3068,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc016_approvePendingDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3190,7 +3190,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc017_1_viewOnlineImportDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3311,7 +3311,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc017_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3375,7 +3375,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc018_verifySortingInAnalyticsPopUps() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3607,7 +3607,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc019_deleteDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3833,7 +3833,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc020_inviteContact3AndDeleteSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4024,7 +4024,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc021_removeInvestorFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4132,7 +4132,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc022_addInvestorFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4240,7 +4240,7 @@ public class Module14 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc024_removeContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4338,8 +4338,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc025_reInviteContactAccessAndCheckImpact(String environment, String mode) {
+	@Test
+	public void M14tc025_reInviteContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc015_onlineImportDocInFRW";
@@ -4427,7 +4427,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc026_removeContactAccessFromContactPageAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4545,8 +4545,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc027_reInviteContactAccessAndCheckImpact(String environment, String mode) {
+	@Test
+	public void M14tc027_reInviteContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc015_onlineImportDocInFRW";
@@ -4634,7 +4634,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc028_closeFundRaisingWorkSpaceAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4752,8 +4752,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc029_againInviteContactAccessAndCheckImpact(String environment, String mode) {
+	@Test
+	public void M14tc029_againInviteContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc015_onlineImportDocInFRW";
@@ -4841,7 +4841,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc030_downloadReportFromExportTabInIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5048,7 +5048,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc031_clearFundraisingWorkspaceAndBuildAgain() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5184,7 +5184,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc032_inviteContactInFRW() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5241,7 +5241,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc033_deactivateManageApprovalsSettings() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -5270,7 +5270,7 @@ public class Module14 extends BaseLib {
 
 	//
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc034_1_buildINVWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5303,8 +5303,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc034_2_validateDealRoomAnalyticsUIInINV(String environment, String mode) {
+	@Test
+	public void M14tc034_2_validateDealRoomAnalyticsUIInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
@@ -5518,8 +5518,8 @@ public class Module14 extends BaseLib {
 	sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc034_3_verifyMostViewedAndMostActiveLink(String environment, String mode) {
+	@Test
+	public void M14tc034_3_verifyMostViewedAndMostActiveLink() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		List<String> ListofActualResult = new ArrayList<String>();
@@ -5816,7 +5816,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc035_inviteContactInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5898,7 +5898,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc036_uploadFilesInINVAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6083,7 +6083,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc037_verifySortingInAnalyticsPopUpsInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6209,7 +6209,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc038_1_uploadFilesInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6290,7 +6290,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc038_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6361,7 +6361,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc039_accessDocFromCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6596,7 +6596,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc040_1_viewDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6687,7 +6687,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc040_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6815,7 +6815,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc041_changeEmailAndDeleteContactAtCRMSideAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6965,7 +6965,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc042_1_downloadDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7047,7 +7047,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc042_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7104,7 +7104,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc043_1_UpdateFileInvestorSideAndCheckImpactAtAnalytics() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7168,7 +7168,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc043_2_updateFilesInINVAndCheckIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7330,7 +7330,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc044_1_viewUpdatedDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7396,7 +7396,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc044_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7453,7 +7453,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc045_updateDocWIthDiffNameAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7640,7 +7640,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc046_1_viewDiffNameUpdatedDocFromInvestorSide() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7729,7 +7729,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc046_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7786,7 +7786,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc047_activateManageApprovalsSettings() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -7814,8 +7814,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc048_onlineImportDocInINV(String environment, String mode) {
+	@Test
+	public void M14tc048_onlineImportDocInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String sharedfolderpath=ExcelUtils.readData("Filepath", excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.SharedPath);
@@ -7959,7 +7959,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc049_approvePendingDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8081,7 +8081,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc050_1_viewOnlineImportDocFromInvestorSideAndCheckImpact() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8202,7 +8202,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc050_2_checkImpactAtIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8266,7 +8266,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc051_verifySortingInAnalyticsPopUpsInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8462,7 +8462,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc052_deleteDocAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8686,7 +8686,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc053_inviteContact3AndDeleteSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8878,7 +8878,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc054_removeLPFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8985,7 +8985,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc055_addLPFromManageInstorAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9091,7 +9091,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc056_removeContactAccessFromContactPageAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9209,8 +9209,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc057_reInviteContactAccessAndCheckImpact(String environment, String mode) {
+	@Test
+	public void M14tc057_reInviteContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc048_onlineImportDocInINV";
@@ -9298,7 +9298,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc058_removeContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9396,8 +9396,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc059_reInviteContactAccessAndCheckImpact(String environment, String mode) {
+	@Test
+	public void M14tc059_reInviteContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc048_onlineImportDocInINV";
@@ -9484,7 +9484,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc060_closeInvestorWorkSpaceAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9602,8 +9602,8 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M14tc061_againInviteContactAccessAndCheckImpact(String environment, String mode) {
+	@Test
+	public void M14tc061_againInviteContactAccessAndCheckImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependONTc="M14tc048_onlineImportDocInINV";
@@ -9691,7 +9691,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc062_downloadReportFromExportTabInIPAnalytics() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9899,7 +9899,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc063_clearInvestorWorkspaceAndBuildAgain() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10034,7 +10034,7 @@ public class Module14 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M14tc064_inviteContactInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

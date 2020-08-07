@@ -8,7 +8,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.android.dx.io.instructions.SparseSwitchPayloadDecodedInstruction;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -56,7 +56,7 @@ import java.util.List;
  */
 public class Module18 extends BaseLib {
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc001_CreatePreconditionData() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -230,7 +230,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc002_CreationOfFundraisingWorkSpace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -263,8 +263,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M18tc003_GiveContactAccessAndSendInvitationEmailToCntactsAndVerifyContactDetailPage(String environment, String mode){
+	@Test
+	public void M18tc003_GiveContactAccessAndSendInvitationEmailToCntactsAndVerifyContactDetailPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -328,7 +328,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc004_RegisterContactAndVerifyInvestorRegistrationPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);	
@@ -403,7 +403,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc005_VerifyContactDetailPageAndResetPasswordPopUpUIAfterInvestorContactRegisteredSuccessfully(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -489,7 +489,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc006_CheckTheUIOfForgotPasswordPageErrorMessageAndClickHereLinkInErrorMessagae(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		String windowID;
@@ -770,7 +770,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc007_SendForgotPasswordEmailToRegisterInvestorContactAndVerifyTheReceivedEmail(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -824,7 +824,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
     
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc008_1_VerifySendingResetPasswordmailtoInvestorFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -914,7 +914,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc008_2_VerifySendingResetPasswordMailToTargetContactFromContactAccessTab(){
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -1166,7 +1166,7 @@ public class Module18 extends BaseLib {
 	sa.assertAll();		
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc009_VerifyClickHereIfInvestorContactHasAlreadyResetThePassword(){
 		SoftAssert sa=new SoftAssert();
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);		
@@ -1222,7 +1222,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc010_1_UpdateTheEmailAddressOfTheContactCheckFunctionalityOfResetPasswordLink(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -1240,7 +1240,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc010_2_checkfunctionalityOfResetPasswordLinkFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1328,7 +1328,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc010_3_UpdateMailIDtoPreviousEmailidofRegisterTargetContact1(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -1345,7 +1345,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc011_1_DeleteTheEmailAddressOfTheContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer contact = new ContactPageBusinessLayer(driver);
@@ -1361,7 +1361,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc011_2_ImpactAfterDeletingRegisterTargetContact1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1417,7 +1417,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc011_3_RestoreRegisterTargetContact1AndExternalAdmin3() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -1444,7 +1444,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc012_1_CloseFundRasingWorkspace(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -1503,7 +1503,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	} 
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc012_2_ImpactAfterClosingDealRoom(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1558,8 +1558,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M18tc013_AgainInviteContactsAndVerifyContactDetailPage(String environment, String mode){
+	@Test
+	public void M18tc013_AgainInviteContactsAndVerifyContactDetailPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1638,7 +1638,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc014_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -1718,7 +1718,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc014_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		driver.get(ExcelUtils.readData("Contacts", excelLabel.Variable_Name	, "M18Contact1", excelLabel.Click_HereLink));
@@ -1752,7 +1752,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc015_VerifyCopyLinkFunctionalityFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -1905,7 +1905,7 @@ public class Module18 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc016_1_UpdateFirstNameFromInvestorSide(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		InvestorProfileBusinessLayer ip=new InvestorProfileBusinessLayer(driver);
@@ -1941,7 +1941,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc016_2_UpdateFirstNameAndFirmNameAndVerifyMail(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim =new NIMPageBusinessLayer(driver);
@@ -2059,7 +2059,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc017_1_ClearFundraisingWorkspace(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -2118,7 +2118,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc017_2_CheckTheImpactWhenEnterRegisterInvestorContact(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -2173,8 +2173,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M18tc018_BuildTheInvestorWorkspaceAndInviteTheContacts(String environment, String mode){
+	@Test
+	public void M18tc018_BuildTheInvestorWorkspaceAndInviteTheContacts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2264,7 +2264,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc019_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2344,7 +2344,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc019_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2403,7 +2403,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc020_VerifyCopyLinkFunctionalityFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2561,8 +2561,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 		}
 		
-	@Parameters({ "environment", "mode" }) @Test
-	public void M18tc021_BuildTheFundraisingWorkspaceAndInviteTheContactsFromContactAccess(String environment, String mode){
+	@Test
+	public void M18tc021_BuildTheFundraisingWorkspaceAndInviteTheContactsFromContactAccess(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2664,7 +2664,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc022_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2744,7 +2744,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc022_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2803,7 +2803,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc023_VerifyCopyLinkFunctionalityFromContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -2959,7 +2959,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc024_ClearFundraisingWorkspaceAndVerifyResetPasswordButtonOnContactDetailPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -3028,8 +3028,8 @@ public class Module18 extends BaseLib {
 		sa.assertAll();		
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M18tc025_BuildTheFundraisingWorkspaceForFund2AndInviteContactsFromContactAccess(String environment, String mode){
+	@Test
+	public void M18tc025_BuildTheFundraisingWorkspaceForFund2AndInviteContactsFromContactAccess(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3131,7 +3131,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc026_CheckFunctionalityOfClickHereLinkWhenUnregisteredInvestorContactChangePassword(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer afp=new AllFirmsPageBusinesslayer(driver);
@@ -3281,7 +3281,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc027_1_SendResetPasswordEmailFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -3361,7 +3361,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc027_2_UpdatePassword(){
 		BasePageBusinessLayer  bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -3420,7 +3420,7 @@ public class Module18 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M18tc028_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

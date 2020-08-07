@@ -1,5 +1,5 @@
 package com.navatar.scripts;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -54,7 +54,7 @@ import java.util.Scanner;
  */
 public class Module7 extends BaseLib {
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc001_Module7_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -264,7 +264,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc002_1_BuildWorkspaceAndImportFolderTemplateCheckButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -473,7 +473,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc002_2_BuildWorkspaceAndImportFolderTemplateCheckButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -633,8 +633,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc003_ContactAccess(String environment, String mode) {
+	@Test
+	public void M7tc003_ContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -792,7 +792,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc004_1_UploadFileCommonNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1009,7 +1009,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc004_2_UploadFileInternalNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1227,7 +1227,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc004_3_UploadFileSharedNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1446,7 +1446,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc005_1_UploadFileActionInCommonFolderCorrectly() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1569,7 +1569,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc005_2_UploadFileInCommonFolderCorrectlyImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1680,7 +1680,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc005_3_UploadFileInCommonFolderCorrectlyImpactInvestor() {
 		// Investor Side
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1714,7 +1714,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc006_UploadFileInternalSuccessful_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1769,7 +1769,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc006_UploadFileInternalSuccessful_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1831,7 +1831,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc007_UploadFileSharedSuccessful_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1906,7 +1906,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc007_UploadFileSharedSuccessful_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2016,7 +2016,7 @@ public class Module7 extends BaseLib {
 		lp.CRMlogout();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc007_UploadFileSharedSuccessful_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2055,7 +2055,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc008_UploadFileStandardFolderNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2386,7 +2386,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc009_UploadFileStandardSuccessful_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2459,7 +2459,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc009_UploadFileStandardSuccessful_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2569,7 +2569,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc009_UploadFileStandardSuccessful_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2611,7 +2611,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc010_MultipleInstitutionsStandardUploadNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2868,8 +2868,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc011_UploadFileInStandardFolderMultipleInstitutionCorrectly_Action(String environment, String mode) {
+	@Test
+	public void M7tc011_UploadFileInStandardFolderMultipleInstitutionCorrectly_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2988,7 +2988,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc011_UploadFileInStandardFolderMultipleInstitutionCorrectly_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3213,7 +3213,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc011_UploadFileInStandardFolderMultipleInstitutionCorrectly_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3309,7 +3309,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc011_UploadFileInStandardFolderMultipleInstitutionCorrectly_RevertChanges() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3355,7 +3355,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc012_UploadFileonStandardFolderNegativeCaseThroughInvestorPortal() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3575,7 +3575,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc013_UploadFileonStandardFolderThroughInvestorPortal_Action() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3625,7 +3625,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc013_UploadFileonStandardFolderThroughInvestorPortal_ImpactCRM() {
 
 		// CRM Side
@@ -3795,7 +3795,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc014_1_UploadAlreadyExistingFileCommon() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4035,7 +4035,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc014_2_UploadAlreadyExistingFileInternal() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4277,7 +4277,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc014_3_UploadAlreadyExistingFileShared() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4519,7 +4519,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc014_4_UploadAlreadyExistingFileStandardSingleInstitution() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4781,7 +4781,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc014_5_UploadAlreadyExistingFileStandardMultipleInstitution() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5149,7 +5149,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc015_OnlineImportCommonInternalSharedNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5435,7 +5435,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc016_OnlineImportStandardSingleInstitutionNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5721,8 +5721,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc017_OnlineImportInCommonFolderSuccessfully_Action(String environment, String mode) {
+	@Test
+	public void M7tc017_OnlineImportInCommonFolderSuccessfully_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -5790,7 +5790,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc017_OnlineImportInCommonFolderSuccessfully_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5907,7 +5907,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc017_OnlineImportInCommonFolderSuccessfully_ImpactInvestor() {
 
 		// Investor Side
@@ -5944,8 +5944,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc018_OnlineImportInInternalFolderSuccessfully_Action(String environment, String mode) {
+	@Test
+	public void M7tc018_OnlineImportInInternalFolderSuccessfully_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6015,7 +6015,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc018_OnlineImportInInternalFolderSuccessfully_ImpactCRM() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6076,8 +6076,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc019_OnlineImportInSharedFolderSuccessfully_Action(String environment, String mode) {
+	@Test
+	public void M7tc019_OnlineImportInSharedFolderSuccessfully_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6152,7 +6152,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc019_OnlineImportInSharedFolderSuccessfully_ImpactCRM() {
 		// Institution
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6261,7 +6261,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc019_OnlineImportInSharedFolderSuccessfully_ImpactInvestor() {
 
 		// Investor Side
@@ -6302,8 +6302,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc020_OnlineImportInStandardFolderSuccessfully_Action(String environment, String mode) {
+	@Test
+	public void M7tc020_OnlineImportInStandardFolderSuccessfully_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6375,7 +6375,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc020_OnlineImportInStandardFolderSuccessfully_ImpactCRM() {
 
 		// Institution
@@ -6497,7 +6497,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc020_OnlineImportInStandardFolderSuccessfully_ImpactInvestor() {
 
 		// Investor Side
@@ -6552,8 +6552,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc021_OnlineImportInStandardFolderMultipleInstitutionSuccessfully_Action(String environment, String mode) {
+	@Test
+	public void M7tc021_OnlineImportInStandardFolderMultipleInstitutionSuccessfully_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6686,7 +6686,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc021_OnlineImportInStandardFolderMultipleInstitutionSuccessfully_ImpactCRM() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6894,7 +6894,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc021_OnlineImportInStandardFolderMultipleInstitutionSuccessfully_ImpactInvestor() {
 
 		// Investor Side
@@ -6967,7 +6967,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc022_CheckSortingAllPages() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7190,7 +7190,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc023_UpdateCommonFolder_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7472,7 +7472,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc023_UpdateCommonFolder_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7585,7 +7585,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc023_UpdateCommonFolder_ImpactInvestor() {
 		// Investor Side
 
@@ -7630,7 +7630,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc024_UpdateInternalFolder_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7912,7 +7912,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc024_UpdateInternalFolder_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7981,7 +7981,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc025_UpdateSharedFolder_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8263,7 +8263,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc025_UpdateSharedFolder_ImpactCRM() {
 
 		// Institution tab verify updated document name
@@ -8375,7 +8375,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc025_UpdateSharedFolder_ImpactInvestor() {
 		// Investor Side
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8415,7 +8415,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc026_UpdateStandardFolderSingleInstitution_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8717,7 +8717,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc026_UpdateStandardFolderSingleInstitution_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8828,7 +8828,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc026_UpdateStandardFolderSingleInstitution_ImpactInvestor() {
 		// Investor Side
 
@@ -8879,7 +8879,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc027_UpdateStandardFolderMultipleInstitution_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9193,7 +9193,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc027_UpdateStandardFolderMultipleInstitution_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9418,7 +9418,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc027_UpdateStandardFolderMultipleInstitution_ImpactInvestor() {
 		// Investor Side
 		// contact 1
@@ -9515,7 +9515,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc028_UpdateFileInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9635,7 +9635,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc029_ManageVersionCommonAction() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9765,7 +9765,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc029_ManageVersionCommonImpact() {
 		// Institution
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9882,7 +9882,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc029_ManageVersionCommonImpactInvestor() {
 		// Investor Side
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9932,7 +9932,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc030_ManageVersionInternal_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10062,7 +10062,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc030_ManageVersionInternal_ImpactCRM() {
 		// Institution
 
@@ -10136,7 +10136,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc031_ManageVersionShared_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10266,7 +10266,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc031_ManageVersionShared_ImpactCRM() {
 		// Institution
 
@@ -10384,7 +10384,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc031_ManageVersionShared_ImpactInvestor() {
 		// Investor Side
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10434,7 +10434,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc032_ManageVersionStandardSingleInst_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10600,7 +10600,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc032_ManageVersionStandardSingleInst_ImpactCRM() {
 
 		// Institution
@@ -10723,7 +10723,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc032_ManageVersionStandardSingleInst_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10790,7 +10790,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc033_ManageVersionStandardMultInstitution_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10925,7 +10925,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc033_ManageVersionStandardMultInstitution_ImpactCRM() {
 		// Institution
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -11135,7 +11135,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc033_ManageVersionStandardMultInstitution_ImpactInvestor() {
 		// Investor Side
 
@@ -11259,7 +11259,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc034_OpenFileAllFoldersFundsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11438,7 +11438,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc035_OpenFileInAllFoldersInstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11619,7 +11619,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc036_OpenFileInAllFoldersContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11803,7 +11803,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc037_OpenFileInAllFoldersInvestorPortal() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11923,7 +11923,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc038_DeleteFilesFromAllFolder_FundsPageNegativeCase() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12127,7 +12127,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc039_1_DeleteFilesFromAllFolderAction_FundsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12255,7 +12255,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc039_2_DeleteFilesFromAllFolderImpact_FundsPage() {
 		// Institution
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12472,7 +12472,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc039_3_DeleteFilesFromAllFolderImpactInvestor_FundsPage() {
 
 		// Investor
@@ -12563,7 +12563,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc040_DeleteFilesFromAllFolder_InstitutionPageNegativeCase() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -12775,7 +12775,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc041_1_DeleteFilesFromAllFolderAction_InstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12912,7 +12912,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc041_2_DeleteFilesFromAllFolderImpact_InstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13120,7 +13120,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc041_3_DeleteFilesFromAllFolderImpact_InstitutionPage() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -13211,7 +13211,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 
 	public void M7tc042_DeleteFilesFromAllFolder_ContactPageNegativeCase() {
 
@@ -13381,7 +13381,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc043_1_DeleteFilesFromAllFolderAction_ContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13522,7 +13522,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc043_2_DeleteFilesFromAllFolderImpact_ContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13709,7 +13709,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc043_3_DeleteFilesFromAllFolderImpact_ContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13799,7 +13799,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc044_SearchingInFundsPageForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14294,7 +14294,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc045_SearchingInInstPageForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14738,7 +14738,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc046_SearchingInContactPageForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15111,7 +15111,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc047_SearchingInInvestorPortalForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15393,7 +15393,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc048_1_UpdateCRMUserNameAndCheckOnContentGrid_VerifyUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15504,7 +15504,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc048_2_UpdateCRMUserNameAndCheckOnContentGrid_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15586,7 +15586,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc048_3_UpdateCRMUserNameAndCheckOnContentGrid_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15641,7 +15641,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc048_4_UpdateCRMUserNameAndCheckOnContentGrid_RevertBackChanges() {
 		// reverting back changes
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -15759,7 +15759,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc049_CheckLinksUploadedByAndFirmName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15978,7 +15978,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc050_CheckLinksAfterDeletingContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16238,7 +16238,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc051_InvestorSideBuildWorkspaceAndImportFolderTemplateCheckButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16592,8 +16592,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc052_InvestorSideProvideContactAccess(String environment, String mode) {
+	@Test
+	public void M7tc052_InvestorSideProvideContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -16682,7 +16682,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc053_1_UploadFileCommonNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -16897,7 +16897,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc053_2_UploadFileInternalNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17113,7 +17113,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc053_3_UploadFileSharedNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17329,7 +17329,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc054_1_UploadFileActionAtCommonFolderFundPageCorrectly() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17402,7 +17402,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc054_2_UploadFileImpactAtCommonFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17587,7 +17587,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc054_3_UploadFileImpactAtCommonFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -17624,7 +17624,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc055_1_UploadFileActionAtInternalFolderFundPageCorrectly() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17701,7 +17701,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc055_2_UploadFileImpactAtInternalFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17845,7 +17845,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc056_1_UploadFileActionAtSharedFolderFundPageCorrectly() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -17919,7 +17919,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc056_2_UploadFileImpactAtSharedFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18109,7 +18109,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc056_3_UploadFileImpactAtSharedFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -18145,7 +18145,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc057_UploadFileStandardFolderSingleFolderNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18506,7 +18506,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc058_1_UploadFileActionAtStandardFolderFundPageCorrectly() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18582,7 +18582,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc058_2_UploadFileImpactAtStandardFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -18770,7 +18770,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc058_3_UploadFileImpactAtStandardFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -18808,7 +18808,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc059_MultipleInstitutionsStandardUploadNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19075,7 +19075,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc060_1_UploadFileActionAtStandardFolderMultipleInstitutionFundPageCorrectly() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19199,7 +19199,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc060_2_UploadFileImpactAtStandardFolderMultipleInstitutionAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -19434,7 +19434,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc060_3_UploadFileImpactAtStandardFolderMultipleInstitutionInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -19530,7 +19530,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc061_UploadFileonStandardFolderNegativeCaseThroughInvestorPortal() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -19749,7 +19749,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc062_1_UploadFileActionaAtStandardFolder() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -19799,7 +19799,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc062_2_UploadFileImpactAtStandardFolderCRMSide() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -20044,7 +20044,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc063_1_UploadAlreadyExistingFileCommon() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20281,7 +20281,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc063_2_UploadAlreadyExistingFileInternal() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20516,7 +20516,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc063_3_UploadAlreadyExistingFileShared() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -20754,7 +20754,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc063_4_UploadAlreadyExistingFileStandardSingleInstitution() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -21014,7 +21014,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc063_5_UploadAlreadyExistingFileStandardMultipleInstitution() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -21392,7 +21392,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc064_OnlineImportCommonInternalSharedNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -21678,7 +21678,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc065_OnlineImportStandardNegative() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22024,8 +22024,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc066_1_OnlineImportActionAtCommonFolderFundPageSuccessfully(String environment, String mode) {
+	@Test
+	public void M7tc066_1_OnlineImportActionAtCommonFolderFundPageSuccessfully() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 
@@ -22088,7 +22088,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc066_2_OnlineImportImpactAtCommonFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22275,7 +22275,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc066_3_OnlineImportImpactAtCommonFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -22313,8 +22313,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc067_1_OnlineImportActionAtInternalFolderFundPageSuccessfully(String environment, String mode) {
+	@Test
+	public void M7tc067_1_OnlineImportActionAtInternalFolderFundPageSuccessfully() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -22386,7 +22386,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc067_2_OnlineImportImpactAtInternalFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22530,8 +22530,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc068_1_OnlineImportActionAtSharedFolderFundPageSuccessfully(String environment, String mode) {
+	@Test
+	public void M7tc068_1_OnlineImportActionAtSharedFolderFundPageSuccessfully() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -22606,7 +22606,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc068_2_OnlineImportImpactAtSharedFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -22793,7 +22793,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc068_3_OnlineImportImpactAtSharedFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -22831,8 +22831,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc069_1_OnlineImportActionAtStandardFolderFundPageSuccessfully(String environment, String mode) {
+	@Test
+	public void M7tc069_1_OnlineImportActionAtStandardFolderFundPageSuccessfully() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -22907,7 +22907,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc069_2_OnlineImportImpactAtStandardFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23140,7 +23140,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc069_3_OnlineImportImpactAtStandardFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -23195,8 +23195,8 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc070_1_OnlineImportActionAtStandardFolderMultipleInsFundPageSuccessfully(String environment, String mode) {
+	@Test
+	public void M7tc070_1_OnlineImportActionAtStandardFolderMultipleInsFundPageSuccessfully() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -23325,7 +23325,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc070_2_OnlineImportImpactAtStandardFolderMultipleInsAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23510,7 +23510,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc070_3_OnlineImportImpactAtStandardFolderMultipleInsInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -23583,7 +23583,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc071_CheckSortingAllPages() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -23991,7 +23991,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc072_1_UpdateActionAtCommonFolderFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24268,7 +24268,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc072_2_UpdateImpactAtCommonFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24459,7 +24459,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc072_3_UpdateImpactAtCommonFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -24496,7 +24496,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc073_1_UpdateActionAtInternalFolderFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24777,7 +24777,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc073_2_UpdateImpactAtInternalFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -24922,7 +24922,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc074_1_UpdateActionAtSharedFolderFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25203,7 +25203,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc074_2_UpdateImpactAtSharedFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25394,7 +25394,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc074_3_UpdateImpactAtSharedFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -25432,7 +25432,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc075_1_UpdateActionAtStandardFolderSingleInstitutionFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25734,7 +25734,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc075_2_UpdateImpactStandardFolderSingleInstitutionAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -25944,7 +25944,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc075_3_UpdateImpactStandardFolderSingleInstitutionInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -25997,7 +25997,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc076_1_UpdateActionAtStandardFolderMultipleInstitutionFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26308,7 +26308,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc076_2_UpdateImpactAtStandardFolderMultipleInstitutionAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26536,7 +26536,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc076_3_UpdateImpactAtStandardFolderMultipleInstitutionInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -26589,7 +26589,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc077_UpdateFileInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -26694,7 +26694,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc078_1_ManageVersionActionAtCommonFolderFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -26825,7 +26825,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc078_2_ManageVersionImpactAtCommonFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27013,7 +27013,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc078_3_ManageVersionImpactAtCommonFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -27052,7 +27052,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc079_1_ManageVersionActionAtInternalFolderFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27181,7 +27181,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc079_2_ManageVersionImpactAtInternalFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27324,7 +27324,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc080_1_ManageVersionActionAtSharedFolderFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27457,7 +27457,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc080_2_ManageVersionImpactAtSharedFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27646,7 +27646,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc080_3_ManageVersionImpactAtSharedFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -27683,7 +27683,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc081_1_ManageVersionActionAtStandardFolderSingleInstitutionFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -27822,7 +27822,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc081_2_ManageVersionImpactAtStandardFolderSingleInstitutionAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28045,7 +28045,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc081_3_ManageVersionImpactAtStandardFolderSingleInstitutionInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -28098,8 +28098,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc082_1_ManageVersionActionAtStandardFolderMultipleInstitutionFundPage(String environment, String mode) {
+	@Test
+	public void M7tc082_1_ManageVersionActionAtStandardFolderMultipleInstitutionFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -28231,8 +28231,8 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc082_2_ManageVersionImpactAtStandardFolderMultipleInstitutionAllPageCRMSide(String environment, String mode) {
+	@Test
+	public void M7tc082_2_ManageVersionImpactAtStandardFolderMultipleInstitutionAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -28437,8 +28437,8 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M7tc082_3_ManageVersionImpactAtStandardFolderMultipleInstitutionInvestorSide(String environment, String mode) {
+	@Test
+	public void M7tc082_3_ManageVersionImpactAtStandardFolderMultipleInstitutionInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -28552,7 +28552,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc083_OpenFileInAllFoldersFundPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28731,7 +28731,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc084_OpenFileInAllFoldersInstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -28912,7 +28912,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc085_OpenFileInAllFoldersContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29063,7 +29063,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc086_OpenFileInAllFoldersInvestorPortal() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29185,7 +29185,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc087_DeleteFilesFromAllFolder_FundsPageNegativeCase() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29389,7 +29389,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc088_1_DeleteFilesActionFromAllFolderFundsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29517,7 +29517,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc088_2_DeleteFilesImpactFromAllFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29914,7 +29914,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc088_3_DeleteFilesImpactFromAllFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -29997,7 +29997,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc089_DeleteFilesFromAllFolder_InstitutionPageNegativeCase() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -30207,7 +30207,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc090_1_DeleteFilesActionFromAllFolderInstitutionPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -30341,7 +30341,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc090_2_DeleteFilesImpactFromAllFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30734,7 +30734,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc090_3_DeleteFilesImpactFromAllFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -30817,7 +30817,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc091_DeleteFilesFromAllFolder_ContactPageNegativeCase() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -30986,7 +30986,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc092_1_DeleteFilesActionFromAllFolderContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31133,7 +31133,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc092_2_DeleteFilesImpactFromAllFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31475,7 +31475,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc092_3_DeleteFilesFromAllFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -31558,7 +31558,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc093_DeleteFilesFromAllFolder_LimitedPartnerPageNegativeCase() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -31768,7 +31768,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc094_1_DeleteFilesActionFromAllFolderInstitutionPageForLP1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -31903,7 +31903,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc094_2_DeleteFilesImportFromAllFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32295,7 +32295,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc094_3_DeleteFilesFromAllFolderInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -32378,7 +32378,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc095_DeleteFilesFromAllFolder_CommitmentPagePageNegativeCase() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -32580,7 +32580,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc096_1_DeleteFilesActionFromAllFolderCommitmentPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -33098,7 +33098,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc096_2_DeleteFilesActionmAllFolderAllPageCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -33517,7 +33517,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc096_3_DeleteFilesFromAllFolderAllPageInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -33601,7 +33601,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-@Parameters({ "environment", "mode" }) @Test
+@Test
 	public void M7tc097_SearchingInFundsPageForPresentAndAbsentFiles() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -34083,7 +34083,7 @@ public class Module7 extends BaseLib {
 
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc098_SearchingInInstitutionPageForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -34561,7 +34561,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc100_SearchingInLimitedPartnerForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -35040,7 +35040,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc099_SearchingInContactPageForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -35410,7 +35410,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc101_SearchingInCommitmentPageForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -35890,7 +35890,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc102_SearchingInInvestorPageForPresentAndAbsentFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -36205,7 +36205,7 @@ public class Module7 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc103_1_UpdateCRMUserNameAndCheckOnContentGrid_VerifyUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -36310,7 +36310,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc103_2_UpdateCRMUserNameAndCheckOnContentGrid_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -36383,7 +36383,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc103_3_UpdateCRMUserNameAndCheckOnContentGrid_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -36434,7 +36434,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc103_4_UpdateCRMUserNameAndCheckOnContentGrid_RevertBackChanges() {
 		// reverting back changes
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -36540,7 +36540,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc104_CheckLinksUploadedByAndFirmName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -36759,7 +36759,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc105_CheckLinksAfterDeletingContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -37011,7 +37011,7 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M7tc106_PostConditionForAll() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

@@ -11,6 +11,7 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
@@ -50,7 +51,7 @@ import java.util.List;
  */
 public class Module10 extends BaseLib {
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc001_CreatePreconditionData() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -223,7 +224,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc002_CreateFundraisingAndInvestorWorkspaceForFund1AndVerifyManageEmailIcon() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -286,7 +287,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc003_VerifyManageEmailPopUpUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -346,7 +347,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc004_CheckVariousErrorMessageOnManageEmails() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -530,7 +531,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc005_CheckPreviewAndEditLinkForInvitationEmailTemplateOption() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -991,7 +992,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc006_CheckPreviewAndEditLinkForCustomEmailTemplateOption() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1328,8 +1329,9 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M10tc007_InviteContactAndVerifyManageEmailsPopUp(String environment, String mode) {
+	@Parameters({ "environment", "mode" })
+	@Test
+	public void M10tc007_InviteContactAndVerifyManageEmailsPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2185,7 +2187,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc008_VerifyConfirmationPopUpReceivedMailAtInvestorSideVerifyCreateActivityAtContactAndAccountPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2934,7 +2936,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc009_RegisterInvestorAndCheckImpactInManageEmailsPopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3094,7 +3096,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc010_CheckSearchingAndSortingOnManageEmail() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3569,8 +3571,9 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M10tc011_InviteContactFromSharedParentFolderAndVerifyfManageEmailIconInContactAccessPopup(String environment, String mode) {
+	@Parameters({ "environment", "mode" }) 
+	@Test
+	public void M10tc011_InviteContactFromSharedParentFolderAndVerifyfManageEmailIconInContactAccessPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3933,7 +3936,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc012_VerifyInvitationEmailsPopUpWithCustomEmailTemplate() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4241,7 +4244,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc013_UpdateFolderNameFundNamePEFirmNameAndVerifyItsImpactInManageEmailsPopUpAndReceivedMail() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4730,7 +4733,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc014_CheckRenamingOfContactAndAccountNameImpactOnManageEmail(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5118,8 +5121,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M10tc015_CreateFundraisingWorkspaceForFund2InviteAlreadyInvitedContactAndVerifyManageEmailsPopUp(String environment, String mode){
+	@Test
+	public void M10tc015_CreateFundraisingWorkspaceForFund2InviteAlreadyInvitedContactAndVerifyManageEmailsPopUp(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -5188,7 +5191,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc016_CheckVariousErrorMessageOnManageEmails(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5373,7 +5376,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc017_CheckPreviewAndEditLinkForIInvitationEmailTemplateOption(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5833,7 +5836,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc018_CheckPreviewAndEditLinkForCustomEmailTemplateOption(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6169,8 +6172,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M10tc019_InviteContactAndVerifyManageEmailsPopUp(String environment, String mode){
+	@Test
+	public void M10tc019_InviteContactAndVerifyManageEmailsPopUp(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7220,7 +7223,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc020_VerifyConfirmationPopUpReceivedMailAtInvestorSideVerifyCreateActivityAtContactAndAccountPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7963,7 +7966,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc021_CheckSearchingAndSortingOnManageEmail(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8437,8 +8440,9 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M10tc022_InviteContactFromSharedParentFolderAgainInviteContactAndVerifyManageEmailIconInContactAccessPopup(String environment, String mode){
+	@Parameters({ "environment", "mode" }) 
+	@Test
+	public void M10tc022_InviteContactFromSharedParentFolderAgainInviteContactAndVerifyManageEmailIconInContactAccessPopup(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8801,7 +8805,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc023_VerifyInvitationEmailsPopUpWithCustomEmailTemplate(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9110,7 +9114,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();		
 		}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc024_UpdateFolderNameFundNameAndVerifyItsImpactInManageEmailsPopUpAndReceivedMail(){
 	LoginPageBusinessLayer	lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9561,7 +9565,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();			
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc025_CheckRenamingOfContactAndAccountNameImpactOnManageEmailCheckDeletionOfContactAndChangeOfEmailImpactOnManageEmails(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9730,7 +9734,7 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M10tc026_VerifyManageEmailsPopUpAfterRemovingCompleteAccessForAContact(){
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 			BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9829,8 +9833,8 @@ public class Module10 extends BaseLib {
 		sa.assertAll();	
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
-	public void M10tc027_VerifyManageEmailsPopUpAfterInvitingContactAgain(String environment, String mode){
+	@Test
+	public void M10tc027_VerifyManageEmailsPopUpAfterInvitingContactAgain(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);

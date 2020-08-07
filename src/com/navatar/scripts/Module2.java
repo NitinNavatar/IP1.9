@@ -4,18 +4,13 @@
 package com.navatar.scripts;
 
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
-import org.testng.Assert;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
-import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -72,7 +67,7 @@ import java.util.Set;
  *
  */
 public class Module2 extends BaseLib{
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc001_UserNIMregistration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -115,7 +110,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc002_1_Module2_PreconditionData() {
 	
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -268,7 +263,7 @@ public class Module2 extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc002_2_createFolderTemplateOrg1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -292,7 +287,7 @@ public class Module2 extends BaseLib{
 		}
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc003_BuildFundraisingAndInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -338,8 +333,8 @@ public class Module2 extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
-	public void M2tc004_GiveContactAccessAndInvite(String environment, String mode) {
+	@Test
+	public void M2tc004_GiveContactAccessAndInvite() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -384,7 +379,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc005_verifyRegistrationPage() {
 		String M2Contact1EmailID;
 		String regLink=null;
@@ -571,7 +566,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc006_CheckInvestorRegistrationLinks() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -769,7 +764,7 @@ public class Module2 extends BaseLib{
 		}
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc007_InvestorRegistrationWithValidData() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -888,7 +883,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc008_SecondInvestorRegistration() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert sa = new SoftAssert();
@@ -989,7 +984,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc009_1_Org2PreconditionData() {
 		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1312,7 +1307,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc009_2_createFolderTemplateOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1336,7 +1331,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc010_Org2BuildFundraisingAndInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
@@ -1374,8 +1369,8 @@ public class Module2 extends BaseLib{
 		lp.CRMlogout();
 	sa.assertAll();
 			}
-	@Parameters({ "environment", "mode" }) @Test	
-	public void M2tc011_ContactAccessAndInvitationMailOrg2(String environment, String mode) {
+	@Test	
+	public void M2tc011_ContactAccessAndInvitationMailOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1417,7 +1412,7 @@ public class Module2 extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc012_InvestorLoginPageFunctionality() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -1567,7 +1562,7 @@ public class Module2 extends BaseLib{
 		
 		sa.assertAll();
 		}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc013_OpenEmailFromFirm2AndLoginFromLinkOnMail() {
 		EmailLib el = new EmailLib();
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1629,7 +1624,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 		
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc014_LoginWithMultipleData() {
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1776,7 +1771,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc015_ClickOnMultipleLinksInvestorLoginPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		String parentID;
@@ -1922,7 +1917,7 @@ public class Module2 extends BaseLib{
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc016_ForgotPasswordFunctionality() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer (driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2122,7 +2117,7 @@ public class Module2 extends BaseLib{
 	}
 
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc017_MyProfileUICheck() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -2350,7 +2345,7 @@ public class Module2 extends BaseLib{
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc018_ChangeProfilePicture() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -2455,7 +2450,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc019_VerifyVariousFormatChangePictureMyProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -2721,7 +2716,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc020_ChangePassword() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -3006,7 +3001,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc021_ChangeNotificationPreferences() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -3261,7 +3256,7 @@ public class Module2 extends BaseLib{
 		lp.investorLogout();
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc022_CheckUIMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -3364,7 +3359,7 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 		
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc023_ChangeFirmLogo() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SoftAssert sa = new SoftAssert();
@@ -3712,7 +3707,7 @@ public class Module2 extends BaseLib{
 		lp.investorLogout();
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc024_CheckUIMyFirmsProfileEditMode() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -3862,7 +3857,7 @@ public class Module2 extends BaseLib{
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc025_CheckValuesInSelectboxesFirmProfilePage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -3956,7 +3951,7 @@ public class Module2 extends BaseLib{
 		lp.investorLogout();
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc026_CheckSaveAndCancelFunctionalityMyFirmsProfile() {
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4283,7 +4278,7 @@ public class Module2 extends BaseLib{
 		lp.investorLogout();
 		sa.assertAll();
 	}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc027_CheckMinInvestmentAndMaxInvestmentValues() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
@@ -4850,7 +4845,7 @@ public class Module2 extends BaseLib{
 		lp.investorLogout();
 		sa.assertAll();
 		}
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M2tc028_MaxCharacterLimit() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);

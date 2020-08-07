@@ -3,11 +3,6 @@
  */
 package com.navatar.generic;
 
-import static com.navatar.generic.CommonVariables.superAdminFirstName;
-import static com.navatar.generic.CommonVariables.superAdminLastName;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.navatar.generic.CommonLib.excelLabel;
 import com.navatar.scripts.Module1;

@@ -6,7 +6,7 @@ package com.navatar.scripts;
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,7 +49,7 @@ import static com.navatar.generic.CommonLib.*;
 public class Module5 extends BaseLib {
 
 //	Scanner scn = new Scanner(System.in);
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc001_Module5_preCondition(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 //		if(lp.preCondition(superAdminUserName, CRMUser1FirstName+" "+CRMUser1LastName, CRMUser1EmailID, EnableDisable.Disable, EnableDisable.Disable, accessType.AdminUserAccess)){
@@ -277,7 +277,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc002_CreateFundraisingWorkspaceAndVerifyManageFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
@@ -379,7 +379,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc003_CreateInvestorWorkspaceAndVerifyManageFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -562,7 +562,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc004_CreateFundriasingWorkspaceAndVerifyManageFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -666,8 +666,8 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M5tc005_InviteContactAndVerifyFolderAtContactPage(String environment, String mode){
+	@Test
+	public void M5tc005_InviteContactAndVerifyFolderAtContactPage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer con = new ContactPageBusinessLayer(driver);
@@ -769,7 +769,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc005_InviteContactAndVerifyFolderAtInvestorSide(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -874,7 +874,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc006_VerifyAddAFolderPopUpFundraisingWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -1161,7 +1161,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc006_VerifyAddAFolderPopUpFundraisingWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -1186,7 +1186,7 @@ public class Module5 extends BaseLib {
 		}
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc007_1_VerifyAddASubFolderPopUpFundraisingWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1555,7 +1555,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc007_2_VerifyAddAFolderPopUpFundraisingWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -1597,7 +1597,7 @@ public class Module5 extends BaseLib {
 		}
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc008_verifyErrorMsgOnParentLevel() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1921,7 +1921,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc009_verifyErrorMsgOnSubLevel() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2198,7 +2198,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc010_1_verifyEditFolderAndUpdateFolderName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2538,7 +2538,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc010_2_verifyUpdateFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2654,7 +2654,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc010_3_verifyUpdatedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -2705,7 +2705,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc011_1_verifyDeleteFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2834,7 +2834,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc011_2_verifyDeletedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2935,7 +2935,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc011_3_verifyDeletedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -2977,7 +2977,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc012_1_deleteInvitedFolderFromManageFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3031,7 +3031,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc012_2_verifyDeleteInvitedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3079,7 +3079,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc012_3_verifyDeleteInvitedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3101,7 +3101,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc013_1_VerifyAddAFolderPopUpInvestorWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer instiPage = new InstitutionPageBusinessLayer(driver);
@@ -3424,7 +3424,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc013_2_VerifyAddAFolderPopUpInvestorWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -3451,7 +3451,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc014_1_VerifyAddASubFolderPopUpInvestorWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3951,7 +3951,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc014_2_VerifyAddAFolderPopUpInvestorWorkspaceAtTargetSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M5C1Email, adminPassword);
@@ -3993,7 +3993,7 @@ public class Module5 extends BaseLib {
 		}
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc015_verifyErrorMsgOnParentLevelInInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4318,7 +4318,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc016_verifyErrorMsgOnSubLevelInInvestorWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4593,7 +4593,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc017_1_verifyEditFolderAndUpdateFolderNameInInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4932,7 +4932,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc017_2_verifyUpdateFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5161,7 +5161,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc017_3_verifyUpdatedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5212,7 +5212,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc018_1_verifyDeleteFolderInInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5341,7 +5341,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc018_2_verifyDeletedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5525,7 +5525,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc018_3_verifyDeletedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5574,7 +5574,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc019_1_deleteInvitedFolderFromManageFolderInInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5628,7 +5628,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc019_2_verifyDeleteInvitedFolderNameOnInstitutionAndContactPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5713,7 +5713,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc019_3_verifyDeleteInvitedFolderNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5741,8 +5741,8 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M5tc020_1_createWorkSpaceAndAddAditionalFolders(String environment, String mode) {
+	@Test
+	public void M5tc020_1_createWorkSpaceAndAddAditionalFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] STDFolder=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC,excelLabel.StandardPath).split(",");
@@ -5918,7 +5918,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc020_2_verifyInvitedFolderStructureAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5966,7 +5966,7 @@ public class Module5 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M5tc021_PostConditionForAll() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);

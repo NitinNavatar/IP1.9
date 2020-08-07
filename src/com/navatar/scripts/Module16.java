@@ -6,7 +6,7 @@ package com.navatar.scripts;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.CommonLib.EditViewMode;
@@ -52,7 +52,7 @@ import java.util.Set;
  */
 public class Module16 extends BaseLib{
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc001_Precondition() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -120,7 +120,7 @@ public class Module16 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc002_CreatePreconditionData() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -315,7 +315,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc003_ActiveWatermarkingAndManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -357,7 +357,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc004_VerifyUIOfBulkUpload() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -406,7 +406,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc005_VerifyUIOfFileSplitter() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -459,8 +459,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc006_BuildWorkspaceAndInvite(String environment, String mode) {
+	@Test
+	public void M16tc006_BuildWorkspaceAndInvite() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -522,7 +522,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test	
+	@Test	
 	public void M16tc007_RegisterContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -556,7 +556,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc008_VerifyFileDistributor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -841,8 +841,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc009_VerifyResolveIssuePopup(String environment, String mode) {
+	@Test
+	public void M16tc009_VerifyResolveIssuePopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1042,7 +1042,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc010_VerifyBulkUploadSuggestedNaming() {
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1325,7 +1325,7 @@ public class Module16 extends BaseLib{
 									
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc011_ApproveDocument_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1451,7 +1451,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc011_ApproveDocument_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1550,7 +1550,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc012_DeactivateManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1579,7 +1579,7 @@ public class Module16 extends BaseLib{
 				
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc013_VerifyDuplicateDocumentsPopup_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1800,7 +1800,7 @@ public class Module16 extends BaseLib{
 		}
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc013_VerifyDuplicateDocumentsPopup_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1838,8 +1838,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc014_ChangeBulkUploadSettings_Action(String environment, String mode) {
+	@Test
+	public void M16tc014_ChangeBulkUploadSettings_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2137,8 +2137,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc014_ChangeBulkUploadSettings_ImpactCRM(String environment, String mode) {
+	@Test
+	public void M16tc014_ChangeBulkUploadSettings_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2303,7 +2303,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc014_ChangeBulkUploadSettings_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2351,7 +2351,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc015_VerifyUploadValidAndInvalidDelimeter_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2619,7 +2619,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc015_VerifyUploadValidAndInvalidDelimeter_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2766,7 +2766,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc015_VerifyUploadValidAndInvalidDelimeter_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2911,8 +2911,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc016_ChangeFileSplitterOptionsAndVerify_Action(String environment, String mode) {
+	@Test
+	public void M16tc016_ChangeFileSplitterOptionsAndVerify_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3174,7 +3174,7 @@ public class Module16 extends BaseLib{
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc016_ChangeFileSplitterOptionsAndVerify_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3297,7 +3297,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc017_ActivateManageApprovalAndFileDistr() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3405,8 +3405,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc018_BuildInvWorkspaceAndInviteContact(String environment, String mode) {
+	@Test
+	public void M16tc018_BuildInvWorkspaceAndInviteContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3468,7 +3468,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc019_VerifyFileDistributorInvestorWs() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3752,8 +3752,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc020_VerifyResolveIssuePopup_Investor(String environment, String mode) {
+	@Test
+	public void M16tc020_VerifyResolveIssuePopup_Investor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3953,7 +3953,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc021_VerifyBulkUploadSuggestedNamingInvestor() {
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4232,7 +4232,7 @@ public class Module16 extends BaseLib{
 									
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc022_ApproveDocumentInvestors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4357,7 +4357,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc022_ApproveDocumentInvestors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4461,7 +4461,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc023_DeactivateManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4490,7 +4490,7 @@ public class Module16 extends BaseLib{
 				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc024_VerifyDuplicateDocumentsPopup_Investors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4711,7 +4711,7 @@ public class Module16 extends BaseLib{
 		}
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc024_VerifyDuplicateDocumentsPopup_Investors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4749,8 +4749,8 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc025_ChangeBulkUploadSettingsInvestor_Action(String environment, String mode) {
+	@Test
+	public void M16tc025_ChangeBulkUploadSettingsInvestor_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5048,7 +5048,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc025_ChangeBulkUploadSettingsInvestor_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5377,7 +5377,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc026_VerifyUploadValidAndInvalidDelimeterInvestor_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5644,7 +5644,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc026_VerifyUploadValidAndInvalidDelimeterInvestor_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5919,7 +5919,7 @@ public class Module16 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc026_VerifyUploadValidAndInvalidDelimeterInvestor_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6047,8 +6047,8 @@ public class Module16 extends BaseLib{
 	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M16tc027_ChangeFileSplitterOptionsAndVerifyInvestors_Action(String environment, String mode) {
+	@Test
+	public void M16tc027_ChangeFileSplitterOptionsAndVerifyInvestors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6309,7 +6309,7 @@ public class Module16 extends BaseLib{
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M16tc027_ChangeFileSplitterOptionsAndVerifyInvestors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.CommonLib.AllOr1By1;
 import com.navatar.generic.CommonLib.ContentGridArrowKeyFunctions;
 import com.navatar.generic.CommonLib.EnableDisable;
@@ -54,7 +55,7 @@ import java.util.List;
 	 static String excelPath=System.getProperty("user.dir") + "/Bulk.xlsx";
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc001_RunPreconditionScenario(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim=new NIMPageBusinessLayer(driver);
@@ -158,7 +159,7 @@ import java.util.List;
 		saa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc002_CreateFolderTemplate(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim=new NIMPageBusinessLayer(driver);
@@ -254,7 +255,7 @@ import java.util.List;
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc003_VerifyErrorMessageForMaximumNumberOfFolders(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -399,7 +400,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc004_1_BuildWorkspaceForFund1(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -582,7 +583,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc004_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -631,7 +632,7 @@ import java.util.List;
 			sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc005_1_BuildWorkspaceForFund2(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -814,7 +815,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc005_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -863,7 +864,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc006_1_BuildWorkspaceForFund3(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1045,7 +1046,7 @@ import java.util.List;
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc006_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1095,7 +1096,7 @@ import java.util.List;
 			sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc007_1_BuildWorkspaceForFund4(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1277,7 +1278,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc007_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1326,7 +1327,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc008_1_BuildWorkspacForFund5(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1493,7 +1494,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc008_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1543,7 +1544,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc009_1_BuildWorkspaceForFund6(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1710,7 +1711,7 @@ import java.util.List;
 		sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc009_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		SoftAssert saa=new SoftAssert();
@@ -1758,7 +1759,7 @@ import java.util.List;
 			sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc010_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -1912,7 +1913,7 @@ import java.util.List;
 				sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc010_2_verifyFolderStructure() {
 		String uploadedFile="Test123.pdf";
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc010_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp", excelLabel.StandardPath);
@@ -1937,8 +1938,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc011_0_uploadFiles(String environment, String mode) {
+	@Test
+	public void M15tc011_0_uploadFiles() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1967,7 +1968,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc011_1_verifyUpload() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -2038,7 +2039,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc011_2_renameFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2134,7 +2135,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc011_3_verifyRenameFolder() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc011_0_uploadFiles", excelLabel.StandardPath).split(",")[0];
@@ -2158,7 +2159,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc011_4_deleteFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2226,7 +2227,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc011_5_verifydeletedFolder() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath8 = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc011_0_uploadFiles", excelLabel.StandardPath).split(",")[0];
@@ -2251,7 +2252,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc012_1_VerifyAdditionOfFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2337,7 +2338,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc012_2_verifyAdditionOfFolders() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc012_1_VerifyAdditionOfFolders", excelLabel.StandardPath).split(",")[0];
@@ -2363,7 +2364,7 @@ import java.util.List;
 		sa.assertAll();
 	}
  
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc015_Invite1KContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2525,7 +2526,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc016_sendInvitationMailTo200Contacts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2620,7 +2621,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc017_RegisterConact1(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2708,7 +2709,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc018_UploadBigSizeFilesInCommon(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2883,8 +2884,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc019_UpdateBigSizeFilesInCommon(String environment, String mode){
+	@Test
+	public void M15tc019_UpdateBigSizeFilesInCommon(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -2941,7 +2942,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc020_UploadBigSizeFilesInInternal(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3075,8 +3076,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc021_UpdateBigSizeFilesInInternal(String environment, String mode){
+	@Test
+	public void M15tc021_UpdateBigSizeFilesInInternal(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String InternalFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.InternalPath);
@@ -3133,7 +3134,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc022_OnlineImportFilesInCommonFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3193,7 +3194,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc023_OnlineImportFilesInCommonFolderUpdate(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3253,7 +3254,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc024_OnlineImportFilesInInternalFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3313,7 +3314,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc025_OnlineImportFilesInInternalFolderUpdate(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3373,8 +3374,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc026_0_UploadFileInStandardFolder(String environment, String mode){
+	@Test
+	public void M15tc026_0_UploadFileInStandardFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -3403,7 +3404,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc026_1_verifyUpload() {
 		String dependOnTc="M15tc026_0_UploadFileInStandardFolder";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -3477,7 +3478,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc026_2_verifyUploadFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3506,8 +3507,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc027_0_OnlineImportFileInStandardFolder(String environment, String mode){
+	@Test
+	public void M15tc027_0_OnlineImportFileInStandardFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -3540,7 +3541,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc027_1_verifyOnlineImportfileInBox() {
 		String dependOnTc="M15tc027_0_OnlineImportFileInStandardFolder";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -3614,7 +3615,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc027_2_verifyOnlineImportedFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3643,8 +3644,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc028_TurnOnManageApproval(String environment, String mode){
+	@Test
+	public void M15tc028_TurnOnManageApproval(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
@@ -3671,8 +3672,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc029_UploadFilesUnderCommonFolder(String environment, String mode){
+	@Test
+	public void M15tc029_UploadFilesUnderCommonFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String CommonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -3714,7 +3715,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc030_ApproveDocumentAndVerifyStatus(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3811,8 +3812,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc031_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessage(String environment, String mode){
+	@Test
+	public void M15tc031_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessage(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependsOn = "M15tc029_UploadFilesUnderCommonFolder";
@@ -3876,8 +3877,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc032_1_UploadFilesInStandardFolder(String environment, String mode){
+	@Test
+	public void M15tc032_1_UploadFilesInStandardFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -3905,7 +3906,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc032_2_verifyUploadedFilesInBox() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -3983,7 +3984,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc033_VerifyErrorMessageForMoreThan100Files(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4033,7 +4034,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc034_ApproveFileOfStandardFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4258,7 +4259,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc035_0_DeactivateManageApproval(){
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4280,7 +4281,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc035_1_UpdateFileWithDifferentNameInStandardFolderFWR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4311,7 +4312,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc035_2_verifyUpdatedFileInBox() {
 		String dependOnTc="M15tc035_1_UpdateFileWithDifferentNameInStandardFolderFWR";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -4385,8 +4386,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc036_InviteContactFrom10Institutions(String environment, String mode){
+	@Test
+	public void M15tc036_InviteContactFrom10Institutions(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -4539,8 +4540,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc037_Generate10000AlertsFromCRMSide(String environment, String mode){
+	@Test
+	public void M15tc037_Generate10000AlertsFromCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -4708,7 +4709,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc038_Create10000AlertFromInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		boolean flag = false;
@@ -4971,7 +4972,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc039_InviteContactFromSharedFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5228,8 +5229,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc040_InviteContactFromDifferentLevel(String environment, String mode){
+	@Test
+	public void M15tc040_InviteContactFromDifferentLevel(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath).split("<break>");
@@ -5316,8 +5317,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc041_upload100FilesInSharedFolder(String environment, String mode){
+	@Test
+	public void M15tc041_upload100FilesInSharedFolder(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
@@ -5378,7 +5379,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc043_1_BuildWorkspaceForFund1(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -5563,7 +5564,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc043_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -5619,7 +5620,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc044_1_BuildWorkspaceForFund2(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -5804,7 +5805,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc044_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -5866,7 +5867,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc045_1_BuildWorkspaceForFund3(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6050,7 +6051,7 @@ import java.util.List;
 		sa.assertAll();				
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc045_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6110,7 +6111,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc046_1_BuildWorkspaceForFund4(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6294,7 +6295,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc046_2_verifyStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6353,7 +6354,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc047_1_BuildWorkspaceForFund5(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6521,7 +6522,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc047_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6579,7 +6580,7 @@ import java.util.List;
 		sa.assertAll();	
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc048_1_BuildWorkspaceForFund6(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
@@ -6797,7 +6798,7 @@ import java.util.List;
 //		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc048_2_verifyFolderStructure() {
 		SoftAssert saa=new SoftAssert();
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -6850,8 +6851,8 @@ import java.util.List;
 		sa.assertAll();	
 	}
  
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc049_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp(String environment, String mode){
+	@Test
+	public void M15tc049_1_VerifyRemovalOfInvestorFromManageInvestorsPopUp(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp=new FundsPageBusinessLayer(driver);
@@ -6931,7 +6932,7 @@ import java.util.List;
 		sa.assertAll();		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc049_2_verifyFolderStructure() {
 		List<String> investorList = new ArrayList<String>();
 		List<String> limitedPartnerList = new ArrayList<String>();
@@ -7004,8 +7005,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc051_0_uploadDocumentInMultiInvestorInINV(String environment, String mode) {
+	@Test
+	public void M15tc051_0_uploadDocumentInMultiInvestorInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7040,7 +7041,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc051_1_verifyFolderStructureInBox() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -7117,7 +7118,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc051_2_renameFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7214,7 +7215,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc051_3_verifyRenameFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc051_0_uploadDocumentInMultiInvestorInINV", excelLabel.StandardPath).split(",")[0];
@@ -7250,7 +7251,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc051_4_deleteFolders() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7321,7 +7322,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc051_5_verifydeletedFolders() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -7381,7 +7382,7 @@ import java.util.List;
 		sa.assertAll();
 	}
  
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc052_1_VerifyAdditionOfFoldersInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7473,7 +7474,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc052_2_verifyFolderStructure() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		String stdPath = ExcelUtils.readData(excelPath,"filepath", excelLabel.TestCases_Name, "M15tc052_1_VerifyAdditionOfFoldersInvestor", excelLabel.StandardPath).split(",")[0];
@@ -7501,7 +7502,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc055_sendInvitationMailTo200Contacts(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7596,7 +7597,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc054_Invite1KContact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7758,7 +7759,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc056_RegisterConact1(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -7793,7 +7794,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc057_UploadBigSizeFilesInCommonInvestorWS(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7966,8 +7967,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc058_UpdateBigSizeFilesInCommonInvestorWS(String environment, String mode){
+	@Test
+	public void M15tc058_UpdateBigSizeFilesInCommonInvestorWS(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -8024,7 +8025,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc059_UploadBigSizeFilesInInternalInvestorWS(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8158,8 +8159,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc060_UpdateBigSizeFilesInInternalInvestorWS(String environment, String mode){
+	@Test
+	public void M15tc060_UpdateBigSizeFilesInInternalInvestorWS(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String InternalFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.InternalPath);
@@ -8216,7 +8217,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc061_OnlineImportFilesInCommonFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8276,7 +8277,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc062_OnlineImportFilesInCommonFolderUpdateINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8336,7 +8337,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc063_OnlineImportFilesInInternalFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8396,7 +8397,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc064_OnlineImportFilesInInternalFolderUpdateINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8456,8 +8457,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc065_1_UploadFileInStandardFolderINV(String environment, String mode){
+	@Test
+	public void M15tc065_1_UploadFileInStandardFolderINV(){
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8492,7 +8493,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc065_2_verifyUploadedFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8521,7 +8522,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc065_3_verifyUploadFileInBox() {
 		String dependOnTc="M15tc066_1_OnlineImportFileInStandardFolderINV";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -8596,8 +8597,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc066_1_OnlineImportFileInStandardFolderINV(String environment, String mode){
+	@Test
+	public void M15tc066_1_OnlineImportFileInStandardFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -8635,7 +8636,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc066_2_verifyOnlineImportedFilesInvestorSide() {
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8664,7 +8665,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc066_3_verifyOnlineImportfileInBox() {
 		String dependOnTc="M15tc066_1_OnlineImportFileInStandardFolderINV";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -8739,7 +8740,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc067_TurnOnManageApprovalInvestorWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -8767,8 +8768,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc068_UploadFilesUnderCommonFolderInvestorWorkspace(String environment, String mode){
+	@Test
+	public void M15tc068_UploadFilesUnderCommonFolderInvestorWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String CommonFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -8810,7 +8811,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc069_ApproveDocumentAndVerifyStatusINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8906,8 +8907,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc070_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessageINV(String environment, String mode){
+	@Test
+	public void M15tc070_UpdateFilesAvailableInCommonFolderAndVerifyErrorMessageINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String dependsOn = "M15tc068_UploadFilesUnderCommonFolderInvestorWorkspace";
@@ -8971,8 +8972,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc071_1_UploadFilesInStandardFolderINV(String environment, String mode){
+	@Test
+	public void M15tc071_1_UploadFilesInStandardFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -9005,7 +9006,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc071_2_verifyUploadedFileInBox() {
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
 		List<String> investorList = new ArrayList<String>();
@@ -9087,7 +9088,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc072_VerifyErrorMessageForMoreThan100FilesINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9137,7 +9138,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc073_ApproveFileOfStandardFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9379,7 +9380,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc074_0_DeactivateManageApprovalINV(){
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9402,7 +9403,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc074_1_UpdateFileWithDifferentNameInStandardFolderINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9433,7 +9434,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc074_2_verifyUpdatedFileInBox() {
 		String dependOnTc="M15tc074_1_UpdateFileWithDifferentNameInStandardFolderINV";
 		BoxPageBusinesslayer box = new BoxPageBusinesslayer(driver);
@@ -9509,8 +9510,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc075_InviteContactFrom10InstitutionsINV(String environment, String mode){
+	@Test
+	public void M15tc075_InviteContactFrom10InstitutionsINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -9663,8 +9664,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc076_Generate10000AlertsFromCRMSideINV(String environment, String mode){
+	@Test
+	public void M15tc076_Generate10000AlertsFromCRMSideINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String StandardFolderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -9834,7 +9835,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc077_Create10000AlertFromInvestorSideINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		boolean flag = false;
@@ -10097,7 +10098,7 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M15tc078_InviteContactFromSharedFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10354,8 +10355,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc079_InviteContactFromDifferentLevelINV(String environment, String mode){
+	@Test
+	public void M15tc079_InviteContactFromDifferentLevelINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath).split("<break>");
@@ -10442,8 +10443,8 @@ import java.util.List;
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M15tc080_upload100FilesInSharedFolderINV(String environment, String mode){
+	@Test
+	public void M15tc080_upload100FilesInSharedFolderINV(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderPath = ExcelUtils.readData(excelPath, "filepath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);

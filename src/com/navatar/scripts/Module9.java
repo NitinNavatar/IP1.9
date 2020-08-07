@@ -9,7 +9,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib.EditViewMode;
 import com.navatar.generic.CommonLib.FolderType;
@@ -64,7 +64,7 @@ import static com.navatar.generic.CommonLib.*;
  */
 public class Module9 extends BaseLib{
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc001_precondition() {
 		//Prerequisite: all users present with no NIM access
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -259,7 +259,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc002_ManageApprovalWithoutAccess() {
 		//prerequisite: 1. Manage Approval Deactivated. 2. No user should be given nim user access
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -464,7 +464,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc003_ManageApprovalWithAccessToInternalUser() {
 	//prerequisite: user2 will be given internal user access 2nd time
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -656,7 +656,7 @@ public class Module9 extends BaseLib{
 
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc004_VerifyActivationOfManageApprovalSetting() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -826,7 +826,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc005_VerifyManageApprovalsUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -987,7 +987,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc006_VerifyingUncheckManageAppSettingForUser() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1466,7 +1466,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc007_VerifyEditManageApprovalSettingDelegateAdmin() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1757,7 +1757,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc008_VerifyUncheckingActivateManageApprovalCheckbox() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2073,7 +2073,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc009_VerifyCheckingManageApprovalSettingAgain() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2245,7 +2245,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc010_VerifyActiveInactiveAndRemovingAccessFromInternalUser() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2593,7 +2593,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc011_VerifyUpdationOfName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2796,7 +2796,7 @@ public class Module9 extends BaseLib{
 											
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc012_GiveManageApprovalAccessToUser1AndUser2() {
 		//register for nim close button
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2881,7 +2881,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc013_ManageApprovalPopUpFundsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3257,8 +3257,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc014_InviteContactAndRegister(String environment, String mode) {
+	@Test
+	public void M9tc014_InviteContactAndRegister() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3334,7 +3334,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc015_UploadManageApprovalOn_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3658,7 +3658,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc015_UploadManageApprovalOn_ImpactCRM() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3873,7 +3873,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc015_UploadManageApprovalOn_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3992,8 +3992,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc016_VerifyDeleteFunctionality(String environment, String mode) {
+	@Test
+	public void M9tc016_VerifyDeleteFunctionality() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4351,7 +4351,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc017_VerifyApprovingDocuments_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4850,8 +4850,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc017_VerifyApprovingDocuments_Impact(String environment, String mode) {
+	@Test
+	public void M9tc017_VerifyApprovingDocuments_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5073,7 +5073,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc017_VerifyApprovingDocuments_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5206,8 +5206,8 @@ public class Module9 extends BaseLib{
 
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc018_VerifyOnlineImportManageApprovalOn_Action(String environment, String mode) {
+	@Test
+	public void M9tc018_VerifyOnlineImportManageApprovalOn_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5471,8 +5471,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc018_VerifyOnlineImportManageApprovalOn_Impact(String environment, String mode) {
+	@Test
+	public void M9tc018_VerifyOnlineImportManageApprovalOn_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5713,7 +5713,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc019_VerifySearchingManageApprovals() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6173,7 +6173,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc020_OpeningOfDocument() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6367,7 +6367,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc021_DuplicateDocumentError() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6680,7 +6680,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc022_UpdateAllAndDuplicateDoc_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6876,7 +6876,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc022_UpdateAllAndDuplicateDoc_Impact1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7009,7 +7009,7 @@ public class Module9 extends BaseLib{
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc022_UpdateAllAndDuplicateDoc_Impact2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7110,7 +7110,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc023_VerifyManageApprovalsAfterDeleteFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7442,7 +7442,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc024_CreateSameNameFolderAndVerify() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7551,7 +7551,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc025_UploadFilesUser2AndVerify() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7780,7 +7780,7 @@ public class Module9 extends BaseLib{
 
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc026_PendingFilesVerifyDuplicatePopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7960,7 +7960,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc027_VerifyFolderDeletedAndCountOfDocs() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8177,7 +8177,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc028_1_UpdateFolderNameAndVerify() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8499,7 +8499,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc028_2_RevertRenameOfFundnameAndInstName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8635,7 +8635,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc029_VerifySortingManageApproval() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8832,7 +8832,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc030_UploadDocumentInvestorSide_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8868,7 +8868,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc030_UploadDocumentInvestorSide_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8963,7 +8963,7 @@ public class Module9 extends BaseLib{
 		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc031_VerifyRemovalAndAdditionOfInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9030,7 +9030,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc032_ManageApprovalsPopupInvestorWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9401,8 +9401,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc033_InviteContactInvestorWorkpsace(String environment, String mode) {
+	@Test
+	public void M9tc033_InviteContactInvestorWorkpsace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
@@ -9450,7 +9450,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9767,7 +9767,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10187,7 +10187,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10304,7 +10304,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc035_VerifyDeleteInvestorWorkspace_Action() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10528,8 +10528,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc035_VerifyDeleteInvestorWorkspace_Impact(String environment, String mode) {
+	@Test
+	public void M9tc035_VerifyDeleteInvestorWorkspace_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10799,7 +10799,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc036_VerifyApprovingDocumentsInvestors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11288,8 +11288,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc036_VerifyApprovingDocumentsInvestors_Impact(String environment, String mode) {
+	@Test
+	public void M9tc036_VerifyApprovingDocumentsInvestors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11608,7 +11608,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc036_VerifyApprovingDocumentsInvestors_ImpactInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11729,8 +11729,8 @@ public class Module9 extends BaseLib{
 		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc037_VerifyOnlineImportInvestors_Action(String environment, String mode) {
+	@Test
+	public void M9tc037_VerifyOnlineImportInvestors_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11993,8 +11993,8 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
-	public void M9tc037_VerifyOnlineImportInvestors_Impact(String environment, String mode) {
+	@Test
+	public void M9tc037_VerifyOnlineImportInvestors_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12235,7 +12235,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc038_VerifySearchingManageApprovalsInvestor() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12694,7 +12694,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc039_OpeningOfDocsInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12888,7 +12888,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc040_VerifyDuplicateDocsInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13201,7 +13201,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc041_UpdateAllAndDuplicateDoc_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13397,7 +13397,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc041_UpdateAllAndDuplicateDoc_ImpactCRM() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13529,7 +13529,7 @@ public class Module9 extends BaseLib{
 		}
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc041_UpdateAllAndDuplicateDoc_ImpactInvestor() {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -13630,7 +13630,7 @@ public class Module9 extends BaseLib{
 	sa.assertAll();
 }
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc042_VerifyManageApprovalAfterDelete() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13961,7 +13961,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc043_CreateSameNameFolderAndVerifyInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -14068,7 +14068,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc044_UploadFilesCRMUser2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14302,7 +14302,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc045_VerifyPendingFilesDuplicateDocPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14486,7 +14486,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc046_VerifyFolderDeletedAndCountOfDocs() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -14702,7 +14702,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc047_1_UpdateFolderNameAndVerify_InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15024,7 +15024,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc047_2_RevertRenameInvestorAndFundName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15168,7 +15168,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test	
+	@Test	
 	public void M9tc048_VerifySortingManageApprovalInvWorkspace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15369,7 +15369,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc049_UploadDocumentInvestorSide_Action() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15407,7 +15407,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc049_UploadDocumentInvestorSide_Impact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15502,7 +15502,7 @@ public class Module9 extends BaseLib{
 		
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc050_VerifyRemovalAndAdditionOfInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -15569,7 +15569,7 @@ public class Module9 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M9tc051_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);

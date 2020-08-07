@@ -13,6 +13,7 @@ import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.UploadFileActions;
 import com.navatar.generic.CommonLib.Workspace;
+import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
 import com.navatar.generic.CommonLib.sideMenu;
@@ -45,7 +46,7 @@ import org.testng.annotations.Test;
  */
 public class Module3 extends BaseLib {
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc001_Module3_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -186,7 +187,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc002_buildFWRAndINVWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -225,8 +226,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc003_inviteContactFromWorkSpace(String environment, String mode) {
+	@Test
+	public void M3tc003_inviteContactFromWorkSpace() {
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 			BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -272,7 +273,7 @@ public class Module3 extends BaseLib {
 			sa.assertAll();
 		}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc004_registerM3Contact1(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -329,7 +330,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc005_validate_DashboardUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -389,7 +390,7 @@ public class Module3 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc006_validateFirmAlertUIAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -514,7 +515,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc007_validateAllDocumentUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -648,7 +649,7 @@ public class Module3 extends BaseLib {
 
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc008_1_uploadDocInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -730,7 +731,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc008_2_verifyDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -802,7 +803,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc009_1_uploadDocInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -884,7 +885,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc009_2_verifyDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -956,7 +957,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc010_1_uploadDocInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1039,7 +1040,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc010_2_verifyDocAlertForShaedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1111,7 +1112,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc011_1_uploadDocInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1187,7 +1188,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc011_2_verifyDocAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1290,7 +1291,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc012_1_updateDocInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1370,7 +1371,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc012_2_verifyUpdateDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1422,7 +1423,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc013_1_updateDocInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1500,7 +1501,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc013_2_verifyUpdateDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1552,7 +1553,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc014_1_updateDocInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1631,7 +1632,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc014_2_verifyUpdateDocAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1683,7 +1684,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc015_1_updateDocInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -1757,7 +1758,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc015_2_verifyUpdateDocAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1809,8 +1810,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc016_1_onlineImportInFWRSTDFolder(String environment, String mode) {
+	@Test
+	public void M3tc016_1_onlineImportInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -1884,7 +1885,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc016_2_verifyOnlineImportDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -1956,8 +1957,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc017_1_onlineImportInFWRCommonFolder(String environment, String mode) {
+	@Test
+	public void M3tc017_1_onlineImportInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2031,7 +2032,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc017_2_verifyOnlineImportDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2103,8 +2104,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc018_1_onlineImportInFWRSharedFolder(String environment, String mode) {
+	@Test
+	public void M3tc018_1_onlineImportInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2181,7 +2182,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc018_2_verifyOnlineImportDocAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2253,8 +2254,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc019_1_onlineImportInFWRInternalFolder(String environment, String mode) {
+	@Test
+	public void M3tc019_1_onlineImportInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2324,7 +2325,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc019_2_verifyOnlineImportDocAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2397,8 +2398,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc020_1_updateImportInFWRSTDFolder(String environment, String mode) {
+	@Test
+	public void M3tc020_1_updateImportInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2473,7 +2474,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc020_2_verifyUpdateImportInFWRSTDFolderAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2525,8 +2526,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc021_1_updateOnlineImportInFWRCommonFolder(String environment, String mode) {
+	@Test
+	public void M3tc021_1_updateOnlineImportInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2598,7 +2599,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc021_2_verifyOnlineImportUpdateAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2650,8 +2651,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc022_1_onlineImportUpdateInFWRSharedFolder(String environment, String mode) {
+	@Test
+	public void M3tc022_1_onlineImportUpdateInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2726,7 +2727,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc022_2_verifyOnlineImportUpdateAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2778,8 +2779,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc023_1_onlineImportUpdateInFWRInternalFolder(String environment, String mode) {
+	@Test
+	public void M3tc023_1_onlineImportUpdateInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -2846,7 +2847,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc023_2_verifyOnlineImportUpdateAlertForInternalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -2898,7 +2899,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc024_1_updateDiffNameDocInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -2973,7 +2974,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc024_2_verifyUpdateDocAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3045,7 +3046,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc025_1_updateDiffNameDocInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3120,7 +3121,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc025_2_verifyUpdateDocAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3192,7 +3193,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc026_1_updateDiffNameDocInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3267,7 +3268,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc026_2_verifyUpdateDocAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3339,7 +3340,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc027_1_updateDiffNameDocInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3407,7 +3408,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 		
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc027_2_verifyUpdateDocAlertForInertnalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3479,7 +3480,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc028_1_updateDocViaManageVersionInFWRSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3554,7 +3555,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc028_2_verifyUpdateDocViaManageVersionAlertForSTDFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3626,7 +3627,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc029_1_updateDocViaManageVersionInFWRCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3701,7 +3702,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc029_2_verifyUpdateDocViaManageVersionAlertForCommonFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3773,7 +3774,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc030_1_updateDocViamanageversionInFWRSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3848,7 +3849,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc030_2_verifyUpdateDocViamanageVersionAlertForSharedFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -3920,7 +3921,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc031_1_updateDocViaManageversionInFWRInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -3988,7 +3989,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc031_2_verifyUpdateDocViaManageVersionAlertForInertnalFoldersAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4060,8 +4061,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc032_1_changeDocViaManageVersoinInCommonFolder(String environment, String mode) {
+	@Test
+	public void M3tc032_1_changeDocViaManageVersoinInCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -4138,7 +4139,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc032_2_verifyAlertsCountsAtInvestorSideAfterMakeCurrentDoc() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp = new AllFirmsPageBusinesslayer(driver);
@@ -4173,7 +4174,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc033_1_uploadFilesInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4253,7 +4254,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc033_2_verifyUploadDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4328,7 +4329,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc034_1_uploadFilesInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4407,7 +4408,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc034_2_verifyUploadDoccommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4482,7 +4483,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc035_1_uploadFilesInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4562,7 +4563,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc035_2_verifyUploadDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4637,7 +4638,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc036_1_uploadFilesInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4711,7 +4712,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc036_2_verifyUploadDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4793,7 +4794,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc037_1_updateFilesInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4872,7 +4873,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc037_2_verifyUdateDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -4936,7 +4937,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc038_1_updateFilesInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5014,7 +5015,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc038_2_verifyUdateDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5078,7 +5079,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc039_1_updateFilesInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5157,7 +5158,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc039_2_verifyUdateDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5221,7 +5222,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc040_1_updateFilesInINVSInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -5296,7 +5297,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc040_2_verifyUdateDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5364,8 +5365,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc041_1_onlineImportInINVSTDFolder(String environment, String mode) {
+	@Test
+	public void M3tc041_1_onlineImportInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5436,7 +5437,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc041_2_verifyImportedDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5511,8 +5512,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc042_1_onlineImportInINVCommonFolder(String environment, String mode) {
+	@Test
+	public void M3tc042_1_onlineImportInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5583,7 +5584,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc042_2_verifyImportedDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5658,8 +5659,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc043_1_onlineImportInINVSharedFolder(String environment, String mode) {
+	@Test
+	public void M3tc043_1_onlineImportInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5729,7 +5730,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc043_2_verifyImportedDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5804,8 +5805,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc044_1_onlineImportInINVInternalFolder(String environment, String mode) {
+	@Test
+	public void M3tc044_1_onlineImportInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -5871,7 +5872,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc044_2_verifyImportedDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -5949,8 +5950,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc045_1_updateImporedDoctInINVSTDFolder(String environment, String mode) {
+	@Test
+	public void M3tc045_1_updateImporedDoctInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -6019,7 +6020,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc045_2_verifyUpdateDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6084,8 +6085,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc046_1_updateImportDocInINVCommonFolder(String environment, String mode) {
+	@Test
+	public void M3tc046_1_updateImportDocInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -6154,7 +6155,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc046_2_verifyUpdateImportedDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6219,8 +6220,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc047_1_updateImportDocInINVSharedFolder(String environment, String mode) {
+	@Test
+	public void M3tc047_1_updateImportDocInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -6289,7 +6290,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc047_2_verifyUpdateImportedDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6354,8 +6355,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc048_1_updateImportDocInINVInternalFolder(String environment, String mode) {
+	@Test
+	public void M3tc048_1_updateImportDocInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -6421,7 +6422,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc048_2_verifyImportedDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6499,7 +6500,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc049_1_updateDiffNameDocInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -6582,7 +6583,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc049_2_verifyDiffNameUpdateDocSTDFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6656,7 +6657,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc050_1_updateDiffNameDocInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -6739,7 +6740,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc050_2_verifyDiffNameUpdateDocCommonFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6813,7 +6814,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc051_1_updateDiffNameDocInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -6896,7 +6897,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc051_2_verifyDiffNameUpdateDocSharedFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -6970,7 +6971,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc052_1_updateDiffNameDocInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7051,7 +7052,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc052_2_verifyDiffNameUpdateDocInternalFolderAlertInINVAtInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7128,7 +7129,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc053_1_updateDocViaManageVersionInINVSTDFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7209,8 +7210,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc053_2_verifyUpdateDocViaManageVersionAlertForSTDInINVAtInvestorSide(String environment, String mode) {
+	@Test
+	public void M3tc053_2_verifyUpdateDocViaManageVersionAlertForSTDInINVAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7283,8 +7284,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc054_1_updateDocViaManageVersionInINVCommonFolder(String environment, String mode) {
+	@Test
+	public void M3tc054_1_updateDocViaManageVersionInINVCommonFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
 		lp.investorLogin(M3Contact1EmailId,adminPassword);
@@ -7364,7 +7365,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc054_2_verifyUpdateDocViaManageVersionAlertForCommonInINVAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7438,7 +7439,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc055_1_updateDocViaManageVersionInINVSharedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7519,7 +7520,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc055_2_verifyUpdateDocViaManageVersionAlertForSharedInINVAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7593,7 +7594,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc056_1_updateDocViaManageVersionInINVInternalFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7672,7 +7673,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc056_2_verifyUpdateDocViaManageVersionAlertForInternalInINVAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -7749,7 +7750,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc057_1_updateMyProfileAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -7888,7 +7889,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc057_2_updateMyFirmProfile() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8040,7 +8041,7 @@ public class Module3 extends BaseLib {
 	sa.assertAll();
 }
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc057_3_verifyProfileAlertsAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -8124,8 +8125,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc058_inviteM3Contact2FromBothWrokSpace(String environment, String mode) {
+	@Test
+	public void M3tc058_inviteM3Contact2FromBothWrokSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -8172,7 +8173,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc059_registerM3Contact2(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -8293,7 +8294,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc060_buildFund2WorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8332,8 +8333,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc061_inviteM3Contact1FromFund2(String environment, String mode) {
+	@Test
+	public void M3tc061_inviteM3Contact1FromFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -8402,7 +8403,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc062_1_uploadDocInSTDInFWRforFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -8479,7 +8480,7 @@ public class Module3 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc062_2_uploadDocInSTDInINVforFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8536,7 +8537,7 @@ public class Module3 extends BaseLib {
 		
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc062_3_verifyUploadDocSTDFolderAlertAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -8642,7 +8643,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc063_1_updateDocInSTDInFWRForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -8717,7 +8718,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc063_2_updateDocInSTDInINVForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8771,7 +8772,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc063_3_verifyUpdateDocInSTDFolderAlertAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -8856,7 +8857,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc064_1_preConditionForOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8970,7 +8971,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc064_2_buildFWRAndINVWorkSpaceInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9009,8 +9010,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc065_inviteContactFromOrg2(String environment, String mode) {
+	@Test
+	public void M3tc065_inviteContactFromOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(Org2CRMUser1EmailID,adminPassword);
@@ -9054,7 +9055,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc066_1_uploadDocInSTDFolderInFWRAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -9149,7 +9150,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc066_2_uploadDocInSTDFolderInINVAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9207,7 +9208,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc066_3_verifyUploadDocAlertForSTDAtInvestorSideForOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -9318,7 +9319,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc067_1_updateDocInSTDFolderInFWRAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -9411,7 +9412,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc067_2_updateDocInSTDFolderInINVAtCRMSideInOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -9467,7 +9468,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc067_3_verifyUpdateDocAlertForSTDAtInvestorSideForOrg2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -9559,7 +9560,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc068_validateFirmsNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -9602,7 +9603,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc069_checkVeriousOperationOnAllDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fpb = new FundsPageBusinessLayer(driver);
@@ -9862,7 +9863,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc070_veriousOperationOnFirmAlertGridAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fpb = new FundsPageBusinessLayer(driver);
@@ -10376,7 +10377,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc071_veriousOperationOnAllFirmAlertGridAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -10890,7 +10891,7 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc072_1_uploadLogoForAdmin1AtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim= new NIMPageBusinessLayer(driver);
@@ -10973,7 +10974,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc072_2_uploadLogoForAdmin2AtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim= new NIMPageBusinessLayer(driver);
@@ -11055,7 +11056,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc072_3_verifyUploadedLogoAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11127,7 +11128,7 @@ public class Module3 extends BaseLib {
 	
 
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc073_1_deleteUploadedDocInSTDFolderInFWRAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -11232,7 +11233,7 @@ public class Module3 extends BaseLib {
 
 
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc073_2_deleteUploadedDocInSTDFolderInINVAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11301,7 +11302,7 @@ public class Module3 extends BaseLib {
 		}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc073_3_verifyDeletedDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11457,7 +11458,7 @@ public class Module3 extends BaseLib {
 	
 
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc074_1_deleteInvitedFolderInSTDFolderInFWRAtCRMSide() {
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11535,7 +11536,7 @@ public class Module3 extends BaseLib {
 	
 
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc074_2_deleteInvitedFolderInSTDFolderInINVAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11609,7 +11610,7 @@ public class Module3 extends BaseLib {
 		}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc074_3_verifyDeletedFolderFirmsNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11675,7 +11676,7 @@ public class Module3 extends BaseLib {
 	
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc075_1_createDeletedFolderInSTDFolderInFWRAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -11807,8 +11808,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc075_2_inviteAgianM3Contact1AndUploadDocInFWR(String environment, String mode) {
+	@Test
+	public void M3tc075_2_inviteAgianM3Contact1AndUploadDocInFWR() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -11859,8 +11860,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc075_3_inviteAgianM3Contact1AndUploadDocInINV(String environment, String mode) {
+	@Test
+	public void M3tc075_3_inviteAgianM3Contact1AndUploadDocInINV() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -11911,7 +11912,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc075_4_verifyUploadedDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -11972,7 +11973,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc076_1_removeInstitutionAndLPFromManageTargetAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12045,7 +12046,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc076_2_verifyDeletedAccountFirmsNameAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12109,8 +12110,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc077_1_addInstitutionFromManageTargetAndUploadDocInFWRAtCRMSide(String environment, String mode) {
+	@Test
+	public void M3tc077_1_addInstitutionFromManageTargetAndUploadDocInFWRAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String STDFolderpath=ExcelUtils.readData("FilePath",0, 4, currentlyExecutingTC);
@@ -12190,8 +12191,8 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc077_2_addLPFromManageTargetAndUploadDocInINVAtCRMSide(String environment, String mode) {
+	@Test
+	public void M3tc077_2_addLPFromManageTargetAndUploadDocInINVAtCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String STDFolderpath=ExcelUtils.readData("FilePath",0, 4, currentlyExecutingTC);
@@ -12271,7 +12272,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc077_3_verifyUploadedDocAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12333,7 +12334,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc078_1_closeFRWAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12361,7 +12362,7 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc078_2_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12458,7 +12459,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc078_3_closeINVAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12485,7 +12486,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc078_4_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12590,8 +12591,8 @@ public class Module3 extends BaseLib {
 	}
 
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc079_1_againInviteContactAndCheckImpactInvestorSide(String environment, String mode) {
+	@Test
+	public void M3tc079_1_againInviteContactAndCheckImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
@@ -12622,7 +12623,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc079_2_againInviteContactAndCheckImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12685,7 +12686,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc080_1_clearWorkspaceAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12723,7 +12724,7 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc080_2_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12826,7 +12827,7 @@ public class Module3 extends BaseLib {
 	}
 	
 
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc080_3_clearINVAndcheckImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -12863,7 +12864,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc080_4_checkImpactAtInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -12965,8 +12966,8 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M3tc081_1_buildAgainFWRINVWorkSpaceAndCheckImpactInvestorSide(String environment, String mode) {
+	@Test
+	public void M3tc081_1_buildAgainFWRINVWorkSpaceAndCheckImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -13059,7 +13060,7 @@ public class Module3 extends BaseLib {
 	}
 	
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc081_2_buildAgainFWRINVWorkSpaceAndCheckImpactInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
@@ -13123,7 +13124,7 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
+	@Test
 	public void M3tc082_PostConditionForAll() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
