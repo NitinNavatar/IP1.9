@@ -6039,4 +6039,14 @@ public class FundsPage extends BasePageBusinessLayer {
 		ele=isDisplayed(driver, FindElement(driver, finalXpath, finalLabelName+" text box in "+mode, action.SCROLLANDBOOLEAN,30), "Visibility", timeOut, finalLabelName+"text box in "+mode);
 		return ele;
 	}
+	
+	@FindBy(xpath="//div[@id='mainForm']/div[contains(text(),'Manage Approvals')]")
+		private WebElement manageApprovalsHeaderText;
+	
+		/**
+		 * @return the manageApprovalsHeaderText
+		 */
+		public WebElement getManageApprovalsHeaderText(int timeOut) {
+			return isDisplayed(driver, manageApprovalsHeaderText, "Visibility", timeOut, "manage approvals header text");
+		}
 }

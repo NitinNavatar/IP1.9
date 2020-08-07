@@ -271,9 +271,9 @@ public class CommitmentPage extends BasePageBusinessLayer{
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 			return isDisplayed(driver, commitmentIdInViewMode_Classic, "Visibility", timeOut, "Commitment ID in View Mode Classic");
 	}else{
-		String xpath="//span[text()='Commitment ID']/../following-sibling::div/span[contains(@class,'test-id')]";
+		String xpath="//*[text()='Commitment']/../*/*[@slot='primaryField']/*";
 		WebElement ele = FindElement(driver,xpath, "commitment id xpath", action.SCROLLANDBOOLEAN, timeOut);
-		return isDisplayed(driver, ele, "Visibility", timeOut, "Commitment ID in View Mode Classic");
+		return ele;
 	}
 
 	}

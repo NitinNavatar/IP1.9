@@ -527,7 +527,7 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 							if (getCommitmentIdInViewMode(environment,mode,20) != null) {
 								String commitmentId = getText(driver, getCommitmentIdInViewMode(environment,mode,60), "Commitment ID",
 										action.BOOLEAN);
-								appLog.info(commitmentId + "  generated");
+								appLog.info(commitmentId  + " : commitment id is generated");
 								if(excelPath!=null) {
 									ExcelUtils.writeData(excelPath,commitmentId, "Commitments", excelLabel.Variable_Name, basedOnValue,
 											excelLabel.Commitment_ID);

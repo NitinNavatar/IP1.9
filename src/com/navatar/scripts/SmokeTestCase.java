@@ -2120,10 +2120,10 @@ public class SmokeTestCase extends BaseLib {
 									if(i==1) {
 										if (click(driver, fp.getManageApprovalsConfirmYesBtn(10), "manage approval del yes button", action.SCROLLANDBOOLEAN)) {
 											appLog.info("clicked on yes button");
-											ThreadSleep(2000);
+											ThreadSleep(5000);
 											if(click(driver, fp.getManageApprovalsCloseBtn(20), "manage approvals close button", action.SCROLLANDBOOLEAN)) {
 												appLog.info("clicked on close button");
-												ThreadSleep(2000);
+												ThreadSleep(5000);
 												if (fp.noDataToDisplay(ManageApprovalTabs.PendingDocuments, 30)!=null) {
 													appLog.info("no data to display is successfully displayed");
 													
@@ -2153,6 +2153,7 @@ public class SmokeTestCase extends BaseLib {
 						appLog.error("Not able to click on header check box so cannot select all file");
 						sa.assertTrue(false,"Not able to click on header check box so cannot select all file");
 					}
+					scrollDownThroughWebelement(driver, fp.getManageApprovalsHeaderText(20),"");
 					if (click(driver, fp.getApprovedDocsTab(60),"approved docs tab", action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
 						
@@ -2186,9 +2187,6 @@ public class SmokeTestCase extends BaseLib {
 							appLog.error("Not able to pass value in search text box "+filesStandard.split("<break>")[1]+" so cannot search file in manage approvals");
 							sa.assertTrue(false, "Not able to pass value in search text box "+filesStandard.split("<break>")[1]+" so cannot search file in manage approvals");
 						}
-						
-						
-						
 						if (fp.clickOnDocumentManageApprovals(ManageApprovalTabs.ApprovedDocuments, filesStandard.split("<break>")[1], 30, fp.manageApprovalsScrollBox(ManageApprovalTabs.ApprovedDocuments, 30))){
 							parentID = switchOnWindow(driver);
 							if (parentID != null) {
@@ -6225,6 +6223,7 @@ public class SmokeTestCase extends BaseLib {
 						appLog.error("Not able to click on header check box so cannot select all file");
 						sa.assertTrue(false,"Not able to click on header check box so cannot select all file");
 					}
+					scrollDownThroughWebelement(driver, fp.getManageApprovalsHeaderText(20),"");
 					if (click(driver, fp.getApprovedDocsTab(60),"approved docs tab", action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(2000);
 						if (sendKeys(driver, fp.getSearchTextboxManageApp(ManageApprovalTabs.ApprovedDocuments, 30), filesStandard.split("<break>")[1], "search box pending tabs", action.BOOLEAN)) {

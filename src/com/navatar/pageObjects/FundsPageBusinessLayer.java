@@ -4924,6 +4924,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			docByXpath = By.xpath("//span[contains(@id,'AprovedGrid-')]//a[text()='"+documentName+"']");
 			docStringXpath = "//span[contains(@id,'AprovedGrid-')]//a[text()='"+documentName+"']";
 		}
+		scrollDownThroughWebelement(driver, getManageApprovalsHeaderText(10), "");
 		ThreadSleep(5000);
 		int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
 					.executeScript("return arguments[0].scrollHeight", scrollBoxele)));
@@ -4932,9 +4933,10 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				if (!driver.findElements(docByXpath).isEmpty() && driver.findElement(docByXpath).isDisplayed()) {
 					appLog.info("Element Successfully Found and displayed");
 					ThreadSleep(500);
-					ele=FindElement(driver, docStringXpath, "", action.BOOLEAN, 20);
+					ele=FindElement(driver, docStringXpath, "", action.SCROLLANDBOOLEAN, 20);
+					scrollDownThroughWebelement(driver, getManageApprovalsHeaderText(10), "");
 					if(ele!=null) {
-						if(click(driver, ele, "", action.BOOLEAN)){
+						if(clickUsingJavaScript(driver, ele, "")){
 							System.err.println("Clicked ON Element");
 						}else {
 							appLog.error("Not able to clicke on Document Name: "+documentName);
