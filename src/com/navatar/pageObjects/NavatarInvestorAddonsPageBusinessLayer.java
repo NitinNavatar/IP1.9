@@ -202,7 +202,7 @@ public class NavatarInvestorAddonsPageBusinessLayer extends NavatarInvestorAddOn
 		if(lastActivatedOn==null && createdDate != null){
 			ele = FindElement(driver, "//a[@title='"+DisclaimerName+"']/../preceding-sibling::span[1]/a[@title='"+activateDeactivate+"']/../following-sibling::span[2]/a[@title='"+View+"']/../following-sibling::span[1]/div[@title='']/../following-sibling::span[1]/div[@title='"+getSystemDate("MM/dd/yyyy")+"' or @title='"+previousOrForwardDate(-1, "MM/dd/yyyy")+"']", "Grid Data", action.BOOLEAN, 30);
 		} else if (lastActivatedOn != null && createdDate !=null){
-			ele = FindElement(driver, "//a[@title='"+DisclaimerName+"']/../preceding-sibling::span[1]/a[@title='"+activateDeactivate+"']/../following-sibling::span[2]/a[@title='"+View+"']/../following-sibling::span[1]/div[@title='"+getSystemDate("MM/dd/yyyy")+"' or @title='"+previousOrForwardDate(-1, "MM/dd/yyyy")+"']/../following-sibling::span[1]/div[@title='"+getSystemDate("M/dd/yyyy")+"' or @title='"+previousOrForwardDate(-1, "M/dd/yyyy")+"']", "Grid Data", action.BOOLEAN, 30);
+			ele = FindElement(driver, "//a[@title='"+DisclaimerName+"']/../preceding-sibling::span[1]/a[@title='"+activateDeactivate+"']/../following-sibling::span[2]/a[@title='"+View+"']/../following-sibling::span[1]/div[@title='"+getSystemDate("MM/dd/yyyy")+"' or @title='"+previousOrForwardDate(-1, "MM/dd/yyyy")+"']/../following-sibling::span[1]/div[@title='"+getSystemDate("MM/dd/yyyy")+"' or @title='"+previousOrForwardDate(-1, "MM/dd/yyyy")+"']", "Grid Data", action.BOOLEAN, 30);
 		}
 		if(ele!=null){
 			return true;
@@ -297,7 +297,7 @@ public class NavatarInvestorAddonsPageBusinessLayer extends NavatarInvestorAddOn
 	public boolean clickOnContactNameLink(String contactName){
 		WebElement ele = FindElement(driver, "//span[contains(@id,'Disclaimer_Statistics-cell-0')]/a[@title='"+contactName+"']", "Contact Name link", action.BOOLEAN, 30);
 		if(ele != null){
-			if(click(driver, ele, contactName+" Contact name link", action.BOOLEAN)){
+			if(clickUsingJavaScript(driver, ele, contactName+" Contact name link")){
 				return true;
 			} else {
 				appLog.error(contactName+" Contact name link cannot be clicked, So cannot check the functionality.");
@@ -318,7 +318,7 @@ public class NavatarInvestorAddonsPageBusinessLayer extends NavatarInvestorAddOn
 	public boolean clickOnFirmNameLink(String firmName){
 		WebElement ele = FindElement(driver, "//span[contains(@id,'Disclaimer_Statistics-cell-2')]/a[@title='"+firmName+"']", "Firm Name link", action.BOOLEAN, 30);
 		if(ele != null){
-			if(click(driver, ele, firmName+" Firm name link", action.BOOLEAN)){
+			if(clickUsingJavaScript(driver, ele, firmName+" Firm name link")){
 				return true;
 			} else {
 				appLog.error(firmName+" Firm name link cannot be clicked, So cannot check the functionality.");
