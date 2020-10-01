@@ -7,19 +7,21 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import static com.navatar.generic.CommonVariables.*;
+
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -49,6 +51,9 @@ import com.navatar.pageObjects.NIMPageBusinessLayer;
 import com.navatar.pageObjects.NavatarInvestorAddOnsErrorMessage;
 import com.navatar.pageObjects.NavatarInvestorAddonsPageBusinessLayer;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
+import com.relevantcodes.extentreports.LogStatus;
+
+import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 
 /**
@@ -58,9 +63,11 @@ import static com.navatar.generic.CommonLib.*;
 public class Module4 extends BaseLib{
 
 	public String passwordResetLink = null;
+	Scanner scn = new Scanner(System.in);
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc000_CreateCRMUser1InstallPackageAndThenCreatePassword() {
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -70,7 +77,7 @@ public class Module4 extends BaseLib{
 		String UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(UserLastName, "Users", excelLabel.Variable_Name, "Org3User1", excelLabel.User_Last_Name);
 		cv = new CommonVariables(this);
-		
+
 		// Azhar add
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			if (superAdminRegisteredOrg3.equalsIgnoreCase("No")) {
@@ -86,25 +93,58 @@ public class Module4 extends BaseLib{
 			}
 		}
 		// Azhar end
-		
+		String parentWindow = null;
+		boolean flag=false;
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						}
+					}
+					if (bp.createPEUser(environment, mode,Org3CRMUser1FirstName, Org3CRMUser1LastName, cp.generateRandomEmailId(), CRMUserLicense,
+							CRMUserProfile)) {
+						appLog.info("PE User 1 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org3User1", excelLabel.User_Email);
+						flag = true;
+						break;
+
+					}
+				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+		}
+		if (flag) {
+			if (bp.installedPackages(environment, mode,Org3CRMUser1FirstName,Org3CRMUser1LastName)) {
+				appLog.info("PE Package is installed Successfully in CRM User1: " + Org3CRMUser1FirstName + " "+ Org3CRMUser1LastName);
+			} else {
+				appLog.error(
+						"Not able to install PE package in CRM User1: " + Org3CRMUser1FirstName + " "+ Org3CRMUser1LastName);
+				sa.assertTrue(false,
+						"Not able to install PE package in CRM User1: " + Org3CRMUser1FirstName + " "+ Org3CRMUser1LastName);
+			}
+			ThreadSleep(5000);
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+		}
+
 		switchToDefaultContent(driver);
-		if (bp.createPEUser(Org3CRMUser1FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,
-				CRMUserProfile)) {
-			appLog.info("PE User 1 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org3User1", excelLabel.User_Email);
-		} else {
-			appLog.info("PE User1 is not created successfully");
-			sa.assertTrue(false, "PE User1 is not created successfully");
-		}
-		if (bp.installedPackages(Org3CRMUser1FirstName, Org3CRMUser1LastName)) {
-			appLog.info("Install package is done for PE User 1 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 1 succesfully");
-			sa.assertTrue(false, "Install package is not done for PE User 1 succesfully");
-		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		bp = new BasePageBusinessLayer(driver);
@@ -125,72 +165,34 @@ public class Module4 extends BaseLib{
 			appLog.info("Password is not set for user1");
 			sa.assertTrue(false, "Password is not set for user1");
 		}
-		if (bp.getSalesForceLightingIcon(20) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
+		if (lp.switchToLighting()) {
+			appLog.info("Successfully Switched to Lighting");
+
+		} else{
+			appLog.error("Not Able to Switched to Lighting");
+			sa.assertTrue(false, "Not Able to Switched to Lighting");
+		}
+
+
+	//	lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
+		String addRemoveTabName="Navatar Investor Manager"+","+"Partnerships"+"Commitments";
+		if (bp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+			log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			sa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					sa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					sa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		if (bp.getNavatarInvestorManagerTab(20) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					sa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(20) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
-			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				sa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
-			}
-		}
-		String userNameAtTab = getAttribute(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab",
-				"title");
-		String userName = trim(userNameAtTab);
-		sa.assertTrue(userName.contains(Org3CRMUser1LastName), "PE User name is  not verified.");
+			log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+			sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+		}	
 		ThreadSleep(1000);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc001_VerifyErrorMsgOnNavetarInvestorAddOnsTab(){
 		LoginPageBusinessLayer lp= new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.NavatarInvestorAddOns)){
+			  switchToFrame(driver,2,lp.getNavatarInvestorAddOnParentFrame(10));
 			String text = getAttribute(driver, niam.getDisclaimerTab(30), "Disclaimer Tab", "class");
 			if(text.equalsIgnoreCase("Selected")){
 				appLog.info("Disclaimer Tab is selected.");
@@ -213,30 +215,86 @@ public class Module4 extends BaseLib{
 			appLog.error("NI Addon Tab cannot be clicked.");
 			sa.assertTrue(false,"NI Addon Tab cannot be clicked.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc002_VerifyErrorMessageAfterVFPageAccess(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		String parentWindow = null;
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
-		if(click(driver, lp.getUserMenuTab(60), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			appLog.info("clicked on user menu tab");
-			if(click(driver, lp.getUserMenuSetupLink(60), "Setup Link", action.SCROLLANDBOOLEAN)){
-				appLog.info("Clicked on setup link");
-				if(click(driver, lp.getExpandManageUserIcon(60), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
+		if(lp.clickOnSetUpLink(environment, mode)) {
+			appLog.info("clicked on user menu tab & set up Link");
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				 parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link");
+					appLog.error("No new window is open after click on setup link");
+					exit("No new window is open after click on setup link");
+				}
+			}
+		
+				if(click(driver, lp.getExpandUserIcon(environment,mode,60), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on manage user expand icon");
-					if(click(driver, lp.getUsersLink(60), "User Link", action.SCROLLANDBOOLEAN)) {
+					if(click(driver, lp.getUsersLink(environment,mode,60), "User Link", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on users link");
-						WebElement ele = FindElement(driver, "//a[text()='PE Standard User']", "Profile is not visible", action.BOOLEAN, 60);
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, lp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}else{
+							System.err.println(">>>11111111111111<<<<<<<<<<<<");	
+						}
+						WebElement ele = FindElement(driver, "//a[text()='PE Standard User']", "PE Standard User visible", action.BOOLEAN, 60);
 						if(click(driver, ele, "Profile", action.BOOLEAN)){
+							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 20, lp.getSetUpPageIframe(20));
+								System.err.println(">>><<<<<<<<<<<<");
+							}else{
+								System.err.println(">>>11111111111111<<<<<<<<<<<<");	
+							}
+							
 							if(click(driver, lp.getEnableVisualForcePageAccessLink(60), "Visiual Force Page Access Link", action.BOOLEAN)){
+								if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 20, lp.getSetUpPageIframe(20));
+									System.err.println(">>><<<<<<<<<<<<");
+								}else{
+									System.err.println(">>>11111111111111<<<<<<<<<<<<");	
+								}
 								if(click(driver, lp.getEnableVisualForcePageAccessEditButton(60), "Edit Button", action.BOOLEAN)){
+									if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+										switchToDefaultContent(driver);
+										switchToFrame(driver, 20, lp.getSetUpPageIframe(20));
+										System.err.println(">>><<<<<<<<<<<<");
+									}else{
+										System.err.println(">>>11111111111111<<<<<<<<<<<<");	
+									}
 									if(selectVisibleTextFromDropDown(driver, lp.getVFPageMultiSelect(60), "VF Page multi select", "PE_Disclaimers_Setup")){
+										if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+											switchToDefaultContent(driver);
+											switchToFrame(driver, 20, lp.getSetUpPageIframe(20));
+											System.err.println(">>><<<<<<<<<<<<");
+										}else{
+											System.err.println(">>>11111111111111<<<<<<<<<<<<");	
+										}
 										if(click(driver, lp.getMultiSelectAddButton(30), "Add button", action.BOOLEAN)){
+											if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+												switchToDefaultContent(driver);
+												switchToFrame(driver, 20, lp.getSetUpPageIframe(20));
+												System.err.println(">>><<<<<<<<<<<<");
+											}else{
+												System.err.println(">>>11111111111111<<<<<<<<<<<<");	
+											}
 											if(click(driver, lp.getSaveButton(60), "Save Button", action.BOOLEAN)){
 												appLog.info("Successfully provide VF Page access.");
+												if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+													switchToDefaultContent(driver);
+													driver.close();
+													driver.switchTo().window(parentWindow);
+												}
 											} else {
 												appLog.error("Save button cannot be clicked, So cannot give VF Page access,");
 												sa.assertTrue(false,"Save button cannot be clicked, So cannot give VF Page access,");
@@ -269,15 +327,12 @@ public class Module4 extends BaseLib{
 					appLog.error("Not able to click on manage user expand icon so cannot give VF Page access.");
 					sa.assertTrue(false,"Not able to click on manage user expand icon so cannot give VF Page access.");
 				}
-			}else {
-				appLog.error("Not able to click on setup link so cannot give VF Page access.");
-				sa.assertTrue(false,"Not able to click on setup link so cannot give VF Page access.");
-			}
+			
 		}else {
-			appLog.error("Not able to click on user menu tab so cannot give VF Page access.");
-			sa.assertTrue(false,"Not able to click on user menu tab so cannot give VF Page access.");
+			appLog.error("Not able to click on user menu tab & set up link so cannot give VF Page access.");
+			sa.assertTrue(false,"Not able to click on user menu tab & set up link so cannot give VF Page access.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -299,23 +354,23 @@ public class Module4 extends BaseLib{
 			appLog.error("NI Addon cannot be clicked, So cannot check the error message.");
 			sa.assertTrue(false,"NI Addon cannot be clicked, So cannot check the error message.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc003_ProvideAccessToCRMUser1AndVerifyNIAddOn(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		boolean flag = true;
 		if(lp.clickOnTab(TabName.NIMTab)){
-			if(nim.giveAccessToUserInNIMTabFromAdmin(Org3CRMUser1FirstName+" "+Org3CRMUser1LastName, accessType.InternalUserAccess)){
+			if(nim.giveAccessToUserInNIMTabFromAdmin(environment,mode,Org3CRMUser1FirstName+" "+Org3CRMUser1LastName, accessType.InternalUserAccess)){
 				appLog.info("Successfully provided access to user "+Org3CRMUser1FirstName+" "+Org3CRMUser1LastName);
 			} else {
 				refresh(driver);
-				if(nim.giveAccessToUserInNIMTabFromAdmin(Org3CRMUser1FirstName+" "+Org3CRMUser1LastName, accessType.InternalUserAccess)){
+				if(nim.giveAccessToUserInNIMTabFromAdmin(environment,mode,Org3CRMUser1FirstName+" "+Org3CRMUser1LastName, accessType.InternalUserAccess)){
 					appLog.info("Successfully provided access to user "+Org3CRMUser1FirstName+" "+Org3CRMUser1LastName);
 				} else {
 					appLog.error("Cannot provided access to user "+Org3CRMUser1FirstName+" "+Org3CRMUser1LastName);
@@ -354,7 +409,7 @@ public class Module4 extends BaseLib{
 			
 		}
 		if(bp.clickOnTab(TabName.NIMTab)){
-			if(nim.NIMRegistration(userType.CRMUser, Org3CRMUser1FirstName, Org3CRMUser1LastName)){
+			if(nim.NIMRegistration(environment,mode,userType.CRMUser, Org3CRMUser1FirstName, Org3CRMUser1LastName)){
 				appLog.info("Crm user "+Org3CRMUser1FirstName+" "+Org3CRMUser1LastName+" is successfull registered.");
 			} else {
 				appLog.error("Not able to register crm user "+Org3CRMUser1FirstName+" "+Org3CRMUser1LastName);
@@ -382,11 +437,11 @@ public class Module4 extends BaseLib{
 			appLog.error("Navatr investor add on tab is not opening.");
 			sa.assertTrue(false,"Navatr investor add on tab is not opening.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc004_CheckDisclaimerUI(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -517,18 +572,18 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc005_PreConditionData(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		InstitutionPageBusinessLayer inst = new InstitutionPageBusinessLayer(driver);
 		for(int i = 1; i < 5; i++)
 			if(lp.clickOnTab(TabName.InstituitonsTab)){
-				if(inst.createInstitution(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M4I"+i, excelLabel.Institutions_Name))){
+				if(inst.createInstitution(environment,mode,ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M4I"+i, excelLabel.Institutions_Name),"Institution",null,null)){
 					appLog.info("Institution '"+ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M4I"+i, excelLabel.Institutions_Name)+"' is created successfully.");
 				} else {
 					appLog.error(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M4I"+i, excelLabel.Institutions_Name)+" institution is not created.");
@@ -539,7 +594,8 @@ public class Module4 extends BaseLib{
 				sa.assertTrue(false,"Insitution Tab cannot be clicked, So cannot create institution.");
 			}
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createLimitedPartner(M4LP1, M4I3)){
+
+			if(inst.createInstitution(environment, mode, M4LP1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), M4I3)){
 				appLog.info(M4LP1+" LP Created successfully.");
 			} else {
 				appLog.error(M4LP1+" LP created successfully.");
@@ -550,7 +606,8 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Insitution Tab cannot be clicked, So cannot create LP.");
 		}
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createLimitedPartner(M4LP2, M4I4)){
+			//inst.createLimitedPartner(M4LP2, M4I4)
+			if(inst.createInstitution(environment, mode, M4LP2, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), M4I4)){
 				appLog.info(M4LP2+" LP Created successfully.");
 			} else {
 				appLog.error(M4LP2+" LP created successfully.");
@@ -563,7 +620,7 @@ public class Module4 extends BaseLib{
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		String emailId = cp.generateRandomEmailId();
 		if(lp.clickOnTab(TabName.ContactTab)){
-			if(cp.createContact(M4CFN1, M4CLN1, M4I1, emailId)){
+			if(cp.createContact(environment,mode,M4CFN1, M4CLN1, M4I1, emailId,null,null,CreationPage.ContactPage)){
 				appLog.info(M4CFN1+" "+M4CLN1+" contact is created successfully.");
 				ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M4Contact1", excelLabel.Contact_EmailId);
 			} else {
@@ -577,7 +634,7 @@ public class Module4 extends BaseLib{
 		
 		emailId = cp.generateRandomEmailId();
 		if(lp.clickOnTab(TabName.ContactTab)){
-			if(cp.createContact(M4CFN2, M4CLN2, M4I2, emailId)){
+			if(cp.createContact(environment,mode,M4CFN2, M4CLN2, M4I2, emailId,null,null,CreationPage.ContactPage)){
 				appLog.info(M4CFN2+" "+M4CLN2+" contact is created successfully.");
 				ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M4Contact2", excelLabel.Contact_EmailId);
 			} else {
@@ -591,7 +648,7 @@ public class Module4 extends BaseLib{
 		
 		emailId = cp.generateRandomEmailId();
 		if(lp.clickOnTab(TabName.ContactTab)){
-			if(cp.createContact(M4CFN3, M4CLN3, M4I3, emailId)){
+			if(cp.createContact(environment,mode,M4CFN3, M4CLN3, M4I3, emailId,null,null,CreationPage.ContactPage)){
 				appLog.info(M4CFN3+" "+M4CLN3+" contact is created successfully.");
 				ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M4Contact3", excelLabel.Contact_EmailId);
 			} else {
@@ -605,7 +662,7 @@ public class Module4 extends BaseLib{
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M4F1, M4FT1, M4FIC1)){
+			if(fp.createFund(environment,mode,M4F1, M4FT1, M4FIC1,null,null)){
 				appLog.info(M4F1+" fund created successfully");
 			} else {
 				appLog.error(M4F1+" fund cannot be created.");
@@ -617,7 +674,7 @@ public class Module4 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M4F2, M4FT2, M4FIC2)){
+			if(fp.createFund(environment,mode,M4F2, M4FT2, M4FIC2,null,null)){
 				appLog.info(M4F2+" fund created successfully");
 			} else {
 				appLog.error(M4F2+" fund cannot be created.");
@@ -630,7 +687,7 @@ public class Module4 extends BaseLib{
 		
 		FundRaisingPageBusinessLayer fdr = new FundRaisingPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M4FR1, M4F1, M4I1)){
+			if(fdr.createFundRaising(environment,mode,M4FR1, M4F1, M4I1)){
 				appLog.info(M4FR1+" fundraising created successfully.");
 			} else {
 				appLog.error(M4FR1+" fundraising not created.");
@@ -642,7 +699,7 @@ public class Module4 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M4FR2, M4F2, M4I1)){
+			if(fdr.createFundRaising(environment,mode,M4FR2, M4F2, M4I1)){
 				appLog.info(M4FR2+" fundraising created successfully.");
 			} else {
 				appLog.error(M4FR2+" fundraising not created.");
@@ -654,7 +711,7 @@ public class Module4 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M4FR3, M4F2, M4I2)){
+			if(fdr.createFundRaising(environment,mode,M4FR3, M4F2, M4I2)){
 				appLog.info(M4FR3+" fundraising created successfully.");
 			} else {
 				appLog.error(M4FR3+" fundraising not created.");
@@ -667,7 +724,7 @@ public class Module4 extends BaseLib{
 		
 		PartnershipPageBusinessLayer prt= new PartnershipPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.PartnershipsTab)){
-			if(prt.createPartnership(M4P1, M4F2)){
+			if(prt.createPartnership(environment,mode,M4P1, M4F2)){
 				appLog.info(M4P1+" PartnerShip created successfully.");
 			} else {
 				appLog.error(M4P1+" partnership not created.");
@@ -680,7 +737,7 @@ public class Module4 extends BaseLib{
 		
 		CommitmentPageBusinessLayer cmt = new CommitmentPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M4LP1, M4P1, "M4CMT1", null)){
+			if(cmt.createCommitment(environment,mode,M4LP1, M4P1, "M4CMT1", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -692,7 +749,7 @@ public class Module4 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M4LP2, M4P1, "M4CMT2", null)){
+			if(cmt.createCommitment(environment,mode,M4LP2, M4P1, "M4CMT2", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -705,7 +762,9 @@ public class Module4 extends BaseLib{
 		
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.NIMTab)){
-			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 60, nim.getNIMTabParentFrame_Lightning());
+			ThreadSleep(5000);
+			switchToFrame(driver, 30, nim.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 			if(nim.createFolderTemplate("FolderTemp", folderTemplateName, "abc", 60)){	
 				appLog.info("Folder template created successfully.");
 			} else {
@@ -717,11 +776,12 @@ public class Module4 extends BaseLib{
 			appLog.error("NIM tab cannot be clicked, So cannot create folder template.");
 			sa.assertTrue(false,"NIM tab cannot be clicked, So cannot create folder template.");
 		}
-		lp.CRMlogout();
+		switchToDefaultContent(driver);
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc006_VerifyNIAddOnAfterCreatingFund(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -852,11 +912,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc007_BuildWorkspaceForF1AndVerifyNIAddOn(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -870,7 +930,7 @@ public class Module4 extends BaseLib{
 		String SharedFromFolder = "UploadFiles\\Module4\\Shared";
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.clickOnCreatedFund(M4F1)){
+			if(fp.clickOnCreatedFund(environment,mode,M4F1)){
 				
 				String Size=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F1", excelLabel.Fund_Size);
 				String vintageyear=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F1", excelLabel.Fund_VintageYear);
@@ -972,26 +1032,28 @@ public class Module4 extends BaseLib{
 			appLog.error("Funds Tab cannot be clicked, so cannot build the workspace.");
 			sa.assertTrue(false,"Funds Tab cannot be clicked, so cannot build the workspace.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc007_BuildWorkspaceForF1AndVerifyNIAddOnCheckImpact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.NavatarInvestorAddOns)){
-			if(switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))){
-				System.err.println("Successfully switched to frame.");
-				switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
-			}
+
+			 switchToFrame(driver,20,lp.getNavatarInvestorAddOnParentFrame(20));
 			String title = getTitle(driver);
 			if(title.contains("Navatar Investor Add-ons")){
 				appLog.info("title is verified.");
 			} else {
 				appLog.error("title is not verified.");
 				sa.assertTrue(false,"title is not verified.");
+			}
+			if(switchToFrame(driver, 20, niam.getNavatarInvestorAddOnFrame(30))){
+				System.err.println("Successfully switched to frame.");
+				  switchToFrame(driver,20,niam.getPEDisclaimersSetupFrame(20));
 			}
 			WebElement ele = FindElement(driver, "//strong[text()='Select Fund:']/following-sibling::select", "Select Fund and drop down", action.BOOLEAN, 30);
 			if(ele!=null){
@@ -1107,20 +1169,21 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc008_VerifyFunctionalityOfNewDisclaimerButtonAndErrorMsg(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if(lp.clickOnTab(TabName.NavatarInvestorAddOns)){
-			if(switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))){
-				System.err.println("Successfully switched to frame.");
-				switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
-			}
+			 switchToFrame(driver,20,lp.getNavatarInvestorAddOnParentFrame(20));
+			 if(switchToFrame(driver, 20, niam.getNavatarInvestorAddOnFrame(30))){
+					System.err.println("Successfully switched to frame.");
+					  switchToFrame(driver,20,niam.getPEDisclaimersSetupFrame(20));
+				}
 			if(click(driver, niam.getNewDisclaimerButton(60), "New discliamer Button", action.BOOLEAN)){
 				String text = getText(driver, niam.getHeaderName(60), "Header name", action.BOOLEAN);
 				if(text.equalsIgnoreCase("Add New Disclaimer")){
@@ -1415,20 +1478,21 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar addon tab cannot be clicked, So cannot check the Disclaimer Button Functionality.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc009_VerifyDisclaimerNameLink(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.NavatarInvestorAddOns)){
-			if(switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))){
-				System.err.println("Successfully switched to frame.");
-				switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
-			}
+			 switchToFrame(driver,20,lp.getNavatarInvestorAddOnParentFrame(20));
+			 if(switchToFrame(driver, 20, niam.getNavatarInvestorAddOnFrame(30))){
+					System.err.println("Successfully switched to frame.");
+					  switchToFrame(driver,20,niam.getPEDisclaimersSetupFrame(20));
+				}
 			WebElement ele = FindElement(driver, "//span[contains(@id,'grid_DefaultFoldersView1-cell-1')]/a[@title='"+M4DIS1+"']", "Disclaimer Name link", action.BOOLEAN, 30);
 			if(ele != null){
 				if(click(driver, ele, M4DIS1+" Disclaimer name link", action.BOOLEAN)){
@@ -1490,20 +1554,21 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"NI Add on tab cannot be clicked, So cannot check the disclaimer name link.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc010_VerifyViewLinkPopUpUIAndDownloadReport(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.NavatarInvestorAddOns)){
-			if(switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))){
-				System.err.println("Successfully switched to frame.");
-				switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
-			}
+			 switchToFrame(driver,20,lp.getNavatarInvestorAddOnParentFrame(20));
+			 if(switchToFrame(driver, 20, niam.getNavatarInvestorAddOnFrame(30))){
+					System.err.println("Successfully switched to frame.");
+					  switchToFrame(driver,20,niam.getPEDisclaimersSetupFrame(20));
+				}
 			if(niam.clickOnViewLinkOfDisclaimer(M4DIS1)){
 				String text = trim(getText(driver, niam.getDisclaimerViewPopUpHeaderName(60), "View pop up header", action.BOOLEAN));
 				if(text.contains("Disclaimer Statistics -") && text.contains(M4F1)){
@@ -1670,20 +1735,21 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar Investor Add On tab cannot be clicked, so cannot check view UI");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc011_VerifyActivationOfADisclaimerAndItsImpact(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if(lp.clickOnTab(TabName.NavatarInvestorAddOns)){
-			if(switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))){
-				System.err.println("Successfully switched to frame.");
-				switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
-			}
+			 switchToFrame(driver,20,lp.getNavatarInvestorAddOnParentFrame(20));
+			 if(switchToFrame(driver, 20, niam.getNavatarInvestorAddOnFrame(30))){
+					System.err.println("Successfully switched to frame.");
+					  switchToFrame(driver,20,niam.getPEDisclaimersSetupFrame(20));
+				}
 			if(niam.clickOnActivationLinkOfDisclaimer(M4DIS1, 60)){
 				String text = trim(getText(driver, niam.getDisclaimerActivationPopUp(60), "Activation pop up header", action.BOOLEAN));
 				if(text.equalsIgnoreCase("Confirm Disclaimer Activation")){
@@ -1902,11 +1968,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar investor add on tab cannot be clicked, So cannot continue with the activtion process.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc012_VerifyPendingDisclaimerAtInvestorFirmHomeAllDocumentPage(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2203,7 +2269,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc013_VerifyPendingDisclaimerPopAtFirmPageAllDocument(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2313,7 +2379,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 		
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc014_VerifyPendingDisclaimerPopAtFirmPageRecentActivities(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2428,7 +2494,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc015_VerifyPendingDisclaimerPopUpOnFirmPage(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -2626,7 +2692,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc016_VerifyPendingDisclaimerPopAtAllFirm(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2809,7 +2875,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc017_VerifyPendingDisclaimerPopAtPotentialInvestmentWorkspace(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -2947,7 +3013,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownload(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
@@ -3122,7 +3188,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownloadCheckImpactCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -3169,12 +3235,12 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar Investor Add ons Tab cannot be clicked, So cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc019_VerifyAccessDeniedPopUpForFilesUploadedByInvestor(){
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
@@ -3301,7 +3367,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 }
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc020_VerifyDeactivateDisclaimer() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -3637,7 +3703,7 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar investor add on tab cannot be clicked.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		driver.close();
 		config(browserToLaunch);
@@ -3714,7 +3780,7 @@ public class Module4 extends BaseLib{
 
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc026_CreateBothWorkspaceForFund2AndVerifySelectFundPicklist() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3737,8 +3803,8 @@ public class Module4 extends BaseLib{
 		String CommonFromFolder = "UploadFiles\\Module4\\M4F2\\FWR\\Common";
 		String InternalFromFolder = "UploadFiles\\Module4\\M4F2\\FWR\\Internal";
 		String SharedFromFolder = "UploadFiles\\Module4\\M4F2\\FWR\\Shared";
-		if (lp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M4F2)) {
+		if (lp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment, mode,M4F2)) {
 				String Size=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F2", excelLabel.Fund_Size);
 				String vintageyear=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F2", excelLabel.Fund_VintageYear);
 				String contact=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F2", excelLabel.Fund_Contact);
@@ -3950,7 +4016,7 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Funds Tab cannot be clicked, so cannot build the workspace.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -4122,11 +4188,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar investor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc027_CreateDisclaimerForFund2AndActivateItAndVerifyItsImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -4252,11 +4318,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar investor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc027_CreateDisclaimerForFund2AndActivateItAndVerifyItsImpactOnInvestorside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -4432,7 +4498,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc028_VerifyPendingDisclaimerFromBothInvestmentPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4638,7 +4704,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc029_AcceptDisclaimerForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4790,7 +4856,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc030_RemoveCompleteAccessForContact1AndContact2ForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4800,8 +4866,8 @@ public class Module4 extends BaseLib{
 				.split(",");
 		SoftAssert sa = new SoftAssert();
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M4F2)) {
+		if (bp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment, mode,M4F2)) {
 				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 						"FundRaising View.");
@@ -4891,11 +4957,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab ");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc030_RemoveCompleteAccessForContact1AndContact2ForFund2AndVerifyNavatarInvestorAddOnsTab() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -5024,11 +5090,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc031_AgainInviteSameContactsForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5105,11 +5171,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc031_AgainInviteSameContactsForFund2andCheckImpactatContact1InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5180,7 +5246,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc031_AgainInviteSameContactsForFund2andCheckImpactatContact2InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5245,7 +5311,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc031_AgainInviteSameContactsForFund2andCheckImpactatAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -5374,11 +5440,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc032_ManageInvestorsForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5412,7 +5478,7 @@ public class Module4 extends BaseLib{
 									fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),
 									"FundraisingWorkspace View.");
 							if (click(driver, fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
-									"Fundraising workspace", action.SCROLLANDBOOLEAN)) {
+									"Done Button", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								scrollDownThroughWebelement(driver,
@@ -5500,11 +5566,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc032_ManageInvestorsForFund2AndCheckImpactOnAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -5633,11 +5699,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc033_ManageInvestorsForFund2AndInviteContacts() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -5768,11 +5834,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc033_ManageInvestorsForFund2AndInviteContactsAndCheckImpactAtContact1Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5843,7 +5909,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc033_ManageInvestorsForFund2AndInviteContactsAndCheckImpactAtContact2Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -5908,7 +5974,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc033_ManageInvestorsForFund2AndInviteContactsAndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -6037,11 +6103,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc021_verifyActivatDisclaimerAndAccept() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -6160,8 +6226,9 @@ public class Module4 extends BaseLib{
 		}
 		switchToDefaultContent(driver);
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
-
+		lp.CRMlogout(environment,mode);
+		driver.close();
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		appLog.info("******************* login to contact 2 **********************");
 		InvestorFirmPageBusinesslayer ifpb = new InvestorFirmPageBusinesslayer(driver);
@@ -6267,7 +6334,8 @@ public class Module4 extends BaseLib{
 
 		}
 		lp.investorLogout();
-
+		driver.close();
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		appLog.info("******************* login to contact 1 **********************");
 		ifpb = new InvestorFirmPageBusinesslayer(driver);
@@ -6420,12 +6488,12 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar investor add on tab cannot be clicked.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc022_CreateDisclaimerAndVerfiyImpact() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6433,10 +6501,11 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
 			System.out.println("inside NavatarInvestorAddonsTab");
-
+			 switchToFrame(driver,20,lp.getNavatarInvestorAddOnParentFrame(20));
+			
 			if (switchToFrame(driver, 60, niam.getNavatarInvestorAddOnFrame(60))) {
 				appLog.info("Successfully switch to  Parent Navatar add-ons inverstor disclaimer frame.");
-				if (switchToFrame(driver, 60, niam.getNavatarInvestorAddOnFrame1(60))) {
+				if (switchToFrame(driver, 60, niam.getPEDisclaimersSetupFrame(60))) {
 					appLog.info("Successfully switched to Child Navatar add-ons inverstor disclaimer frame.");
 
 					if (selectVisibleTextFromDropDown(driver, niam.getSelectFundDropDown(60),
@@ -6701,20 +6770,21 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar investor add on tab cannot be clicked.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc023_ActivateDisclaimerForFundAndVerifyImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
-			if (switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))) {
-				System.err.println("Successfully switched to frame.");
-				switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
-			}
+			 switchToFrame(driver,20,lp.getNavatarInvestorAddOnParentFrame(20));
+			 if(switchToFrame(driver, 20, niam.getNavatarInvestorAddOnFrame(30))){
+			 				System.err.println("Successfully switched to frame.");
+			 				  switchToFrame(driver,20,niam.getPEDisclaimersSetupFrame(20));
+			 			}
 			if (selectVisibleTextFromDropDown(driver, niam.getSelectFundDropDown(60),
 					"Select fund drop down on Navatar Investor add-ons page", M4F1)) {
 				appLog.info(M4F1 + "value is select from dropdown.");
@@ -6904,8 +6974,9 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
-
+		lp.CRMlogout(environment,mode);
+		driver.close();
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		appLog.info("******************* login to contact 1 **********************");
 		InvestorFirmPageBusinesslayer ifpb = new InvestorFirmPageBusinesslayer(driver);
@@ -6925,36 +6996,48 @@ public class Module4 extends BaseLib{
 						"Pending Disclaimer Popup Go to Disclaimer Button", action.BOOLEAN)) {
 					appLog.info("Click on Go to Disclaimer Button Successfully.");
 					parentID = switchOnWindow(driver);
-					String text = trim(getText(driver, dpbl.getDisclaimerPageHeader(60), "Header", action.BOOLEAN));
-					if (text.equalsIgnoreCase("Disclaimers")) {
-						appLog.info("Header is verified.");
-					} else {
-						appLog.error("Header is not present on the page.Expected: Disclaimers\tActual: " + text);
-						sa.assertTrue(false,
-								"Header is not present on the page.Expected: Disclaimers\tActual: " + text);
+					if (parentID!=null) {
+						
+						String text = trim(getText(driver, dpbl.getDisclaimerPageHeader(60), "Header", action.BOOLEAN));
+						if (text.equalsIgnoreCase("Disclaimers")) {
+							appLog.info("Header is verified.");
+						} else {
+							appLog.error("Header is not present on the page.Expected: Disclaimers\tActual: " + text);
+							sa.assertTrue(false,
+									"Header is not present on the page.Expected: Disclaimers\tActual: " + text);
 
-					}
-					text = trim(getText(driver, dpbl.getFundName(60), "FundName", action.BOOLEAN));
-					if (text.equalsIgnoreCase(M4F1)) {
-						appLog.info(M4F1 + "FundName is verified.");
-					} else {
-						appLog.error(M4F1 + "Fund Name is not verified.");
-						sa.assertTrue(false, "FundName is not verified.");
+						}
+						text = trim(getText(driver, dpbl.getFundName(60), "FundName", action.BOOLEAN));
+						if (text.equalsIgnoreCase(M4F1)) {
+							appLog.info(M4F1 + "FundName is verified.");
+						} else {
+							appLog.error(M4F1 + "Fund Name is not verified.");
+							sa.assertTrue(false, "FundName is not verified.");
 
-					}
-					text = trim(getText(driver, dpbl.getDisclaimerName(60), "DisclaimerName", action.BOOLEAN));
-					if (text.equalsIgnoreCase(M4DIS2)) {
-						appLog.info(M4DIS2 + "DisclaimerName is verified.");
+						}
+						text = trim(getText(driver, dpbl.getDisclaimerName(60), "DisclaimerName", action.BOOLEAN));
+						if (text.equalsIgnoreCase(M4DIS2)) {
+							appLog.info(M4DIS2 + "DisclaimerName is verified.");
+						} else {
+							appLog.error(M4DIS2 + "DisclaimerName is not verified.");
+							sa.assertTrue(false, " '" + M4DIS2 + "'DisclaimerName is not verified.");
+						}
+						if (dpbl.getAcceptButton(60) != null) {
+							appLog.info("AcceptButton is available and verified.");
+						} else {
+							appLog.error("AcceptButton is not available and verified.");
+							sa.assertTrue(false, "AcceptButton is not available and  verified.");
+						}
+						
+
+						driver.close();
+						driver.switchTo().window(parentID);
+						
 					} else {
-						appLog.error(M4DIS2 + "DisclaimerName is not verified.");
-						sa.assertTrue(false, " '" + M4DIS2 + "'DisclaimerName is not verified.");
+						appLog.info("No New Window open");
+						sa.assertTrue(false, "No New Window open");
 					}
-					if (dpbl.getAcceptButton(60) != null) {
-						appLog.info("AcceptButton is available and verified.");
-					} else {
-						appLog.error("AcceptButton is not available and verified.");
-						sa.assertTrue(false, "AcceptButton is not available and  verified.");
-					}
+					
 				} else {
 					appLog.info("Not able to click on Go to Disclaimer Button .");
 					sa.assertTrue(false, "Not able to click on Go to Disclaimer Button.");
@@ -6970,13 +7053,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Investor password is wrong so cannot login");
 
 		}
-		driver.close();
-		driver.switchTo().window(parentID);
 		lp.investorLogout();
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc024_VerifyStatusPicklistAndSearchResult() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -6991,7 +7072,7 @@ public class Module4 extends BaseLib{
 				appLog.info(M4F1 + " value is select from dropdown.");
 				if (niam.clickOnViewLinkOfDisclaimer(M4DIS2)) {
 					appLog.info("Disclaimer Statistics Popup is opened.");
-					if (click(driver, niam.getDisclaimerViewPopupSearchIcon(60), "Search Icon", action.BOOLEAN)) {
+					if (clickUsingJavaScript(driver, niam.getDisclaimerViewPopupSearchIcon(60), "Search Icon", action.BOOLEAN)) {
 						appLog.info("Click on search icon successfully.");
 						ThreadSleep(4000);
 						if (isAlertPresent(driver)) {
@@ -7571,18 +7652,19 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc025_VerifyLinksDisclaimerStatisticsPopup() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		String parentID = null;
+		WebElement ele;
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
@@ -7601,9 +7683,8 @@ public class Module4 extends BaseLib{
 						ThreadSleep(5000);
 						parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(60),
-									"contact name on contacts page");
-							if (cp.getContactFullNameInViewMode(60).getText().equalsIgnoreCase(contactName1)) {
+							ele = cp.getContactFullNameInViewMode(environment,mode,60);
+							if (ele!=null && ele.getText().equalsIgnoreCase(contactName1)) {
 								appLog.info(
 										"" + contactName1 + " detail Page is opened in new tab and has been verified.");
 							} else {
@@ -7632,9 +7713,8 @@ public class Module4 extends BaseLib{
 						ThreadSleep(5000);
 						parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, ip.getLegalNameLabelTextbox(60),
-									"instituion name on institutions page");
-							if (ip.getLegalNameLabelTextbox(60).getText().trim().contains(M4I1)) {
+							ele = ip.getLegalNameLabelTextbox(60);
+							if (ele!=null && ele.getText().trim().contains(M4I1)) {
 								appLog.info("institutions page for " + M4I1
 										+ " is opened successfully after clicking on firm name in content grid");
 							} else {
@@ -7688,12 +7768,12 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc034_CloseWorkspaceForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -7858,11 +7938,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc035_AgainInviteContactsForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -7911,11 +7991,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc035_AgainInviteContactsForFund2AndCheckImpactAtContact1InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -7986,7 +8066,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc035_AgainInviteContactsForFund2AndCheckImpactAtContact2InvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8051,7 +8131,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc035_AgainInviteContactsForFund2AndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8182,11 +8262,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc036_ClearWorkspaceForFund2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8251,11 +8331,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc037_CreateWorkspaceForFund2AndVerifySelectFundPicklist() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8287,7 +8367,7 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Funds Tab cannot be clicked, so cannot build the workspace.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -8393,11 +8473,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar investor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc038_AgainInviteContactsForFund2AndAlsoVerifySearchingOfNonRegisteredContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8439,11 +8519,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc038_AgainInviteContactsForFund2AndAndCheckImpactAtContact1Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8514,7 +8594,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc038_AgainInviteContactsForFund2AndAndCheckImpactAtContact2Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8579,7 +8659,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc038_AgainInviteContactsForFund2AndAndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8627,11 +8707,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc039_DeleteInvitedFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8693,11 +8773,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on created fund");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc039_DeleteInvitedFolderAndCheckImpactAtAdminUserside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -8705,6 +8785,7 @@ public class Module4 extends BaseLib{
 		SoftAssert sa = new SoftAssert();
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (bp.clickOnTab(TabName.NavatarInvestorAddOns)) {
+			scn.nextLine();
 			switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60));
 			switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
 			List<WebElement> lstOfEle = allOptionsInDropDrop(driver, niam.getSelectFundDropDown(60),
@@ -8809,11 +8890,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc040_CreateFolderAndInviteContacts() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -8872,11 +8953,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on created fund");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc040_CreateFolderAndInviteContactsAndCheckImpactAtContact1Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -8947,7 +9028,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc040_CreateFolderAndInviteContactsAndCheckImpactAtContact2Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
@@ -9012,7 +9093,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc040_CreateFolderAndInviteContactsAndCheckImpactAtAdminUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9124,11 +9205,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc041_RemoveContactAccessFromContactDetailPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -9142,7 +9223,8 @@ public class Module4 extends BaseLib{
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Workspace Section view");
 				if (click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60),
-						"Remove contact access close button", action.SCROLLANDBOOLEAN)) {
+						"Remove contact access button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(4000);
 					ele = FindElement(driver, "//label[text()='" + M4F2 + "']/../..//a[@title='Remove']",
 							"Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
 					if (click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)) {
@@ -9204,7 +9286,8 @@ public class Module4 extends BaseLib{
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
 						"Fundraising Workspace Section view");
 				if (click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60),
-						"Remove contact access close button", action.SCROLLANDBOOLEAN)) {
+						"Remove contact access button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(4000);
 					ele = FindElement(driver, "//label[text()='" + M4F2 + "']/../..//a[@title='Remove']",
 							"Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
 					if (click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)) {
@@ -9260,12 +9343,12 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on contacts tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc041_RemoveContactAccessFromContactDetailPageAndCheckImpactAtAdminUserside() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9377,12 +9460,12 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar invetsor add ons tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc046_VerifySortingInDisclaimerGrid(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9517,11 +9600,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar Investor Add Ons tab cannot be clicked, So cannot check sorting on disclaimer grid.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc047_VerifySortingInDisclaimerGrid(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -9678,11 +9761,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,"Navatar Investor Add Ons tab cannot be clicked, So cannot check sorting on disclaimer grid.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc048_PreconditionOrg2(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer inst = new InstitutionPageBusinessLayer(driver);
@@ -9690,9 +9773,11 @@ public class Module4 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fdr = new FundRaisingPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
-		lp.CRMLogin(Org2CRMUser1EmailID, adminPassword);
+		lp.CRMLogin(Org2CRMUser1EmailID, adminPasswordOrg2);
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createInstitution(M4I2)){
+			//inst.createInstitution(environment,mode,M4I2,"Institution",null,null);
+			//inst.createInstitution(M4I2)
+			if(inst.createInstitution(environment,mode,M4I2,"Institution",null,null)){
 				appLog.info("Institution '"+M4I2+"' is created successfully.");
 			} else {
 				appLog.error(M4I2+" institution is not created.");
@@ -9704,7 +9789,9 @@ public class Module4 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.ContactTab)){
-			if(cp.createContact(M4CFN2, M4CLN2, M4I2, M4C2Email)){
+			//cp.createContact(environment,mode,M4CFN1, M4CLN1, M4I1, emailId,null,null,CreationPage.ContactPage)
+		//	cp.createContact(M4CFN2, M4CLN2, M4I2, M4C2Email)
+			if(cp.createContact(environment,mode,M4CFN2, M4CLN2, M4I2, M4C2Email,null,null,CreationPage.ContactPage)){
 				appLog.info(M4CFN2+" "+M4CLN2+" contact is created successfully.");
 			} else {
 				appLog.error(M4CFN2+" "+M4CLN2+" contact is not created.");
@@ -9716,7 +9803,9 @@ public class Module4 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M4F1, M4FT1, M4FIC1)){
+		//	fp.createFund(environment,mode,M4F1, M4FT1, M4FIC1,null,null)
+		//	fp.createFund(M4F1, M4FT1, M4FIC1)
+			if(fp.createFund(environment,mode,M4F1, M4FT1, M4FIC1,null,null)){
 				appLog.info(M4F1+" fund created successfully");
 			} else {
 				appLog.error(M4F1+" fund cannot be created.");
@@ -9728,7 +9817,9 @@ public class Module4 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M4FR1, M4F1, M4I2)){
+		//	fdr.createFundRaising(environment,mode,M4FR1, M4F1, M4I1)
+			// fdr.createFundRaising(M4FR1, M4F1, M4I2)
+			if(fdr.createFundRaising(environment,mode,M4FR1, M4F1, M4I2)){
 				appLog.info(M4FR1+" fundraising created successfully.");
 			} else {
 				appLog.error(M4FR1+" fundraising not created.");
@@ -9738,15 +9829,15 @@ public class Module4 extends BaseLib{
 			appLog.error("fundraising tab cannot be clicked, So cannot continue with the TC.");
 			sa.assertTrue(false,"fundraising tab cannot be clicked, So cannot continue with the TC.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc049_BuildFundraisingWorkspaceAndCreateDisclaimer() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-		lp.CRMLogin(Org2CRMUser1EmailID, adminPassword);
+		lp.CRMLogin(Org2CRMUser1EmailID, adminPasswordOrg2);
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F1)) {
 				String Size=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F1", excelLabel.Fund_Size);
@@ -9779,12 +9870,12 @@ public class Module4 extends BaseLib{
 			appLog.error("FundsTab cannot be clicked, So cannot continue with the tc.");
 			sa.assertTrue(false, "FundsTab cannot be clicked, So cannot continue with the tc.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminOrg2UserName, adminPassword);
+		lp.CRMLogin(superAdminOrg2UserName, adminPasswordOrg2);
 		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
 			switchToFrame(driver, 60, niam.getNavatarInvestorAddOnFrame(60));
 			switchToFrame(driver, 60, niam.getNavatarInvestorAddOnFrame1(60));
@@ -9833,11 +9924,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on navatar investor add ons tab.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc049_BuildFundraisingWorkspaceAndCreateDisclaimerCheckImpactInvestorSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.investorLogin(M4C2Email, adminPassword);
@@ -9960,7 +10051,7 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc042_InviteContacts() {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -10001,8 +10092,9 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Funds tab cannot be clicked, So cannot invite contacts.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
-
+		lp.CRMlogout(environment,mode);
+		driver.close();
+		config(browserToLaunch);
 		appLog.info("******************* login to contact 1 **********************");
 		lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -10068,7 +10160,8 @@ public class Module4 extends BaseLib{
 		driver.close();
 		driver.switchTo().window(parentID);
 		lp.investorLogout();
-
+		driver.close();
+		config(browserToLaunch);
 		appLog.info("******************* login to contact 2 **********************");
 		lp = new LoginPageBusinessLayer(driver);
 		niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
@@ -10144,7 +10237,8 @@ public class Module4 extends BaseLib{
 		driver.close();
 		driver.switchTo().window(parentID);
 		lp.investorLogout();
-
+		driver.close();
+		config(browserToLaunch);
 		niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
@@ -10253,12 +10347,12 @@ public class Module4 extends BaseLib{
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
-	@Test
-	public void M4tc043_UpdateContactEmailidAndVerifyErrorMessage() {
+	@Parameters({ "environment", "mode" }) @Test 
+	public void M4tc043_1_UpdateContactEmailidAndVerifyErrorMessage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10283,60 +10377,7 @@ public class Module4 extends BaseLib{
 									action.SCROLLANDBOOLEAN).equalsIgnoreCase("**" + M4C1Email.substring(2))) {
 								appLog.info("contact email id has been successfully updated");
 
-								if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
-									if (switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))) {
-										System.err.println("Successfully switched to frame.");
-										switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
-									}
-									if (selectVisibleTextFromDropDown(driver, niam.getSelectFundDropDown(60),
-											"Select fund drop down on Navatar Investor add-ons page", M4F1)) {
-										appLog.info(M4F1 + "value is select from dropdown.");
-										if (niam.clickOnViewLinkOfDisclaimer(M4DIS1)) {
-											appLog.info("Disclaimer Statistics Popup is opened.");
-											if (niam.clickOnContactNameLink(M4CFN1 + " " + M4CLN1)) {
-												appLog.info("Successfully click on contact : " + M4CFN1 + " " + M4CLN1);
-												if (isAlertPresent(driver)) {
-													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-													switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-													if (msg.trim()
-															.equals(FundsPageErrorMessage.couldNotFindContactOrFirm)) {
-														appLog.info(
-																"correct error message alert is present after editing email id of contact and clicking on contact name");
-														switchToDefaultContent(driver);
-													} else {
-														appLog.error(
-																"error message is wrong when updated contact name and clicking on contact");
-														sa.assertTrue(false,
-																"error message is wrong when updated contact name and clicking on contact");
-													}
-												} else {
-													appLog.error(
-															"no alert message is present when clicked on changed email id of contact");
-													sa.assertTrue(false,
-															"no alert message is present when clicked on changed email id of contact");
-												}
-											} else {
-												appLog.error(
-														" Not able to click on Contact 1 so error message is not verified. ");
-												sa.assertTrue(false,
-														" Not able to click on Contact 1 so error message is not verified. ");
-											}
-										} else {
-											appLog.error(" Disclaimer View Popup is not opened. ");
-											sa.assertTrue(false, " Disclaimer View Popup is not opened.");
-										}
-									} else {
-										appLog.error(M4F1
-												+ " fund name is not present in the drop down, So not able to select.");
-										sa.assertTrue(false, M4F1
-												+ " fund name is not present in the drop down, So not able to select.");
-									}
-
-								} else {
-									appLog.error("Navatar addon tab cannot be clicked, So cannot check the UI.");
-									sa.assertTrue(false,
-											"Navatar addon tab cannot be clicked, So cannot check the UI.");
-								}
+							
 							} else {
 								appLog.error("contact email id could not be updated");
 								sa.assertTrue(false, "contact email id could not be updated");
@@ -10365,7 +10406,74 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false,
 					"Contacts tab cannot be clicked, So cannot update conatct email and verify error message.");
 		}
+		
+
 		switchToDefaultContent(driver);
+		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
+			if (switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))) {
+				System.err.println("Successfully switched to frame.");
+				switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
+			}
+			if (selectVisibleTextFromDropDown(driver, niam.getSelectFundDropDown(60),
+					"Select fund drop down on Navatar Investor add-ons page", M4F1)) {
+				appLog.info(M4F1 + "value is select from dropdown.");
+				if (niam.clickOnViewLinkOfDisclaimer(M4DIS1)) {
+					appLog.info("Disclaimer Statistics Popup is opened.");
+					if (niam.clickOnContactNameLink(M4CFN1 + " " + M4CLN1)) {
+						appLog.info("Successfully click on contact : " + M4CFN1 + " " + M4CLN1);
+						ThreadSleep(5000);
+						try {
+							if (isAlertPresent(driver)) {
+								String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
+								switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+								if (msg.trim()
+										.equals(FundsPageErrorMessage.couldNotFindContactOrFirm)) {
+									appLog.info(
+											"correct error message alert is present after editing email id of contact and clicking on contact name");
+									switchToDefaultContent(driver);
+								} else {
+									appLog.error(
+											"error message is wrong when updated contact name and clicking on contact");
+									sa.assertTrue(false,
+											"error message is wrong when updated contact name and clicking on contact");
+								}
+							} else {
+								appLog.error(
+										"no alert message is present when clicked on changed email id of contact");
+								sa.assertTrue(false,
+										"no alert message is present when clicked on changed email id of contact");
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							appLog.error(
+									"no alert message is present when clicked on changed email id of contact");
+							sa.assertTrue(false,
+									"no alert message is present when clicked on changed email id of contact");
+						}
+					} else {
+						appLog.error(
+								" Not able to click on Contact 1 so error message is not verified. ");
+						sa.assertTrue(false,
+								" Not able to click on Contact 1 so error message is not verified. ");
+					}
+				} else {
+					appLog.error(" Disclaimer View Popup is not opened. ");
+					sa.assertTrue(false, " Disclaimer View Popup is not opened.");
+				}
+			} else {
+				appLog.error(M4F1
+						+ " fund name is not present in the drop down, So not able to select.");
+				sa.assertTrue(false, M4F1
+						+ " fund name is not present in the drop down, So not able to select.");
+			}
+
+		} else {
+			appLog.error("Navatar addon tab cannot be clicked, So cannot check the UI.");
+			sa.assertTrue(false,
+					"Navatar addon tab cannot be clicked, So cannot check the UI.");
+		}
+		
 		if (lp.clickOnTab(TabName.ContactTab)) {
 			appLog.info("Click on Contact tab succesfully.");
 			if (cp.clickOnCreatedContact(M4CFN1, M4CLN1, null)) {
@@ -10414,23 +10522,20 @@ public class Module4 extends BaseLib{
 
 		if (lp.clickOnTab(TabName.InstituitonsTab)) {
 			appLog.info("Click on Institution tab succesfully.");
-			if (ip.clickOnCreatedInstitution(M4I1)) {
+			if (ip.clickOnCreatedInstitution(environment,mode,M4I1)) {
 				appLog.info("Successfully click on institute .");
-				if (click(driver, bp.getDeleteButton(60), " Institute Page Detail Page", action.BOOLEAN)) {
+				if (clickUsingJavaScript(driver, bp.getDeleteButton(60), " Institute Page Detail Page", action.BOOLEAN)) {
 					appLog.info("Cliked On delete button Successfully");
-					if (isAlertPresent(driver)) {
-						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-						if (ip.verifyDeletedInstitution(M4I1)) {
+					ThreadSleep(2000);
+						if (!ip.clickOnCreatedInstitution(environment,mode,M4I1)) {
 							appLog.info("Institution get deleted successfully and verified");
 						} else {
 							appLog.info("Institution does not get deleted successfully and verified. ");
 							sa.assertTrue(false, "Institution does not get deleted successfully");
 						}
-					} else {
-						appLog.error(" no alert present when clicked on delete button. ");
-						sa.assertTrue(false, " no alert present when clicked on delete button. ");
-					}
+
+					
+					
 				} else {
 					appLog.error(" not able to click on delete button so not able to delete Institute. ");
 					sa.assertTrue(false, " not able to click on delete button so not able to delete Institute. ");
@@ -10449,10 +10554,10 @@ public class Module4 extends BaseLib{
 			appLog.info("Click on Contact tab succesfully.");
 			if (cp.clickOnCreatedContact(M4CFN2, M4CLN2, null)) {
 				appLog.info("Successfully Click on Contact : " + M4CFN2 + " " + M4CLN2);
-				if (click(driver, cp.getDeleteButtonContactsPage(60), "Delete Button", action.SCROLLANDBOOLEAN)) {
+				if (clickUsingJavaScript(driver, cp.getDeleteButton(60), "Delete Button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("Click on delete button Successfully. ");
-					if (isAlertPresent(driver)) {
-						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+
+					ThreadSleep(2000);
 						if (!cp.clickOnCreatedContact(M4CFN2, M4CLN2, null)) {
 							appLog.info("not able to click that means this contact get deleted . ");
 
@@ -10468,6 +10573,7 @@ public class Module4 extends BaseLib{
 										appLog.info("Disclaimer Statistics Popup is opened.");
 										if (niam.clickOnContactNameLink(M4CFN2 + " " + M4CLN2)) {
 											appLog.info("Successfully click on contact : " + M4CFN2 + " " + M4CLN2);
+											ThreadSleep(3000);
 											if (isAlertPresent(driver)) {
 												String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 												switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
@@ -10540,10 +10646,7 @@ public class Module4 extends BaseLib{
 							appLog.error(" Contact2 is not deleted . ");
 							sa.assertTrue(false, " Contact2 is not deleted .");
 						}
-					} else {
-						appLog.error(" no alert present when clicked on delete button. ");
-						sa.assertTrue(false, " no alert present when clicked on delete button. ");
-					}
+
 				} else {
 					appLog.error(" not able to click on delete button. ");
 					sa.assertTrue(false, " not able to click on delete button. ");
@@ -10558,20 +10661,77 @@ public class Module4 extends BaseLib{
 					"Contacts tab cannot be clicked, So cannot update conatct email and verify error message.");
 		}
 		switchToDefaultContent(driver);
-		if (bp.clickOnTab(TabName.HomeTab)) {
-			if (hp.restoreValuesFromRecycleBin(M4CFN2 + " " + M4CLN2)) {
-				appLog.info("successfully restored contact1 " + M4CFN2 + " " + M4CLN2);
+		lp.CRMlogout(environment,mode);
+		sa.assertAll();
+	}
+	
+	@Parameters({ "environment", "mode" }) @Test 
+	public void M4tc043_2_UpdateContactEmailidAndVerifyErrorMessage() {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
+		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
+		
+//		
+		
+		String contactName = M4CFN2 + " " + M4CLN2;
+		String insName = M4I1;
+		
+		TabName[] tabNames = {TabName.RecycleBinTab,TabName.RecycleBinTab};
+		String[] names = {contactName,insName};
+		
+		TabName tabName ;
+		int i=0;
+		for (String name : names) {
+			name=names[i];
+			tabName=tabNames[i];
+			if (cp.clickOnTab(tabName)) {
+				log(LogStatus.INFO,"Clicked on Tab : "+tabName+" For : "+name,YesNo.No);
+				ThreadSleep(1000);
+				if (cp.clickOnAlreadyCreatedItem(tabName, name, 20)) {
+					log(LogStatus.INFO,"Clicked on  : "+name+" For : "+tabName,YesNo.No);
+					ThreadSleep(2000);
+					
+					 WebElement ele = cp.getCheckboxOfRestoreItemOnRecycleBin( name, 10);
+					 if (clickUsingJavaScript(driver, ele, "Check box against : "+name, action.BOOLEAN)) {
+						 log(LogStatus.INFO,"Click on checkbox for "+name,YesNo.No);
+						 
+						 ThreadSleep(1000);
+							//					scn.nextLine();
+						 ele=cp.getRestoreButtonOnRecycleBin( 10);
+						 if (clickUsingJavaScript(driver, ele, "Restore Button : "+name, action.BOOLEAN)) {
+							 log(LogStatus.INFO,"Click on Restore Button for "+name,YesNo.No);
+							 ThreadSleep(3000);
+
+								
+						} else {
+							sa.assertTrue(false,"Not Able to Click on Restore Button for "+name);
+							log(LogStatus.SKIP,"Not Able to Click on Restore Button for "+name,YesNo.Yes);
+						}
+						 
+					} else {
+						sa.assertTrue(false,"Not Able to Click on checkbox for "+name);
+						log(LogStatus.SKIP,"Not Able to Click on checkbox for "+name,YesNo.Yes);
+					}
+
+
+
+				} else {
+					sa.assertTrue(false,"Item Not Found : "+name+" For : "+tabName);
+					log(LogStatus.SKIP,"Item Not Found : "+name+" For : "+tabName,YesNo.Yes);
+				}
+
 			} else {
-				appLog.error("could not restore contact");
-				sa.assertTrue(false, "could not restore contact");
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" For : "+name);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+name,YesNo.Yes);
 			}
-			if (hp.restoreValuesFromRecycleBin(M4I1)) {
-				appLog.info("succesfully restored " + M4I1);
-			} else {
-				appLog.error("could not restore " + M4I1);
-				sa.assertTrue(false, "could not restore " + M4I1);
-			}
+			i++;
+			switchToDefaultContent(driver);
 		}
+		
 		String parentID = null;
 		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
 			if (switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60))) {
@@ -10588,9 +10748,9 @@ public class Module4 extends BaseLib{
 						ThreadSleep(5000);
 						parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(60),
-									"contact name on contacts page");
-							if (cp.getContactFullNameInViewMode(60).getText().equalsIgnoreCase(M4CFN2 + " " + M4CLN2)) {
+							
+							WebElement ele = cp.getContactFullNameInViewMode(environment,mode,60);
+							if (ele!=null &&  ele.getText().trim().equalsIgnoreCase(M4CFN2 + " " + M4CLN2)) {
 								appLog.info("" + M4CFN2 + " " + M4CLN2
 										+ " detail Page is opened in new tab and has been verified.");
 							} else {
@@ -10620,9 +10780,8 @@ public class Module4 extends BaseLib{
 						ThreadSleep(5000);
 						parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, ip.getLegalNameLabelTextbox(60),
-									"instituion name on institutions page");
-							if (ip.getLegalNameLabelTextbox(60).getText().trim().contains(M4I1)) {
+							WebElement ele = ip.getLegalNameLabelTextbox(60);
+							if (ele!=null && ele.getText().trim().contains(M4I1)) {
 								appLog.info("institutions page for " + M4I1
 										+ " is opened successfully after clicking on firm name in content grid");
 							} else {
@@ -10656,11 +10815,12 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
+	
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc044_UpdateInformationFromInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifpb = new InvestorFirmPageBusinesslayer(driver);
@@ -10789,12 +10949,12 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
 
-	@Test
+	@Parameters({ "environment", "mode" }) @Test 
 	public void M4tc045_UpdateInvestmentAndFirmInformationAndVerifyItsImpact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -10803,7 +10963,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if (lp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M4F1)) {
-				if (click(driver, fp.getEditButton(60), "Fund Deatil Page Edit Button", action.BOOLEAN)) {
+				if (click(driver, fp.getEditButton1(60), "Fund Deatil Page Edit Button", action.BOOLEAN)) {
 					if (sendKeys(driver, fp.getFundName(60), "Updated" + M4F1, "Fund Name Text Page on Fund Page",
 							action.BOOLEAN)) {
 						if (click(driver, fp.getSaveButton(60), "Fund Detail Page save button", action.BOOLEAN)) {
@@ -10889,18 +11049,18 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Not able click on Fund Tab , So cannot update fund name.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		np = new NIMPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
-		/*String Org3UpdatedFirmName = ExcelUtils.readData("Users", excelLabel.Variable_Name, "AdminUser",
-				excelLabel.Updated_FirmName);*/
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 60, np.getNIMTabParentFrame_Lightning());
+			ThreadSleep(5000);
+			switchToFrame(driver, 30, np.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 				if (np.clickOnEditIcon()) {
 					if (sendKeys(driver, np.getMyFirmProfileNameTextBox(60), Org3UpdatedFirmName, "firm name textbox",
@@ -10990,11 +11150,11 @@ public class Module4 extends BaseLib{
 			sa.assertTrue(false, "Navatar addon tab cannot be clicked, So cannot check the UI.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
-		niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
+		 niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		DisclaimerPageBussinessLayer dp = new DisclaimerPageBussinessLayer(driver);
 		String parentID = null;
 		if (lp.investorLogin(M4C2Email, adminPassword)) {
@@ -11010,8 +11170,6 @@ public class Module4 extends BaseLib{
 						"Pending Disclaimer Popup Go to Disclaimer Button", action.BOOLEAN)) {
 					appLog.info("Click on Go to Disclaimer Button Successfully.");
 					parentID = switchOnWindow(driver);
-					Org3UpdatedFirmName = ExcelUtils.readData("Users", excelLabel.Variable_Name, "AdminUser",
-							excelLabel.Updated_FirmName);
 					if (dp.clickOnExpandIcon(M4F1, 60)) {
 						if (dp.verifyFundDisplaying(M4F1, Org3UpdatedFirmName)) {
 							appLog.info("Fund is displaying and fund name is verified");
@@ -11065,12 +11223,12 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-//	@Test
+//	@Parameters({ "environment", "mode" }) @Test 
 //	public void M4tc050PostConditionForAll() {
 //		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 //		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 //		lp.postCondition().assertAll();
-//		lp.CRMlogout();
+//		lp.CRMlogout(environment,mode);
 //
 //	}
 }

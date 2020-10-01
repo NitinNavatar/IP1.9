@@ -461,6 +461,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	String [] spiltedInstitutionOrLP=null;
 	String ins=null;
 	String lpName=null;
+	switchToDefaultContent(driver);
 	if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 		if(switchToFrame(driver, 30, getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 			
@@ -1131,7 +1132,17 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 */
 	public boolean buildWorkspace(String[] step1Of3Data, WorkSpaceAction WithOrWithOutFolderTemplate, String folderTemplateName, String folderStructureSheetName, String institutionOrLPName, Workspace workspace, int timeOut){
 		boolean flag = true;
-		switchToFrame(driver, 30, getFrame( PageName.FundsPage, timeOut));
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+		if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
+			
+		}else {
+			appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
+			exit("Not able to switch in parent frame so cannot build FR Workspace");
+		}
+	}else {
+		switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
+	}
 		System.err.println("Switched to frame.");
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
 		if(click(driver, getBuildWorkspaceButton(workspace, timeOut), workspace.toString()+" Workspace Button", action.BOOLEAN)){
@@ -1855,7 +1866,17 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		int counter = 0;
 		String dropImage = "DropLoc.JPG";
 		CommonLib compare = new CommonLib();
-		switchToFrame(driver, timeOut, getFrame( pageName, timeOut));
+		switchToDefaultContent(driver);
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			if(switchToFrame(driver, 30, getNIMTabParentFrame_Lightning(pageName))) {
+				
+			}else {
+				appLog.error("Not able to switch in parent frame in Lightning so cannot upload/update :  "+institutionOrLPName);
+				return false;
+			}
+		}else {
+			switchToFrame(driver, 30,getFrame( pageName, 30));
+		}
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" view.");
 		if(institutionOrLPName!=null){
 			if(workspace.toString().equalsIgnoreCase(Workspace.FundraisingWorkspace.toString())){
@@ -8530,6 +8551,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 */
 	public boolean clickOnCreatedFund(String fundName) {
 		int i=1;
+		if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
+			return clickOnCreatedFund(environment, mode, fundName);
+		} else {
+
+		}
 		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text").equalsIgnoreCase("All")) {
 			if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
 

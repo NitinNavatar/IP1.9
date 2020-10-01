@@ -16,7 +16,6 @@ import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.WorkSpaceAction;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.accessType;
 import com.navatar.generic.CommonLib.action;

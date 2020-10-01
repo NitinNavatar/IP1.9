@@ -5,7 +5,6 @@ package com.navatar.scripts;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;

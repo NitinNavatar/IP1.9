@@ -12,13 +12,16 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.SoftAssert;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.Workspace;
 
 import com.navatar.generic.CommonLib.action;
+import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.*;
 
 import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
@@ -139,7 +142,11 @@ public abstract class BasePage {
 	 * @return the saveButton
 	 */
 	public WebElement getSaveButton(int timeOut) {
-		return isDisplayed(driver, saveButton, "Visibility", timeOut, "Save Button");
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, saveButtonClassic, "Visibility", timeOut, "Save Button Classic");
+		}else{
+			return isDisplayed(driver, saveButtonLighting, "Visibility", timeOut, "Save Button Lighting");
+		}
 	} 
 	@FindBy(xpath = "//a[text()='Close']")
 	private WebElement lightingCloseButton;
@@ -1111,6 +1118,15 @@ public abstract class BasePage {
 	 @FindBy(xpath="//iframe[@id='NavatarInvestorAddOns']")
 	private WebElement navatarInvestorAddOnFrame;
 	 
+	 @FindBy(xpath="//iframe[@title='Navatar Investor Add-ons']")
+	 private WebElement navatarInvestorAddOnParentFrame;
+	 /**
+	  * @return the navatarInvestorAddOnFrame
+	  */
+	 public WebElement getNavatarInvestorAddOnParentFrame(int timeOut) {
+	 	return isDisplayed(driver, navatarInvestorAddOnParentFrame, "Visibility", timeOut, "Navatar Investor Add On Parent Frame");
+	 }
+	 
 	 /**
 	  * @author Ankit Jaiswal
 	  * @param pageName
@@ -1122,16 +1138,23 @@ public abstract class BasePage {
 	  if(pageName.toString().equalsIgnoreCase(PageName.InstitutionsPage.toString())) {
 	   ele=isDisplayed(driver, institutionPageFrame, "Visibility", timeOut, pageName+" frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.ContactsPage.toString())) {
-	   ele=isDisplayed(driver, contactPageFrame, "Visibility", timeOut, pageName+" frame");
+		  switchToDefaultContent(driver);
+		  switchToFrame(driver, 20, getNIMTabParentFrame_Lightning(PageName.FundsPage));
+		  ele=isDisplayed(driver, contactPageFrame, "Visibility", timeOut, pageName+" frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
-	   ele=isDisplayed(driver, fundPageFrame, "Visibility", timeOut, pageName+" frame");
+		  switchToDefaultContent(driver);
+		  switchToFrame(driver, 20, getNIMTabParentFrame_Lightning(PageName.FundsPage));
+		  ele=isDisplayed(driver, fundPageFrame, "Visibility", timeOut, pageName+" frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.CommitmentsPage.toString())) {
 	   ele=isDisplayed(driver, commitmentPageFrame, "Visibility", timeOut, pageName+" frame");
 	  }else if(pageName.toString().equalsIgnoreCase(PageName.HomePage.toString())){
 		  ele=isDisplayed(driver, homePageAlertsFrame, "Visibility", timeOut, pageName+" frame");
 	  }else if(pageName.toString().equalsIgnoreCase(PageName.NavatarInvestorAddOnsPage.toString())){
+		  switchToDefaultContent(driver);
+		  switchToFrame(driver,10,getNavatarInvestorAddOnParentFrame(20));
 		  ele=isDisplayed(driver, navatarInvestorAddOnFrame, "Visibility", timeOut, pageName+" frame");
 	  } else if (pageName.toString().equalsIgnoreCase(PageName.NavatarInvestorManager.toString())){
+		  
 		  ele=isDisplayed(driver, NIMTabFrame, "Visibility", timeOut, "NIM Frame");
 	  }
 	  return ele; 
@@ -1198,8 +1221,14 @@ public abstract class BasePage {
 	 * @return the editButton
 	 */
 	public WebElement getEditButton(int timeOut) {
-		return isDisplayed(driver, editButton, "Visibility", timeOut, "Edit Button");
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, editButton_Classic, "Visibility", timeOut, "Edit Button Classic");	
+		}else{
+			return isDisplayed(driver, editButton_Lighting, "Visibility", timeOut, "Edit Button Lighting");	
+
+		}
 	}
+	
 	/**
 	 * @param editButton the editButton to set
 	 */
@@ -1505,9 +1534,30 @@ public abstract class BasePage {
 	 * @return the deleteButton
 	 */
 	public WebElement getDeleteButton(int timeOut) {
-		return isDisplayed(driver, deleteButton, "Visibility", timeOut, "Delete Button");
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, deleteButton, "Visibility", timeOut, "Delete Button");
+		}else{
+			clickOnShowMoreDropdownOnly();
+			log(LogStatus.INFO,"Able to Click on Show more Icon : ",YesNo.No);
+			ThreadSleep(500);
+			WebElement ele = actionDropdownElement(ShowMoreActionDropDownList.Delete, 15);
+
+			click(driver, getDeleteButton1(30), "Delete button ", action.BOOLEAN);
+			return getDeleteButtonOnDeletePopUp(timeOut);
+		}
+
+
 	}
 
+	@FindBy(xpath="//*[@title='Delete' or text()='Delete']")
+	private WebElement deleteButton1;
+	
+	/**
+	 * @return the addFilterLogicLink
+	 */
+	public WebElement getDeleteButton1(int timeOut) {
+		return isDisplayed(driver, deleteButton1, "Visibility", timeOut, "Delete Button");
+	}
 	/**
 	 * @return the pendingDisclaimerPopUpHeader
 	 */
@@ -3404,5 +3454,109 @@ public abstract class BasePage {
 	public WebElement getSearchIcon_Lighting(int timeOut) {
 		return isDisplayed(driver, searchIcon_Lighting, "Visibility", timeOut, "Search Icon Lighting");
 	}
+
+	 @FindBy(xpath="//div[@class='pbHeader']//input[@title='Edit']")
+	 private WebElement editButton_Classic;
+	 
+	 @FindBy(xpath="//a[@title='Edit']")
+	 private WebElement editButton_Lighting;
 	
-}
+	 /**
+	 * @return the editButton
+	 */
+	public WebElement getEditButton_lightning(String environment,String mode,int timeOut) {
+		
+		return isDisplayed(driver, editButton_Lighting, "Visibility", timeOut, "Edit Button Lighting");	
+		
+	}
+	
+	/**
+	 * @param projectName
+	 * @param pageName
+	 * @param smaddl
+	 * @param timeOut
+	 * @return webelement for show more action item
+	 */
+	public WebElement actionDropdownElement(ShowMoreActionDropDownList smaddl, int timeOut) {
+		String actionDropDown = smaddl.toString().replace("_", " ");
+		String xpath ="//li/a[@title='"+actionDropDown+"']";
+		
+		
+		return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
+	}
+	
+	/**
+	 * @param projectName
+	 * @param pageName
+	 * @return  true if able to click o Show more action Icon
+	 */
+	public boolean clickOnShowMoreDropdownOnly() {
+		String xpath = "";int i =1;
+		WebElement ele=null;
+		boolean flag = true;
+
+		xpath="(//a[contains(@title,'more actions')])["+i+"]";
+		
+		ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
+		if(click(driver, ele, "show more action ", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
+
+		}
+		else {
+			log(LogStatus.FAIL, "cannot click on show more actions icon", YesNo.Yes);
+			flag = false;
+		}
+		return flag;
+	}
+	
+	@FindBy(xpath="//h2[contains(text(),'Delete')]/../following-sibling::div//*[@title='Delete']")
+	private WebElement deleteButtonOnDeletePopUp;
+
+
+	/**
+	 * @return the deleteButtonOnDeletePopUp
+	 */
+
+	public WebElement getDeleteButtonOnDeletePopUp(int timeOut) {
+		return isDisplayed(driver, deleteButtonOnDeletePopUp, "Visibility", timeOut, "Delete Button on Delete Popup");
+	}
+	
+	public WebElement getCheckboxOfRestoreItemOnRecycleBin( String restoreItem, int timeOut) {
+        String xpath="//span[@title='"+restoreItem+"']/../../preceding-sibling::td//input/..";
+        return isDisplayed(driver, FindElement(driver, xpath, "checkbox : "+restoreItem, action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "checkbox");
+    }
+	
+	@FindBy(xpath = "//div[@title='Restore']")
+	private WebElement restoreButtonOnRecycleBin;
+	
+	public WebElement getRestoreButtonOnRecycleBin(int timeOut) {
+		return isDisplayed(driver, restoreButtonOnRecycleBin, "Visibility", timeOut, "restore Button On Recycle Bin");
+	}
+	
+	/**
+	 * @return the editButton
+	 */
+	
+	@FindBy(xpath="//button[@name='Edit']")
+	 private WebElement editButton_Lighting1;
+	
+	public WebElement getEditButton1(int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, editButton_Classic, "Visibility", timeOut, "Edit Button Classic");	
+		}else{
+			return isDisplayed(driver, editButton_Lighting1, "Visibility", timeOut, "Edit Button Lighting");	
+
+		}
+	}
+	
+	@FindBy(xpath="//iframe[@title='Navatar Investor Add-ons']")
+	 private WebElement nimParentFrame;
+	 /**
+	  * @return the navatarInvestorAddOnFrame
+	  */
+	 public WebElement getNimParentFrame(int timeOut) {
+	 	return isDisplayed(driver, nimParentFrame, "Visibility", timeOut, "NIM Parent Frame");
+	 }
+	 
+	
+	}

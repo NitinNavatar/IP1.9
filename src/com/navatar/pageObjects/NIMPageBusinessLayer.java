@@ -992,6 +992,7 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 							if(createFolderStructureFromExcel(sheetName, timeOut)){
 								appLog.info("Folder structure is created successfully.");
 								if(click(driver, getFolderTemplateSaveButton(timeOut), "Folder template Save Button", action.BOOLEAN)){
+									ThreadSleep(3000);
 									if(click(driver, getSaveConfirmationYesButton(timeOut), "folder template save confirmation yes button", action.BOOLEAN)){
 										appLog.info("Successfully saved the created folder structure.");
 										return true;

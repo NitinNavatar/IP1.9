@@ -13,7 +13,6 @@ import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.UploadFileActions;
 import com.navatar.generic.CommonLib.Workspace;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
 import com.navatar.generic.CommonLib.sideMenu;

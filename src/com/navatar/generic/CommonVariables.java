@@ -430,7 +430,7 @@ public class CommonVariables {
 		public static String M17Commitment1,M17Commitment1ID;
 		public static String M17Commitment2,M17Commitment2ID;
 		public static String M17Commitment3,M17Commitment3ID;
-
+		public static String environment,mode;
 		
 		
 //	/**
@@ -497,6 +497,10 @@ public class CommonVariables {
 		Org3CRMUser3FirstName = ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org3User3", excelLabel.User_First_Name);
 		Org3CRMUser3LastName=ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org3User3", excelLabel.User_Last_Name);
 		Org3CRMUser3EmailID=ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org3User3", excelLabel.User_Email);
+		
+		environment = ExcelUtils.readDataFromPropertyFile("Environment");
+		mode=ExcelUtils.readDataFromPropertyFile("Mode");
+
 		
 		//****************Module 1***************************//
 		if(obj instanceof Module1){
@@ -656,7 +660,7 @@ public class CommonVariables {
 			M4C2Email = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M4Contact2", excelLabel.Contact_EmailId);
 			M4C3Email = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M4Contact3", excelLabel.Contact_EmailId);
 			Org3FirmName = ExcelUtils.readData("Users", excelLabel.Variable_Name, "Org3SuperAdmin",excelLabel.Firm_Name);
-			Org3UpdatedFirmName = ExcelUtils.readData("Users", excelLabel.Variable_Name, "Org3SuperAdmin",excelLabel.Updated_FirmName);
+			Org3UpdatedFirmName = "Updated"+Org3FirmName;
 			org3SuperAdminFirstName=ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org3SuperAdmin", excelLabel.User_First_Name);
 			org3SuperAdminLastName=ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org3SuperAdmin", excelLabel.User_Last_Name);
 		}  else if (obj instanceof Module5){

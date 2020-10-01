@@ -45,7 +45,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 /**
  * @author Parul Singh
  *
@@ -98,10 +97,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case FolderTemplate:
 			tabName = "Folder Templates Tab";
 			break;
+		case RecycleBinTab:
+			tabName = "Recycle Bin";
+			break;
 		default:
 			return false;
 		}
 		System.err.println("Passed switch statement");
+		if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
+			return clickOnTab(environment, mode, TabName);
+		} else {
+
+		}
 		for (int i = 0; i < 2; i++)
 			if (click(driver,
 					isDisplayed(driver,
@@ -213,6 +220,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 		case FolderTemplate:
 			tabName = "Folder Templates";
+			break;
+		case RecycleBinTab:
+			tabName = "Recycle Bin";
 			break;
 		default:
 			return false;
@@ -1521,9 +1531,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public boolean createParentFolder(String folderName, FolderType folderType, PageName pageName, Workspace workspace,
 			int timeOut) {
+		WebElement ele = null;
 		for (int i = 0; i < 2; i++)
-			if (click(driver, FindElement(driver, "//span[@id='add0000'][@title='Add a Folder']", "+Icon",
-					action.BOOLEAN, timeOut), "", action.BOOLEAN)) {
+			ele = FindElement(driver, "//span[@id='add0000'][@title='Add a Folder']", "+Icon",
+					action.SCROLLANDBOOLEAN, timeOut);
+		ThreadSleep(1000);
+			scrollDownThroughWebelement(driver, ele, "Add");
+			ThreadSleep(3000);
+			if (clickUsingJavaScript(driver, ele, "Add >", action.SCROLLANDBOOLEAN)) {
 				if (click(driver, getFolderTypeRadioButton(folderType, workspace, pageName, timeOut),
 						folderType.toString() + " Folder Radio Button", action.BOOLEAN)) {
 					if (sendKeys(driver, getParentFolderNameTextBox(workspace, pageName, timeOut), folderName,
@@ -5229,10 +5244,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}else {
 			if(click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
-				appLog.info("setting icon");
-				
+				appLog.info("clicked on setting icon");
+				ThreadSleep(10000);
 			}else {
-				appLog.error("setting icon");
+				appLog.error("Not able to click on setting icon");
 				return flag;
 			}
 		}
@@ -5519,6 +5534,71 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			appLog.error("Not able to click on Select List Icon");
 		}
 		return false;
+	}
+	
+	public boolean clickOnAlreadyCreatedItem( TabName tabName,
+			String alreadyCreated, int timeout) {
+		boolean flag=false;
+		String xpath="";
+		String viewList = null;
+		switch (tabName) {
+		case InstituitonsTab:
+			viewList = "All Institutions";
+			
+			break;
+
+		case CompaniesTab:
+			viewList = "All Companies";
+			break;
+		case FundsTab:
+			viewList = "All";
+			break;
+		
+		case NavatarSetup:
+			viewList = "All";
+			break;
+		case RecycleBinTab:
+			viewList = "Org Recycle Bin";
+			break;
+		default:
+			return false;
+		}
+		System.err.println("Passed switch statement");
+		WebElement ele, selectListView;
+		ele = null;
+
+		refresh(driver);
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+			selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
+			if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				ThreadSleep(5000);
+
+				if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(5000);
+
+					xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
+					ele = FindElement(driver,xpath,alreadyCreated, action.BOOLEAN, 30);
+					ThreadSleep(2000);
+
+					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+						ThreadSleep(3000);
+						flag=true;
+					} else {
+						appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+					}
+				} else {
+					appLog.error("Not able to enter value on Search Box");
+				}
+			} else {
+				appLog.error("Not able to select on Select View List : "+viewList);
+			}
+		} else {
+			appLog.error("Not able to click on Select List Icon");
+		}
+		return flag;
 	}
 
 }

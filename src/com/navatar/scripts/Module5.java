@@ -6,7 +6,6 @@ package com.navatar.scripts;
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

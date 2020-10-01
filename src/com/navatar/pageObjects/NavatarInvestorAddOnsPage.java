@@ -4,6 +4,8 @@
 package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.isDisplayed;
+import static com.navatar.generic.CommonLib.switchToDefaultContent;
+import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonLib.FindElements;
 
 import java.util.List;
@@ -35,6 +37,8 @@ public class NavatarInvestorAddOnsPage extends BasePageBusinessLayer {
 	 * @return the navatarInvestorAddOnFrame
 	 */
 	public WebElement getNavatarInvestorAddOnFrame(int timeOut) {
+		 switchToDefaultContent(driver);
+		  switchToFrame(driver,15,getNavatarInvestorAddOnParentFrame(30));
 		return isDisplayed(driver, navatarInvestorAddOnFrame, "Visibility", timeOut, "Navatar Investor Add On Frame");
 	}
 
@@ -549,6 +553,14 @@ public class NavatarInvestorAddOnsPage extends BasePageBusinessLayer {
  */
 public WebElement getDisclaimerPageHeader(int timeOut) {
 	return isDisplayed(driver, disclaimerPageHeader, "Visibility", timeOut, "Discalimer section header");
+}
+
+
+@FindBy(xpath="//iframe[@id='PEDisclaimersSetup']")
+private WebElement PEDisclaimersSetupFrame;
+
+public WebElement getPEDisclaimersSetupFrame(int timeOut) {
+	return isDisplayed(driver, PEDisclaimersSetupFrame, "Visibility", timeOut, "PE disclaimers Setup Frame");
 }
  	
 	

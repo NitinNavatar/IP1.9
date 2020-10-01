@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.CommonLib.AllOr1By1;
 import com.navatar.generic.CommonLib.ContentGridArrowKeyFunctions;
 import com.navatar.generic.CommonLib.EnableDisable;

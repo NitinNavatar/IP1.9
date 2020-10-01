@@ -9,7 +9,6 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.CommonLib.FolderType;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.CommonLib.OnlineImportFileAddTo;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;

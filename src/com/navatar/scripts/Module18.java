@@ -8,7 +8,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.android.dx.io.instructions.SparseSwitchPayloadDecodedInstruction;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;

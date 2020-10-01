@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
@@ -19,6 +20,8 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.M12FundName1;
+import static com.navatar.generic.CommonVariables.environment;
+import static com.navatar.generic.CommonVariables.mode;
 
 import java.util.List;
 import java.util.Random;
@@ -446,6 +449,11 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 	public boolean clickOnCreatedContact(String contactFirstName,String contactLastName, String emailId){
 		int i =1;
 		String xpath="";
+		if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
+			return clickOnCreatedContact(environment, mode, contactFirstName, contactLastName, emailId);
+		} else {
+
+		}
 			if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text").equalsIgnoreCase("All Contacts")) {
 				if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
 				}

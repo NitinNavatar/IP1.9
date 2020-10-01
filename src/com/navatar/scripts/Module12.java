@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import static com.navatar.generic.CommonLib.*;
 
 import org.openqa.selenium.By;

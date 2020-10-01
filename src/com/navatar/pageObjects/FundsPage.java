@@ -11,11 +11,12 @@ import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.investorSideWorkSpace;
-import com.navatar.generic.SmokeCommonVariable;
+import static com.navatar.generic.CommonVariables.*;
 
 import static com.navatar.generic.CommonLib.*;
 /**
@@ -46,7 +47,11 @@ public class FundsPage extends BasePageBusinessLayer {
 	 * @return the fundName
 	 */
 	public WebElement getFundName(int timeOut) {
-		return isDisplayed(driver, fundName, "Visibility", timeOut, "Fund Name");
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, fundName_Classic, "Visibility", timeOut, "Fund Name Classic");
+		}else{
+			return isDisplayed(driver, fundName_Lighting, "Visibility", timeOut, "Fund Name Lighting");
+		}
 	}
 	
 	@FindBy(xpath="//div[@class='requiredInput']//select")
@@ -71,12 +76,20 @@ public class FundsPage extends BasePageBusinessLayer {
 	
 	@FindBy(xpath="//div[@id='Name_ileinner']")
 	private WebElement fundNameInViewMode;
+	
+	@FindBy(xpath="//span[@class='custom-truncate uiOutputText']")
+	private WebElement fundNameInViewModeLightning;
 
 	/**
 	 * @return the fundNameLabel
 	 */
 	public WebElement getFundNameInViewMode(int timeOut) {
-		return isDisplayed(driver, fundNameInViewMode, "Visibility", timeOut, "Fund Name in View Mode");
+		
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, fundNameInViewMode, "Visibility", timeOut, "Fund Name in View Mode");
+		}else{
+			return isDisplayed(driver, fundNameInViewModeLightning, "Visibility", timeOut, "Fund Name in View Mode");
+		}
 	}
 	
 	@FindBy(xpath="//iframe[contains(@title,'PE_Fund_NothingEnabled')]")
@@ -281,7 +294,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	public WebElement getContactAccessIcon(Workspace workspace,int timeOut) {
 		int i=1;
 		if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
-			if(SmokeCommonVariable.mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 				List<WebElement> lst = FindElements(driver, "//div[@id='frworkspace']//a[@title='Contact Access']", "contact access icon in FR");
 				if(!lst.isEmpty()) {
 					for(int j=0;j<lst.size();j++) {
@@ -300,7 +313,7 @@ public class FundsPage extends BasePageBusinessLayer {
 				i=0;
 			}
 		}else {
-			if(SmokeCommonVariable.mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 				List<WebElement> lst = FindElements(driver, "//div[@id='invworkspace']//a[@title='Contact Access']", "contact access icon in FR");
 				if(!lst.isEmpty()) {
 					for(int j=0;j<lst.size();j++) {

@@ -9,8 +9,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.CommonLib.Mode;
 
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.*;
 import java.util.List;
 /**
  * @author Parul Singh
@@ -127,13 +129,19 @@ public class InstitutionPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//div[@id='acc2_ileinner']")
 	private WebElement legalNameLabelTextbox;
 
+	@FindBy(xpath="//span[@class='custom-truncate uiOutputText']")
+	private WebElement accountNameInViewMode_Lighting;
 
 	/**
 	 * @return the legalNameLabelTextbox
 	 */
 	public WebElement getLegalNameLabelTextbox(int timeOut) {
-		return isDisplayed(driver, legalNameLabelTextbox, "Visibility", timeOut, "Legal Name Label Text Box");
-	}
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, legalNameLabelTextbox, "Visibility", timeOut, "Legal Name Label Text Box");
+			}else{
+			return isDisplayed(driver, accountNameInViewMode_Lighting, "Visibility", timeOut, "Legal Name In View Mode Lighting");
+		}
+		}
 	
 	@FindBy(xpath="//iframe[@title='Investor_Portal_Institution_Enabled']")
 	private WebElement workspaceFrame;

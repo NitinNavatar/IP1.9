@@ -163,7 +163,7 @@ public class CommonLib implements Comparator<String> {
 		InstituitonsTab, ContactTab, FundraisingsTab, FundsTab, NIMTab, CommitmentsTab, PartnershipsTab, 
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
 		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
-		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab;
+		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab, RecycleBinTab;
 	}
 	
 	
@@ -2674,5 +2674,37 @@ public class CommonLib implements Comparator<String> {
 		System.out.println("Change US Number Formate >>>>> "+number);
 		return s;
 	}
+	
+	public static boolean clickUsingJavaScript(WebDriver driver, WebElement element,String elementName,action action) {
+		String text =null;
+		try {
+		//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
+
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+		appLog.info("Able to Clicked using JavaScript");
+		return true;
+		}catch (Exception e) {
+		// TODO: handle exception
+		appLog.error("Exception in Clicked using JavaScript");
+		System.err.println("Cannot Click Element: "+elementName);
+		}
+		appLog.info("Not Able to Click using JavaScript");
+		return false;
+
+	}
+	
+	public static enum ShowMoreActionDropDownList{
+		 New_Task,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
+				@Override
+				public String toString() {
+					return "Log a Call with Multiple Associations";
+				}
+			},NewTaskWithMultiple{
+				@Override
+				public String toString() {
+					return "New Task with Multiple Associations";
+				}
+			}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments
+			};
 }
 

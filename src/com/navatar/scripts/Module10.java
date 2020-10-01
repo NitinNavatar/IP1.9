@@ -11,7 +11,6 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
-import static com.navatar.generic.SmokeCommonVariable.*;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;

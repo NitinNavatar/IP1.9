@@ -10,11 +10,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
 
 import static com.navatar.generic.CommonLib.*;
-
+import static com.navatar.generic.CommonVariables.*;
 import java.util.List;
 /**
  * @author Parul Singh
@@ -90,17 +91,30 @@ public class ContactPage extends BasePageBusinessLayer{
 	 * @return the emailId
 	 */
 	public WebElement getEmailId(int timeOut) {
-		return isDisplayed(driver, emailId, "Visibility", timeOut, "Email Id");
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, emailId_Clasic, "Visibility", timeOut, "Email Id Classic");
+		}else{
+			return isDisplayed(driver, emailId_Lighting, "Visibility", timeOut, "Email Id Lighting");
+		}
 	}
 	@FindBy(xpath = "//td[text()='Email']/../td/div/a")
 	private WebElement emailIdViewMode;
 	
+	@FindBy(xpath = "//*[text()='Email']/following-sibling::p//a")
+	private WebElement emailIdViewModeLightning;
 	
 	/**
 	 * @return the emailIdViewMode
 	 */
 	public WebElement getEmailIdViewMode(int timeOut) {
-		return isDisplayed(driver, emailIdViewMode, "Visibility", timeOut, "email id in view mode");
+		
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, emailIdViewMode, "Visibility", timeOut, "email id in view mode");
+		}else{
+			return isDisplayed(driver, emailIdViewModeLightning, "Visibility", timeOut, "email id in view mode");
+
+		}
+		
 	}
 
 	@FindBy(xpath = "//span[@id='myGridfundr-scroll-box']")
