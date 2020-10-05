@@ -870,7 +870,6 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
 		if(lp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M4F1)){
-				
 				String Size=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F1", excelLabel.Fund_Size);
 				String vintageyear=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F1", excelLabel.Fund_VintageYear);
 				String contact=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M4F1", excelLabel.Fund_Contact);
@@ -939,6 +938,7 @@ public class Module4 extends BaseLib{
 						appLog.error("Not able to upload files in '"+shdPath[0]+"'");
 						sa.assertTrue(false,"Not able to upload files in '"+shdPath[0]+"'");
 					}
+				
 					SharedFromFolder = SharedFromFolder+"Sub";
 					if(fp.uploadFile(shdPath[1], null, SharedFromFolder, null, UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)){
 						appLog.info("Successfully uploaded files in '"+shdPath[1]+"'");
@@ -6160,7 +6160,8 @@ public class Module4 extends BaseLib{
 		switchToDefaultContent(driver);
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
-
+		driver.close();
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		appLog.info("******************* login to contact 2 **********************");
 		InvestorFirmPageBusinesslayer ifpb = new InvestorFirmPageBusinesslayer(driver);
@@ -6409,7 +6410,6 @@ public class Module4 extends BaseLib{
 					sa.assertTrue(false, "not able to switch to Child Navatar add-ons inverstor disclaimer frame.");
 
 				}
-
 			} else {
 				appLog.error("not able to switch to  Parent Navatar add-ons inverstor disclaimer frame.");
 				sa.assertTrue(false, "not able to switch to Parent  Navatar add-ons inverstor disclaimer frame.");

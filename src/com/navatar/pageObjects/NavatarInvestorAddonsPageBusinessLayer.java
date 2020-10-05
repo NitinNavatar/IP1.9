@@ -258,13 +258,13 @@ public class NavatarInvestorAddonsPageBusinessLayer extends NavatarInvestorAddOn
 				"//span[contains(@id,'Disclaimer_Statistics-cell-3')]/img", "Status");
 		List<WebElement> contactAcceptedOn = FindElements(driver,
 				"//span[contains(@id,'Disclaimer_Statistics-cell-4')]/span", "AcceptedOn");
-
+		String yes=previousOrForwardDate(-1, "MM/dd/yyyy");
 		if (!cntactName.isEmpty()) {
 			for (int i = 0; i < cntactName.size(); i++) {
 				if (cntactName.get(i).getText().contains(contactName) && contactEmail.get(i).getText().contains(email)
 						&& contactFirm.get(i).getText().contains(firm)
 						&& contactStatus.get(i).getAttribute("title").contains(status)
-						&& contactAcceptedOn.get(i).getText().contains(acceptedOn)) {
+						&& (contactAcceptedOn.get(i).getText().contains(acceptedOn) || contactAcceptedOn.get(i).getText().contains(yes) )) {
 					appLog.info(contactName + " Contact Name is Verfied");
 					appLog.info(email + " Email is Verfied");
 					appLog.info(firm + " Firm is Verfied");
