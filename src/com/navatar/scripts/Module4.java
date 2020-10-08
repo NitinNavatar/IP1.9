@@ -175,7 +175,7 @@ public class Module4 extends BaseLib{
 
 
 	//	lp.CRMLogin(Org3CRMUser1EmailID, adminPassword);
-		String addRemoveTabName="Navatar Investor Manager"+","+"Partnerships"+"Commitments";
+		String addRemoveTabName="Navatar Investor Manager"+","+"Partnerships"+"Commitments"+"Recycle Bin";
 		if (bp.addTab_Lighting(mode, addRemoveTabName, 5)) {
 			log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 		} else {
@@ -288,7 +288,7 @@ public class Module4 extends BaseLib{
 											}else{
 												System.err.println(">>>11111111111111<<<<<<<<<<<<");	
 											}
-											if(click(driver, lp.getSaveButton(60), "Save Button", action.BOOLEAN)){
+											if(click(driver, lp.getSaveButton(environment, Mode.Classic.toString(),60), "Save Button", action.BOOLEAN)){
 												appLog.info("Successfully provide VF Page access.");
 												if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 													switchToDefaultContent(driver);
@@ -2034,7 +2034,6 @@ public class Module4 extends BaseLib{
 				flag = true;
 			}
 		}
-		
 		if(flag){
 			String text = getSelectedOptionOfDropDown(driver, bp.getFirmNameDropdown(60), "Firm selection drop down", "text");
 			if(text.equalsIgnoreCase(Org3FirmName)){
@@ -3013,8 +3012,60 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 	
+	@Parameters({ "environment", "mode" }) @Test
+	public void M4tc018_1_LoginWithHubToEnableBulkDownLoad() {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(HubUserName,HubPassword);
+		String[] funds = {M4F1};
+		for (String fund : funds) {
+			
+			if(fp.clickOnTab(TabName.FundsTab)) {
+				if(fp.clickOnCreatedFund(fund)) {
+					if (click(driver, fp.getEditButton1(10), "Edit Button", action.BOOLEAN)) {
+						appLog.error("Click on Edit Button : "+fund);
+						ThreadSleep(1000);
+						if (isSelected(driver, fp.getBulkDownLoadCheckBox(Workspace.FundraisingWorkspace, 10), "Bulk DownLoad CheckBox")) {
+							appLog.info("Bulk DownLoad is Already Checked");	
+						}else{
+							if (click(driver, fp.getBulkDownLoadCheckBox(Workspace.FundraisingWorkspace, 10), "Bulk DownLoad CheckBox", action.SCROLLANDBOOLEAN)) {
+								appLog.info(fund+" clicked on Bulk DownLoad CheckBox : "+Workspace.FundraisingWorkspace);	
+							} else {
+								appLog.error(fund+" Not able to click on Bulk DownLoad CheckBox : "+Workspace.FundraisingWorkspace);
+								sa.assertTrue(false, fund+" Not able to click on Bulk DownLoad CheckBox : "+Workspace.FundraisingWorkspace);
+							}	
+						}
+						ThreadSleep(2000);
+						if (click(driver, fp.getSaveButton(10), "Save Button", action.SCROLLANDBOOLEAN)) {
+							appLog.error("click on Save Button : "+fund);
+						} else {
+							appLog.error("Not able to click on Save Button : "+fund);
+							sa.assertTrue(false, "Not able to click on Save Button : "+fund);
+						}
+
+					} else {
+						appLog.error("Not able to click on Edit Button : "+fund);
+						sa.assertTrue(false, "Not able to click on Edit Button : "+fund);
+					}
+				}else {
+					appLog.error("Not able to click on created fund Name : "+fund);
+					sa.assertTrue(false, "Not able to click on created fund Name : "+fund);
+
+				}
+			}else {
+				appLog.error("Not able to click on fund tab");
+				sa.assertTrue(false, "Not able to click on fund tab");
+			}
+			switchToDefaultContent(driver);
+			
+		}
+		
+		sa.assertAll();
+
+	}
+	
 	@Parameters({ "environment", "mode" }) @Test 
-	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownload(){
+	public void M4tc018_2_VerifyPendingDisclaimerPopAtBulkDownload(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3189,7 +3240,7 @@ public class Module4 extends BaseLib{
 	}
 
 	@Parameters({ "environment", "mode" }) @Test 
-	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownloadCheckImpactCRMSide(){
+	public void M4tc018_3_VerifyPendingDisclaimerPopAtBulkDownloadCheckImpactCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
@@ -8785,7 +8836,6 @@ public class Module4 extends BaseLib{
 		SoftAssert sa = new SoftAssert();
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (bp.clickOnTab(TabName.NavatarInvestorAddOns)) {
-			scn.nextLine();
 			switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame(60));
 			switchToFrame(driver, 30, niam.getNavatarInvestorAddOnFrame1(60));
 			List<WebElement> lstOfEle = allOptionsInDropDrop(driver, niam.getSelectFundDropDown(60),
@@ -10113,36 +10163,44 @@ public class Module4 extends BaseLib{
 						"Pending Disclaimer Popup Go to Disclaimer Button", action.BOOLEAN)) {
 					appLog.info("Click on Go to Disclaimer Button Successfully.");
 					parentID = switchOnWindow(driver);
-					String text = trim(getText(driver, dpbl.getDisclaimerPageHeader(60), "Header", action.BOOLEAN));
-					if (text.equalsIgnoreCase("Disclaimers")) {
-						appLog.info("Header is verified.");
-					} else {
-						appLog.error("Header is not present on the page.Expected: Disclaimers\tActual: " + text);
-						sa.assertTrue(false,
-								"Header is not present on the page.Expected: Disclaimers\tActual: " + text);
+					if (parentID!=null) {
+						String text = trim(getText(driver, dpbl.getDisclaimerPageHeader(60), "Header", action.BOOLEAN));
+						if (text.equalsIgnoreCase("Disclaimers")) {
+							appLog.info("Header is verified.");
+						} else {
+							appLog.error("Header is not present on the page.Expected: Disclaimers\tActual: " + text);
+							sa.assertTrue(false,
+									"Header is not present on the page.Expected: Disclaimers\tActual: " + text);
 
-					}
-					text = trim(getText(driver, dpbl.getFundName(60), "FundName", action.BOOLEAN));
-					if (text.equalsIgnoreCase(M4F1)) {
-						appLog.info(M4F1 + "FundName is verified.");
-					} else {
-						appLog.error(M4F1 + "Fund Name is not verified.");
-						sa.assertTrue(false, "FundName is not verified.");
+						}
+						text = trim(getText(driver, dpbl.getFundName(60), "FundName", action.BOOLEAN));
+						if (text.equalsIgnoreCase(M4F1)) {
+							appLog.info(M4F1 + "FundName is verified.");
+						} else {
+							appLog.error(M4F1 + "Fund Name is not verified.");
+							sa.assertTrue(false, "FundName is not verified.");
 
-					}
-					text = trim(getText(driver, dpbl.getDisclaimerName(60), "DisclaimerName", action.BOOLEAN));
-					if (text.equalsIgnoreCase(M4DIS2)) {
-						appLog.info(M4DIS2 + "DisclaimerName is verified.");
+						}
+						text = trim(getText(driver, dpbl.getDisclaimerName(60), "DisclaimerName", action.BOOLEAN));
+						if (text.equalsIgnoreCase(M4DIS2)) {
+							appLog.info(M4DIS2 + "DisclaimerName is verified.");
+						} else {
+							appLog.error(M4DIS2 + "DisclaimerName is not verified.");
+							sa.assertTrue(false, " '" + M4DIS2 + "'DisclaimerName is not verified.");
+						}
+						if (dpbl.getAcceptButton(60) != null) {
+							appLog.info("AcceptButton is available and verified.");
+						} else {
+							appLog.error("AcceptButton is not available and verified.");
+							sa.assertTrue(false, "AcceptButton is not available and  verified.");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
 					} else {
-						appLog.error(M4DIS2 + "DisclaimerName is not verified.");
-						sa.assertTrue(false, " '" + M4DIS2 + "'DisclaimerName is not verified.");
-					}
-					if (dpbl.getAcceptButton(60) != null) {
-						appLog.info("AcceptButton is available and verified.");
-					} else {
-						appLog.error("AcceptButton is not available and verified.");
-						sa.assertTrue(false, "AcceptButton is not available and  verified.");
-					}
+					appLog.info("not able to find new window to switch");
+					sa.assertTrue(false, "not able to find new window to switch");
+
+				}
 				} else {
 					appLog.info("Not able to click on Go to Disclaimer Button .");
 					sa.assertTrue(false, "Not able to click on Go to Disclaimer Button.");
@@ -10157,8 +10215,7 @@ public class Module4 extends BaseLib{
 			appLog.info("Investor password is wrong so cannot login.");
 			sa.assertTrue(false, "Investor password is wrong so cannot login");
 		}
-		driver.close();
-		driver.switchTo().window(parentID);
+		
 		lp.investorLogout();
 		driver.close();
 		config(browserToLaunch);
@@ -10166,6 +10223,7 @@ public class Module4 extends BaseLib{
 		lp = new LoginPageBusinessLayer(driver);
 		niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		dpbl = new DisclaimerPageBussinessLayer(driver);
+		parentID=null;
 		if (lp.investorLogin(M4C2Email, adminPassword)) {
 			if (matchTitle(driver, "Firm Alerts", 60)) {
 				appLog.info("Page title is successfully matched.");
@@ -10179,47 +10237,54 @@ public class Module4 extends BaseLib{
 						"Pending Disclaimer Popup Go to Disclaimer Button", action.BOOLEAN)) {
 					appLog.info("Click on Go to Disclaimer Button Successfully.");
 					parentID = switchOnWindow(driver);
-					String text = trim(getText(driver, dpbl.getDisclaimerPageHeader(60), "Header", action.BOOLEAN));
-					if (text.equalsIgnoreCase("Disclaimers")) {
-						appLog.info("Header is verified.");
+					if (parentID!=null) {
+						String text = trim(getText(driver, dpbl.getDisclaimerPageHeader(60), "Header", action.BOOLEAN));
+						if (text.equalsIgnoreCase("Disclaimers")) {
+							appLog.info("Header is verified.");
+						} else {
+							appLog.error("Header is not present on the page.Expected: Disclaimers\tActual: " + text);
+							sa.assertTrue(false,
+									"Header is not present on the page.Expected: Disclaimers\tActual: " + text);
+						}
+						if (dpbl.clickOnExpandIcon(M4F1, 60)) {
+							if (dpbl.verifyFundDisplaying(M4F1, Org3FirmName)) {
+								appLog.info("Fund is displaying and fund name is verified");
+							} else {
+								appLog.info("Fund is not displaying and fund name is not verified");
+								sa.assertTrue(false, "Fund Is Not displaying and fund name is not verified");
+							}
+							if (dpbl.verifyAcceptButton(M4F1, M4DIS2)) {
+								appLog.info("Accept button is verified for :" + M4F1);
+							} else {
+								appLog.info("Accept button is not verified for :" + M4F1);
+								sa.assertTrue(false, "Accept button is not verified for :" + M4F1);
+							}
+						} else {
+							appLog.info("Not bale to click on expand icon");
+							sa.assertTrue(false, "Not able to click on expand icon");
+						}
+						if (dpbl.clickOnExpandIcon(M4F2, 60)) {
+							if (dpbl.verifyFundDisplaying(M4F2, Org3FirmName)) {
+								appLog.info("Fund is displaying and fund name is verified");
+							} else {
+								appLog.info("Fund is not displaying and fund name is not verified");
+								sa.assertTrue(false, "Fund Is Not displaying and fund name is not verified");
+							}
+							if (dpbl.verifyAcceptButton(M4F2, M4DIS1)) {
+								appLog.info("Accept button is verified for :" + M4F2);
+							} else {
+								appLog.info("Accept button is not verified for :" + M4F2);
+								sa.assertTrue(false, "Accept button is not verified for :" + M4F2);
+							}
+						} else {
+							appLog.info("Not bale to click on expand icon");
+							sa.assertTrue(false, "Not able to click on expand icon");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
 					} else {
-						appLog.error("Header is not present on the page.Expected: Disclaimers\tActual: " + text);
-						sa.assertTrue(false,
-								"Header is not present on the page.Expected: Disclaimers\tActual: " + text);
-					}
-					if (dpbl.clickOnExpandIcon(M4F1, 60)) {
-						if (dpbl.verifyFundDisplaying(M4F1, Org3FirmName)) {
-							appLog.info("Fund is displaying and fund name is verified");
-						} else {
-							appLog.info("Fund is not displaying and fund name is not verified");
-							sa.assertTrue(false, "Fund Is Not displaying and fund name is not verified");
-						}
-						if (dpbl.verifyAcceptButton(M4F1, M4DIS2)) {
-							appLog.info("Accept button is verified for :" + M4F1);
-						} else {
-							appLog.info("Accept button is not verified for :" + M4F1);
-							sa.assertTrue(false, "Accept button is not verified for :" + M4F1);
-						}
-					} else {
-						appLog.info("Not bale to click on expand icon");
-						sa.assertTrue(false, "Not able to click on expand icon");
-					}
-					if (dpbl.clickOnExpandIcon(M4F2, 60)) {
-						if (dpbl.verifyFundDisplaying(M4F2, Org3FirmName)) {
-							appLog.info("Fund is displaying and fund name is verified");
-						} else {
-							appLog.info("Fund is not displaying and fund name is not verified");
-							sa.assertTrue(false, "Fund Is Not displaying and fund name is not verified");
-						}
-						if (dpbl.verifyAcceptButton(M4F2, M4DIS1)) {
-							appLog.info("Accept button is verified for :" + M4F2);
-						} else {
-							appLog.info("Accept button is not verified for :" + M4F2);
-							sa.assertTrue(false, "Accept button is not verified for :" + M4F2);
-						}
-					} else {
-						appLog.info("Not bale to click on expand icon");
-						sa.assertTrue(false, "Not able to click on expand icon");
+					appLog.info("could not find new window to switch");
+					sa.assertTrue(false, "could not find new window to switch");
 					}
 				} else {
 					appLog.info("Not able to click on Go to Disclaimer Button .");
@@ -10234,11 +10299,11 @@ public class Module4 extends BaseLib{
 			appLog.info("Investor password is wrong so cannot login.");
 			sa.assertTrue(false, "Investor password is wrong so cannot login");
 		}
-		driver.close();
-		driver.switchTo().window(parentID);
 		lp.investorLogout();
 		driver.close();
 		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		dpbl = new DisclaimerPageBussinessLayer(driver);
 		niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		if (lp.clickOnTab(TabName.NavatarInvestorAddOns)) {
@@ -10967,8 +11032,8 @@ public class Module4 extends BaseLib{
 					if (sendKeys(driver, fp.getFundName(60), "Updated" + M4F1, "Fund Name Text Page on Fund Page",
 							action.BOOLEAN)) {
 						if (click(driver, fp.getSaveButton(60), "Fund Detail Page save button", action.BOOLEAN)) {
-							if (getText(driver, fp.getFundNameInViewMode(60), "Fund Name", action.SCROLLANDBOOLEAN)
-									.equals("Updated" + M4F1)) {
+							
+							if ( fp.getFundNameInViewMode1("Updated" + M4F1,30)!=null) {
 								appLog.info("Fund Name is successfully updated and verfied.");
 							} else {
 								appLog.error("Fund Name is not Updated.");

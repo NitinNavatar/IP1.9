@@ -91,7 +91,16 @@ public class FundsPage extends BasePageBusinessLayer {
 			return isDisplayed(driver, fundNameInViewModeLightning, "Visibility", timeOut, "Fund Name in View Mode");
 		}
 	}
-	
+	public WebElement getFundNameInViewMode1(String fund,int timeOut) {
+		
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, fundNameInViewMode, "Visibility", timeOut, "Fund Name in View Mode");
+		}else{
+			String xpath="//*[text()='Fund']/following-sibling::*//*[text()='"+fund+"']";
+			WebElement ele=FindElement(driver, xpath, "Fund Name in View Mode", action.BOOLEAN, 10);
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Fund Name in View Mode");
+		}
+	}
 	@FindBy(xpath="//iframe[contains(@title,'PE_Fund_NothingEnabled')]")
 	private WebElement workspaceFrameOnFundsPage;
 
@@ -5881,7 +5890,7 @@ public class FundsPage extends BasePageBusinessLayer {
 		WebElement ele = null;
 		String xpath="";
 		if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
-			xpath="//td/label[text()='Bulk Download (Fundraising)']/../following-sibling::td/input";
+			xpath="//*[text()='Bulk Download (Fundraising)']/..//following-sibling::input";
 		}else if(workspace.toString().equalsIgnoreCase(workspace.InvestorWorkspace.toString())) {
 			xpath="//td/label[text()='Bulk Download (Investor)']/../following-sibling::td/input";
 		}	
