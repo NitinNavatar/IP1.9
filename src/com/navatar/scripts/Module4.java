@@ -2947,7 +2947,59 @@ public class Module4 extends BaseLib{
 	}
 	
 	@Test
-	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownload(){
+	public void M4tc018_1_LoginWithHubToEnableBulkDownLoad() {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		lp.CRMLogin(HubUserName,HubPassword);
+		String[] funds = {M4F1};
+		for (String fund : funds) {
+			
+			if(fp.clickOnTab(TabName.FundsTab)) {
+				if(fp.clickOnCreatedFund(fund)) {
+					if (click(driver, fp.getEditButton(10), "Edit Button", action.BOOLEAN)) {
+						appLog.error("Click on Edit Button : "+fund);
+						ThreadSleep(1000);
+						if (isSelected(driver, fp.getBulkDownLoadCheckBox(Workspace.FundraisingWorkspace, 10), "Bulk DownLoad CheckBox")) {
+							appLog.info("Bulk DownLoad is Already Checked");	
+						}else{
+							if (click(driver, fp.getBulkDownLoadCheckBox(Workspace.FundraisingWorkspace, 10), "Bulk DownLoad CheckBox", action.SCROLLANDBOOLEAN)) {
+								appLog.info(fund+" clicked on Bulk DownLoad CheckBox : "+Workspace.FundraisingWorkspace);	
+							} else {
+								appLog.error(fund+" Not able to click on Bulk DownLoad CheckBox : "+Workspace.FundraisingWorkspace);
+								sa.assertTrue(false, fund+" Not able to click on Bulk DownLoad CheckBox : "+Workspace.FundraisingWorkspace);
+							}	
+						}
+						ThreadSleep(2000);
+						if (click(driver, fp.getSaveButton(10), "Save Button", action.SCROLLANDBOOLEAN)) {
+							appLog.error("click on Save Button : "+fund);
+						} else {
+							appLog.error("Not able to click on Save Button : "+fund);
+							sa.assertTrue(false, "Not able to click on Save Button : "+fund);
+						}
+
+					} else {
+						appLog.error("Not able to click on Edit Button : "+fund);
+						sa.assertTrue(false, "Not able to click on Edit Button : "+fund);
+					}
+				}else {
+					appLog.error("Not able to click on created fund Name : "+fund);
+					sa.assertTrue(false, "Not able to click on created fund Name : "+fund);
+
+				}
+			}else {
+				appLog.error("Not able to click on fund tab");
+				sa.assertTrue(false, "Not able to click on fund tab");
+			}
+			switchToDefaultContent(driver);
+			
+		}
+		
+		sa.assertAll();
+
+	}
+	
+	@Test
+	public void M4tc018_2_VerifyPendingDisclaimerPopAtBulkDownload(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InvestorFirmPageBusinesslayer ifp = new InvestorFirmPageBusinesslayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3122,7 +3174,7 @@ public class Module4 extends BaseLib{
 	}
 
 	@Test
-	public void M4tc018_VerifyPendingDisclaimerPopAtBulkDownloadCheckImpactCRMSide(){
+	public void M4tc018_3_VerifyPendingDisclaimerPopAtBulkDownloadCheckImpactCRMSide(){
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarInvestorAddonsPageBusinessLayer niam = new NavatarInvestorAddonsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
