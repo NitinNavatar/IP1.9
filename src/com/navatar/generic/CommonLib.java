@@ -285,7 +285,7 @@ public class CommonLib implements Comparator<String> {
 			public String toString() {
 				return "Installed Packages";
 		}
-	}
+	},Users;
 	};
 	
 	
@@ -2692,6 +2692,36 @@ public class CommonLib implements Comparator<String> {
 		return false;
 
 	}
+	
+	
+	/**
+	 * @param driver
+	 * @param cssSelectorPath
+	 * @param buttonName
+	 * @return true if able to click on WebElement using cssPath
+	 */
+	public static boolean clickUsingCssSelectorPath(WebDriver driver,String cssSelectorPath,String buttonName) {
+		boolean cssFlag=false;
+		appLog.info("Css Selector Path for "+buttonName+" is  >>>>   "+cssSelectorPath);
+		try {
+			cssFlag=false;
+			WebElement ele = BaseLib.edriver.findElement(By.cssSelector(cssSelectorPath));
+			ThreadSleep(200);
+			scrollDownThroughWebelement(driver, ele, buttonName);
+			ThreadSleep(1000);
+			ele.click();
+			appLog.info("click on "+buttonName);
+			cssFlag = true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			appLog.info("Not able to click on "+buttonName);
+			BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
+			cssFlag=false;
+
+		}
+		return cssFlag;
+	}
+	
 	
 	public static enum ShowMoreActionDropDownList{
 		 New_Task,Edit, Delete, New_Meeting,LogCaLLWithMultiple{

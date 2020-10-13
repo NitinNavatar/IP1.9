@@ -235,7 +235,7 @@ public class Module4 extends BaseLib{
 				}
 			}
 		
-				if(click(driver, lp.getExpandUserIcon(environment,mode,60), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
+				if(lp.quickSearchOnSetupHomePage(environment, mode, object.Users)) {
 					appLog.info("clicked on manage user expand icon");
 					if(click(driver, lp.getUsersLink(environment,mode,60), "User Link", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on users link");

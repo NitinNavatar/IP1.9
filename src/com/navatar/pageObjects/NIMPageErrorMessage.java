@@ -11,7 +11,7 @@ public interface NIMPageErrorMessage {
 
 	public String lastNameErrorMessageOnRegisterPopup="Please enter the required field.";
 	public String invalidNameErrorMessage="Invalid Name";
-	public String problemLoggingInErrorMessage="We can’t log you in because of the following error. For more information, contact your Salesforce administrator.";
+	public String problemLoggingInErrorMessage="We can’t log you in because of an authentication error. For help, contact your Salesforce administrator.";
 	public String registrationSuccessfulPopMessage="You have registered successfully for Navatar Investor.";
     public String errorMessageBeforeGivingInternalUserAccess="The Navatar Investor functionality is not available for you. Please contact your Navatar Administrator.";      
     public String adminLabelToolTipMessage="To be granted permission, users first need to register with Navatar Investor.";

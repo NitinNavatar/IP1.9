@@ -313,7 +313,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
 						CommonLib.log(LogStatus.INFO, "Tab found", YesNo.No);
 						appLog.info("Clicked on Tab : "+tabName);
-						return true;
+						if(!tabName.equalsIgnoreCase("Navatar Investor Manager")) {
+							return true;
+						}
 					} else {
 						appLog.error("Not Able to Click on Tab : "+tabName);
 					}
@@ -331,7 +333,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
 								appLog.info("Clicked on Tab on More Icon: "+tabName);
 								CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
-								return true;
+								if(!tabName.equalsIgnoreCase("Navatar Investor Manager")) {
+									return true;
+								}
 							}	
 						}
 					} else {
@@ -344,47 +348,42 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					for(int K=0; K<20; K++) {
 						if(nim.getNIMTabParentFrame_Lightning()!=null) {
 							ThreadSleep(3000);
-							switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
-							if (nim.getNIMTabFrame(20) != null) {
-								appLog.info("NIM Frame Loaded Successfully.");
+							switchToFrame(driver, 5, nim.getNIMTabParentFrame_Lightning());
+							if (nim.getNIMTabFrame(2) != null) {
+								appLog.info("NIM  Parent Frame is Loaded Successfully.");
 								switchToFrame(driver, 30, nim.getNIMTabFrame(30));
 								for(int j = 0; j < 20; j++ ) {
 									if (nim.getFolderTemplatetab(0) != null) {
 										switchToDefaultContent(driver);
 										appLog.info("NIM Tab is loaded successfully.");
-										flag=true;
+										switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
 										return true;
 									} else if (nim.getStartButton(0) != null) {
 										switchToDefaultContent(driver);
 										appLog.info("NIM Tab is loaded successfully.");
-										flag=true;
+										switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
 										return true;
 									} else if (nim.getNextButton(0) != null) {
 										switchToDefaultContent(driver);
 										appLog.info("NIM Tab is loaded successfully");
-										flag=true;
+										switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
 										return true;
 									} else if (nim.getRegistrationSuccessfulCloseBtn(0) != null) {
 										System.err.println("Inside reg close button");
 										switchToDefaultContent(driver);
 										appLog.info("NIM Tab is loaded successfully.");
-										flag=true;
+										switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
 										return true;
 									} else if (bp.getErrorMessageBeforeGivingInternalUserAccess(0) != null) {
 										switchToDefaultContent(driver);
 										appLog.info("NIM Tab is loaded successfully.");
-										flag=true;
+										switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
 										return true;
 									} else {
 										appLog.error("NIM Tab is not loaded");
 									}
 								}
 							}
-							switchToDefaultContent(driver);
-							switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning(30));
-						}
-						if(flag) {
-							break;
 						}
 					}
 					switchToDefaultContent(driver);
@@ -882,6 +881,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 }
 	
 	
+	
+	public boolean quickSearchOnSetupHomePage(String environment, String mode, object objectName) {
+		if(sendKeys(driver,getQucikSearchInSetupPage(environment, mode, 30),objectName.toString(),"quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
+			appLog.info("passed value in serach text box: "+objectName);
+			return true;
+		}else {
+			appLog.error("Not able to search object in classic : "+objectName);
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * @author Ankit Jaiswal
 	 * @description- This method is used to set new password for CRM Users
@@ -1214,6 +1225,90 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return false;
 	}
 	
+	
+	
+	//Lightning Method.....
+	/**
+	 * @author Parul Singh
+	 * @param viewUser
+	 * @param userFirstName
+	 * @param userLastName
+	 * @param userStatus
+	 * @return true/false
+	 */
+	public boolean deactivateAndActivateCreatedUser(String environment, String mode,String viewUser, String userFirstName, String userLastName,
+			String userStatus) {
+	
+		if(quickSearchOnSetupHomePage(environment, mode, object.Users)) {
+			if (click(driver, getUsersLink(environment, mode, 30), "User Link", action.SCROLLANDBOOLEAN)) {
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					ThreadSleep(3000);
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+				}
+				if (selectVisibleTextFromDropDown(driver, getViewAllDropdownList(20), "View dropdown list",
+						viewUser)) {
+					if (click(driver, getLastLogin(10), "Last Login", action.SCROLLANDBOOLEAN)) {
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(3000);
+							switchToFrame(driver, 20, getSetUpPageIframe(20));
+						}
+						if (click(driver, getLastLogin(10), "Last Login", action.SCROLLANDBOOLEAN)) {
+							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								ThreadSleep(3000);
+								switchToFrame(driver, 20, getSetUpPageIframe(20));
+							}
+							WebElement ele = FindElement(driver,
+									"//a[text()='" + userLastName + "," + " " + userFirstName
+									+ "']/..//preceding-sibling::td//a",
+									"Edit icon", action.SCROLLANDBOOLEAN, 10);
+							if (ele != null) {
+								if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
+									if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+										ThreadSleep(3000);
+										switchToFrame(driver, 20, getSetUpPageIframe(20));
+									}
+									if (CommonLib.clickUsingCssSelectorPath(driver, CssPath.cssPathForUserCreationActiveCheckBox, "Active check box")) {
+										if (userStatus.equalsIgnoreCase("Deactivate")) {
+											switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+										}
+										if (CommonLib.clickUsingCssSelectorPath(driver,CssPath.cssPathForUserCreationSaveButton, "Save button")) {
+											appLog.info("Clicked on save button");
+											switchToDefaultContent(driver);
+											return true;
+										} else {
+											appLog.info("Not able to click on save button");
+										}
+
+									} else {
+										appLog.info("Not able to click on activate checkbox");
+									}
+
+								} else {
+									appLog.info("Not able to click on edit icon");
+								}
+							} else {
+								appLog.info("Element is not present");
+							}
+
+						} else {
+							appLog.info("Not able to click on Last Login");
+						}
+					} else {
+						appLog.info("Not able to click on Last Login");
+					}
+				} else {
+					appLog.info("Not able to select visbible text from the dropdown");
+				}
+			} else {
+				appLog.info("Not able to click on users Link");
+			}
+		} else {
+			appLog.info("Not able to click on Manage User Icon");
+		}
+		switchToDefaultContent(driver);
+		return false;
+	}
+	
 	/**
 	 * @author Parul Singh
 	 * @param userFirstName
@@ -1270,13 +1365,67 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	
 	}
 	
+	
+	//Lightning Method....
+	/**
+	 * @author Parul Singh
+	 * @param userFirstName
+	 * @param userLastName
+	 * @param userStatus
+	 * @return true/false
+	 */
+	public boolean verifyUserGetDeactivatedAndActivated(String environment, String mode,String userFirstName, String userLastName, String userStatus) {
+		if (quickSearchOnSetupHomePage(environment, mode, object.Users)) {
+			if (click(driver, getUsersLink(environment, mode, 30), "User Link", action.SCROLLANDBOOLEAN)) {
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					ThreadSleep(3000);
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+				}
+				if (selectVisibleTextFromDropDown(driver, getViewAllDropdownList(20), "View dropdown list",
+						"Active Users")) {
+					ThreadSleep(2000);
+					if (userStatus.equalsIgnoreCase("Deactivate")) {
+						ThreadSleep(2000);
+						if (FindElement(driver, "//a[text()='" + userLastName + "," + " " + userFirstName + "']/../..",
+								"Deactivated User", action.SCROLLANDTHROWEXCEPTION, 5) == null) {
+							appLog.info("User is Deactivated");
+						} else {
+							appLog.info("User is not Deactivated");
+							switchToDefaultContent(driver);
+							return false;
+						}
+					}			
+					if (userStatus.equalsIgnoreCase("Activate")) {
+						ThreadSleep(2000);
+						if (FindElement(driver, "//a[text()='" + userLastName + "," + " " + userFirstName + "']/../..",
+								"Activated User", action.SCROLLANDTHROWEXCEPTION, 5) != null) {
+							appLog.info("User is Activated");
+						} else {
+							appLog.info("User is not Activated");
+							switchToDefaultContent(driver);
+							return false;
+						}
+					}	
+				} else {
+					appLog.info("Not able to select visbible text from the dropdown");
+				}
+			} else {
+				appLog.info("Not able to click on users Link");
+			}
+		} else {
+			appLog.info("Not able to click on Manage User Icon");
+		}
+		switchToDefaultContent(driver);
+		return true;
+	}
+	
 	/**
 	 * @author Parul Singh
 	 * @return true/false
 	 */
 	public boolean verifyWorkspaceCollapseOrExpanded(){
-		String expandIcon = getAttribute(driver, getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-		if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		String expandIcon = getAttribute(driver, getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+		if (expandIcon.equalsIgnoreCase("false")) {
 			if (click(driver,getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 					action.SCROLLANDBOOLEAN)) {
 				appLog.info("Clicked on workspace expand icon");
@@ -5245,7 +5394,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}else {
 			if(click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on setting icon");
-				ThreadSleep(10000);
+				ThreadSleep(3000);
 			}else {
 				appLog.error("Not able to click on setting icon");
 				return flag;

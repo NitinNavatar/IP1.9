@@ -515,7 +515,7 @@ public abstract class BasePage {
 		return isDisplayed(driver, switchToClassic, "Visibility", timeOut, "Sales force switch to classic mode");
 	}
 	
-	@FindBy(xpath="//img[@name='Workspace']")
+	@FindBy(xpath="//span[text()='Workspace']/../../button")
 	private WebElement workspaceExpandIcon;
 
 	/**

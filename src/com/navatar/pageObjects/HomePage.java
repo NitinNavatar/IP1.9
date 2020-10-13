@@ -22,7 +22,7 @@ public class HomePage extends BasePage {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath="//h2[text()='Navatar Investor Activities']")
+	@FindBy(xpath="//span[text()='Navatar Investor Activities']")
 	private WebElement navatarInvestorActivitiesLabel;
 
 	/**
@@ -111,7 +111,7 @@ public class HomePage extends BasePage {
 	public WebElement getErrorMessage(int timeOut) {
 		return isDisplayed(driver, errorMessage, "Visibility", timeOut, "Error Message");
 	}
-	@FindBy(xpath = "//h2[text()='Navatar Investor Activities']/..")
+	@FindBy(xpath = "//span[text()='Navatar Investor Activities']/..")
 	private WebElement navatarInvetsorActivityGridOnHomeAlert;
 
 	/**

@@ -4,13 +4,19 @@
 package com.navatar.scripts;
 
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
+import com.navatar.generic.CommonLib.CreationPage;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.SortOrder;
+import com.navatar.generic.CommonLib.YesNo;
 import com.navatar.generic.CommonLib.action;
+import com.navatar.generic.CommonLib.customTabActionType;
 import com.navatar.generic.CommonLib.excelLabel;
 import com.navatar.generic.CommonLib.sideMenu;
 import com.navatar.generic.CommonVariables;
@@ -19,6 +25,7 @@ import com.navatar.pageObjects.CommitmentPageBusinessLayer;
 import com.navatar.pageObjects.CommitmentPageErrorMessage;
 import com.navatar.pageObjects.ContactPageBusinessLayer;
 import com.navatar.pageObjects.ContactPageErrorMessage;
+import com.navatar.pageObjects.CssPath;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageErrorMessage;
@@ -32,11 +39,16 @@ import com.navatar.pageObjects.NIMPageErrorMessage;
 import com.navatar.pageObjects.NavatarInvestorAddOnsErrorMessage;
 import com.navatar.pageObjects.NavatarInvestorAddonsPageBusinessLayer;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
+import com.relevantcodes.extentreports.LogStatus;
+
 import static com.navatar.generic.CommonLib.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.SmokeCommonVariable.SmokeCRMUser1FirstName;
+import static com.navatar.generic.SmokeCommonVariable.SmokeCRMUser1LastName;
+import static com.navatar.generic.SmokeCommonVariable.SmokeInstitution1;
 
 /**
  * @author Parul Singh
@@ -46,379 +58,330 @@ public class Module1 extends BaseLib {
 	String passwordResetLink = null;
 
 	
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc001_CreateCRMUser1InstallPackageAndThenCreatePassword() {
+	public void M1tc001_CreateCRMUser1InstallPackageAndThenCreatePassword(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
-		List<String> lst=new ArrayList<String>();
+		String parentWindow = null;
+		boolean flag = false;
+		String addRemoveTabName="Partnerships"+","+"Commitments"+","+"Navatar Investor Manager";
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String[] splitedUserName = removeNumbersFromString(CRMUser1LastName); 
 		String UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(UserLastName, "Users", excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
 		cv = new CommonVariables(this);
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		if (bp.createPEUser(CRMUser1FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,
-				CRMUserProfile)) {
-			appLog.info("PE User 1 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "User1", excelLabel.User_Email);
+		if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+			log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 		} else {
-			appLog.info("PE User1 is not created successfully");
-			saa.assertTrue(false, "PE User1 is not created successfully");
-		}
-		if (bp.installedPackages(CRMUser1FirstName, CRMUser1LastName)) {
-			appLog.info("Install package is done for PE User 1 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 1 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 1 succesfully");
-		}
-		lp.CRMlogout();
-		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
-		bp = new BasePageBusinessLayer(driver);
-		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		appLog.info("ResetLinkIs: " + passwordResetLink);
-		driver.get(passwordResetLink);
-		if (bp.setNewPassword()) {
-			appLog.info("Password is set successfully for user1");
-		} else {
-			appLog.info("Password is not set for user1");
-			saa.assertTrue(false, "Password is not set for user1");
-		}
-		if (bp.getSalesForceLightingIcon(10) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		 ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
+			log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+			sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+		}	
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						}
+					}
+					if (bp.createPEUser(environment, mode, CRMUser1FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,CRMUserProfile)) {
+						appLog.info("PE User 1 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "User1", excelLabel.User_Email);
+						flag = true;
+						break;
+						
+					}
 				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
 			}
 		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		if (bp.getNavatarInvestorManagerTab(20) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(20) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
+		if (flag) {
+			if (bp.installedPackages(environment, mode,CRMUser1FirstName,CRMUser1LastName)) {
+				appLog.info("PE Package is installed Successfully in CRM User1: " + CRMUser1FirstName + " "+ CRMUser1LastName);
 			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
+				appLog.error(
+						"Not able to install PE package in CRM User1: " + CRMUser1FirstName + " "+ CRMUser1LastName);
+				sa.assertTrue(false,
+						"Not able to install PE package in CRM User1: " + CRMUser1FirstName + " "+ CRMUser1LastName);
 			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			lp.CRMlogout(environment,mode);
+			driver.close();
+			config(ExcelUtils.readDataFromPropertyFile("Browser"));
+			bp = new BasePageBusinessLayer(driver);
+			lp = new LoginPageBusinessLayer(driver);
+			try {
+				passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+						ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+						ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			appLog.info("ResetLinkIs: " + passwordResetLink);
+			driver.get(passwordResetLink);
+			if (bp.setNewPassword()) {
+				appLog.info("Password is set successfully for user1");
+				if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+					log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+					sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+				}	
+			} else {
+				appLog.info("Password is not set for user1");
+				saa.assertTrue(false, "Password is not set for user1");
+			}
+		}else{
+			appLog.error("could not create CRM User so cannot installed Package and set password of created user");
+			sa.assertTrue(false,"could not create CRM User so cannot installed Package and set password of created user");
+
 		}
-		String userNameAtTab = getAttribute(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab",
-				"title");
-		String userName = trim(userNameAtTab);
-		saa.assertTrue(userName.contains(CRMUser1LastName), "PE User name is  not verified.");
-		ThreadSleep(1000);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc002_CreateCRMUser2InstallPackageAndThenCreatePassword() {
+	public void M1tc002_CreateCRMUser2InstallPackageAndThenCreatePassword(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
+		String addRemoveTabName="Partnerships"+","+"Commitments"+","+"Navatar Investor Manager";
 		SoftAssert saa = new SoftAssert();
-		List<String> lst=new ArrayList<String>();
+		String parentWindow = null;
+		boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String[] splitedUserName = removeNumbersFromString(CRMUser2LastName); 
 		String UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(UserLastName, "Users", excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 		cv = new CommonVariables(this);
-		if (bp.createPEUser(CRMUser2FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,
-				CRMUserProfile)) {
-			appLog.info("PE User 2 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "User2", excelLabel.User_Email);
-		} else {
-			appLog.info("PE User2 is not created successfully");
-			saa.assertTrue(false, "PE User2 is not created successfully");
-		}
-		if (bp.installedPackages(CRMUser2FirstName, CRMUser2LastName)) {
-			appLog.info("Install package is done for PE User 2 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 2 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
-		}
-		lp.CRMlogout();
-		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
-		bp = new BasePageBusinessLayer(driver);
-		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		appLog.info("ResetLinkIs: " + passwordResetLink);
-		driver.get(passwordResetLink);
-		if (bp.setNewPassword()) {
-			appLog.info("Password is set successfully for user2");
-		} else {
-			appLog.info("Password is not set for user2");
-			saa.assertTrue(false, "Password is not set for user2");
-		}
-		if (bp.getSalesForceLightingIcon(10) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						}
+					}
+					if (bp.createPEUser(environment, mode, CRMUser2FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,CRMUserProfile)) {
+						appLog.info("PE User 2 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "User2", excelLabel.User_Email);
+						flag = true;
+						break;
+						
+					}
 				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
 			}
 		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		if (bp.getNavatarInvestorManagerTab(20) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(20) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
+		if (flag) {
+			if (bp.installedPackages(environment, mode,CRMUser2FirstName,CRMUser2LastName)) {
+				appLog.info("PE Package is installed Successfully in CRM User2: " + CRMUser2FirstName + " "+ CRMUser2LastName);
 			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
+				appLog.error(
+						"Not able to install PE package in CRM User2: " + CRMUser2FirstName + " "+ CRMUser2LastName);
+				sa.assertTrue(false,
+						"Not able to install PE package in CRM User2: " + CRMUser2FirstName + " "+ CRMUser2LastName);
 			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			lp.CRMlogout(environment,mode);
+			driver.close();
+			config(ExcelUtils.readDataFromPropertyFile("Browser"));
+			bp = new BasePageBusinessLayer(driver);
+			lp = new LoginPageBusinessLayer(driver);
+			try {
+				passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+						ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+						ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			appLog.info("ResetLinkIs: " + passwordResetLink);
+			driver.get(passwordResetLink);
+			if (bp.setNewPassword()) {
+				appLog.info("Password is set successfully for user2");
+				if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+					log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+					sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+				}	
+			} else {
+				appLog.info("Password is not set for user1");
+				saa.assertTrue(false, "Password is not set for user1");
+			}
+		}else{
+			appLog.error("could not create CRM User2 so cannot installed Package and set password of created user");
+			sa.assertTrue(false,"could not create CRM User2 so cannot installed Package and set password of created user");
+
 		}
-		String userNameAtTab = getAttribute(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab",
-				"title");
-		String userName = trim(userNameAtTab);
-		saa.assertTrue(userName.contains(CRMUser2LastName), "PE User name is  not verified.");
-		ThreadSleep(1000);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc003_CreateCRMUser3InstallPackageAndThenCreatePassword() {
+	public void M1tc003_CreateCRMUser3InstallPackageAndThenCreatePassword(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
+		String addRemoveTabName="Partnerships"+","+"Commitments"+","+"Navatar Investor Manager";
 		SoftAssert saa = new SoftAssert();
-		List<String> lst=new ArrayList<String>();
+		String parentWindow = null;
+		boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String[] splitedUserName = removeNumbersFromString(CRMUser3LastName); 
 		String UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(UserLastName, "Users", excelLabel.Variable_Name, "User3", excelLabel.User_Last_Name);
 		cv = new CommonVariables(this);
-		if (bp.createPEUser(CRMUser3FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,
-				CRMUserProfile)) {
-			appLog.info("PE User 3 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "User3", excelLabel.User_Email);
-		} else {
-			appLog.info("PE User3 is not created successfully");
-			saa.assertTrue(false, "PE User3 is not created successfully");
-		}
-		if (bp.installedPackages(CRMUser3FirstName, CRMUser3LastName)) {
-			appLog.info("Install package is done for PE User 3 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 3 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 3 succesfully");
-		}
-		lp.CRMlogout();
-		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
-		bp = new BasePageBusinessLayer(driver);
-		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
-		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		appLog.info("ResetLinkIs: " + passwordResetLink);
-		driver.get(passwordResetLink);
-		if (bp.setNewPassword()) {
-			appLog.info("Password is set successfully for user3");
-		} else {
-			appLog.info("Password is not set for user3");
-			saa.assertTrue(false, "Password is not set for user3");
-		}
-		if (bp.getSalesForceLightingIcon(10) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
+		
+		
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						}
+					}
+					if (bp.createPEUser(environment, mode, CRMUser3FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,CRMUserProfile)) {
+						appLog.info("PE User 3 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "User3", excelLabel.User_Email);
+						flag = true;
+						break;
+						
+					}
 				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
 			}
 		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-		}
-		if (bp.getNavatarInvestorManagerTab(20) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(20) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
+		if (flag) {
+			if (bp.installedPackages(environment, mode,CRMUser3FirstName,CRMUser3LastName)) {
+				appLog.info("PE Package is installed Successfully in CRM User3: " + CRMUser3FirstName + " "+ CRMUser3LastName);
 			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
+				appLog.error(
+						"Not able to install PE package in CRM User3: " + CRMUser3FirstName + " "+ CRMUser3LastName);
+				sa.assertTrue(false,
+						"Not able to install PE package in CRM User3: " + CRMUser3FirstName + " "+ CRMUser3LastName);
 			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			lp.CRMlogout(environment,mode);
+			driver.close();
+			config(ExcelUtils.readDataFromPropertyFile("Browser"));
+			bp = new BasePageBusinessLayer(driver);
+			lp = new LoginPageBusinessLayer(driver);
+			try {
+				passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+						ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+						ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+			} catch (InterruptedException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			appLog.info("ResetLinkIs: " + passwordResetLink);
+			driver.get(passwordResetLink);
+			if (bp.setNewPassword()) {
+				appLog.info("Password is set successfully for user3");
+				if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+					log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+					sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+				}	
+			} else {
+				appLog.info("Password is not set for user3");
+				saa.assertTrue(false, "Password is not set for user3");
+			}
+			
+		}else{
+			appLog.error("could not create CRM User3 so cannot installed Package and set password of created user");
+			sa.assertTrue(false,"could not create CRM User3 so cannot installed Package and set password of created user");
+
 		}
-		String userNameAtTab = getAttribute(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab",
-				"title");
-		String userName = trim(userNameAtTab);
-		saa.assertTrue(userName.contains(CRMUser3LastName), "PE User name is  not verified.");
-		ThreadSleep(1000);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc004_1_CreatePrecondition() {
+	public void M1tc004_1_CreatePrecondition(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
 		CommitmentPageBusinessLayer cmp = new CommitmentPageBusinessLayer(driver);
 		PartnershipPageBusinessLayer pp = new PartnershipPageBusinessLayer(driver);
-		List<String> lst=new ArrayList<String>();
 		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-	if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createInstitution(M1Institution1)) {
+	if (bp.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if (ip.createInstitution(environment,mode,M1Institution1,"Institution",null,null)) {
 				appLog.info("Institution is created successfully");
 			} else {
 				appLog.info("Institution is not created successfully");
@@ -428,9 +391,8 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institution tab so we cannot craete institution");
 			saa.assertTrue(false, "Not able to click on institution tab so we cannot craete institution");
 		}
-		scrollDownThroughWebelement(driver, bp.getUserNameAtUserMenuTab(60), "User Name");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createLimitedPartner(M1LimitedPartner1, M1Institution1)) {
+		if (bp.clickOnTab(environment,mode,TabName.InstituitonsTab)) {
+			if (ip.createInstitution(environment, mode,M1LimitedPartner1,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M1Institution1)) {
 				appLog.info("Limited Partner is created successfully");
 			} else {
 				appLog.info("Limited Partner is not created successfully");
@@ -440,9 +402,9 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institution tab so we cannot craete institution");
 			saa.assertTrue(false, "Not able to click on institution tab so we cannot craete institution");
 		}
-		if (bp.clickOnTab(TabName.ContactTab)) {
+		if (bp.clickOnTab(environment,mode,TabName.ContactTab)) {
 			String emailId = cp.generateRandomEmailId();
-			if (cp.createContact(M1Contact1FirstName, M1Contact1LastName, M1Institution1, emailId)) {
+			if (cp.createContact(environment,mode,M1Contact1FirstName, M1Contact1LastName, M1Institution1, emailId,null,null,CreationPage.ContactPage)) {
 				appLog.info("Contact is created successfully");
 				ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M1Contact1",
 						excelLabel.Contact_EmailId);
@@ -454,8 +416,8 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on Contact tab so we cannot create Contact");
 			saa.assertTrue(false, "Not able to click on Contact tab so we cannot create Contact");
 		}
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.createFund(M1FundName1, M1FundType1, M1FundInvestmentCategory1)) {
+		if (bp.clickOnTab(environment,mode,TabName.FundsTab)) {
+			if (fp.createFund(environment,mode,M1FundName1, M1FundType1, M1FundInvestmentCategory1,null,null)) {
 				appLog.info("Fund is created successfully");
 			} else {
 				appLog.info("Fund is not created successfully");
@@ -465,8 +427,8 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on Fund tab so we cannot create Fund");
 			saa.assertTrue(false, "Not able to click on Fund tab so we cannot create Fund");
 		}
-		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-			if (frp.createFundRaising(M1FundRaisingName1, M1FundName1, M1Institution1)) {
+		if (bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
+			if (frp.createFundRaising(environment,mode,M1FundRaisingName1, M1FundName1, M1Institution1)) {
 				appLog.info("FundRaising is created successfully");
 			} else {
 				appLog.info("FundRaising is not created successfully");
@@ -476,30 +438,9 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on FundRaising tab so we cannot create FundRaising");
 			saa.assertTrue(false, "Not able to click on FundRaising tab so we cannot create FundRaising");
 		}
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-		lst=bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.clickOnTab(TabName.PartnershipsTab)) {
-				if (pp.createPartnership(M1Partnership1, M1FundName1)) {
-					appLog.info("Partnership is created successfully");
-				} else {
-					appLog.info("Partnership is not created successfully");
-					saa.assertTrue(false, "Partnership is not created successfully");
-				}
-			} else {
-				appLog.info("Not able to click on Partnership tab so we cannot create Partnership");
-				saa.assertTrue(false, "Not able to click on Partnership tab so we cannot create Partnership");
-			}
-		}else{
-		if (bp.clickOnTab(TabName.PartnershipsTab)) {
-			if (pp.createPartnership(M1Partnership1, M1FundName1)) {
+	
+		if (bp.clickOnTab(environment,mode,TabName.PartnershipsTab)) {
+			if (pp.createPartnership(environment,mode,M1Partnership1, M1FundName1)) {
 				appLog.info("Partnership is created successfully");
 			} else {
 				appLog.info("Partnership is not created successfully");
@@ -509,33 +450,8 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on Partnership tab so we cannot create Partnership");
 			saa.assertTrue(false, "Not able to click on Partnership tab so we cannot create Partnership");
 		}
-		}
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			ThreadSleep(1000);
-			 if (bp.clickOnTab(TabName.CommitmentsTab)) {
-				if (cmp.createCommitment(M1LimitedPartner1, M1Partnership1, "M1Commitment1", null)) {
-					appLog.info("Commitment is created successfully");
-				} else {
-					appLog.info("Commitment is not created successfully");
-					saa.assertTrue(false, "Commitment is not created successfully");
-				}
-			} else {
-				appLog.info("Not able to click on Commitment tab so we cannot create Commitment");
-				saa.assertTrue(false, "Not able to click on Commitment tab so we cannot create Commitment");
-			}
-	
-		}else{		
-		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M1LimitedPartner1, M1Partnership1, "M1Commitment1", null)) {
+		if (bp.clickOnTab(environment,mode,TabName.CommitmentsTab)) {
+			if (cmp.createCommitment(environment,mode,M1LimitedPartner1, M1Partnership1, "M1Commitment1", null)) {
 				appLog.info("Commitment is created successfully");
 			} else {
 				appLog.info("Commitment is not created successfully");
@@ -545,14 +461,15 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on Commitment tab so we cannot create Commitment");
 			saa.assertTrue(false, "Not able to click on Commitment tab so we cannot create Commitment");
 		}
-		}
-		lp.CRMlogout();
+		
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc004_2_CheckErrorMessagesForAdminBeforeRegistration() {
+	public void M1tc004_2_CheckErrorMessagesForAdminBeforeRegistration(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -565,8 +482,8 @@ public class Module1 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		scrollDownThroughWebelement(driver, hp.getNavatarInvestorActivitiesLabel(60),
 				"Navatar Investor Manager Activitis label");
+		switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.HomePage));
 		ThreadSleep(2000);
-		switchToFrame(driver, 60, hp.getHomePageAlertsFrame(60));
 		if (bp.verifyErrorMessageOnPage(HomePageErrorMessage.errorMessageBeforeAdminRegistration,
 				hp.getErrorMessageBeforeAdminRegistration(60), "Error Message before admin Registration")) {
 			appLog.info("Error Message is verified at home page");
@@ -578,11 +495,10 @@ public class Module1 extends BaseLib {
 									"Error Message before admin registration", action.BOOLEAN));
 		}
 		switchToDefaultContent(driver);
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedInstitution(M1Institution1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedInstitution(environment, mode,M1Institution1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -593,7 +509,8 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.InstitutionsPage));
+				
 				if (bp.verifyErrorMessageOnPage(InstitutionPageErrorMessage.errorMessageBeforeAdminRegistration,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before admin Registration on Instituition page")) {
@@ -618,7 +535,6 @@ public class Module1 extends BaseLib {
 											"Error Message before admin registration on instituition page for investor workspace",
 											action.BOOLEAN));
 				}
-				switchToDefaultContent(driver);
 			} else {
 				saa.assertTrue(false, "Not able to click on created instituition");
 			}
@@ -626,11 +542,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institution tab");
 			saa.assertTrue(false, "Not able to click on institution tab");
 		}
-		scrollDownThroughWebelement(driver, cp.getContactsTab(60), "Contacts Tab");
-		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.clickOnCreatedContact(M1Contact1FirstName, M1Contact1LastName, null)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.ContactTab)) {
+			if (cp.clickOnCreatedContact(environment, mode,M1Contact1FirstName, M1Contact1LastName, null)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -641,7 +557,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, cp.getWorkspaceFrameIncontactPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.ContactsPage));
 				if (bp.verifyErrorMessageOnPage(ContactPageErrorMessage.errorMessageBeforeAdminRegistration,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before admin Registration on Contact page")) {
@@ -673,11 +589,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on contacts tab so we cannot check error message on contact page");
 			saa.assertTrue(false, "Not able to click on contacts tab so we cannot check error message on contact page");
 		}
-		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds Tab");
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M1FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment, mode,M1FundName1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -688,7 +604,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, fp.getWorkspaceFrameOnFundsPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.FundsPage));
 				if (bp.verifyErrorMessageOnPage(FundsPageErrorMessage.errorMessageBeforeAdminRegistration,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before admin Registration on Funds page")) {
@@ -720,11 +636,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Nota ble to click on funds tab so we cannot check error message on funds page");
 			saa.assertTrue(false, "Nota ble to click on funds tab so we cannot check error message on funds page");
 		}
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M1LimitedPartner1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedLP(environment, mode,M1LimitedPartner1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -735,7 +651,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.LimitedPartnerPage));
 				if (bp.verifyErrorMessageOnPage(InstitutionPageErrorMessage.errorMessageBeforeAdminRegistration,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before admin Registration on Limited Partner page")) {
@@ -757,11 +673,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institution tab");
 			saa.assertTrue(false, "Not able to click on institution tab");
 		}
-		scrollDownThroughWebelement(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab");
-		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M1CommitmentId)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.CommitmentsTab)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M1CommitmentId)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -772,7 +688,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, cmp.getWorkspaceFrameOnCommitmentPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.CommitmentsPage));
 				if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMessageBeforeAdminRegistration,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before admin Registration on commitments page")) {
@@ -795,7 +711,8 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false,
 					"Not able to click on commitment tab so cannot check error message on Commitments page");
 		}
-		if (bp.clickOnTab(TabName.NavatarInvestorAddOns)) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.NavatarInvestorAddOns)) {
 			switchToFrame(driver, 60, naop.getNavatarInvestorAddOnFrame(60));
 			switchToFrame(driver, 30, naop.getNavatarInvestorAddOnFrame1(60));
 			if (bp.verifyErrorMessageOnPage(NavatarInvestorAddOnsErrorMessage.errorMessageBeforeAdminRegistration,
@@ -815,13 +732,14 @@ public class Module1 extends BaseLib {
 					"Not able to click on Navatar investor Add ons tab tab so cannot check error message on Navatar investor Add ons  page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc005_VerifyRegisterForNavatarInvestorPopUpAtNIMTab() {
+	public void M1tc005_VerifyRegisterForNavatarInvestorPopUpAtNIMTab(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -829,7 +747,7 @@ public class Module1 extends BaseLib {
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (ExcelUtils.readData("Users", 1, 7).equalsIgnoreCase("Not Registered")) {
-			if (bp.clickOnTab(TabName.NIMTab)) {
+			if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 				switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 				ThreadSleep(2000);
 				if (nim.getnIMRegisterPopupHeader(60) != null) {
@@ -887,7 +805,7 @@ public class Module1 extends BaseLib {
 						saa.assertTrue(false, "Not able to click on close icon");
 					}
 
-					if (bp.clickOnTab(TabName.NIMTab)) {
+					if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 						switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 						if (click(driver, nim.getNimRegisterPopupCancelButton(60), "Cancel Button",
 								action.SCROLLANDBOOLEAN)) {
@@ -918,13 +836,14 @@ public class Module1 extends BaseLib {
 			appLog.info("Super admin is already registered so we cannot verify register popup.");
 			saa.assertTrue(false, "Super admin is already registered so we cannot verify register popup.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc006_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages() {
+	public void M1tc006_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -932,7 +851,7 @@ public class Module1 extends BaseLib {
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (ExcelUtils.readData("Users", 1, 7).equalsIgnoreCase("Not Registered")) {
-			if (bp.clickOnTab(TabName.NIMTab)) {
+			if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 				switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 				if (click(driver, nim.getStartButton(60), "Start Button", action.SCROLLANDBOOLEAN)) {
 					if (nim.getRegisterPopupHeaderStep1Of2(60) != null) {
@@ -1003,7 +922,7 @@ public class Module1 extends BaseLib {
 						appLog.info("Not able to click on close icon");
 						saa.assertTrue(false, "Not able to click on close icon");
 					}
-					if (bp.clickOnTab(TabName.NIMTab)) {
+					if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 						switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 						if (click(driver, nim.getStartButton(60), "Start Button", action.SCROLLANDBOOLEAN)) {
 							if (click(driver, nim.getRegisterPopupBackButton(60).get(0), "Back Button",
@@ -1231,13 +1150,14 @@ public class Module1 extends BaseLib {
 			appLog.info("Admin User is Already registered so we cannot check error messages");
 			saa.assertTrue(false, "Admin User is Already registered so we cannot check error messages");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc007_VerifyCompleteAdminRegistration() {
+	public void M1tc007_VerifyCompleteAdminRegistration(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1249,7 +1169,7 @@ public class Module1 extends BaseLib {
 		WebElement ele = null;
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (superAdminRegistered.equalsIgnoreCase("No")) {
-			if (bp.clickOnTab(TabName.NIMTab)) {
+			if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 				switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 				if (click(driver, nim.getStartButton(60), "Start Button", action.SCROLLANDBOOLEAN)) {
 					if (click(driver, nim.getNextButton(60), "NextButton", action.SCROLLANDBOOLEAN)) {
@@ -1342,7 +1262,9 @@ public class Module1 extends BaseLib {
 											if (click(driver, nim.getRegistrationSuccessfulCloseBtn(60), "Close button",
 													action.SCROLLANDBOOLEAN)) {
 												switchToDefaultContent(driver);
-												if (bp.clickOnTab(TabName.NIMTab)) {
+												if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+													switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
+													ThreadSleep(3000);
 													switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 													if (nim.verifyLandingPageText("Internal Users")) {
 														appLog.info("Landing page text is verified");
@@ -1431,13 +1353,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Admin User is Already registered so we cannot check error messages");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc008_CheckErrorMessagesForAdminAfterRegistration() {
+	public void M1tc008_CheckErrorMessagesForAdminAfterRegistration(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -1449,8 +1372,8 @@ public class Module1 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		scrollDownThroughWebelement(driver, hp.getNavatarInvestorActivitiesLabel(60),
 				"Navatar Investor Manager Activitis label");
-		ThreadSleep(2000);
-		switchToFrame(driver, 60, hp.getHomePageAlertsFrame(60));
+		switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.HomePage));
+		ThreadSleep(3000);
 		if (bp.verifyErrorMessageOnPage(HomePageErrorMessage.errorMessageAfterAdminAndCRMUserRegistration,
 				hp.getErrorMessageAfterAdminAndCRMUserRegistration(60), "Error Message After admin Registration")) {
 			appLog.info("Error Message is verified at home page");
@@ -1462,11 +1385,10 @@ public class Module1 extends BaseLib {
 									"Error Message after admin registration", action.BOOLEAN));
 		}
 		switchToDefaultContent(driver);
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedInstitution(M1Institution1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedInstitution(environment, mode,M1Institution1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1477,7 +1399,8 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.InstitutionsPage));
+				ThreadSleep(3000);
 				if (bp.verifyErrorMessageOnPage(
 						InstitutionPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace,
 						ip.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60),
@@ -1508,19 +1431,19 @@ public class Module1 extends BaseLib {
 											"Error Message after admin registration on instituition page for investor workspace",
 											action.BOOLEAN));
 				}
-				switchToDefaultContent(driver);
 			} else {
+				appLog.info( "Not able to click on created instituition");
 				saa.assertTrue(false, "Not able to click on created instituition");
 			}
 		} else {
 			appLog.info("Not able to click on institution tab");
 			saa.assertTrue(false, "Not able to click on institution tab");
 		}
-		scrollDownThroughWebelement(driver, cp.getContactsTab(60), "Contacts Tab");
-		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.clickOnCreatedContact(M1Contact1FirstName, M1Contact1LastName, null)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.ContactTab)) {
+			if (cp.clickOnCreatedContact(environment, mode,M1Contact1FirstName, M1Contact1LastName, null)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1531,7 +1454,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, cp.getWorkspaceFrameIncontactPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.ContactsPage));
 				if (bp.verifyErrorMessageOnPage(
 						ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace,
 						cp.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60),
@@ -1569,11 +1492,10 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on contacts tab so we cannot check error message on contact page");
 			saa.assertTrue(false, "Not able to click on contacts tab so we cannot check error message on contact page");
 		}
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M1LimitedPartner1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedLP(environment, mode,M1LimitedPartner1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1584,7 +1506,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.LimitedPartnerPage));
 				if (bp.verifyErrorMessageOnPage(
 						InstitutionPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace,
 						ip.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60),
@@ -1606,11 +1528,10 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institution tab");
 			saa.assertTrue(false, "Not able to click on institution tab");
 		}
-		scrollDownThroughWebelement(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab");
-		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M1CommitmentId)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.CommitmentsTab)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M1CommitmentId)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1621,7 +1542,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, cmp.getWorkspaceFrameOnCommitmentPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.CommitmentsPage));
 				if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMesageAfterAdminAndCRMUserRegistration,
 						cmp.getErrorMessageAfterAdminAndCRMUserRegistration(60),
 						"Error Message after admin Registration on commitments page")) {
@@ -1644,11 +1565,10 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false,
 					"Not able to click on commitment tab so cannot check error message on Commitments page");
 		}
-		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds Tab");
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M1FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment, mode,M1FundName1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1659,7 +1579,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, fp.getWorkspaceFrameOnFundsPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.FundsPage));
 				if (fp.getBuildFundraisinWorkspaceButton(60) != null) {
 					appLog.info("build Fundarising Workspace button is displaying");
 				} else {
@@ -1680,13 +1600,14 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on funds tab so we cannot check error message on funds page");
 			saa.assertTrue(false, "Nota ble to click on funds tab so we cannot check error message on funds page");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc009_CheckErrorMessagesAtCRMUser2Side() {
+	public void M1tc009_CheckErrorMessagesAtCRMUser2Side(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -1696,19 +1617,13 @@ public class Module1 extends BaseLib {
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
-		List<String> lst=new ArrayList<String>();
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		if(bp.clickOnTab(TabName.HomeTab)){
+		if(bp.clickOnTab(environment, mode,TabName.HomeTab)){
 		scrollDownThroughWebelement(driver, hp.getNavatarInvestorActivitiesLabel(60),
 				"Navatar Investor Manager Activitis label");
 		ThreadSleep(2000);
-		switchToFrame(driver, 60, hp.getHomePageAlertsFrame(60));
+		switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.HomePage));
+		ThreadSleep(3000);
 		if (bp.verifyErrorMessageOnPage(HomePageErrorMessage.errorMessageBeforeGivingInternalUserAccess,
 				bp.getErrorMessageBeforeGivingInternalUserAccess(60),
 				"Error Message before giving internal User Access")) {
@@ -1725,11 +1640,10 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Home Tab");
 		}
 		switchToDefaultContent(driver);
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedInstitution(M1Institution1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedInstitution(environment, mode,M1Institution1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1740,7 +1654,8 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.InstitutionsPage));
+				ThreadSleep(3000);
 				if (bp.verifyErrorMessageOnPage(InstitutionPageErrorMessage.errorMessageBeforGivingInternalUserAccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before giving internal user access on Instituition page")) {
@@ -1773,11 +1688,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institutions tab");
 			saa.assertTrue(false, "Not able to click on institutions tab");
 		}
-		scrollDownThroughWebelement(driver, cp.getContactsTab(60), "Contacts Tab");
-		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.clickOnCreatedContact(M1Contact1FirstName, M1Contact1LastName, null)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.ContactTab)) {
+			if (cp.clickOnCreatedContact(environment, mode,M1Contact1FirstName, M1Contact1LastName, null)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1788,7 +1703,8 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, cp.getWorkspaceFrameIncontactPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.ContactsPage));
+				ThreadSleep(3000);
 				if (bp.verifyErrorMessageOnPage(ContactPageErrorMessage.errorMessageBeforeGivingInternalUserAccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before giving internal user access on Contact page")) {
@@ -1821,11 +1737,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on contacts tab so we cannot check error message on contact page");
 			saa.assertTrue(false, "Not able to click on contacts tab so we cannot check error message on contact page");
 		}
-		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds Tab");
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M1FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment, mode,M1FundName1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1836,7 +1752,8 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, fp.getWorkspaceFrameOnFundsPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.FundsPage));
+				ThreadSleep(3000);
 				if (bp.verifyErrorMessageOnPage(FundsPageErrorMessage.errorMessageBeforeGivingInternalUseraccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before giving internal user access on Funds page")) {
@@ -1869,11 +1786,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Nota ble to click on funds tab so we cannot check error message on funds page");
 			saa.assertTrue(false, "Nota ble to click on funds tab so we cannot check error message on funds page");
 		}
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M1LimitedPartner1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedLP(environment, mode,M1LimitedPartner1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1884,7 +1801,8 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.LimitedPartnerPage));
+				ThreadSleep(3000);
 				if (bp.verifyErrorMessageOnPage(InstitutionPageErrorMessage.errorMessageBeforGivingInternalUserAccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before giving internal user access on Limited Partner page")) {
@@ -1906,22 +1824,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on created institution");
 			saa.assertTrue(false, "Not able to click on created institution");
 		}
-		scrollDownThroughWebelement(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab");
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}		
-			ThreadSleep(1000);
-			if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M1CommitmentId)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.CommitmentsTab)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M1CommitmentId)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -1932,7 +1839,8 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, cmp.getWorkspaceFrameOnCommitmentPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.CommitmentsPage));
+				ThreadSleep(3000);
 				if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMessageBeforeGivingInternalUseraccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message before giving internal user access on commitments page")) {
@@ -1955,48 +1863,9 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false,
 					"Not able to click on commitment tab so cannot check error message on Commitments page");
 		}
-		}else{
-			if (bp.clickOnTab(TabName.CommitmentsTab)) {
-				if (cmp.clickOnCreatedCommitmentId(M1CommitmentId)) {
-					String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-					if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
-						if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
-								action.SCROLLANDBOOLEAN)) {
-							appLog.info("Clicked on workspace expand icon");
-						} else {
-							appLog.info("Not able to click on workspace expand icon");
-							saa.assertTrue(false, "Not able to click on workspace expand icon");
-						}
-					} else {
-						appLog.info("Workspace is in expanded form");
-					}
-					switchToFrame(driver, 60, cmp.getWorkspaceFrameOnCommitmentPage(60));
-					if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMessageBeforeGivingInternalUseraccess,
-							bp.getErrorMessageOnAllPages(60).get(0),
-							"Error Message before giving internal user access on commitments page")) {
-						appLog.info("Error Message is verified  on commitments page");
-					} else {
-						saa.assertTrue(false,
-								"Error Message is not verified on commitments page.Expected:"
-										+ CommitmentPageErrorMessage.errorMessageBeforeGivingInternalUseraccess + " Actual"
-										+ getText(driver, bp.getErrorMessageOnAllPages(60).get(0),
-												"Error Message before giving internal user access on commitments page",
-												action.BOOLEAN));
-					}
-					switchToDefaultContent(driver);
-				} else {
-					appLog.info("Not able to click on created commitment ID");
-					saa.assertTrue(false, "Not able to click on created commitment ID");
-				}
-			} else {
-				appLog.info("Not able to click on commitment tab so cannot check error message on Commitments page");
-				saa.assertTrue(false,
-						"Not able to click on commitment tab so cannot check error message on Commitments page");
-			}
-		}
-		scrollDownThroughWebelement(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab");
-		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+			switchToFrame(driver, 20, nim.getNIMTabFrame(60));
 			if (bp.verifyErrorMessageOnPage(NIMPageErrorMessage.errorMessageBeforeGivingInternalUserAccess,
 					bp.getErrorMessageBeforeGivingInternalUserAccess(60),
 					"Error Message before giving internal user access on NIM page")) {
@@ -2014,13 +1883,14 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on NIM Tab");
 			saa.assertTrue(false, "Not able to click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc010_VerifyRegisterForNavatarInvestorPopUpAtNIMTab() {
+	public void M1tc010_VerifyRegisterForNavatarInvestorPopUpAtNIMTab(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2032,17 +1902,11 @@ public class Module1 extends BaseLib {
 		List<String> lst=new ArrayList<String>();
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
-		if(bp.clickOnTab(TabName.HomeTab)){
+		if(bp.clickOnTab(environment, mode,TabName.HomeTab)){
 		scrollDownThroughWebelement(driver, hp.getNavatarInvestorActivitiesLabel(60),
 				"Navatar Investor Manager Activitis label");
 		ThreadSleep(2000);
-		switchToFrame(driver, 60, hp.getHomePageAlertsFrame(60));
+		switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.HomePage));
 		if (bp.verifyErrorMessageOnPage(HomePageErrorMessage.errorMessageAfterGivingInternalUserAccess,
 				bp.getErrorMessageBeforeGivingInternalUserAccess(60),
 				"Error Message after giving internal User Access")) {
@@ -2059,11 +1923,10 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Home Tab");
 		}
 		switchToDefaultContent(driver);
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedInstitution(M1Institution1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedInstitution(environment, mode,M1Institution1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -2074,7 +1937,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.InstitutionsPage));
 				if (bp.verifyErrorMessageOnPage(InstitutionPageErrorMessage.errorMessageAfterGivingInternalUseraccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message after giving internal user access on Instituition page")) {
@@ -2107,11 +1970,10 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institutions tab");
 			saa.assertTrue(false, "Not able to click on institutions tab");
 		}
-		scrollDownThroughWebelement(driver, cp.getContactsTab(60), "Contacts Tab");
-		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.clickOnCreatedContact(M1Contact1FirstName, M1Contact1LastName, null)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		if (bp.clickOnTab(environment, mode,TabName.ContactTab)) {
+			if (cp.clickOnCreatedContact(environment, mode,M1Contact1FirstName, M1Contact1LastName, null)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -2122,7 +1984,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, cp.getWorkspaceFrameIncontactPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.ContactsPage));
 				if (bp.verifyErrorMessageOnPage(ContactPageErrorMessage.errorMessageAfterGivingInternalUserAccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message after giving internal user access on Contact page")) {
@@ -2155,11 +2017,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on contacts tab so we cannot check error message on contact page");
 			saa.assertTrue(false, "Not able to click on contacts tab so we cannot check error message on contact page");
 		}
-		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds Tab");
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M1FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment, mode,M1FundName1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -2170,7 +2032,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, fp.getWorkspaceFrameOnFundsPage(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.FundsPage));
 				if (bp.verifyErrorMessageOnPage(FundsPageErrorMessage.errorMessageAfterGivingInternalUseraccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message after giving internal user access on Funds page")) {
@@ -2203,11 +2065,11 @@ public class Module1 extends BaseLib {
 			appLog.info("Nota ble to click on funds tab so we cannot check error message on funds page");
 			saa.assertTrue(false, "Nota ble to click on funds tab so we cannot check error message on funds page");
 		}
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M1LimitedPartner1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedLP(environment, mode,M1LimitedPartner1)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -2218,7 +2080,7 @@ public class Module1 extends BaseLib {
 				} else {
 					appLog.info("Workspace is in expanded form");
 				}
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.LimitedPartnerPage));
 				if (bp.verifyErrorMessageOnPage(InstitutionPageErrorMessage.errorMessageAfterGivingInternalUseraccess,
 						bp.getErrorMessageOnAllPages(60).get(0),
 						"Error Message after giving internal user access on Limited Partner page")) {
@@ -2240,96 +2102,46 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on created institution");
 			saa.assertTrue(false, "Not able to click on created institution");
 		}
-		scrollDownThroughWebelement(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab");
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			lst=bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			ThreadSleep(1000);
-				if (bp.clickOnTab(TabName.CommitmentsTab)) {
-				if (cmp.clickOnCreatedCommitmentId(M1CommitmentId)) {
-					String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-					if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
-						if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
-								action.SCROLLANDBOOLEAN)) {
-							appLog.info("Clicked on workspace expand icon");
-						} else {
-							appLog.info("Not able to click on workspace expand icon");
-							saa.assertTrue(false, "Not able to click on workspace expand icon");
-						}
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.CommitmentsTab)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M1CommitmentId)) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
+					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
+							action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on workspace expand icon");
 					} else {
-						appLog.info("Workspace is in expanded form");
+						appLog.info("Not able to click on workspace expand icon");
+						saa.assertTrue(false, "Not able to click on workspace expand icon");
 					}
-					switchToFrame(driver, 60, cmp.getWorkspaceFrameOnCommitmentPage(60));
-					if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMessageAfterGivingInternalUseraccess,
-							bp.getErrorMessageOnAllPages(60).get(0),
-							"Error Message after giving internal user access on commitments page")) {
-						appLog.info("Error Message is verified  on commitments page");
-					} else {
-						saa.assertTrue(false,
-								"Error Message is not verified on commitments page.Expected:"
-										+ CommitmentPageErrorMessage.errorMessageAfterGivingInternalUseraccess + " Actual"
-										+ getText(driver, bp.getErrorMessageOnAllPages(60).get(0),
-												"Error Message after giving internal user access on commitments page",
-												action.BOOLEAN));
-					}
-					switchToDefaultContent(driver);
 				} else {
-					appLog.info("Not able to click on created commitment ID");
-					saa.assertTrue(false, "Not able to click on created commitment ID");
+					appLog.info("Workspace is in expanded form");
 				}
-			} else {
-				appLog.info("Not able to click on commitment tab so cannot check error message on Commitments page");
-				saa.assertTrue(false,
-						"Not able to click on commitment tab so cannot check error message on Commitments page");
-			}
-		}else{
-			if (bp.clickOnTab(TabName.CommitmentsTab)) {
-				if (cmp.clickOnCreatedCommitmentId(M1CommitmentId)) {
-					String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-					if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
-						if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
-								action.SCROLLANDBOOLEAN)) {
-							appLog.info("Clicked on workspace expand icon");
-						} else {
-							appLog.info("Not able to click on workspace expand icon");
-							saa.assertTrue(false, "Not able to click on workspace expand icon");
-						}
-					} else {
-						appLog.info("Workspace is in expanded form");
-					}
-					switchToFrame(driver, 60, cmp.getWorkspaceFrameOnCommitmentPage(60));
-					if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMessageAfterGivingInternalUseraccess,
-							bp.getErrorMessageOnAllPages(60).get(0),
-							"Error Message after giving internal user access on commitments page")) {
-						appLog.info("Error Message is verified  on commitments page");
-					} else {
-						saa.assertTrue(false,
-								"Error Message is not verified on commitments page.Expected:"
-										+ CommitmentPageErrorMessage.errorMessageAfterGivingInternalUseraccess + " Actual"
-										+ getText(driver, bp.getErrorMessageOnAllPages(60).get(0),
-												"Error Message after giving internal user access on commitments page",
-												action.BOOLEAN));
-					}
-					switchToDefaultContent(driver);
+				switchToFrame(driver, 60, bp.getNIMTabParentFrame_Lightning(PageName.CommitmentsPage));
+				if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMessageAfterGivingInternalUseraccess,
+						bp.getErrorMessageOnAllPages(60).get(0),
+						"Error Message after giving internal user access on commitments page")) {
+					appLog.info("Error Message is verified  on commitments page");
 				} else {
-					appLog.info("Not able to click on created commitment ID");
-					saa.assertTrue(false, "Not able to click on created commitment ID");
+					saa.assertTrue(false,
+							"Error Message is not verified on commitments page.Expected:"
+									+ CommitmentPageErrorMessage.errorMessageAfterGivingInternalUseraccess + " Actual"
+									+ getText(driver, bp.getErrorMessageOnAllPages(60).get(0),
+											"Error Message after giving internal user access on commitments page",
+											action.BOOLEAN));
 				}
+				switchToDefaultContent(driver);
 			} else {
-				appLog.info("Not able to click on commitment tab so cannot check error message on Commitments page");
-				saa.assertTrue(false,
-						"Not able to click on commitment tab so cannot check error message on Commitments page");
+				appLog.info("Not able to click on created commitment ID");
+				saa.assertTrue(false, "Not able to click on created commitment ID");
 			}
+		} else {
+			appLog.info("Not able to click on commitment tab so cannot check error message on Commitments page");
+			saa.assertTrue(false,
+					"Not able to click on commitment tab so cannot check error message on Commitments page");
 		}
-
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.getRegisterPopupHeaderForCRMUser(60) != null) {
 				String NIMHeader = trim(getText(driver, nim.getRegisterPopupHeaderForCRMUser(60),
@@ -2393,7 +2205,7 @@ public class Module1 extends BaseLib {
 				if (click(driver, nim.getRegisterPopupCRMUserCloseIcon(60), "Close Icon on CRM Register popup",
 						action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);
-					if (isDisplayed(driver, hp.getDashboardLabelOnHomePage(60), "Visibility", 60,
+					if (isDisplayed(driver, hp.getnavatarInvetsorActivityGridOnHomeAlert(10), "Visibility", 10,
 							"Dashboard label on HomePage") != null) {
 						appLog.info("User is redirected to home page successfully");
 					} else {
@@ -2404,11 +2216,11 @@ public class Module1 extends BaseLib {
 					appLog.info("Not able to click on close icon");
 					saa.assertTrue(false, "Not able to click on close icon");
 				}
-				if (bp.clickOnTab(TabName.NIMTab)) {
+				if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 					switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 					if (click(driver, nim.getRegisterPopupBackButton(60).get(1), "Back Button",
 							action.SCROLLANDBOOLEAN)) {
-						if (isDisplayed(driver, hp.getDashboardLabelOnHomePage(60), "Visibility", 60,
+						if (isDisplayed(driver, hp.getnavatarInvetsorActivityGridOnHomeAlert(20), "Visibility", 20,
 								"Dashboard label on HomePage") != null) {
 							appLog.info("User is redirected to home page successfully");
 						} else {
@@ -2433,19 +2245,20 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM tab so cannot verify register popup");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc011_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages() {
+	public void M1tc011_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			nim.getRegisterPopupFirstName(60).clear();
 			nim.getRegisterPopupLastName(60).clear();
@@ -2466,7 +2279,7 @@ public class Module1 extends BaseLib {
 						"First Name", action.SCROLLANDBOOLEAN)) {
 					if (sendKeys(driver, nim.getRegisterPopupLastName(60), ExcelUtils.readData("SpecialChar", 3, 1),
 							"Last Name", action.SCROLLANDBOOLEAN)) {
-						if (click(driver, nim.getNextButton(60), "Next Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingCssSelectorPath(driver, CssPath.cssPathForUserRegistrationNextButton, "Next button")) {
 							String alertMessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 							if (alertMessage.equalsIgnoreCase(NIMPageErrorMessage.invalidNameErrorMessage)) {
 								appLog.info("error message of alert is verified");
@@ -2488,6 +2301,7 @@ public class Module1 extends BaseLib {
 									if (click(driver, nim.getNextButton(60), "Next Button", action.SCROLLANDBOOLEAN)) {
 										if (click(driver, nim.getDenyButton(60), "Deny Button",
 												action.SCROLLANDBOOLEAN)) {
+											switchToDefaultContent(driver);
 											if (bp.verifyErrorMessageOnPage(
 													NIMPageErrorMessage.problemLoggingInErrorMessage,
 													nim.getProblemLoggingInErrorMessage(60),
@@ -2504,16 +2318,17 @@ public class Module1 extends BaseLib {
 																		"Problem Logging Error Message",
 																		action.BOOLEAN));
 											}
-											String accessdeniedtext = trim(getText(driver,
-													isDisplayed(driver, nim.getDeniedAccessLabeltext(60), "visibility",
-															60, "Remote Access denied Text."),
-													"Error Message", action.SCROLLANDBOOLEAN));
-											saa.assertTrue(accessdeniedtext.contains("Remote_Error: access_denied"),
-													"Remote_Error: access_denied is not matched");
+//											String accessdeniedtext = trim(getText(driver,
+//													isDisplayed(driver, nim.getDeniedAccessLabeltext(60), "visibility",
+//															60, "Remote Access denied Text."),
+//													"Error Message", action.SCROLLANDBOOLEAN));
+//											saa.assertTrue(accessdeniedtext.contains("Remote_Error: access_denied"),
+//													"Remote_Error: access_denied is not matched");
 											driver.navigate().back();
 											driver.navigate().back();
-											switchToFrame(driver, 60, nim.getNIMTabFrame(60));
-											if (nim.getNextButton(60) != null) {
+											switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
+											switchToFrame(driver, 30, nim.getNIMTabFrame(60));
+											if (nim.getNextButton(10) != null) {
 												String userfirstName = getAttribute(driver,
 														nim.getRegisterPopupFirstName(60), "First name", "value");
 												if (userfirstName.equalsIgnoreCase(CRMUser1FirstName)) {
@@ -2573,14 +2388,15 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on navatar investor manager tab so cannot verify error messages");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc012_VerifyCompleteUserRegistrationStep2Of2() {
+	public void M1tc012_VerifyCompleteUserRegistrationStep2Of2(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2588,11 +2404,12 @@ public class Module1 extends BaseLib {
 		List<String> sideMenusList = new ArrayList<String>();
 		String sideMenusOnNIM = "Internal Users<break>Folder Templates<break>Manage Approvals<break>Watermarking<break>Profiles";
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (click(driver, nim.getNextButton(60), "NextButton", action.SCROLLANDBOOLEAN)) {
 				if (click(driver, nim.getAllowButton(60), "Allow Button", action.SCROLLANDBOOLEAN)) {
-					switchToFrame(driver, 60, nim.getNIMTabFrame(60));
+					switchToFrame(driver, 30, nim.getNIMTabParentFrame_Lightning());
+					switchToFrame(driver, 20, nim.getNIMTabFrame(60));
 					ThreadSleep(5000);
 					if (nim.getRegistrationSuccessfulPopupHeader(60) != null) {
 						String regSuccessfulheader = trim(getText(driver, nim.getRegistrationSuccessfulPopupHeader(60),
@@ -2619,7 +2436,7 @@ public class Module1 extends BaseLib {
 									action.SCROLLANDBOOLEAN)) {
 								ExcelUtils.writeData("Registered", "Users", excelLabel.Variable_Name, "User1", excelLabel.Registered);
 								switchToDefaultContent(driver);
-								if (bp.clickOnTab(TabName.NIMTab)) {
+								if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 									switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 									if (nim.verifyLandingPageText("Folder Templates")) {
 										appLog.info("Landing page text is verified");
@@ -2667,13 +2484,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on navatar investor manager tab so cannot verify error messages");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc013_CheckErrorMessagesForCRMUserAfterRegistration() {
+	public void M1tc013_CheckErrorMessagesForCRMUserAfterRegistration(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2686,7 +2504,7 @@ public class Module1 extends BaseLib {
 		scrollDownThroughWebelement(driver, hp.getNavatarInvestorActivitiesLabel(60),
 				"Navatar Investor Manager Activitis label");
 		ThreadSleep(2000);
-		switchToFrame(driver, 60, hp.getHomePageAlertsFrame(60));
+		switchToFrame(driver, 30, bp.getNIMTabParentFrame_Lightning(PageName.HomePage));
 		if (bp.verifyErrorMessageOnPage(HomePageErrorMessage.errorMessageAfterAdminAndCRMUserRegistration,
 				hp.getErrorMessageAfterAdminAndCRMUserRegistration(60), "Error Message After CRM user Registration")) {
 			appLog.info("Error Message is verified at home page");
@@ -2698,10 +2516,9 @@ public class Module1 extends BaseLib {
 									"Error Message after CRM user registration", action.BOOLEAN));
 		}
 		switchToDefaultContent(driver);
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedInstitution(M1Institution1)) {
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedInstitution(environment, mode,M1Institution1)) {
+				switchToFrame(driver, 30, bp.getNIMTabParentFrame_Lightning(PageName.InstitutionsPage));
 				if (bp.verifyErrorMessageOnPage(
 						InstitutionPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace,
 						ip.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60),
@@ -2740,10 +2557,9 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institution tab");
 			saa.assertTrue(false, "Not able to click on institution tab");
 		}
-		scrollDownThroughWebelement(driver, cp.getContactsTab(60), "Contacts Tab");
-		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.clickOnCreatedContact(M1Contact1FirstName, M1Contact1LastName, null)) {
-				switchToFrame(driver, 60, cp.getWorkspaceFrameIncontactPage(60));
+		if (bp.clickOnTab(environment, mode,TabName.ContactTab)) {
+			if (cp.clickOnCreatedContact(environment, mode,M1Contact1FirstName, M1Contact1LastName, null)) {
+				switchToFrame(driver, 30, bp.getNIMTabParentFrame_Lightning(PageName.ContactsPage));
 				if (bp.verifyErrorMessageOnPage(
 						ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace,
 						cp.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60),
@@ -2782,10 +2598,9 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on contacts tab so we cannot check error message on contact page");
 			saa.assertTrue(false, "Not able to click on contacts tab so we cannot check error message on contact page");
 		}
-		scrollDownThroughWebelement(driver, ip.getInstitutionsTab(60), "Institution Tab");
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M1LimitedPartner1)) {
-				switchToFrame(driver, 60, ip.getWorkspaceFrame(60));
+		if (bp.clickOnTab(environment, mode,TabName.InstituitonsTab)) {
+			if (ip.clickOnCreatedLP(environment, mode,M1LimitedPartner1)) {
+				switchToFrame(driver, 30, bp.getNIMTabParentFrame_Lightning(PageName.LimitedPartnerPage));
 				if (bp.verifyErrorMessageOnPage(
 						InstitutionPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace,
 						ip.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60),
@@ -2808,10 +2623,9 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on institution tab");
 			saa.assertTrue(false, "Not able to click on institution tab");
 		}
-		scrollDownThroughWebelement(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab");
-		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M1CommitmentId)) {
-				switchToFrame(driver, 60, cmp.getWorkspaceFrameOnCommitmentPage(60));
+		if (bp.clickOnTab(environment, mode,TabName.CommitmentsTab)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M1CommitmentId)) {
+				switchToFrame(driver, 30, bp.getNIMTabParentFrame_Lightning(PageName.CommitmentsPage));
 				if (bp.verifyErrorMessageOnPage(CommitmentPageErrorMessage.errorMesageAfterAdminAndCRMUserRegistration,
 						cmp.getErrorMessageAfterAdminAndCRMUserRegistration(60),
 						"Error Message after CRM user Registration on commitments page")) {
@@ -2835,10 +2649,9 @@ public class Module1 extends BaseLib {
 					"Not able to click on commitment tab so cannot check error message on Commitments page");
 		}
 
-		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds Tab");
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M1FundName1)) {
-				switchToFrame(driver, 60, fp.getWorkspaceFrameOnFundsPage(60));
+		if (bp.clickOnTab(environment, mode,TabName.FundsTab)) {
+			if (fp.clickOnCreatedFund(environment, mode,M1FundName1)) {
+				switchToFrame(driver, 30, bp.getNIMTabParentFrame_Lightning(PageName.FundsPage));
 				if (fp.getBuildFundraisinWorkspaceButton(60) != null) {
 					appLog.info("build Fundarising Workspace button is displaying");
 				} else {
@@ -2859,13 +2672,14 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on funds tab so we cannot check error message on funds page");
 			saa.assertTrue(false, "Nota ble to click on funds tab so we cannot check error message on funds page");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc014_VerifyInternalUsersFromAdminSideAndEditIcon() {
+	public void M1tc014_VerifyInternalUsersFromAdminSideAndEditIcon(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2874,7 +2688,7 @@ public class Module1 extends BaseLib {
 		List<String> ColoumnList = new ArrayList<String>();
 		String ColoumnHeaders = "Access<break>User<break>Admin";
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.verifyLandingPageText("Internal Users")) {
 				appLog.info("Internal User tab is selected");
@@ -3099,20 +2913,21 @@ public class Module1 extends BaseLib {
 			appLog.info("Not able to click on NIM Tab");
 			saa.assertTrue(false, "Not able to click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc015_VerifyConfirmUserPermissionRemovalConfirmUserPermissionAdditionConfirmAccessPopUps() {
+	public void M1tc015_VerifyConfirmUserPermissionRemovalConfirmUserPermissionAdditionConfirmAccessPopUps(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		WebElement ele = null;
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnEditIcon()) {
 				ele = FindElement(driver,
@@ -3515,15 +3330,16 @@ public class Module1 extends BaseLib {
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc016_VerifyUncheckingAccessCheckbox() {
+	public void M1tc016_VerifyUncheckingAccessCheckbox(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		WebElement ele = null;
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnEditIcon()) {
 				ele = FindElement(driver,
@@ -3583,14 +3399,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		nim = new NIMPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (bp.verifyErrorMessageOnPage(NIMPageErrorMessage.errorMessageBeforeGivingInternalUserAccess,
 					bp.getErrorMessageBeforeGivingInternalUserAccess(60),
@@ -3609,20 +3425,21 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab so cannot check error message");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc017_VerifyCheckingAccessCheckboxAndErrorMessageAtUserSide() {
+	public void M1tc017_VerifyCheckingAccessCheckboxAndErrorMessageAtUserSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		WebElement ele = null;
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnEditIcon()) {
 				ele = FindElement(driver,
@@ -3682,14 +3499,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		nim = new NIMPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.getRegistrationSuccessfulCloseBtn(60) != null) {
 				if (bp.verifyErrorMessageOnPage(NIMPageErrorMessage.registrationSuccessfulPopMessage,
@@ -3705,7 +3522,7 @@ public class Module1 extends BaseLib {
 				if (click(driver, nim.getRegistrationSuccessfulCloseBtn(60),
 						"Registration successful popup close button", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);
-					if (bp.clickOnTab(TabName.NIMTab)) {
+					if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 						switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 						if (nim.verifyLandingPageText("Folder Templates")) {
 							appLog.info("Landing page text is verified");
@@ -3809,13 +3626,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab so cannot check error message");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc018_VerifyAdminRadioButton() {
+	public void M1tc018_VerifyAdminRadioButton(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3824,7 +3642,7 @@ public class Module1 extends BaseLib {
 		WebElement ele = null;
 		String sideMenusOnNIM = "Internal Users<break>Folder Templates<break>Manage Approvals<break>Watermarking<break>File Distributor Settings<break>Profiles";
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnEditIcon()) {
 				ele = FindElement(driver,
@@ -3886,14 +3704,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab so cannot check error message");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		nim = new NIMPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			List<WebElement> sideMenus = nim.getnimPageSideMenus();
 			for (int i = 0; i < sideMenus.size(); i++) {
@@ -3954,13 +3772,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab so cannot check error message");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc019_VerifyChangingOfAdminAccessFromUserSide() {
+	public void M1tc019_VerifyChangingOfAdminAccessFromUserSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3969,7 +3788,7 @@ public class Module1 extends BaseLib {
 		WebElement ele = null;
 		String sideMenusOnNIM = "Internal Users<break>Folder Templates<break>Manage Approvals<break>Watermarking<break>Profiles";
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnEditIcon()) {
 				ele = FindElement(driver,
@@ -4056,7 +3875,7 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab so cannot check error message");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -4064,7 +3883,7 @@ public class Module1 extends BaseLib {
 		bp = new BasePageBusinessLayer(driver);
 		saa = new SoftAssert();
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			appLog.info("Clicked on NIM Tab");
 			if (click(driver, nim.getNextButton(60), "Next Button", action.SCROLLANDBOOLEAN)) {
@@ -4076,7 +3895,7 @@ public class Module1 extends BaseLib {
 								action.SCROLLANDBOOLEAN)) {
 							ExcelUtils.writeData("Registered", "Users", excelLabel.Variable_Name, "User2", excelLabel.Registered);
 							switchToDefaultContent(driver);
-							if (bp.clickOnTab(TabName.NIMTab)) {
+							if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 								switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 								List<WebElement> sideMenus = nim.getnimPageSideMenus();
 								for (int i = 0; i < sideMenus.size(); i++) {
@@ -4113,7 +3932,7 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIm Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -4121,7 +3940,7 @@ public class Module1 extends BaseLib {
 		bp = new BasePageBusinessLayer(driver);
 		saa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			appLog.info("Clicked on NIM Tab");
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnEditIcon()) {
@@ -4300,7 +4119,7 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not bale to click on NIm Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -4309,7 +4128,7 @@ public class Module1 extends BaseLib {
 		saa = new SoftAssert();
 		String sideMenusOnNIMHavingAdminAccess = "Internal Users<break>Folder Templates<break>Manage Approvals<break>Watermarking<break>File Distributor Settings<break>Profiles";
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			appLog.info("Clicked on NIM Tab");
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			List<WebElement> sideMenus = nim.getnimPageSideMenus();
@@ -4327,13 +4146,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc020_VerifyChangingOfAdminAccessFromAdminSide() {
+	public void M1tc020_VerifyChangingOfAdminAccessFromAdminSide(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4342,7 +4162,7 @@ public class Module1 extends BaseLib {
 		WebElement ele = null;
 		String sideMenusOnNIM = "Internal Users<break>Folder Templates<break>Manage Approvals<break>Watermarking<break>File Distributor Settings<break>Profiles";
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnEditIcon()) {
 				ele = FindElement(driver,
@@ -4391,14 +4211,14 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not bale to click on NIm Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		nim = new NIMPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			sideMenusList.clear();
 			List<WebElement> sideMenus = nim.getnimPageSideMenus();
@@ -4416,7 +4236,7 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -4424,7 +4244,7 @@ public class Module1 extends BaseLib {
 		bp = new BasePageBusinessLayer(driver);
 		String sideMenusOnNIMWithoutAdminAccess = "Internal Users<break>Folder Templates<break>Manage Approvals<break>Watermarking<break>Profiles";
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			List<WebElement> sideMenus = nim.getnimPageSideMenus();
 			for (int i = 0; i < sideMenus.size(); i++) {
@@ -4442,307 +4262,380 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc021_VerifyDeactivatingActivatingACRMUser() {
+	public void M1tc021_VerifyDeactivatingActivatingACRMUser(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
+		String parentWindow=null;
 		WebElement ele = null;
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.deactivateAndActivateCreatedUser("Active Users", CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
-			appLog.info("deactivate the CRM User 1 ");
-		} else {
-			appLog.info("Not able to deactivate CRM User1");
-			saa.assertTrue(false, "Not able to deactivate CRM User1");
-		}
-		if (bp.verifyUserGetDeactivatedAndActivated(CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
-			appLog.info("User get deactivated successfully");
-		} else {
-			appLog.info("User is not get deactivated successfully");
-			saa.assertTrue(false, "User is not get deactivated successfully");
-		}
-		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
-			appLog.info("Clicked on NIm Tab");
-			ele = FindElement(driver, "//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "(inactive)"
-					+ "']/../..//input[@type='checkbox']", "CRM User 1 checkbox", action.SCROLLANDBOOLEAN, 60);
-			if (ele != null) {
-				appLog.info("CRM User1 with inactive keywod is displaying");
-				if (nim.clickOnEditIcon()) {
-					if (isEnabled(driver, ele, "CRM User 1 checkbox")) {
-						appLog.info("CRM User1 checkbox is enabled");
-					} else {
-						appLog.info("CRM User1 checkbox is not enabled");
-						saa.assertTrue(false, "CRM User1 checkbox is not enabled");
-					}
-					ThreadSleep(2000);
-					ele = FindElement(driver,
-							"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "(inactive)"
-									+ "']/../..//input[@type='radio']",
-							"CRM User 1 radio button", action.SCROLLANDBOOLEAN, 60);
-					if (isSelected(driver, ele, "CRM User 1 radio button")) {
-						appLog.info("CRM User1 radio button is selected");
-					} else {
-						appLog.info("CRM User1 radio button is not selected");
-						saa.assertTrue(false, "CRM User1 radio button is not selected");
-					}
-					if (isEnabled(driver, ele, "CRM User 1 radio button")) {
-						appLog.info("CRM User1 radio button is enabled");
-						saa.assertTrue(false, "CRM User1 radio button is enabled");
-					} else {
-						appLog.info("CRM User1 radio button is not enabled");
-					}
-					String licenseMessage = nim.getInternalUsersLiceneMessage(60).getText().trim();
-					if (licenseMessage.equalsIgnoreCase("Internal Users (2 out of 10 Licenses Used)")) {
-						appLog.info("Internal user license mesage is verified");
-					} else {
-						appLog.info("Internal user license message is not verified");
-						saa.assertTrue(false, "Internal user license message is not verified");
-					}
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+				}
+			}
+			if (bp.deactivateAndActivateCreatedUser(environment, mode,"Active Users", CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
+				appLog.info("deactivate the CRM User 1 ");
+				refresh(driver);
+				if (bp.verifyUserGetDeactivatedAndActivated(environment, mode,CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
+					appLog.info("User get deactivated successfully");
 				} else {
-					appLog.info("Not able to click on edit icon");
-					saa.assertTrue(false, "Not able to click on edit icon");
+					appLog.info("User is not get deactivated successfully");
+					saa.assertTrue(false, "User is not get deactivated successfully");
 				}
 			} else {
-				appLog.info("CRM User1 with inactive keywod is not displaying");
-				saa.assertTrue(false, "CRM User1 with inactive keywod is not displaying");
+				appLog.info("Not able to deactivate CRM User1");
+				saa.assertTrue(false, "Not able to deactivate CRM User1");
 			}
-
-		} else {
-			appLog.info("Not able to click on NIm Tab");
-			saa.assertTrue(false, "Not able to click on NIm Tab");
-		}
-		switchToDefaultContent(driver);
-		if (bp.deactivateAndActivateCreatedUser("All Users", CRMUser1FirstName, CRMUser1LastName, "Activate")) {
-			appLog.info("Activate the CRM User 1 ");
-		} else {
-			appLog.info("Not able to Activate CRM User1");
-			saa.assertTrue(false, "Not able to Activate CRM User1");
-		}
-		if (bp.verifyUserGetDeactivatedAndActivated(CRMUser1FirstName, CRMUser1LastName, "Activate")) {
-			appLog.info("User get Activate successfully");
-		} else {
-			appLog.info("User is not get Activate successfully");
-			saa.assertTrue(false, "User is not get Activate successfully");
-		}
-		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
-			ThreadSleep(2000);
-			ele = FindElement(driver, "//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName
-					+ "']/../..//input[@type='checkbox']", "CRM User 1 checkbox", action.SCROLLANDBOOLEAN, 60);
-			if (ele != null) {
-				appLog.info("CRM User1  displaying");
-				if (nim.clickOnEditIcon()) {
-					if (isEnabled(driver, ele, "CRM User 1 radio button")) {
-						appLog.info("CRM User1 radio button is enabled");
-					} else {
-						appLog.info("CRM User1 radio button is not enabled");
-						saa.assertTrue(false, "CRM User1 radio button is not enabled");
-					}
-					ThreadSleep(2000);
-					ele = FindElement(driver,
-							"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName
-									+ "']/../..//input[@type='radio']",
-							"CRM User 1 radio button", action.SCROLLANDBOOLEAN, 60);
-
-					if (isSelected(driver, ele, "CRM User 1 radio button")) {
-						appLog.info("CRM User1 radio button is selected");
-					} else {
-						appLog.info("CRM User1 radio button is not selected");
-						saa.assertTrue(false, "CRM User1 radio button is not selected");
-					}
-					if (isEnabled(driver, ele, "CRM User 1 radio button")) {
-						appLog.info("CRM User1 radio button is enabled");
-					} else {
-						appLog.info("CRM User1 radio button is not enabled");
-						saa.assertTrue(false, "CRM User1 radio button is not enabled");
-					}
-					String licenseMessage = nim.getInternalUsersLiceneMessage(60).getText().trim();
-					if (licenseMessage.equalsIgnoreCase("Internal Users (2 out of 10 Licenses Used)")) {
-						appLog.info("Internal user license mesage is verified");
-					} else {
-						appLog.info("Internal user license message is not verified");
-						saa.assertTrue(false, "Internal user license message is not verified");
-					}
-				} else {
-					appLog.info("Not able to click on edit icon");
-					saa.assertTrue(false, "Not able to click on edit icon");
-				}
-			} else {
-				appLog.info("CRM User1  is not displaying");
-				saa.assertTrue(false, "CRM User1 is not displaying");
-			}
-		} else {
-			appLog.info("Not able to click on NIM Tab");
-			saa.assertTrue(false, "Not able to click on NIM Tab");
-		}
-		switchToDefaultContent(driver);
-		if (bp.deactivateAndActivateCreatedUser("Active Users", CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
-			appLog.info("deactivate the CRM User 1 ");
-		} else {
-			appLog.info("Not able to deactivate CRM User1");
-			saa.assertTrue(false, "Not able to deactivate CRM User1");
-		}
-		if (bp.verifyUserGetDeactivatedAndActivated(CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
-			appLog.info("User get deactivated successfully");
-		} else {
-			appLog.info("User is not get deactivated successfully");
-			saa.assertTrue(false, "User is not get deactivated successfully");
-		}
-		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
-			appLog.info("Clicked on NIm Tab");
-			if (nim.clickOnEditIcon()) {
-				ele = FindElement(driver,
-						"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "(inactive)"
-								+ "']/../..//input[@type='checkbox']",
-						"CRM User 1 checkbox", action.SCROLLANDBOOLEAN, 60);
-				if (click(driver, ele, "CRM User1 checkbox", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, nim.getUserPermissionRemovalPopupYesButton(60), "User Permissionreval Yes Button",
-							action.SCROLLANDBOOLEAN)) {
-						ThreadSleep(3000);
-						if (click(driver, nim.getInternalUsersTab(60), "Internal Users Tab", action.SCROLLANDBOOLEAN)) {
-							ThreadSleep(2000);
-							ele = FindElement(driver,
-									"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "']",
-									"CRM User 1 ", action.SCROLLANDBOOLEAN, 20);
-							if (nim.getUsersListInInternalUsers().contains(ele)) {
-								appLog.info("CRM User1 is displaying in the users list");
-								saa.assertTrue(false, "CRM User1 is displaying in the users list");
-							} else {
-								appLog.info("CRM User1 is not displaying in the users list");
-							}
-							String licenseMessage = nim.getInternalUsersLiceneMessage(60).getText().trim();
-							if (licenseMessage.equalsIgnoreCase("Internal Users (1 out of 10 Licenses Used)")) {
-								appLog.info("Internal user license mesage is verified");
-							} else {
-								appLog.info("Internal user license message is not verified");
-								saa.assertTrue(false, "Internal user license message is not verified");
-							}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+				switchToFrame(driver, 60, nim.getNIMTabFrame(60));
+				appLog.info("Clicked on NIm Tab");
+				ele = FindElement(driver, "//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "(inactive)"
+						+ "']/../..//input[@type='checkbox']", "CRM User 1 checkbox", action.SCROLLANDBOOLEAN, 60);
+				if (ele != null) {
+					appLog.info("CRM User1 with inactive keywod is displaying");
+					if (nim.clickOnEditIcon()) {
+						if (isEnabled(driver, ele, "CRM User 1 checkbox")) {
+							appLog.info("CRM User1 checkbox is enabled");
 						} else {
-							appLog.info("Not able to click on internal users tab");
-							saa.assertTrue(false, "Not able to click on internal users tab");
+							appLog.info("CRM User1 checkbox is not enabled");
+							saa.assertTrue(false, "CRM User1 checkbox is not enabled");
+						}
+						ThreadSleep(2000);
+						ele = FindElement(driver,
+								"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "(inactive)"
+										+ "']/../..//input[@type='radio']",
+										"CRM User 1 radio button", action.SCROLLANDBOOLEAN, 60);
+						if (isSelected(driver, ele, "CRM User 1 radio button")) {
+							appLog.info("CRM User1 radio button is selected");
+						} else {
+							appLog.info("CRM User1 radio button is not selected");
+							saa.assertTrue(false, "CRM User1 radio button is not selected");
+						}
+						if (isEnabled(driver, ele, "CRM User 1 radio button")) {
+							appLog.info("CRM User1 radio button is enabled");
+							saa.assertTrue(false, "CRM User1 radio button is enabled");
+						} else {
+							appLog.info("CRM User1 radio button is not enabled");
+						}
+						String licenseMessage = nim.getInternalUsersLiceneMessage(60).getText().trim();
+						if (licenseMessage.equalsIgnoreCase("Internal Users (2 out of 10 Licenses Used)")) {
+							appLog.info("Internal user license mesage is verified");
+						} else {
+							appLog.info("Internal user license message is not verified");
+							saa.assertTrue(false, "Internal user license message is not verified");
 						}
 					} else {
-						appLog.info("Not able to click on Yes Button");
-						saa.assertTrue(false, "Not able to click on Yes Button");
+						appLog.info("Not able to click on edit icon");
+						saa.assertTrue(false, "Not able to click on edit icon");
 					}
 				} else {
-					appLog.info("Not able to click on CRM User1 checkbox");
-					saa.assertTrue(false, "Not able to click on CRM User1 checkbox");
+					appLog.info("CRM User1 with inactive keywod is not displaying");
+					saa.assertTrue(false, "CRM User1 with inactive keywod is not displaying");
 				}
+
 			} else {
-				appLog.info("Not able to click on edit icon");
-				saa.assertTrue(false, "Not able to click on edit icon");
+				appLog.info("Not able to click on NIm Tab");
+				saa.assertTrue(false, "Not able to click on NIm Tab");
 			}
-		} else {
-			appLog.info("Not able to click on NIM Tab");
-			saa.assertTrue(false, "Not able to click on NIM Tab");
+		}else {
+			appLog.error("Not able to click on setup link so cannot deactivate CRM user 1 and check deactivate funcationality on NIM page");
+			sa.assertTrue(false, "Not able to click on setup link so cannot deactivate CRM user 1 and check deactivate funcationality on NIM page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot activate CRM User1");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot activate CRM User1");
+					exit("No new window is open after click on setup link in lighting mode so cannot activate CRM User1");
+				}
+			}
+			if (bp.deactivateAndActivateCreatedUser(environment, mode,"All Users", CRMUser1FirstName, CRMUser1LastName, "Activate")) {
+				appLog.info("Activate the CRM User 1 ");
+				refresh(driver);
+				if (bp.verifyUserGetDeactivatedAndActivated(environment, mode,CRMUser1FirstName, CRMUser1LastName, "Activate")) {
+					appLog.info("User get Activate successfully");
+				} else {
+					appLog.info("User is not get Activate successfully");
+					saa.assertTrue(false, "User is not get Activate successfully");
+				}
+			} else {
+				appLog.info("Not able to Activate CRM User1");
+				saa.assertTrue(false, "Not able to Activate CRM User1");
+			}
+			
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+				switchToFrame(driver, 10, nim.getNIMTabFrame(10));
+				ele = FindElement(driver, "//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName
+						+ "']/../..//input[@type='checkbox']", "CRM User 1 checkbox", action.SCROLLANDBOOLEAN, 60);
+				if (ele != null) {
+					appLog.info("CRM User1  displaying");
+					if (nim.clickOnEditIcon()) {
+						if (isEnabled(driver, ele, "CRM User 1 radio button")) {
+							appLog.info("CRM User1 radio button is enabled");
+						} else {
+							appLog.info("CRM User1 radio button is not enabled");
+							saa.assertTrue(false, "CRM User1 radio button is not enabled");
+						}
+						ThreadSleep(2000);
+						ele = FindElement(driver,
+								"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName
+										+ "']/../..//input[@type='radio']",
+								"CRM User 1 radio button", action.SCROLLANDBOOLEAN, 60);
+
+						if (isSelected(driver, ele, "CRM User 1 radio button")) {
+							appLog.info("CRM User1 radio button is selected");
+						} else {
+							appLog.info("CRM User1 radio button is not selected");
+							saa.assertTrue(false, "CRM User1 radio button is not selected");
+						}
+						if (isEnabled(driver, ele, "CRM User 1 radio button")) {
+							appLog.info("CRM User1 radio button is enabled");
+						} else {
+							appLog.info("CRM User1 radio button is not enabled");
+							saa.assertTrue(false, "CRM User1 radio button is not enabled");
+						}
+						String licenseMessage = nim.getInternalUsersLiceneMessage(60).getText().trim();
+						if (licenseMessage.equalsIgnoreCase("Internal Users (2 out of 10 Licenses Used)")) {
+							appLog.info("Internal user license mesage is verified");
+						} else {
+							appLog.info("Internal user license message is not verified");
+							saa.assertTrue(false, "Internal user license message is not verified");
+						}
+					} else {
+						appLog.info("Not able to click on edit icon");
+						saa.assertTrue(false, "Not able to click on edit icon");
+					}
+				} else {
+					appLog.info("CRM User1  is not displaying");
+					saa.assertTrue(false, "CRM User1 is not displaying");
+				}
+			} else {
+				appLog.info("Not able to click on NIM Tab");
+				saa.assertTrue(false, "Not able to click on NIM Tab");
+			}
+		}else {
+			appLog.error("Not able to click on setup link so cannot activate CRM user 1 and check activate funcationality on NIM page");
+			sa.assertTrue(false, "Not able to click on setup link so cannot activate CRM user 1 and check activate funcationality on NIM page");
+		}
+		switchToDefaultContent(driver);
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+				}
+			}
+			if (bp.deactivateAndActivateCreatedUser(environment, mode,"Active Users", CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
+				appLog.info("deactivate the CRM User 1 ");
+				refresh(driver);
+				if (bp.verifyUserGetDeactivatedAndActivated(environment, mode,CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
+					appLog.info("User get deactivated successfully");
+				} else {
+					appLog.info("User is not get deactivated successfully");
+					saa.assertTrue(false, "User is not get deactivated successfully");
+				}
+				
+			} else {
+				appLog.info("Not able to deactivate CRM User1");
+				saa.assertTrue(false, "Not able to deactivate CRM User1");
+			}
+			
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+				switchToFrame(driver, 10, nim.getNIMTabFrame(10));
+				appLog.info("Clicked on NIm Tab");
+				if (nim.clickOnEditIcon()) {
+					ele = FindElement(driver,
+							"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "(inactive)"
+									+ "']/../..//input[@type='checkbox']",
+							"CRM User 1 checkbox", action.SCROLLANDBOOLEAN, 30);
+					if (click(driver, ele, "CRM User1 checkbox", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, nim.getUserPermissionRemovalPopupYesButton(60), "User Permissionreval Yes Button",
+								action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(3000);
+							if (click(driver, nim.getInternalUsersTab(60), "Internal Users Tab", action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(2000);
+								ele = FindElement(driver,
+										"//span[text()='" + CRMUser1FirstName + " " + CRMUser1LastName + "']",
+										"CRM User 1 ", action.SCROLLANDBOOLEAN, 5);
+								if (nim.getUsersListInInternalUsers().contains(ele)) {
+									appLog.info("CRM User1 is displaying in the users list");
+									saa.assertTrue(false, "CRM User1 is displaying in the users list");
+								} else {
+									appLog.info("CRM User1 is not displaying in the users list");
+								}
+								String licenseMessage = nim.getInternalUsersLiceneMessage(60).getText().trim();
+								if (licenseMessage.equalsIgnoreCase("Internal Users (1 out of 10 Licenses Used)")) {
+									appLog.info("Internal user license mesage is verified");
+								} else {
+									appLog.info("Internal user license message is not verified");
+									saa.assertTrue(false, "Internal user license message is not verified");
+								}
+							} else {
+								appLog.info("Not able to click on internal users tab");
+								saa.assertTrue(false, "Not able to click on internal users tab");
+							}
+						} else {
+							appLog.info("Not able to click on Yes Button");
+							saa.assertTrue(false, "Not able to click on Yes Button");
+						}
+					} else {
+						appLog.info("Not able to click on CRM User1 checkbox");
+						saa.assertTrue(false, "Not able to click on CRM User1 checkbox");
+					}
+				} else {
+					appLog.info("Not able to click on edit icon");
+					saa.assertTrue(false, "Not able to click on edit icon");
+				}
+			} else {
+				appLog.info("Not able to click on NIM Tab");
+				saa.assertTrue(false, "Not able to click on NIM Tab");
+			}
+		
+		}else {
+			appLog.error("Not able to click on setup link so cannot again Deactivate CRM user 1 and check Deactivate funcationality on NIM page");
+			sa.assertTrue(false, "Not able to click on setup link so cannot again Deactivate CRM user 1 and check Deactivate funcationality on NIM page");
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc022_VerifyUpdationOfName() {
+	public void M1tc022_VerifyUpdationOfName(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		WebElement ele = null;
+		String parentWindow=null;
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
-		if (click(driver, bp.getUserMenuTab(120), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			if (click(driver, bp.getUserMenuSetupLink(120), "Setup Link", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(1000);
-				if (click(driver, bp.getExpandManageUserIcon(120), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, bp.getUsersLink(120), "User Link", action.SCROLLANDBOOLEAN)) {
-						if (selectVisibleTextFromDropDown(driver, bp.getViewAllDropdownList(120), "View dropdown list",
-								"Active Users")) {
-							ThreadSleep(2000);
-							ele = FindElement(driver,
-									"//a[text()='" + CRMUser2LastName + "," + " " + CRMUser2FirstName
-											+ "']/..//preceding-sibling::td//a",
-									"Edit icon", action.SCROLLANDBOOLEAN, 120);
-							if (ele != null) {
-								if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
-									if (sendKeys(driver, bp.getUserFirstName(60), CRMUser2FirstName + "Updated",
-											"First updtaed name", action.SCROLLANDBOOLEAN)) {
-										if (sendKeys(driver, bp.getUserLastName(60), CRMUser2LastName + "Updated",
-												"Last updtaed name", action.SCROLLANDBOOLEAN)) {
-											if (click(driver, bp.getSaveButton(120), "Save Button",
-													action.SCROLLANDBOOLEAN)) {
-												appLog.info("Clicked on save button");
-												ThreadSleep(2000);
-												ele = FindElement(driver,
-														"//a[text()='" + CRMUser2LastName + "Updated" + "," + " "
-																+ CRMUser2FirstName + "Updated" + "']",
-														"Updated CRM User 2 name", action.SCROLLANDBOOLEAN, 120);
+		
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+				}
+			}
+			if (bp.quickSearchOnSetupHomePage(environment, mode, object.Users)) {
+				if (click(driver, bp.getUsersLink(environment, mode, 30), "User Link", action.SCROLLANDBOOLEAN)) {
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(3000);
+						switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+					}
+					if (selectVisibleTextFromDropDown(driver, bp.getViewAllDropdownList(30), "View dropdown list",
+							"Active Users")) {
+						ThreadSleep(2000);
+						ele = FindElement(driver,
+								"//a[text()='" + CRMUser2LastName + "," + " " + CRMUser2FirstName
+								+ "']/..//preceding-sibling::td//a",
+								"Edit icon", action.SCROLLANDBOOLEAN, 10);
+						if (ele != null) {
+							if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
+								if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+									ThreadSleep(3000);
+									switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+								}
+								if (sendKeys(driver, bp.getUserFirstName(60), CRMUser2FirstName + "Updated",
+										"First updtaed name", action.SCROLLANDBOOLEAN)) {
+									if (sendKeys(driver, bp.getUserLastName(60), CRMUser2LastName + "Updated",
+											"Last updtaed name", action.SCROLLANDBOOLEAN)) {
+										if (click(driver, bp.getCreateUserSaveBtn_Lighting(30), "Save Button",
+												action.SCROLLANDBOOLEAN)) {
+											appLog.info("Clicked on save button");
+											ThreadSleep(2000);
+											if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+												ThreadSleep(3000);
+												switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+											}
+											ele = FindElement(driver,
+													"//a[text()='" + CRMUser2LastName + "Updated" + "," + " "
+															+ CRMUser2FirstName + "Updated" + "']",
+															"Updated CRM User 2 name", action.SCROLLANDBOOLEAN, 20);
 
-												if (ele != null) {
-													appLog.info("Updated CRM User2 name is displaying");
-												} else {
-													appLog.info("Updated CRm User2 name is not displaying");
-													saa.assertTrue(false, "Updated CRm User2 name is not displaying");
-												}
+											if (ele != null) {
+												appLog.info("Updated CRM User2 name is displaying");
 											} else {
-												appLog.info("Not able to click on save button");
-												saa.assertTrue(false, "Not able to click on save button");
+												appLog.info("Updated CRm User2 name is not displaying");
+												saa.assertTrue(false, "Updated CRm User2 name is not displaying");
 											}
 										} else {
-											appLog.info("Not able to enter values in first name text box");
-											saa.assertTrue(false, "Not able to enter values in first name text box");
+											appLog.info("Not able to click on save button");
+											saa.assertTrue(false, "Not able to click on save button");
 										}
 									} else {
 										appLog.info("Not able to enter values in first name text box");
 										saa.assertTrue(false, "Not able to enter values in first name text box");
 									}
 								} else {
-									appLog.info("Not able to click on edit icon");
-									saa.assertTrue(false, "Not able to click on edit icon");
+									appLog.info("Not able to enter values in first name text box");
+									saa.assertTrue(false, "Not able to enter values in first name text box");
 								}
 							} else {
-								appLog.info("Element is not present");
-								saa.assertTrue(false, "Element is not present");
+								appLog.info("Not able to click on edit icon");
+								saa.assertTrue(false, "Not able to click on edit icon");
 							}
 						} else {
-							appLog.info("Not able to select visbible text from the dropdown");
-							saa.assertTrue(false, "Not able to select visbible text from the dropdown");
+							appLog.info("Element is not present");
+							saa.assertTrue(false, "Element is not present");
 						}
 					} else {
-						appLog.info("Not able to click on users Link");
-						saa.assertTrue(false, "Not able to click on users Link");
+						appLog.info("Not able to select visbible text from the dropdown");
+						saa.assertTrue(false, "Not able to select visbible text from the dropdown");
 					}
 				} else {
-					appLog.info("Not able to click on Manage User Icon");
-					saa.assertTrue(false, "Not able to click on Manage User Icon");
+					appLog.info("Not able to click on users Link");
+					saa.assertTrue(false, "Not able to click on users Link");
 				}
 			} else {
-				appLog.info("Not able to click on Setup link");
-				saa.assertTrue(false, "Not able to click on Setup link");
+				appLog.info("Not able to click on Manage User Icon");
+				saa.assertTrue(false, "Not able to click on Manage User Icon");
 			}
-		} else {
-			appLog.info("Not able to click on user menu tab");
-			saa.assertTrue(false, "Not able to click on user menu tab");
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			appLog.error("Not able to click on setup link so cannot update crm user 2");
+			sa.assertTrue(false, "Not able to click on setup link so cannot update crm user 2");
 		}
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		switchToDefaultContent(driver);
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (nim.clickOnEditIcon()) {
-					if (sendKeys(driver, nim.getMyProfileFirstName(60), CRMUser2FirstName + "New", "New first Name",
+					if (sendKeys(driver, nim.getMyProfileFirstName(30), CRMUser2FirstName + "New", "New first Name",
 							action.SCROLLANDBOOLEAN)) {
-						if (sendKeys(driver, nim.getMyProfileLastName(60), CRMUser2LastName + "New", "New Last Name",
+						if (sendKeys(driver, nim.getMyProfileLastName(30), CRMUser2LastName + "New", "New Last Name",
 								action.SCROLLANDBOOLEAN)) {
-							if (click(driver, nim.getMyProfileSaveButton(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+							if (click(driver, nim.getMyProfileSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(3000);
-								String nameInViewMode = nim.getMyProfileNameInViewMode(60).getText().trim();
+								String nameInViewMode = nim.getMyProfileNameInViewMode(30).getText().trim();
 								if (nameInViewMode
 										.equalsIgnoreCase(CRMUser2FirstName + "New" + " " + CRMUser2LastName + "New")) {
 									appLog.info("Updtaed name is displaying");
@@ -4777,24 +4670,24 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIm Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		nim = new NIMPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (nim.clickOnEditIcon()) {
-					if (sendKeys(driver, nim.getMyProfileFirstName(60), superAdminFirstName + "New", "New first Name",
+					if (sendKeys(driver, nim.getMyProfileFirstName(30), superAdminFirstName + "New", "New first Name",
 							action.SCROLLANDBOOLEAN)) {
-						if (sendKeys(driver, nim.getMyProfileLastName(60), superAdminLastName + "New", "New Last Name",
+						if (sendKeys(driver, nim.getMyProfileLastName(30), superAdminLastName + "New", "New Last Name",
 								action.SCROLLANDBOOLEAN)) {
-							if (click(driver, nim.getMyProfileSaveButton(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+							if (click(driver, nim.getMyProfileSaveButton(30), "Save Button", action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(3000);
-								String nameInViewMode = nim.getMyProfileNameInViewMode(60).getText().trim();
+								String nameInViewMode = nim.getMyProfileNameInViewMode(30).getText().trim();
 								if (nameInViewMode.equalsIgnoreCase(
 										superAdminFirstName + "New" + " " + superAdminLastName + "New")) {
 									appLog.info("Updtaed name is displaying");
@@ -4828,7 +4721,7 @@ public class Module1 extends BaseLib {
 				ThreadSleep(2000);
 				ele = FindElement(driver,
 						"//span[text()='" + CRMUser2FirstName + "Updated" + " " + CRMUser2LastName + "Updated" + "']",
-						"CRM User 2", action.SCROLLANDBOOLEAN, 60);
+						"CRM User 2", action.SCROLLANDBOOLEAN, 30);
 				if (nim.getUsersListInInternalUsers().contains(ele)) {
 					appLog.info("CRM User2 is displaying in the users list");
 				} else {
@@ -4838,7 +4731,7 @@ public class Module1 extends BaseLib {
 				ThreadSleep(2000);
 				ele = FindElement(driver,
 						"//span[text()='" + superAdminFirstName + "New" + " " + superAdminLastName + "New" + "']",
-						"Admin Name", action.SCROLLANDBOOLEAN, 60);
+						"Admin Name", action.SCROLLANDBOOLEAN, 30);
 				if (ele != null) {
 					appLog.info("Updated CRM Admin Name is displaying");
 				} else {
@@ -4854,19 +4747,20 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIm Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc023_VerifySortingInInternalUsersSection() {
+	public void M1tc023_VerifySortingInInternalUsersSection(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
 			if (nim.getSortingIconOnUserLabel(60) != null) {
 				appLog.info("Sorting icon is displaying on user label ");
@@ -4930,114 +4824,132 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIm Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 
+	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc024_MakeUserActiveAndUpdateInformation() {
+	public void M1tc024_MakeUserActiveAndUpdateInformation(String environment, String mode) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		WebElement ele = null;
+		String parentWindow=null;
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.deactivateAndActivateCreatedUser("All Users", CRMUser1FirstName, CRMUser1LastName, "Activate")) {
-			appLog.info("Activate the CRM User 1 ");
-		} else {
-			appLog.info("Not able to Activate CRM User1");
-			saa.assertTrue(false, "Not able to Activate CRM User1");
-		}
-		if (bp.verifyUserGetDeactivatedAndActivated(CRMUser1FirstName, CRMUser1LastName, "Activate")) {
-			appLog.info("User get Activate successfully");
-		} else {
-			appLog.info("User is not get Activate successfully");
-			saa.assertTrue(false, "User is not get Activate successfully");
-		}
-		if (click(driver, bp.getUserMenuTab(120), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			if (click(driver, bp.getUserMenuSetupLink(120), "Setup Link", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(1000);
-				if (click(driver, bp.getExpandManageUserIcon(120), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, bp.getUsersLink(120), "User Link", action.SCROLLANDBOOLEAN)) {
-						if (selectVisibleTextFromDropDown(driver, bp.getViewAllDropdownList(120), "View dropdown list",
-								"Active Users")) {
-							ThreadSleep(2000);
-							ele = FindElement(driver,
-									"//a[text()='" + CRMUser2LastName + "Updated" + "," + " " + CRMUser2FirstName
-											+ "Updated" + "']/..//preceding-sibling::td//a",
-									"Edit icon", action.SCROLLANDBOOLEAN, 120);
-							if (ele != null) {
-								if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
-									if (sendKeys(driver, bp.getUserFirstName(60), CRMUser2FirstName, "First name",
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot Activate CRM User1");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot Activate CRM User1");
+					exit("No new window is open after click on setup link in lighting mode so cannot Activate CRM User1");
+				}
+			}
+			if (bp.deactivateAndActivateCreatedUser(environment, mode,"All Users", CRMUser1FirstName, CRMUser1LastName, "Activate")) {
+				appLog.info("Activate the CRM User 1 ");
+				refresh(driver);
+				if (bp.verifyUserGetDeactivatedAndActivated(environment, mode,CRMUser1FirstName, CRMUser1LastName, "Activate")) {
+					appLog.info("User get Activate successfully");
+				} else {
+					appLog.info("User is not get Activate successfully");
+					saa.assertTrue(false, "User is not get Activate successfully");
+				}
+			} else {
+				appLog.info("Not able to Activate CRM User1");
+				saa.assertTrue(false, "Not able to Activate CRM User1");
+			}
+			refresh(driver);
+			if (bp.quickSearchOnSetupHomePage(environment, mode, object.Users)) {
+				if (click(driver, bp.getUsersLink(environment, mode, 30), "User Link", action.SCROLLANDBOOLEAN)) {
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(3000);
+						switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+					}
+					if (selectVisibleTextFromDropDown(driver, bp.getViewAllDropdownList(10), "View dropdown list",
+							"Active Users")) {
+						ThreadSleep(2000);
+						ele = FindElement(driver,
+								"//a[text()='" + CRMUser2LastName + "Updated" + "," + " " + CRMUser2FirstName
+								+ "Updated" + "']/..//preceding-sibling::td//a",
+								"Edit icon", action.SCROLLANDBOOLEAN, 20);
+						if (ele != null) {
+							if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
+								if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+									switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+								}
+								if (sendKeys(driver, bp.getUserFirstName(20), CRMUser2FirstName, "First name",
+										action.SCROLLANDBOOLEAN)) {
+									if (sendKeys(driver, bp.getUserLastName(20), CRMUser2LastName, "Last name",
 											action.SCROLLANDBOOLEAN)) {
-										if (sendKeys(driver, bp.getUserLastName(60), CRMUser2LastName, "Last name",
+										if (click(driver, bp.getCreateUserSaveBtn_Lighting(30), "Save Button",
 												action.SCROLLANDBOOLEAN)) {
-											if (click(driver, bp.getSaveButton(120), "Save Button",
-													action.SCROLLANDBOOLEAN)) {
-												appLog.info("Clicked on save button");
-												ele = FindElement(driver,
-														"//a[text()='" + CRMUser2LastName + "," + " "
-																+ CRMUser2FirstName + "']",
-														"CRM User 2 name", action.SCROLLANDBOOLEAN, 120);
-												ThreadSleep(2000);
-												if (ele != null) {
-													appLog.info("CRM User2 name is displaying");
-												} else {
-													appLog.info("CRm User2 name is not displaying");
-													saa.assertTrue(false, "CRm User2 name is not displaying");
-												}
+											appLog.info("Clicked on save button");
+											if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+												switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+											}
+											ele = FindElement(driver,
+													"//a[text()='" + CRMUser2LastName + "," + " "
+															+ CRMUser2FirstName + "']",
+															"CRM User 2 name", action.SCROLLANDBOOLEAN, 10);
+											ThreadSleep(2000);
+											if (ele != null) {
+												appLog.info("CRM User2 name is displaying");
 											} else {
-												appLog.info("Not able to click on save button");
-												saa.assertTrue(false, "Not able to click on save button");
+												appLog.info("CRm User2 name is not displaying");
+												saa.assertTrue(false, "CRm User2 name is not displaying");
 											}
 										} else {
-											appLog.info("Not able to enter values in first name text box");
-											saa.assertTrue(false, "Not able to enter values in first name text box");
+											appLog.info("Not able to click on save button");
+											saa.assertTrue(false, "Not able to click on save button");
 										}
 									} else {
 										appLog.info("Not able to enter values in first name text box");
 										saa.assertTrue(false, "Not able to enter values in first name text box");
 									}
 								} else {
-									appLog.info("Not able to click on edit icon");
-									saa.assertTrue(false, "Not able to click on edit icon");
+									appLog.info("Not able to enter values in first name text box");
+									saa.assertTrue(false, "Not able to enter values in first name text box");
 								}
 							} else {
-								appLog.info("Element is not present");
-								saa.assertTrue(false, "Element is not present");
+								appLog.info("Not able to click on edit icon");
+								saa.assertTrue(false, "Not able to click on edit icon");
 							}
 						} else {
-							appLog.info("Not able to select visbible text from the dropdown");
-							saa.assertTrue(false, "Not able to select visbible text from the dropdown");
+							appLog.info("Element is not present");
+							saa.assertTrue(false, "Element is not present");
 						}
 					} else {
-						appLog.info("Not able to click on users Link");
-						saa.assertTrue(false, "Not able to click on users Link");
+						appLog.info("Not able to select visbible text from the dropdown");
+						saa.assertTrue(false, "Not able to select visbible text from the dropdown");
 					}
 				} else {
-					appLog.info("Not able to click on Manage User Icon");
-					saa.assertTrue(false, "Not able to click on Manage User Icon");
+					appLog.info("Not able to click on users Link");
+					saa.assertTrue(false, "Not able to click on users Link");
 				}
 			} else {
-				appLog.info("Not able to click on Setup link");
-				saa.assertTrue(false, "Not able to click on Setup link");
+				appLog.info("Not able to click on Manage User Icon");
+				saa.assertTrue(false, "Not able to click on Manage User Icon");
 			}
-		} else {
-			appLog.info("Not able to click on user menu tab");
-			saa.assertTrue(false, "Not able to click on user menu tab");
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			appLog.error("Not able to click on setup link so cannot Activate CRM user 1");
+			sa.assertTrue(false, "Not able to click on setup link so cannot Activate CRM user 1");
 		}
-		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+			switchToFrame(driver, 20, nim.getNIMTabFrame(20));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (nim.clickOnEditIcon()) {
-					if (sendKeys(driver, nim.getMyProfileFirstName(60), superAdminFirstName, "first Name",
+					if (sendKeys(driver, nim.getMyProfileFirstName(20), superAdminFirstName, "first Name",
 							action.SCROLLANDBOOLEAN)) {
-						if (sendKeys(driver, nim.getMyProfileLastName(60), superAdminLastName, "Last Name",
+						if (sendKeys(driver, nim.getMyProfileLastName(20), superAdminLastName, "Last Name",
 								action.SCROLLANDBOOLEAN)) {
-							if (click(driver, nim.getMyProfileSaveButton(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+							if (click(driver, nim.getMyProfileSaveButton(20), "Save Button", action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(3000);
-								String nameInViewMode = nim.getMyProfileNameInViewMode(60).getText().trim();
+								String nameInViewMode = nim.getMyProfileNameInViewMode(20).getText().trim();
 								if (nameInViewMode.equalsIgnoreCase(superAdminFirstName + " " + superAdminLastName)) {
 									appLog.info("Name is displaying");
 								} else {
@@ -5070,24 +4982,24 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIM Tab so we cannot change admin first name and last name");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		nim = new NIMPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 60, nim.getNIMTabFrame(60));
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+			switchToFrame(driver, 20, nim.getNIMTabFrame(20));
 			if (nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if (nim.clickOnEditIcon()) {
-					if (sendKeys(driver, nim.getMyProfileFirstName(60), CRMUser2FirstName, "New first Name",
+					if (sendKeys(driver, nim.getMyProfileFirstName(20), CRMUser2FirstName, "New first Name",
 							action.SCROLLANDBOOLEAN)) {
-						if (sendKeys(driver, nim.getMyProfileLastName(60), CRMUser2LastName, "New Last Name",
+						if (sendKeys(driver, nim.getMyProfileLastName(20), CRMUser2LastName, "New Last Name",
 								action.SCROLLANDBOOLEAN)) {
-							if (click(driver, nim.getMyProfileSaveButton(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+							if (click(driver, nim.getMyProfileSaveButton(20), "Save Button", action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(3000);
-								String nameInViewMode = nim.getMyProfileNameInViewMode(60).getText().trim();
+								String nameInViewMode = nim.getMyProfileNameInViewMode(20).getText().trim();
 								if (nameInViewMode.equalsIgnoreCase(CRMUser2FirstName + " " + CRMUser2LastName)) {
 									appLog.info("name is displaying");
 								} else {
@@ -5120,20 +5032,20 @@ public class Module1 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on NIm Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
 	
-	@Test
-	public void M1tc025_postCondition(){
+	@Parameters({ "environment", "mode" }) @Test
+	public void M1tc025_postCondition(String environment, String mode){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa1 = new SoftAssert();
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		saa1=bp.postCondition();
 		sa.combineAssertions(saa1);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();		
 	}
 	
