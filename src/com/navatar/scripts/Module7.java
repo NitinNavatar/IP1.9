@@ -9,8 +9,10 @@ import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.ContentGridArrowKeyFunctions;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.OnlineImportFileAddTo;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
@@ -84,7 +86,7 @@ public class Module7 extends BaseLib {
 
 		// Institution
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createInstitution(M7Institution1)) {
+			if (ip.createInstitution(environment, mode,M7Institution1,"Institution",null,null)) {
 				appLog.info("Institution Created Successfully : " + M7Institution1);
 			} else {
 				appLog.error("Not Able to Create Institution : " + M7Institution1);
@@ -92,7 +94,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createInstitution(M7Institution2)) {
+			if (ip.createInstitution(environment, mode,M7Institution2,"Institution",null,null)) {
 				appLog.info("Institution Created Successfully : " + M7Institution2);
 			} else {
 				appLog.error("Not Able to Create Institution : " + M7Institution2);
@@ -109,7 +111,7 @@ public class Module7 extends BaseLib {
 
 		// Contact
 		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.createContact(M7Contact1FirstName, M7Contact1LastName, M7Institution1, M7Contact1EmailID)) {
+			if (cp.createContact(environment, mode,M7Contact1FirstName, M7Contact1LastName, M7Institution1, M7Contact1EmailID,null,null,CreationPage.ContactPage)) {
 				ExcelUtils.writeData(M7Contact1EmailID, "Contacts", excelLabel.Variable_Name, "M7C1",
 						excelLabel.Contact_EmailId);
 				appLog.info("Contact " + M7Contact1FirstName + " " + M7Contact1LastName + " was successfully created");
@@ -124,7 +126,7 @@ public class Module7 extends BaseLib {
 		}
 
 		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.createContact(M7Contact2FirstName, M7Contact2LastName, M7Institution2, M7Contact2EmailID)) {
+			if (cp.createContact(environment, mode,M7Contact2FirstName, M7Contact2LastName, M7Institution2, M7Contact2EmailID,null,null,CreationPage.ContactPage)) {
 				ExcelUtils.writeData(M7Contact2EmailID, "Contacts", excelLabel.Variable_Name, "M7C2",
 						excelLabel.Contact_EmailId);
 				appLog.info("Contact " + M7Contact2FirstName + " " + M7Contact2LastName + " was successfully created");
@@ -141,7 +143,7 @@ public class Module7 extends BaseLib {
 		// Fund
 
 		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.createFund(M7FundName1, M7FundType, M7FundInvestmentCategory)) {
+			if (fp.createFund(environment, mode,M7FundName1, M7FundType, M7FundInvestmentCategory,null,null)) {
 				appLog.info("New fund " + M7FundName1 + " was successfully created");
 			} else {
 				appLog.error("New fund " + M7FundName1 + " could not be created");
@@ -154,7 +156,7 @@ public class Module7 extends BaseLib {
 
 		// Fund Raising
 		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-			if (frp.createFundRaising(M7FundRaisingName1, M7FundName1, M7Institution1)) {
+			if (frp.createFundRaising(environment, mode,M7FundRaisingName1, M7FundName1, M7Institution1)) {
 				appLog.info("Fundraising " + M7FundRaisingName1 + " was successfully created");
 			} else {
 				appLog.error("Fundraising " + M7FundRaisingName1 + " could not be created");
@@ -166,7 +168,7 @@ public class Module7 extends BaseLib {
 		}
 
 		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-			if (frp.createFundRaising(M7FundRaisingName2, M7FundName1, M7Institution2)) {
+			if (frp.createFundRaising(environment, mode,M7FundRaisingName2, M7FundName1, M7Institution2)) {
 				appLog.info("Fundraising " + M7FundRaisingName1 + " was successfully created");
 			} else {
 				appLog.error("Fundraising " + M7FundRaisingName1 + " could not be created");
@@ -178,7 +180,7 @@ public class Module7 extends BaseLib {
 		}
 		// Limited Partner
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createLimitedPartner(M7LimitedPartner1, M7Institution1)) {
+			if (ip.createInstitution(environment, mode,M7LimitedPartner1, "Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(),M7Institution1)) {
 				appLog.info(M7LimitedPartner1 + " limited partner was successfully created");
 			} else {
 				appLog.error(M7LimitedPartner1 + " LP could not be created");
@@ -190,8 +192,10 @@ public class Module7 extends BaseLib {
 		}
 
 		// Limited Partner
-		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createLimitedPartner(M7LimitedPartner2, M7Institution2)) {
+	//	ip.createInstitution(environment, mode,M7Institution1,"Institution",null,null)
+		
+				if (bp.clickOnTab(TabName.InstituitonsTab)) {
+			if (ip.createInstitution(environment, mode,M7LimitedPartner2, "Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(),M7Institution2)) {
 				appLog.info(M7LimitedPartner1 + " limited partner was successfully created");
 			} else {
 				appLog.error(M7LimitedPartner1 + " LP could not be created");
@@ -203,7 +207,7 @@ public class Module7 extends BaseLib {
 		}
 		// PartnerShip
 		if (bp.clickOnTab(TabName.PartnershipsTab)) {
-			if (pp.createPartnership(M7Partnership1, M7FundName1)) {
+			if (pp.createPartnership(environment, mode,M7Partnership1, M7FundName1)) {
 				appLog.info(M7Partnership1 + " was successfully created");
 			} else {
 				appLog.error(M7Partnership1 + " could not be created");
@@ -216,7 +220,7 @@ public class Module7 extends BaseLib {
 
 		// Commitment
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M7LimitedPartner1, M7Partnership1, M7Commitment1, null)) {
+			if (cmp.createCommitment(environment, mode,M7LimitedPartner1, M7Partnership1, M7Commitment1, null)) {
 				appLog.info(M7Commitment1 + " was successfully created");
 			} else {
 				appLog.error(M7Commitment1 + " could not be created");
@@ -227,12 +231,12 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Not Able to Click Commitments tab");
 		}
 		// Commitment
-		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M7LimitedPartner2, M7Partnership1, M7Commitment2, null)) {
-				appLog.info(M7Commitment1 + " was successfully created");
+		if (bp.clickOnTab(environment, mode,TabName.CommitmentsTab)) {
+			if (cmp.createCommitment(environment, mode,M7LimitedPartner2, M7Partnership1, M7Commitment2, null)) {
+				appLog.info(M7Commitment2 + " was successfully created");
 			} else {
-				appLog.error(M7Commitment1 + " could not be created");
-				sa.assertTrue(false, M7Commitment1 + " could not be created");
+				appLog.error(M7Commitment2 + " could not be created");
+				sa.assertTrue(false, M7Commitment2 + " could not be created");
 			}
 		} else {
 			appLog.error("Not Able to Click Commitments tab");
@@ -256,10 +260,10 @@ public class Module7 extends BaseLib {
 			} else {
 				sa.assertTrue(false, "profile side menu is not cllickable on nim page");
 			}
-			switchToDefaultContent(driver);
+			
 		}
-
-		lp.CRMlogout();
+		switchToDefaultContent(driver);
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -468,7 +472,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Not able to Click Fund tab ");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -628,7 +632,7 @@ public class Module7 extends BaseLib {
 
 		ThreadSleep(10000);
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -707,7 +711,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Funds tab is not clickable");
 		}
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -1004,7 +1008,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1222,7 +1226,7 @@ public class Module7 extends BaseLib {
 
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1441,7 +1445,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1564,7 +1568,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1674,7 +1678,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
@@ -1764,7 +1768,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1826,7 +1830,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Institutions tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1901,7 +1905,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2012,7 +2016,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 	}
 
 	@Test
@@ -2381,7 +2385,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2454,7 +2458,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2564,7 +2568,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2983,7 +2987,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -3208,7 +3212,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -3348,7 +3352,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -3787,7 +3791,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -4030,7 +4034,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4272,7 +4276,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4514,7 +4518,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5144,7 +5148,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5430,7 +5434,7 @@ public class Module7 extends BaseLib {
 			appLog.error("funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5785,7 +5789,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5902,7 +5906,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6010,7 +6014,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6071,7 +6075,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Not able to Click Institution tab ");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6147,7 +6151,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6256,7 +6260,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6370,7 +6374,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6492,7 +6496,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6681,7 +6685,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6889,7 +6893,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7142,7 +7146,7 @@ public class Module7 extends BaseLib {
 				switchToDefaultContent(driver);
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -7467,7 +7471,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7580,7 +7584,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7907,7 +7911,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8258,7 +8262,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8370,7 +8374,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8712,7 +8716,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8823,7 +8827,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -9188,7 +9192,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -9413,7 +9417,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -9760,7 +9764,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -9877,7 +9881,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10057,7 +10061,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10130,7 +10134,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		sa.assertAll();
 	}
@@ -10261,7 +10265,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10379,7 +10383,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10595,7 +10599,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10718,7 +10722,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10920,7 +10924,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -11130,7 +11134,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -11431,7 +11435,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -11612,7 +11616,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		sa.assertAll();
 
@@ -11796,7 +11800,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -12120,7 +12124,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -12250,7 +12254,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Not Able to Click Funds Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -12467,7 +12471,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -12768,7 +12772,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -12907,7 +12911,7 @@ public class Module7 extends BaseLib {
 		// Funds Page
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -13115,7 +13119,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -13375,7 +13379,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 	}
@@ -13517,7 +13521,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -13704,7 +13708,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -14287,7 +14291,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -14731,7 +14735,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -15104,7 +15108,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -15499,7 +15503,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -15636,7 +15640,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -15695,7 +15699,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		af = new AllFirmsPageBusinesslayer(driver);
@@ -15973,7 +15977,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "contacts tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -16233,7 +16237,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -16587,7 +16591,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -16676,7 +16680,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Not Able to Click Fund Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 	}
@@ -16892,7 +16896,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -17108,7 +17112,7 @@ public class Module7 extends BaseLib {
 
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -17324,7 +17328,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -17395,7 +17399,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -17580,7 +17584,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -17694,7 +17698,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -17838,7 +17842,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -17914,7 +17918,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -18104,7 +18108,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -18501,7 +18505,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -18576,7 +18580,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 	}
@@ -18764,7 +18768,7 @@ public class Module7 extends BaseLib {
 		//
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -19070,7 +19074,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -19193,7 +19197,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -19428,7 +19432,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -20036,7 +20040,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -20276,7 +20280,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -20511,7 +20515,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -20749,7 +20753,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -21009,7 +21013,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -21387,7 +21391,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -22082,7 +22086,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -22269,7 +22273,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -22379,7 +22383,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -22523,7 +22527,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -22599,7 +22603,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -22787,7 +22791,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -22899,7 +22903,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -23131,7 +23135,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
@@ -23317,7 +23321,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -23502,7 +23506,7 @@ public class Module7 extends BaseLib {
 
 		//
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -23943,7 +23947,7 @@ public class Module7 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -24261,7 +24265,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -24453,7 +24457,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -24770,7 +24774,7 @@ public class Module7 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -25196,7 +25200,7 @@ public class Module7 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -25387,7 +25391,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -25727,7 +25731,7 @@ public class Module7 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -25938,7 +25942,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -26301,7 +26305,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -26529,7 +26533,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -26818,7 +26822,7 @@ public class Module7 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		ThreadSleep(3000);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 
@@ -27005,7 +27009,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 
@@ -27176,7 +27180,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -27318,7 +27322,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		sa.assertAll();
 	}
@@ -27448,7 +27452,7 @@ public class Module7 extends BaseLib {
 
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -27638,7 +27642,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -27814,7 +27818,7 @@ public class Module7 extends BaseLib {
 
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -28037,7 +28041,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -28225,7 +28229,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -28430,7 +28434,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 
@@ -28724,7 +28728,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -28905,7 +28909,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -29056,7 +29060,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -29382,7 +29386,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -29510,7 +29514,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -29907,7 +29911,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -30200,7 +30204,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -30334,7 +30338,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -30727,7 +30731,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -30980,7 +30984,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 	}
@@ -31126,7 +31130,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -31469,7 +31473,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
@@ -31761,7 +31765,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -31896,7 +31900,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -32289,7 +32293,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
@@ -32573,7 +32577,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -33092,7 +33096,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
@@ -33510,7 +33514,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 		sa.assertAll();
 
@@ -34076,7 +34080,7 @@ public class Module7 extends BaseLib {
 	}
 
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	ThreadSleep(3000);
 	sa.assertAll();
 
@@ -34554,7 +34558,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -35033,7 +35037,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -35403,7 +35407,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -35883,7 +35887,7 @@ public class Module7 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(3000);
 		sa.assertAll();
 
@@ -36305,7 +36309,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -36429,7 +36433,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -36476,7 +36480,7 @@ public class Module7 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		af = new AllFirmsPageBusinesslayer(driver);
@@ -36754,7 +36758,7 @@ public class Module7 extends BaseLib {
 			sa.assertTrue(false, "contacts tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -37006,7 +37010,7 @@ public class Module7 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -37050,7 +37054,7 @@ public class Module7 extends BaseLib {
 
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
