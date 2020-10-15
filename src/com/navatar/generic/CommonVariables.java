@@ -38,7 +38,7 @@ public class CommonVariables {
 	public static String superAdminFirstName,org3SuperAdminFirstName;
 	public static String superAdminLastName,org3SuperAdminLastName;
 	public static String adminPassword,passwordOrg3,adminPasswordOrg2;
-	public static String superAdminRegistered,superAdminRegisteredOrg3;
+	public static String superAdminRegistered,superAdminRegisteredOrg3,superAdminRegisteredOrg2;
 	public static String CRMUser1FirstName,Org2CRMUser1FirstName,Org3CRMUser1FirstName;
 	public static String CRMUser1LastName,Org2CRMUser1LastName,Org3CRMUser1LastName;
 	public static String CRMUser1EmailID,Org2CRMUser1EmailID,Org3CRMUser1EmailID;
@@ -449,6 +449,7 @@ public class CommonVariables {
 		//************superadmin*******************//
 		superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
 		superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
+		superAdminRegisteredOrg2=ExcelUtils.readDataFromPropertyFile("SuperAdminRegisteredOrg2");
 		superAdminOrg2UserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsernameOrg2");
 		superAdminOrg3UserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsernameOrg3");
 		
