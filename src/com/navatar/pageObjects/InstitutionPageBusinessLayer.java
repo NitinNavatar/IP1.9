@@ -17,6 +17,7 @@ import static com.navatar.generic.CommonLib.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import static com.navatar.generic.CommonVariables.*;
 
 /**
  * @author Parul Singh
@@ -450,6 +451,7 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 	 * @param inst_name
 	 */
 	public boolean clickOnCreatedInstitution(String inst_name) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 		int i =1;
 		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
 				.equalsIgnoreCase("All Institutions")) {
@@ -502,6 +504,14 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 				}
 				i++;
 			}
+		}	
+		}else{
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, inst_name, 30)){
+				appLog.info("Clicked on Institutions name : " + inst_name);
+				return true;
+			}else{
+				appLog.error("Institutions Not Available : " + inst_name);
+			}	
 		}
 		return false;
 	}
