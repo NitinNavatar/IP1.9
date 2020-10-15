@@ -348,7 +348,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					for(int K=0; K<20; K++) {
 						if(nim.getNIMTabParentFrame_Lightning()!=null) {
 							ThreadSleep(3000);
-							switchToFrame(driver, 5, nim.getNIMTabParentFrame_Lightning());
+							switchToFrame(driver, 2, nim.getNIMTabParentFrame_Lightning());
 							if (nim.getNIMTabFrame(2) != null) {
 								appLog.info("NIM  Parent Frame is Loaded Successfully.");
 								switchToFrame(driver, 30, nim.getNIMTabFrame(30));
