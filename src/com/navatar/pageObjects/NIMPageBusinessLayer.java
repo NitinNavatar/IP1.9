@@ -149,7 +149,6 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 	 * @return true/false
 	 */
 	public boolean NIMRegistration(userType adminOrUser, String userFirstName, String userLastName) {
-		
 		switchToFrame(driver, 60, getFrame(PageName.NavatarInvestorManager, 30));
 		// if admin only then start button is displayed
 		if (adminOrUser == userType.SuperAdmin) {
@@ -176,6 +175,7 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 		}
 		if (click(driver, getNextButton(60), "Next button", action.SCROLLANDBOOLEAN)) {
 			if (click(driver, getAllowButton(60), "Allow button", action.BOOLEAN)) {
+				switchToFrame(driver, 30, getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 				if (switchToFrame(driver, 30, getNIMTabFrame(30))) {
 				
 				// if admin only then asks which users to add
