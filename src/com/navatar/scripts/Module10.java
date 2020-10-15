@@ -12,8 +12,10 @@ import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -43,6 +45,7 @@ import static com.navatar.generic.CommonVariables.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author Parul Singh
@@ -73,9 +76,10 @@ public class Module10 extends BaseLib {
 		for (int i = 0; i < 2; i++) {
 			instutionName = ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M10Institution" + (i + 1),
 					excelLabel.Institutions_Name);
+			ThreadSleep(3000);
 			if (bp.clickOnTab(TabName.InstituitonsTab)) {
-				if (ip.createInstitution(instutionName)) {
-
+				if (ip.createInstitution(environment,mode,instutionName,"Institution",null,null)) {
+					appLog.info("successfully created "+instutionName);
 				} else {
 					appLog.error("Not able to create institution: " + instutionName);
 					saa.assertTrue(false, "Not able to create institution: " + instutionName);
@@ -94,7 +98,7 @@ public class Module10 extends BaseLib {
 						excelLabel.Fund_Type);
 				String investmentCategory = ExcelUtils.readData("Funds", excelLabel.Variable_Name, "M10Fund" + (i + 1),
 						excelLabel.Fund_InvestmentCategory);
-				if (fp.createFund(fundName, fundType, investmentCategory)) {
+				if (fp.createFund(environment,mode,fundName, fundType, investmentCategory,null,null)) {
 					appLog.info("fund is created: " + fundName);
 				} else {
 					appLog.error("Not able to create fund: " + fundName);
@@ -114,7 +118,7 @@ public class Module10 extends BaseLib {
 			String ContactLastName = ExcelUtils.readData("Contacts", excelLabel.Variable_Name, "M10Contact" + (i + 1),
 					excelLabel.Contact_LastName);
 			if (bp.clickOnTab(TabName.ContactTab)) {
-				if (cp.createContact(ContactFirstName, ContactLastName, instutionName, emailId)) {
+				if (cp.createContact(environment,mode,ContactFirstName, ContactLastName, instutionName, emailId,null,null,CreationPage.ContactPage)) {
 					appLog.info("contact is created: " + ContactFirstName + " " + ContactLastName);
 					if (emailId != "") {
 						ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M10Contact" + (i + 1),
@@ -125,6 +129,10 @@ public class Module10 extends BaseLib {
 					saa.assertTrue(false, "Not able to create contact: " + ContactFirstName + " " + ContactLastName);
 				}
 			}
+			else {
+				appLog.error("contacts tab is not clickable");
+				sa.assertTrue(false, "contacts tab is not clickable");
+			}
 		}
 		for (int i = 0; i < 3; i++) {
 			String fundraisingName = ExcelUtils.readData("Fundraisings", excelLabel.Variable_Name,
@@ -134,7 +142,7 @@ public class Module10 extends BaseLib {
 						"M10FundRaising" + (i + 1), excelLabel.Fund_Name);
 				instutionName = ExcelUtils.readData("Fundraisings", excelLabel.Variable_Name,
 						"M10FundRaising" + (i + 1), excelLabel.Institutions_Name);
-				if (frp.createFundRaising(fundraisingName, fundName, instutionName)) {
+				if (frp.createFundRaising(environment,mode,fundraisingName, fundName, instutionName)) {
 					appLog.info("fundraising is created : " + fundraisingName);
 				} else {
 					appLog.error("Not able to create fundraising: " + fundraisingName);
@@ -152,7 +160,7 @@ public class Module10 extends BaseLib {
 			if (bp.clickOnTab(TabName.InstituitonsTab)) {
 				instutionName = ExcelUtils.readData("Institutions", excelLabel.Variable_Name,
 						"M10Institution" + (i + 1), excelLabel.Institutions_Name);
-				if (ip.createLimitedPartner(lpName, instutionName)) {
+				if(ip.createInstitution(environment, mode, lpName, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), instutionName)) {
 					appLog.info("limited partner is created: " + lpName);
 				} else {
 					appLog.error("Not able to create limited partner: " + lpName);
@@ -169,7 +177,7 @@ public class Module10 extends BaseLib {
 				excelLabel.PartnerShip_Name);
 		if (bp.clickOnTab(TabName.PartnershipsTab)) {
 			String fundName = ExcelUtils.readData("Funds", excelLabel.Variable_Name, "M10Fund1", excelLabel.Fund_Name);
-			if (pp.createPartnership(partnershipName, fundName)) {
+			if (pp.createPartnership(environment, mode,partnershipName, fundName)) {
 				appLog.info("partnership is created: " + partnershipName);
 			} else {
 				appLog.error("Not able to create partnership: " + partnershipName);
@@ -195,7 +203,7 @@ public class Module10 extends BaseLib {
 				partnershipName = ExcelUtils.readData("Partnerships", excelLabel.Variable_Name, "M10Partnership1",
 						excelLabel.PartnerShip_Name);
 
-				if (cmp.createCommitment(lpName, partnershipName, "M10Commitment" + (i + 1), null)) {
+				if (cmp.createCommitment(environment, mode,lpName, partnershipName, "M10Commitment" + (i + 1), null)) {
 					appLog.info("commitment is created successfully");
 				} else {
 					appLog.error("Not able to create commitment for limited partner: " + lpName
@@ -218,7 +226,7 @@ public class Module10 extends BaseLib {
 			saa.assertTrue(false, "Not able to write CRM User first,last name and firm profile in excel");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -281,7 +289,7 @@ public class Module10 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -341,7 +349,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -366,15 +374,15 @@ public class Module10 extends BaseLib {
 						if (fp.getManageEmailsHeader(10) == null) {
 							appLog.info("Manage email popup get closed");
 						} else {
-							appLog.info("Manage email popup does not get closed");
+							appLog.error("Manage email popup does not get closed");
 							sa.assertTrue(false, "manage email popup does not get closed");
 						}
 					} else {
-						appLog.info("Not able to click on close icon");
+						appLog.error("Not able to click on close icon");
 						sa.assertTrue(false, "Not able to click on close icon");
 					}
 				} else {
-					appLog.info("Not able to click on manage emails");
+					appLog.error("Not able to click on manage emails");
 					sa.assertTrue(false, "Not able to click on manage emails");
 				}
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage emails icon",
@@ -384,15 +392,15 @@ public class Module10 extends BaseLib {
 						if (fp.getManageEmailsHeader(10) == null) {
 							appLog.info("Manage email popup get closed");
 						} else {
-							appLog.info("Manage email popup does not get closed");
+							appLog.error("Manage email popup does not get closed");
 							sa.assertTrue(false, "manage email popup does not get closed");
 						}
 					} else {
-						appLog.info("Not able to click on Cancel button");
+						appLog.error("Not able to click on Cancel button");
 						sa.assertTrue(false, "Not able to click on Cancel button");
 					}
 				} else {
-					appLog.info("Not able to click on manage emails");
+					appLog.error("Not able to click on manage emails");
 					sa.assertTrue(false, "Not able to click on manage emails");
 				}
 				if (click(driver, fp.getmanageEmails(Workspace.FundraisingWorkspace, 60), "Manage emails icon",
@@ -403,13 +411,13 @@ public class Module10 extends BaseLib {
 					if (contactaccessDropdownOption.equalsIgnoreCase("All Folders")) {
 						appLog.info("All folder option is displaying in the contact access view dropdown ");
 					} else {
-						appLog.info("All folder option is not displaying in contact access view dropdown");
+						appLog.error("All folder option is not displaying in contact access view dropdown");
 						sa.assertTrue(false, "All folder option is not displaying in contact access view dropdown");
 					}
 					if (click(driver, fp.getManageEmailCancelBtn(60), "Cancel button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Cancel button");
 					} else {
-						appLog.info("Not able to click on Cancel button");
+						appLog.error("Not able to click on Cancel button");
 						sa.assertTrue(false, "Not able to click on Cancel button");
 					}
 				} else {
@@ -443,7 +451,7 @@ public class Module10 extends BaseLib {
 								appLog.info(contactAccessViewDropdownValues.get(i).getText()
 										+ " :Opiton is available in the list.");
 							} else {
-								appLog.info(contactAccessViewDropdownValues.get(i).getText()
+								appLog.error(contactAccessViewDropdownValues.get(i).getText()
 										+ " :Opiton is not available in the list.");
 								sa.assertTrue(false, contactAccessViewDropdownValues.get(i).getText()
 										+ " :Opiton is not available in the list.");
@@ -456,12 +464,12 @@ public class Module10 extends BaseLib {
 									FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
 								appLog.info("Please select one investor eror message is verified");
 							} else {
-								appLog.info("Please select one invetsor error mesage is not verified");
+								appLog.error("Please select one invetsor error mesage is not verified");
 								sa.assertTrue(false, "Please select one investor error message is not verified");
 							}
 							switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 						} else {
-							appLog.info("Not able to click on send button");
+							appLog.error("Not able to click on send button");
 							sa.assertTrue(false, "Not able to click on send button");
 						}
 						if (click(driver, fp.getManageEmailCustomRadioButton(60), "Custom email radio button",
@@ -476,7 +484,7 @@ public class Module10 extends BaseLib {
 											FundsPageErrorMessage.pleaseSelectOneInvestorErrorMessageInManageEmails)) {
 										appLog.info("Please select one investor eror message is verified");
 									} else {
-										appLog.info("Please select one invetsor error mesage is not verified");
+										appLog.error("Please select one invetsor error mesage is not verified");
 										sa.assertTrue(false,
 												"Please select one investor error message is not verified");
 									}
@@ -485,9 +493,9 @@ public class Module10 extends BaseLib {
 									appLog.info("Not able to click on send button");
 									sa.assertTrue(false, "Not able to click on send button");
 								}
-								if ( fp.clickUsingCssSelectorPath("div#searchIddiv > a", "search button")) {
-								//if (click(driver, fp.getManageEmailSearchBtn(60), "Search button",
-								//		action.SCROLLANDBOOLEAN)) {
+								//if ( fp.clickUsingCssSelectorPath("div#searchIddiv > a", "search button")) {
+								if (clickUsingJavaScript(driver, fp.getManageEmailSearchBtn(60), "Search button",
+										action.SCROLLANDBOOLEAN)) {
 									String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 									if (alertmessage.equalsIgnoreCase(
 											FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails)) {
@@ -499,7 +507,7 @@ public class Module10 extends BaseLib {
 									switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 								} else {
 									appLog.info("Not able to click on search icon");
-									sa.assertTrue(false, "Not able to click on serach icon");
+									sa.assertTrue(false, "Not able to click on search icon");
 								}
 							} else {
 								appLog.info("Not able to click on manage email custom template cancel button");
@@ -526,7 +534,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -987,7 +995,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1324,7 +1332,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2182,7 +2190,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2449,166 +2457,182 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact1 checkbox");
 						sa.assertTrue(false, "Not able ot click on contact1 checkbox");
 					}
+					appLog.info(">>>>");
+					Scanner scn = new Scanner(System.in);
+					scn.next();
 					ele = FindElement(driver, "//a[text()='" + M10Contact1FirstName + " " + M10Contact1LastName + "']",
 							"Contact 1", action.SCROLLANDBOOLEAN, 30);
 					if (click(driver, ele, "Contact 1 name", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
-							if (cp.getContactActivityAlertAccountNameText(30).getText().trim()
-									.contains(M10Institution1)) {
-								appLog.info("Activity Alert is available in Contact page.");
-							} else {
-								appLog.info("Activity Alert is not available in Contact page.");
-								sa.assertTrue(false, "Activity Alert is not available in Contact page.");
+							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Contact)) {
+								if (bp.clickOnViewAllRelatedList(environment, mode, RelatedList.Activity_History)) {
+
+									scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
+									if (cp.getContactActivityAlertAccountNameText(30).getText().trim()
+											.contains(M10Institution1)) {
+										appLog.info("Activity Alert is available in Contact page.");
+									} else {
+										appLog.info("Activity Alert is not available in Contact page.");
+										sa.assertTrue(false, "Activity Alert is not available in Contact page.");
+									}
+									if (click(driver, cp.getContactAcitivityAlertSubjectLink(30),
+											"Contact Activity Alert Subject Link", action.SCROLLANDBOOLEAN)) {
+										if (cp.getContactAcitivityAlertAssignedToEmailText(30).getText().trim()
+												.contains(CRMUser1LastName)) {
+											appLog.info("Assigned To user name is verified.");
+										} else {
+											appLog.info("Assigned To user name is not verified.");
+											sa.assertTrue(false, "Assigned To user name is not verified.");
+										}
+										if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
+												.contains("Invitation from")) {
+											appLog.info("Subject Text is  verified.");
+										} else {
+											appLog.info("Subject Text is not verified.");
+											sa.assertTrue(false, "Subject Text is not verified.");
+										}
+										if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
+												.contains(Org1FirmName)) {
+											appLog.info("Subject Text is  verified.");
+										} else {
+											appLog.info("Subject Text is not verified."+cp.getContactAcitivityAlertSubjectText(30).getText().trim()+" and "+Org1FirmName);
+											sa.assertTrue(false, "Subject Text is not verified.");
+										}
+										String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
+										if (bp.verifyDate(date, "Due")) {
+											appLog.info("Due Date is verified.");
+										} else {
+											appLog.error("Due Date is not verified. Actual Result: " + date);
+											sa.assertTrue(false, "Due Date is not verified. Actual Result: " + date);
+										}
+										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains("Subject:")) {
+											appLog.info("Comments Text is verified.");
+										} else {
+											appLog.error("Comments Text is not verified.");
+											sa.assertTrue(false, "Comments Text is not verified.");
+										}
+										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+												.contains("Invitation from " + Org1FirmName)) {
+											appLog.info("Comments subject Text is verified.");
+										} else {
+											appLog.info("Comments subject Text is not verified.."+cp.getContactAcitivityAlertCommentsText(30).getText().trim()+" and "+Org1FirmName);
+											sa.assertTrue(false, "Comments subject Text is not verified.");
+										}
+										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+												.contains("Hello " + M10Contact1FirstName)) {
+											appLog.info("Comments body Text is verified.");
+										} else {
+											appLog.info("Comments body Text is not verified..");
+											sa.assertTrue(false, "Comments body Text is not verified.");
+										}
+										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+												.contains("You have been granted access to Potential investments of "
+														+ M10FundName1 + " by")) {
+											appLog.info("Comments body Text is verified.");
+										} else {
+											appLog.info("Comments body Text is not verified..");
+											sa.assertTrue(false, "Comments body Text is not verified.");
+										}
+										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+												.contains("If you have not yet registered, Click here to register.")) {
+											appLog.info("Comments body Text is verified.");
+										} else {
+											appLog.info("Comments body Text is not verified..");
+											sa.assertTrue(false, "Comments body Text is not verified.");
+										}
+										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+												.contains("If you have already registered, Click here to login.")) {
+											appLog.info("Comments body Text is verified.");
+										} else {
+											appLog.info("Comments body Text is not verified..");
+											sa.assertTrue(false, "Comments body Text is not verified.");
+										}
+										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains(
+												"If you believe this has been sent in error, or if you cannot login, please contact")) {
+											appLog.info("Comments body Text is verified.");
+										} else {
+											appLog.info("Comments body Text is not verified..");
+											sa.assertTrue(false, "Comments body Text is not verified.");
+										}
+										if (cp.getContactActivityAlertStatusText(30).getText().trim().contains("Completed")) {
+											appLog.info("Status text is verified.");
+										} else {
+											appLog.info("Status text is not verified.");
+											sa.assertTrue(false, "Status text is not verified.");
+										}
+										if (cp.getContactActivityAlertPriorityText(30).getText().trim().contains("Normal")) {
+											appLog.info("Priority text is verified.");
+										} else {
+											appLog.info("Priority text is not verified.");
+											sa.assertTrue(false, "Priority text is not verified.");
+										}
+										if (cp.getAccountActivityAlertRelatedToText(60).getText().trim()
+												.contains(M10Institution1)) {
+											appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
+										} else {
+											appLog.info(
+													"Institution Name is not verified in Activity Alert on Institution Page.");
+											sa.assertTrue(false,
+													"Institution Name is not verified in Activity Alert on Institution Page.");
+										}
+										if (cp.getContactActivityAlertEmailIdtext(30).getText().trim()
+												.contains(M10Contact1EmailId)) {
+											appLog.info("Email ID is verified.");
+										} else {
+											appLog.info("Email ID is not verified.");
+											sa.assertTrue(false, "Email ID is not verified.");
+										}
+										if (cp.getContactActivityAlertCreatedByText(30).getText().trim()
+												.contains(CRMUser1LastName)) {
+											appLog.info("Created By text is verified.");
+										} else {
+											appLog.info("Created By text is not verified.");
+											sa.assertTrue(false, "Created By text is not verified.");
+										}
+										if (cp.getAccountActivityAlertNameText(30).getText().trim()
+												.contains(M10Contact1LastName)) {
+											appLog.info("Name text is verified.");
+										} else {
+											appLog.info("Name text is not verified.");
+											sa.assertTrue(false, "Name text is not verified.");
+										}
+										String createdByDate = cp.getContactActivityAlertCreatedByDate(60).getText().trim();
+										if (bp.verifyDate(createdByDate, "Created Date")) {
+											appLog.info("Cretaed by date is verified");
+										} else {
+											appLog.info("Created by date is not verified");
+											sa.assertTrue(false, "Created by date is not verified");
+										}
+										if (cp.getContactActivityAlertLastModifiedName(30).getText().trim()
+												.contains(CRMUser1LastName)) {
+											appLog.info("Name text is verified.");
+										} else {
+											appLog.info("Name text is not verified.");
+											sa.assertTrue(false, "Name text is not verified.");
+										}
+										String lastModifiedDate = cp.getContactActivityAlertLastModifiedDate(60).getText()
+												.trim();
+										if (bp.verifyDate(lastModifiedDate, "Last Modified Date")) {
+											appLog.info("Last Modified Date is verified");
+										} else {
+											appLog.info("Last Modified Date is not verified");
+											sa.assertTrue(false, "Last Modified Date is not verified");
+										}
+									} else {
+										appLog.info("Not able to click on activity alert subject link");
+										sa.assertTrue(false, "Not able to click on activity alert subject link");
+									}
+								}
+								else {
+									appLog.error("could not click on view all on activity history");
+									sa.assertTrue(false,"could not click on view all on activity history" );
+								}
 							}
-							if (click(driver, cp.getContactAcitivityAlertSubjectLink(30),
-									"Contact Activity Alert Subject Link", action.SCROLLANDBOOLEAN)) {
-								if (cp.getContactAcitivityAlertAssignedToEmailText(30).getText().trim()
-										.contains(CRMUser1LastName)) {
-									appLog.info("Assigned To user name is verified.");
-								} else {
-									appLog.info("Assigned To user name is not verified.");
-									sa.assertTrue(false, "Assigned To user name is not verified.");
-								}
-								if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-										.contains("Invitation from")) {
-									appLog.info("Subject Text is  verified.");
-								} else {
-									appLog.info("Subject Text is not verified.");
-									sa.assertTrue(false, "Subject Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-										.contains(Org1FirmName)) {
-									appLog.info("Subject Text is  verified.");
-								} else {
-									appLog.info("Subject Text is not verified."+cp.getContactAcitivityAlertSubjectText(30).getText().trim()+" and "+Org1FirmName);
-									sa.assertTrue(false, "Subject Text is not verified.");
-								}
-								String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
-								if (bp.verifyDate(date, "Due")) {
-									appLog.info("Due Date is verified.");
-								} else {
-									appLog.info("Due Date is not verified. Actual Result: " + date);
-									sa.assertTrue(false, "Due Date is not verified. Actual Result: " + date);
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains("Subject:")) {
-									appLog.info("Comments Text is verified.");
-								} else {
-									appLog.info("Comments Text is not verified.");
-									sa.assertTrue(false, "Comments Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("Invitation from " + Org1FirmName)) {
-									appLog.info("Comments subject Text is verified.");
-								} else {
-									appLog.info("Comments subject Text is not verified.."+cp.getContactAcitivityAlertCommentsText(30).getText().trim()+" and "+Org1FirmName);
-									sa.assertTrue(false, "Comments subject Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("Hello " + M10Contact1FirstName)) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("You have been granted access to Potential investments of "
-												+ M10FundName1 + " by")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("If you have not yet registered, Click here to register.")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("If you have already registered, Click here to login.")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains(
-										"If you believe this has been sent in error, or if you cannot login, please contact")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactActivityAlertStatusText(30).getText().trim().contains("Completed")) {
-									appLog.info("Status text is verified.");
-								} else {
-									appLog.info("Status text is not verified.");
-									sa.assertTrue(false, "Status text is not verified.");
-								}
-								if (cp.getContactActivityAlertPriorityText(30).getText().trim().contains("Normal")) {
-									appLog.info("Priority text is verified.");
-								} else {
-									appLog.info("Priority text is not verified.");
-									sa.assertTrue(false, "Priority text is not verified.");
-								}
-								if (cp.getAccountActivityAlertRelatedToText(60).getText().trim()
-										.contains(M10Institution1)) {
-									appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
-								} else {
-									appLog.info(
-											"Institution Name is not verified in Activity Alert on Institution Page.");
-									sa.assertTrue(false,
-											"Institution Name is not verified in Activity Alert on Institution Page.");
-								}
-								if (cp.getContactActivityAlertEmailIdtext(30).getText().trim()
-										.contains(M10Contact1EmailId)) {
-									appLog.info("Email ID is verified.");
-								} else {
-									appLog.info("Email ID is not verified.");
-									sa.assertTrue(false, "Email ID is not verified.");
-								}
-								if (cp.getContactActivityAlertCreatedByText(30).getText().trim()
-										.contains(CRMUser1LastName)) {
-									appLog.info("Created By text is verified.");
-								} else {
-									appLog.info("Created By text is not verified.");
-									sa.assertTrue(false, "Created By text is not verified.");
-								}
-								if (cp.getAccountActivityAlertNameText(30).getText().trim()
-										.contains(M10Contact1LastName)) {
-									appLog.info("Name text is verified.");
-								} else {
-									appLog.info("Name text is not verified.");
-									sa.assertTrue(false, "Name text is not verified.");
-								}
-								String createdByDate = cp.getContactActivityAlertCreatedByDate(60).getText().trim();
-								if (bp.verifyDate(createdByDate, "Created Date")) {
-									appLog.info("Cretaed by date is verified");
-								} else {
-									appLog.info("Created by date is not verified");
-									sa.assertTrue(false, "Created by date is not verified");
-								}
-								if (cp.getContactActivityAlertLastModifiedName(30).getText().trim()
-										.contains(CRMUser1LastName)) {
-									appLog.info("Name text is verified.");
-								} else {
-									appLog.info("Name text is not verified.");
-									sa.assertTrue(false, "Name text is not verified.");
-								}
-								String lastModifiedDate = cp.getContactActivityAlertLastModifiedDate(60).getText()
-										.trim();
-								if (bp.verifyDate(lastModifiedDate, "Last Modified Date")) {
-									appLog.info("Last Modified Date is verified");
-								} else {
-									appLog.info("Last Modified Date is not verified");
-									sa.assertTrue(false, "Last Modified Date is not verified");
-								}
-							} else {
-								appLog.info("Not able to click on activity alert subject link");
-								sa.assertTrue(false, "Not able to click on activity alert subject link");
-							}
+						else {
+							appLog.error("related tab is not clickable");
+							sa.assertTrue(false, "related tab is not clickable");
+						}
 							driver.close();
 							driver.switchTo().window(parentID);
 
@@ -2844,7 +2868,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		String investormailcontent = null;
 		try {
 			investormailcontent = new EmailLib().getInvestorMailContent("invitationMail", gmailUserName, gmailPassword,
@@ -3091,7 +3115,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -3566,7 +3590,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able ot click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -3931,7 +3955,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able ot click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -4217,7 +4241,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		String investormailcontent = null;
 		try {
 			investormailcontent = new EmailLib().getInvestorCustomMailContent("InvitationMail", gmailUserName,
@@ -4280,7 +4304,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -4667,7 +4691,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		String investormailcontent = null;
 		ThreadSleep(2000);
 		try {
@@ -5116,7 +5140,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -5186,7 +5210,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 		
@@ -5371,7 +5395,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -5831,7 +5855,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -6167,7 +6191,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -7218,7 +7242,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -7875,7 +7899,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		String investormailcontent = null;
 		try {
 			investormailcontent = new EmailLib().getInvestorMailContent("invitationMail", gmailUserName, gmailPassword,
@@ -8435,7 +8459,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able ot click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -8800,7 +8824,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able ot click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -9087,7 +9111,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		String investormailcontent = null;
 		try {
 			investormailcontent = new EmailLib().getInvestorCustomMailContent("InvitationMail", gmailUserName,
@@ -9499,7 +9523,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		String investormailcontent = null;
 		ThreadSleep(2000);
 		try {
@@ -9729,7 +9753,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 		
@@ -9769,7 +9793,7 @@ public class Module10 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on funds tab");
 			}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -9828,7 +9852,7 @@ public class Module10 extends BaseLib {
 		sa.assertTrue(false, "Not able to click on funds tab");
 	}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 		
@@ -9924,7 +9948,7 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();		
+		lp.CRMlogout(environment, mode);		
 		sa.assertAll();		
 	}
 	
@@ -9937,7 +9961,7 @@ public class Module10 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		saa1=bp.postCondition();
 		sa.combineAssertions(saa1);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 		}
 }

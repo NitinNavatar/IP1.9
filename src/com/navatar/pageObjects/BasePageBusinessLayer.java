@@ -348,7 +348,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					for(int K=0; K<20; K++) {
 						if(nim.getNIMTabParentFrame_Lightning()!=null) {
 							ThreadSleep(3000);
-							switchToFrame(driver, 5, nim.getNIMTabParentFrame_Lightning());
+							switchToFrame(driver, 2, nim.getNIMTabParentFrame_Lightning());
 							if (nim.getNIMTabFrame(2) != null) {
 								appLog.info("NIM  Parent Frame is Loaded Successfully.");
 								switchToFrame(driver, 30, nim.getNIMTabFrame(30));
@@ -3344,7 +3344,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (clickOnTab(TabName.NIMTab)) {
 			if (manageApproval == EnableDisable.Enable) {
 				appLog.info("enabling manage approval");
-				switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 				if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 					if (np.clickOnEditIcon()) {
 						if (!isSelected(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.Edit), "checkbox to tick manage approvals")) {
@@ -3388,14 +3388,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (manageApproval == EnableDisable.Disable){
 				appLog.info("disabling manage approval");
-				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 				flag1 = np.deactivateManageApprovalsSetting();
 				switchToDefaultContent(driver);
 
 			}
 			if (watermarking == EnableDisable.Enable) {
 				appLog.info("enabling watermarking");
-				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 				if (np.clickOnSideMenusTab(sideMenu.Watermarking)) {
 					if (!isSelected(driver, np.getWatermarkingActivateCheckbox(60), "Watermarking Activate checkbox")) {
 						if ( np.clickOnEditIcon()) {
@@ -3431,7 +3431,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (watermarking == EnableDisable.Disable){
 				appLog.info("deactivating watermarking setting");
-				switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 				flag2 = np.deactivateWatermarkingSetting();
 				switchToDefaultContent(driver);
 			}
@@ -3439,7 +3439,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		appLog.info("providing access to user "+userName);
 		String[] users = userName.split("<break>");
 		for (int i = 0; i < users.length; i++) {
-			switchToFrame(driver, 30, getFrame( PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 			if (np.clickOnSideMenusTab(sideMenu.InternalUsers)) {
 				switchToDefaultContent(driver);
 				if (np.giveAccessToUserInNIMTabFromAdmin(users[i], access)) {
@@ -3458,7 +3458,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		for(int k =0;k<mailId.length;k++){
 		lp.CRMLogin(mailId[k], adminPassword);
 		 if(np.clickOnTab(TabName.NIMTab)){
-			 switchToFrame(driver, 30, np.getNIMTabFrame(30));
+			 switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 			 if(click(driver, np.getRegistrationSuccessfulCloseBtn(60), "Registration successful popup close button", action.SCROLLANDBOOLEAN)){
 				 appLog.info("clicked on registration successful popup close button");
 			 }else{
@@ -5532,6 +5532,144 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return false;
 	}
 	
+	
+	public boolean clickOnViewAllRelatedList(String environment,String mode, RelatedList RelatedList) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if (clickOnRelatedList_Classic(environment, RelatedList)) {
+				return true;
+			}
+		} else {
+			String relatedList = null;
+			WebElement ele;
+			switch (RelatedList) {
+			case Fundraising_Contacts:
+				relatedList = "Fundraising Contacts";
+				break;
+			case Office_Locations:
+				relatedList = "Office Locations";
+				break;
+			case Affiliations:
+				relatedList = "Affiliations";
+				break;
+			case Activities:
+				relatedList = "Activities";
+				break;
+			case Activity_History:
+				relatedList = "Activity History";
+				break;	
+			case Deals_Sourced:
+				relatedList = "Deals Sourced";
+				break;
+			case Partnerships:
+				relatedList = "Partnerships";
+				break;
+			case FundDrawdown:
+				relatedList = "Fund Drawdown";
+				break;
+			case FundDistribution:
+				relatedList = "Fund Distribution";
+				break;
+			case CapitalCalls:
+				relatedList = "Capital Calls";
+				break;
+			case InvestorDistributions:
+				relatedList = "Investor Distributions";
+				break;	
+			case Pipeline_Stage_Logs:
+				relatedList = "Pipeline Stage Logs";
+				break;
+			case Correspondence_Lists:
+				relatedList = "Correspondence Lists";
+				break;
+			case Commitments:
+				relatedList = "Commitments";
+				break;
+			default:
+				return false;
+			}
+			ThreadSleep(2000);
+			System.err.println("Passed switch statement");
+		
+				
+				ele = isDisplayed(driver, FindElement(driver, "//span[text()='"+relatedList+"']/ancestor::article//span[text()='View All']", relatedList,
+						action.SCROLLANDBOOLEAN, 10), "visibility", 10, relatedList);
+				if (ele != null) {
+					if (click(driver, ele, relatedList, action.SCROLLANDBOOLEAN)) {
+						CommonLib.log(LogStatus.INFO, "Related List found : "+relatedList, YesNo.No);
+						ThreadSleep(2000);
+						return true;
+					}
+				}
+			
+		}
+		
+
+		return false;
+	}
+
+	public boolean clickOnRelatedList_Classic(String environment, RelatedList RelatedList) {
+		String relatedList = null;
+		WebElement ele;
+		switch (RelatedList) {
+		case Fundraising_Contacts:
+			relatedList = "Fundraising Contacts";
+			break;
+		case Office_Locations:
+			relatedList = "Office Locations";
+			break;
+		case Open_Activities:
+			relatedList = "Open Activities";
+			break;
+		case Fundraisings:
+			relatedList = "Fundraisings";
+			break;
+		case FundDrawdown:
+			relatedList = "Fund Drawdown";
+			break;
+		case CapitalCalls:
+			relatedList = "Capital Calls";
+			break;
+		case Affiliations:
+			relatedList = "Affiliations";
+			break;
+		case Activities:
+			relatedList = "Activities";
+			break;
+		case Activity_History:
+			relatedList = "Activity History";
+			break;
+		case Commitments:
+			relatedList = "Commitments";
+			break;
+		case Partnerships:
+			relatedList = "Partnerships";
+			break;
+		case Deals_Sourced:
+			relatedList = "Deals Sourced";
+			break;
+		case Pipeline_Stage_Logs:
+			relatedList = "Pipeline Stage Logs";
+			break;
+			
+		default:
+			return false;
+		}
+		ThreadSleep(2000);
+		System.err.println("Passed switch statement");
+		
+			ele = isDisplayed(driver, FindElement(driver, "//span[@class='listTitle'][text()='"+relatedList+"']", relatedList,
+					action.SCROLLANDBOOLEAN, 10), "visibility", 10, relatedList);
+			if (ele != null) {
+				if (click(driver, ele, relatedList, action.SCROLLANDBOOLEAN)) {
+					CommonLib.log(LogStatus.INFO, "Related List found : "+relatedList, YesNo.No);
+					ThreadSleep(2000);
+					return true;
+				}
+			}
+		
+
+		return false;
+	}
 	
 	public boolean clickOnGridSection_Lightning(String environment,String mode,RelatedList gridSectionName ,int timeOut) {
 		WebElement ele = null;

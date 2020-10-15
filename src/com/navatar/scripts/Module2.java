@@ -11,6 +11,9 @@ import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
+import com.navatar.generic.CommonLib.CreationPage;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -45,6 +48,7 @@ import com.navatar.pageObjects.NIMPageErrorMessage;
 import com.navatar.pageObjects.NavatarInvestorAddOnsErrorMessage;
 import com.navatar.pageObjects.NavatarInvestorAddonsPageBusinessLayer;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
+import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
@@ -86,12 +90,8 @@ public class Module2 extends BaseLib{
 //		bp = new BasePageBusinessLayer(driver);
 //		np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
-		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
-			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-				ThreadSleep(3000);
-				switchToFrame(driver, 20, np.getSetUpPageIframe(20));
-			}
-			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
+		if (bp.clickOnTab(TabName.NIMTab)) {
+			switchToFrame(driver, 10, np.getFrame( PageName.NavatarInvestorManager, 10));
 			if (np.clickOnSideMenusTab(sideMenu.Profiles)){
 				if (np.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
 					String firm_name = np.getFirmName(60).getText().trim();
@@ -108,7 +108,7 @@ public class Module2 extends BaseLib{
 
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 	
 		sa.assertAll();	
 	}
@@ -132,7 +132,7 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			ip.createInstitution(M2Institution1);
+			ip.createInstitution(environment,mode,M2Institution1,"Institution",null,null);
 		}
 		else {
 			appLog.error("Institutions Tab is not clickable");
@@ -143,7 +143,7 @@ public class Module2 extends BaseLib{
 		M2Contact2EmailID = cp.generateRandomEmailId();
 		
 		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.createContact(M2Contact1First, M2Contact1Last, M2Contact1Inst, M2Contact1EmailID)) {
+			if (cp.createContact(environment,mode,M2Contact1First, M2Contact1Last, M2Contact1Inst, M2Contact1EmailID,null,null,CreationPage.ContactPage)) {
 				ExcelUtils.writeData(M2Contact1EmailID, "Contacts", excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
 				appLog.info("Contact "+M2Contact1Last+" was successfully created");
 			}
@@ -155,7 +155,7 @@ public class Module2 extends BaseLib{
 			sa.assertTrue(false,"Contacts tab is not clickable");
 		}
 		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.createContact(M2Contact2First, M2Contact2Last, M2Contact2Inst, M2Contact2EmailID)) {
+			if (cp.createContact(environment,mode,M2Contact2First, M2Contact2Last, M2Contact2Inst, M2Contact2EmailID,null,null,CreationPage.ContactPage)) {
 				ExcelUtils.writeData(M2Contact2EmailID, "Contacts", excelLabel.Variable_Name, "M2Contact2", excelLabel.Contact_EmailId);
 				appLog.info("Contact "+M2Contact2Last +" was successfully created");
 			}
@@ -168,7 +168,7 @@ public class Module2 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.FundsTab)){
-		if (fp.createFund(M2Fund1Name,M2Fund1Type, M2Fund1InvCategory)) {
+		if (fp.createFund(environment,mode,M2Fund1Name,M2Fund1Type, M2Fund1InvCategory,null,null)) {
 			appLog.info("New fund "+M2Fund1Name+ " was successfully created");
 		}
 		else {
@@ -180,7 +180,7 @@ public class Module2 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-		if (frp.createFundRaising(M2Fundraising1, M2Fundraising1Fund, M2Fundraising1Inst)) {
+		if (frp.createFundRaising(environment,mode,M2Fundraising1, M2Fundraising1Fund, M2Fundraising1Inst)) {
 			appLog.info("Fundraising "+ M2Fundraising1+ " was successfully created");
 		}
 		else {
@@ -192,7 +192,7 @@ public class Module2 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-		if (ip.createLimitedPartner(M2LP1, M2LP1Inst)) {
+		if (ip.createInstitution(environment, mode,M2LP1,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M2LP1Inst)) {
 			appLog.info(M2LP1+ " limited partner was successfully created");
 		}
 		else {
@@ -202,28 +202,8 @@ public class Module2 extends BaseLib{
 		else {
 			sa.assertTrue(false, "Institution tab is not clickable");
 		}
-		
-		
-		
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			
-			if (bp.clickOnTab(TabName.PartnershipsTab)) {
-				if (pp.createPartnership(M2Partnership1Name, M2Partnership1Fund)) {
-					appLog.info("Partnership is created successfully");
-				} else {
-					appLog.info("Partnership is not created successfully");
-					sa.assertTrue(false, "Partnership is not created successfully");
-				}
-			} else {
-				appLog.info("Not able to click on Partnership tab so we cannot create Partnership");
-				sa.assertTrue(false, "Not able to click on Partnership tab so we cannot create Partnership");
-			}
-		}else{
 		if (bp.clickOnTab(TabName.PartnershipsTab)) {
-			if (pp.createPartnership(M2Partnership1Name, M2Partnership1Fund)) {
+			if (pp.createPartnership(environment, mode,M2Partnership1Name, M2Partnership1Fund)) {
 				appLog.info("Partnership is created successfully");
 			} else {
 				appLog.info("Partnership is not created successfully");
@@ -233,37 +213,18 @@ public class Module2 extends BaseLib{
 			appLog.info("Not able to click on Partnership tab so we cannot create Partnership");
 			sa.assertTrue(false, "Not able to click on Partnership tab so we cannot create Partnership");
 		}
-		}
 		
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			ThreadSleep(1000);
-			 if (bp.clickOnTab(TabName.CommitmentsTab)) {
-				if (cmp.createCommitment(M2Commitment1LP, M2Commitment1Partnership, "M1Commitment1", null)) {
-					appLog.info("Commitment is created successfully");
-				} else {
-					appLog.error("Commitment is not created successfully");
-					sa.assertTrue(false, "Commitment is not created successfully");
-				}
-			} else {
-				appLog.error("Not able to click on Commitment tab so we cannot create Commitment");
-				sa.assertTrue(false, "Not able to click on Commitment tab so we cannot create Commitment");
-			}
-	
-		}else{		
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M2Commitment1LP, M2Commitment1Partnership, "M1Commitment1", null)) {
+			if (cmp.createCommitment(environment, mode,M2Commitment1LP, M2Commitment1Partnership, "M2Commitment1", null)) {
 				appLog.info("Commitment is created successfully");
 			} else {
 				appLog.error("Commitment is not created successfully");
 				sa.assertTrue(false, "Commitment is not created successfully");
 			}
 		} 
-		}
 		
-		lp.CRMlogout();
+		
+		lp.CRMlogout(environment,mode);;
 		sa.assertAll();
 	}
 	@Test
@@ -333,7 +294,7 @@ public class Module2 extends BaseLib{
 			appLog.error( "funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 		sa.assertAll();
 	}
 	@Test
@@ -378,7 +339,7 @@ public class Module2 extends BaseLib{
 			appLog.error("Funds tab is not clickable");
 			sa.assertTrue(false, "Funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 		sa.assertAll();
 	}
 	
@@ -998,49 +959,79 @@ public class Module2 extends BaseLib{
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		
+		String parentWindow=null;
 		SoftAssert saa = new SoftAssert();
 		String passwordResetLink=null;
-		String Org2Admin = ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2Admin", excelLabel.User_Email);
+		String addRemoveTabName="Partnerships"+","+"Commitments"+","+"Navatar Investor Manager";
 		String Org2User1Last = ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2User1", excelLabel.User_Last_Name);
 		String Org2User1First= ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2User1", excelLabel.User_First_Name);
 		String Org2AdminLast = ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2Admin", excelLabel.User_Last_Name);
 		String Org2AdminFirst= ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2Admin", excelLabel.User_First_Name);
-		String org2adminPassword = ExcelUtils.readDataFromPropertyFile("passwordOrg2");
-		
-		lp.CRMLogin(Org2Admin, org2adminPassword);
-		
+		boolean flag = false;
+		lp.CRMLogin(superAdminOrg2UserName,adminPasswordOrg2);
 		//Org2 creating user from admin
 		String UserLastName = Org2User1Last + bp.generateRandomNumber();
 		ExcelUtils.writeData(UserLastName, "Users", excelLabel.Variable_Name, "Org2User1", excelLabel.User_Last_Name);
 		cv = new CommonVariables(this);
-		if (bp.createPEUser(Org2User1First, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,
-				CRMUserProfile)) {
-			appLog.info("Org2 User 1 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org2User1", excelLabel.User_Email);
-		} else {
-			appLog.info("PE User1 is not created successfully");
-			saa.assertTrue(false, "PE User1 is not created successfully");
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						}
+					}
+					if (bp.createPEUser(environment, mode, Org2User1First, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,CRMUserProfile)) {
+						appLog.info("Org2 User 1 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+							System.err.println(">>><<<<<<<<<<<<");
+						}
+						String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
+								"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
+						ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org2User1", excelLabel.User_Email);
+						flag = true;
+						break;
+						
+					}
+				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
 		}
-		Org2User1Last = UserLastName;
-		//installing pe package for user1
-		if (bp.installedPackages(Org2User1First, Org2User1Last)) {
-			appLog.info("Install package is done for PE User 1 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 1 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 1 succesfully");
+		if (flag) {
+			Org2User1Last = UserLastName;
+			if (bp.installedPackages(environment, mode,Org2User1First, Org2User1Last)) {
+				appLog.info("PE Package is installed Successfully in CRM User1: " + Org2User1First + " "+ Org2User1Last);
+			} else {
+				appLog.error(
+						"Not able to install PE package in CRM User1: " + Org2User1First + " "+ Org2User1Last);
+				sa.assertTrue(false,
+						"Not able to install PE package in CRM User1: " + Org2User1First + " "+ Org2User1Last);
+			}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else{
+			appLog.error("could not create CRM User so cannot installed Package and set password of created user");
+			sa.assertTrue(false,"could not create CRM User so cannot installed Package and set password of created user");
+
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",gmailUserName,gmailPassword);
 		} catch (InterruptedException e2) {
 			e2.printStackTrace();
 		}
@@ -1048,39 +1039,19 @@ public class Module2 extends BaseLib{
 		driver.get(passwordResetLink);
 		if (bp.setNewPassword()) {
 			appLog.info("Password is set successfully for user1");
+			if (lp.addTab_Lighting(mode, addRemoveTabName, 5)) {
+				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+				sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+			}	
 		} else {
 			appLog.info("Password is not set for user1");
 			saa.assertTrue(false, "Password is not set for user1");
 		}
-		if (bp.getSalesForceLightingIcon(20) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		if (bp.getNavatarInvestorManagerTab(20) == null) {
-			bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if (bp.getNavatarInvestorManagerTab(20) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
-			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
-			}
-		}
-		String userNameAtTab = getAttribute(driver, bp.getUserNameAtUserMenuTab(60), "User Name At User Menu Tab",
-				"title");
-		String userName = trim(userNameAtTab);
-		saa.assertTrue(userName.contains(Org2User1Last), "PE User name is  not verified.");
-		ThreadSleep(1000);
-		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 		driver.close();
-		
-		
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		config(browserToLaunch);
 		frp = new FundRaisingPageBusinessLayer(driver);
 		fp = new FundsPageBusinessLayer(driver);
 		ip = new InstitutionPageBusinessLayer(driver);
@@ -1090,22 +1061,18 @@ public class Module2 extends BaseLib{
 		np = new NIMPageBusinessLayer(driver);
 		lp = new LoginPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(Org2Admin, org2adminPassword);
+		lp.CRMLogin(superAdminOrg2UserName,adminPasswordOrg2);
 		//org2 admin nim access for itself
-		String adminRegOrNot = ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2Admin", excelLabel.Registered);
-		
 		if (bp.clickOnTab(TabName.NIMTab)) {
-			if (adminRegOrNot.contains("Not")) {
-			if (np.NIMRegistration(userType.SuperAdmin, Org2AdminFirst, Org2AdminLast)) {
-				appLog.info("ip access was given succesfully to admin ");
-				if (ExcelUtils.writeData("Registered", "Users", excelLabel.Variable_Name, "Org2Admin", excelLabel.Registered)) {
-					appLog.info("written registered for "+Org2Admin+" in excel");
+			if (superAdminRegisteredOrg2.contains("No")) {
+				if (np.NIMRegistration(userType.SuperAdmin, Org2AdminFirst, Org2AdminLast)) {
+					appLog.info("ip access was given succesfully to admin ");
+					if (ExcelUtils.writeData("Registered", "Users", excelLabel.Variable_Name, "Org2Admin", excelLabel.Registered)) {
+						appLog.info("written registered for "+superAdminOrg2UserName+" in excel");
+					}
 				}
-			}
-			}
-			else if(adminRegOrNot.contains("Registered"))
-			{
-				appLog.info("admin is already registered for ip access");
+			}else{
+				appLog.info("super admin org2 is already registered for ip access");
 			}
 			//giving access to user
 			if (np.giveAccessToUserInNIMTabFromAdmin(Org2User1First+ " " + Org2User1Last, accessType.InternalUserAccess)) {
@@ -1116,10 +1083,11 @@ public class Module2 extends BaseLib{
 			}
 			
 			 //writing org2 firm name to excel
-			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
+				switchToFrame(driver, 5, bp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
+				switchToFrame(driver, 10, np.getFrame( PageName.NavatarInvestorManager, 10));
 				if (np.clickOnSideMenusTab(sideMenu.Profiles)){
 					if (np.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {
-						String firm_name = np.getFirmName(60).getText().trim();
+						String firm_name = np.getFirmName(30).getText().trim();
 						ExcelUtils.writeData(firm_name, "Users", excelLabel.Variable_Name, "Org2Admin", excelLabel.Firm_Name);
 						appLog.info("firm name "+firm_name+" is successfully written to excel");
 					}
@@ -1131,16 +1099,12 @@ public class Module2 extends BaseLib{
 					sa.assertTrue(false, "profile side menu is not cllickable on nim page");
 				}
 				switchToDefaultContent(driver);
-			
-			
-		}
-		else {
+		}else {
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
-		
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		frp = new FundRaisingPageBusinessLayer(driver);
@@ -1153,30 +1117,20 @@ public class Module2 extends BaseLib{
 		lp = new LoginPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		cv = new CommonVariables(this);
-		
 		String M2Contact1EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact1", excelLabel.Contact_EmailId);
 		String M2Contact2EmailID = ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M2Contact2", excelLabel.Contact_EmailId);
-		String Org2User1EmailID = ExcelUtils.readData("Users",excelLabel.Variable_Name, "Org2User1", excelLabel.User_Email);
-		
 		//Email id read from excel
-		lp.CRMLogin(Org2User1EmailID, adminPassword);
-		if(bp.removeUnusedTabs()){
-			appLog.info("Unused tabs remove successfully");
-		}else{
-			appLog.info("Unused tabs not removed successfully");
-			saa.assertTrue(false, "Unused tabs not removed successfully");
-		}
+		lp.CRMLogin(Org2CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			ip.createInstitution(M2Institution1);
+			ip.createInstitution(environment, mode,M2Institution1,"Institution",null,null);
 		}
 		else {
 			appLog.error("Institutions Tab is not clickable");
+			sa.assertTrue(false, "Institutions Tab is not clickable");
 		}
-		
-		
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			//M2C1 email will be same as M2C1 of org1
-			if (cp.createContact(M2Contact1First, M2Contact1Last, M2Contact1Inst, M2Contact1EmailID)) {
+			if (cp.createContact(environment,mode,M2Contact1First, M2Contact1Last, M2Contact1Inst, M2Contact1EmailID,null,null,CreationPage.ContactPage)) {
 				appLog.info("Contact "+M2Contact1Last+" was successfully created");
 			}
 			else {
@@ -1188,7 +1142,7 @@ public class Module2 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			//M2C2 email will be same as M2C2 of org1
-			if (cp.createContact(M2Contact2First, M2Contact2Last, M2Contact2Inst, M2Contact2EmailID)) {
+			if (cp.createContact(environment,mode,M2Contact2First, M2Contact2Last, M2Contact2Inst, M2Contact2EmailID,null,null,CreationPage.ContactPage)) {
 				appLog.info("Contact "+M2Contact2Last +" was successfully created");
 			}
 			else {
@@ -1200,7 +1154,7 @@ public class Module2 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.FundsTab)){
-		if (fp.createFund(M2Fund1Name,M2Fund1Type, M2Fund1InvCategory)) {
+		if (fp.createFund(environment,mode,M2Fund1Name,M2Fund1Type, M2Fund1InvCategory,null,null)) {
 			appLog.info("New fund "+M2Fund1Name+ " was successfully created");
 		}
 		else {
@@ -1212,7 +1166,7 @@ public class Module2 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-		if (frp.createFundRaising(M2Fundraising1, M2Fundraising1Fund, M2Fundraising1Inst)) {
+		if (frp.createFundRaising(environment,mode,M2Fundraising1, M2Fundraising1Fund, M2Fundraising1Inst)) {
 			appLog.info("Fundraising "+ M2Fundraising1+ " was successfully created");
 		}
 		else {
@@ -1224,7 +1178,7 @@ public class Module2 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-		if (ip.createLimitedPartner(M2LP1, M2LP1Inst)) {
+		if (ip.createInstitution(environment,mode,M2LP1,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M2LP1Inst)) {
 			appLog.info(M2LP1+ " limited partner was successfully created");
 		}
 		else {
@@ -1234,26 +1188,8 @@ public class Module2 extends BaseLib{
 		else {
 			sa.assertTrue(false, "Institution tab is not clickable");
 		}
-		
-		WebElement ele=FindElement(driver, "//a[contains(@title,'Partnerships')]", "Partnerships tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			bp.addRemoveCustomTab("Partnerships", customTabActionType.Add);
-			
-			if (bp.clickOnTab(TabName.PartnershipsTab)) {
-				if (pp.createPartnership(M2Partnership1Name, M2Partnership1Fund)) {
-					appLog.info("Partnership is created successfully");
-				} else {
-					appLog.info("Partnership is not created successfully");
-					sa.assertTrue(false, "Partnership is not created successfully");
-				}
-			} else {
-				appLog.info("Not able to click on Partnership tab so we cannot create Partnership");
-				sa.assertTrue(false, "Not able to click on Partnership tab so we cannot create Partnership");
-			}
-		}else{
 		if (bp.clickOnTab(TabName.PartnershipsTab)) {
-			if (pp.createPartnership(M2Partnership1Name, M2Partnership1Fund)) {
+			if (pp.createPartnership(environment,mode,M2Partnership1Name, M2Partnership1Fund)) {
 				appLog.info("Partnership is created successfully");
 			} else {
 				appLog.info("Partnership is not created successfully");
@@ -1263,37 +1199,14 @@ public class Module2 extends BaseLib{
 			appLog.info("Not able to click on Partnership tab so we cannot create Partnership");
 			sa.assertTrue(false, "Not able to click on Partnership tab so we cannot create Partnership");
 		}
-		}
-		
-		ele=FindElement(driver, "//a[contains(@title,'Commitments')]", "Commitments tab",
-				action.SCROLLANDBOOLEAN, 10);
-		if(ele==null){
-			bp.addRemoveCustomTab("Commitments", customTabActionType.Add);
-			ThreadSleep(1000);
-			 if (bp.clickOnTab(TabName.CommitmentsTab)) {
-				if (cmp.createCommitment(M2Commitment1LP, M2Commitment1Partnership, "M1Commitment1", null)) {
-					appLog.info("Commitment is created successfully");
-				} else {
-					appLog.info("Commitment is not created successfully");
-					sa.assertTrue(false, "Commitment is not created successfully");
-				}
-			} else {
-				appLog.info("Not able to click on Commitment tab so we cannot create Commitment");
-				sa.assertTrue(false, "Not able to click on Commitment tab so we cannot create Commitment");
-			}
-	
-		}else{		
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M2Commitment1LP, M2Commitment1Partnership, "M1Commitment1", null)) {
+			if (cmp.createCommitment(environment,mode,M2Commitment1LP, M2Commitment1Partnership, "M2Commitment1", null)) {
 				appLog.info("Commitment is created successfully");
 			} else {
 				appLog.info("Commitment is not created successfully");
 				sa.assertTrue(false, "Commitment is not created successfully");
 			}
 		} 
-		}
-		
-		//user registering for IP access
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			if (np.NIMRegistration(userType.CRMUser, Org2User1First, Org2User1Last)) {
 				appLog.info("user has successfully registered itself for ip access");
@@ -1306,7 +1219,7 @@ public class Module2 extends BaseLib{
 			appLog.error("Cannot click on Nim tab");
 			sa.assertTrue(false, "cannot click on nim tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 		sa.assertAll();
 	}
 	
@@ -1369,7 +1282,7 @@ public class Module2 extends BaseLib{
 	else {
 		sa.assertTrue(false, "funds tab is not clickable");
 	}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 	sa.assertAll();
 			}
 	@Test	
@@ -1412,7 +1325,7 @@ public class Module2 extends BaseLib{
 		else {
 			sa.assertTrue(false, "Funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 		sa.assertAll();
 	}
 	@Test
@@ -1452,7 +1365,7 @@ public class Module2 extends BaseLib{
 			e.printStackTrace();
 		}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);;
 		//closing browser and opening investor portal
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
@@ -1586,7 +1499,7 @@ public class Module2 extends BaseLib{
 					if (click(driver, lp.getInvestorLoginButton(60), "investor login button", action.BOOLEAN)) {
 						if (getSelectedOptionOfDropDown(driver, af.getFirmNameDropdown(60), "Firm name dropdown on investor all firms page", "text").contains(M2FirmName2)) {
 				appLog.info("firm 2 name is successfully verified on investor page after logging from firm 2 email link");
-					if (invFirm.getActivitiesCreatedOnLabel(60)!=null) {
+					if (invFirm.getActivitiesCreatedOnLabel(2)!=null) {
 					appLog.info("Recent Activities page is successfully displayed of firm 2");
 				}
 				else {
@@ -1597,9 +1510,9 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false, "firm name selected is not "+M2FirmName2);
 			}
 				//selecting firm 1 to check tab changed or not
-			if( selectVisibleTextFromDropDown(driver,af.getFirmNameDropdown(60) , "firm name dropdown on investor login", M2FirmName1))
+			if( selectVisibleTextFromDropDown(driver,af.getFirmNameDropdown(5) , "firm name dropdown on investor login", M2FirmName1))
 			{
-				if (invFirm.getActivitiesCreatedOnLabel(60)==null) {
+				if (invFirm.getActivitiesCreatedOnLabel(2)==null) {
 					appLog.info("All documents page is successfully opened of Firm 1 "+M2FirmName1);
 				}
 			}
