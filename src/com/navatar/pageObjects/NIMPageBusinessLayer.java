@@ -347,7 +347,7 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 	 * @return true/false
 	 */
 	public boolean giveAccessToUserInNIMTabFromAdmin(String userName, accessType access) {
-		switchToFrame(driver, 30, getNIMTabFrame(30));
+		switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 		//internal User Tab click
 		if (clickOnEditIcon()) {
 			if (access == accessType.InternalUserAccess) {
