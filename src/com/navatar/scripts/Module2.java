@@ -4,6 +4,7 @@
 package com.navatar.scripts;
 
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonVariables;
@@ -85,8 +86,11 @@ public class Module2 extends BaseLib{
 //		bp = new BasePageBusinessLayer(driver);
 //		np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
-		if (bp.clickOnTab(TabName.NIMTab)) {
-		 
+		if (bp.clickOnTab(environment, mode,TabName.NIMTab)) {
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				ThreadSleep(3000);
+				switchToFrame(driver, 20, np.getSetUpPageIframe(20));
+			}
 			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.Profiles)){
 				if (np.clickOnSideMenusTab(sideMenu.MyFirmProfile)) {

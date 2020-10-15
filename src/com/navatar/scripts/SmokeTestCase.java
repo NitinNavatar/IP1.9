@@ -3,7 +3,6 @@
  */
 package com.navatar.scripts;
 
-import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.SmokeCommonVariable.*;
 
@@ -73,7 +72,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc001_1_CreateCRMUser3(String environment, String mode) {
+	public void Smoketc001_1_CreateCRMUser3() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -128,7 +127,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc001_2_SuperAdminRegistration(String environment, String mode) {
+	public void Smoketc001_2_SuperAdminRegistration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -306,7 +305,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc002_1_CreateCRMUser1InstallPackageAndThenCreatePassword(String environment, String mode) {
+	public void Smoketc002_1_CreateCRMUser1InstallPackageAndThenCreatePassword() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -497,7 +496,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc002_2_provideAccesstoUser1(String environment, String mode) {
+	public void Smoketc002_2_provideAccesstoUser1() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
@@ -520,7 +519,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc002_3_user1CompleteRegistration(String environment, String mode) {
+	public void Smoketc002_3_user1CompleteRegistration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
@@ -542,7 +541,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc003_1_CreateCRMUser2InstallPackageAndThenCreatePassword(String environment, String mode) {
+	public void Smoketc003_1_CreateCRMUser2InstallPackageAndThenCreatePassword() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -733,7 +732,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc003_2_provideAccesstoUser2(String environment, String mode) {
+	public void Smoketc003_2_provideAccesstoUser2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName, SmokePassword);
@@ -764,7 +763,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc003_3_user2CompleteRegsitration(String environment, String mode) {
+	public void Smoketc003_3_user2CompleteRegsitration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser2Email, SmokePassword);
@@ -787,7 +786,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc004_createPreconditionData(String environment, String mode) {
+	public void Smoketc004_createPreconditionData() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -973,7 +972,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc005_1_buildFRWorkSpaceAndProvideContactAccess(String environment, String mode) {
+	public void Smoketc005_1_buildFRWorkSpaceAndProvideContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1197,7 +1196,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc006_inviteContactAndSendEmailToContact(String environment, String mode) {
+	public void Smoketc006_inviteContactAndSendEmailToContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String shrdfolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
@@ -1557,7 +1556,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc007_activateManageApprovalWatermarkingSettingAndUpdateProfilesInfo(String environment, String mode) {
+	public void Smoketc007_activateManageApprovalWatermarkingSettingAndUpdateProfilesInfo() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
@@ -1670,7 +1669,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc008_addRenameAndDeleteFolderFromManageFolder(String environment, String mode) {
+	public void Smoketc008_addRenameAndDeleteFolderFromManageFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath).split("<break>");
@@ -1768,7 +1767,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc009_addRemoveRenameInvestorFromManageInvestor(String environment, String mode) {
+	public void Smoketc009_addRemoveRenameInvestorFromManageInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1906,7 +1905,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc010_uploadDocumentCRMSide(String environment, String mode) {
+	public void Smoketc010_uploadDocumentCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -1961,7 +1960,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc011_importOnlineDocument(String environment, String mode) {
+	public void Smoketc011_importOnlineDocument() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -1994,7 +1993,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc012_1_approvePendingDocumentAndCheckUI(String environment, String mode) {
+	public void Smoketc012_1_approvePendingDocumentAndCheckUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2235,7 +2234,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc012_2_updateDocumentCRMSideAndCheckDuplicatePopUp(String environment, String mode) {
+	public void Smoketc012_2_updateDocumentCRMSideAndCheckDuplicatePopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -2352,7 +2351,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc013_registerInvestorAndCheckFolder(String environment, String mode) {
+	public void Smoketc013_registerInvestorAndCheckFolder() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2502,7 +2501,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" })
 	@Test 
-	public void Smoketc014_updateprofileAndFirmProfileInvestorSide(String environment, String mode) {
+	public void Smoketc014_updateprofileAndFirmProfileInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
@@ -2639,7 +2638,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc015_checkLinksOnHomePageAlert(String environment, String mode) {
+	public void Smoketc015_checkLinksOnHomePageAlert() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp=new HomePageBusineesLayer(driver);
@@ -2871,7 +2870,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc016_checkLinksOnFundDetailsPage(String environment, String mode) {
+	public void Smoketc016_checkLinksOnFundDetailsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3652,7 +3651,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc017_checkLinksOnContactDetailsPage(String environment, String mode) {
+	public void Smoketc017_checkLinksOnContactDetailsPage() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4105,7 +4104,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc018_checkLinkOnInstitutionPage(String environment, String mode) {
+	public void Smoketc018_checkLinkOnInstitutionPage() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4335,7 +4334,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc019_checkLinksOnNIMPage(String environment, String mode) {
+	public void Smoketc019_checkLinksOnNIMPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeCRMUser1Email,SmokePassword);
@@ -4493,7 +4492,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc020_checkLinksOnAllFirmsPage(String environment, String mode) {
+	public void Smoketc020_checkLinksOnAllFirmsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
 		InvestorFirmPageBusinesslayer inv = new InvestorFirmPageBusinesslayer(driver);
@@ -4627,7 +4626,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc021_checkLinksOnAllDocumentsAndRecentActivitiesGrid(String environment, String mode) {
+	public void Smoketc021_checkLinksOnAllDocumentsAndRecentActivitiesGrid() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfp= new AllFirmsPageBusinesslayer(driver);
 		InvestorFirmPageBusinesslayer ivp = new InvestorFirmPageBusinesslayer(driver);
@@ -4873,7 +4872,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc022_checkLinkInvestorLoginPage(String environment, String mode) {
+	public void Smoketc022_checkLinkInvestorLoginPage() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
      	driver.get(SmokeInvestorURL);
      	if (click(driver, lp.getResetPasswordLink(60), "Reset Password Link",action.BOOLEAN)) {
@@ -5180,7 +5179,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc023_1_SendForgotPasswordEmailToInvestor(String environment, String mode){
+	public void Smoketc023_1_SendForgotPasswordEmailToInvestor(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 	   	driver.get(SmokeInvestorURL);
@@ -5210,7 +5209,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc023_2_VerifySendingResetPasswordAndChangePassword(String environment, String mode){
+	public void Smoketc023_2_VerifySendingResetPasswordAndChangePassword(){
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer afp =new AllFirmsPageBusinesslayer(driver);
@@ -5268,7 +5267,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc024_buildINWorkSpaceAndProvideContactAccess(String environment, String mode) {
+	public void Smoketc024_buildINWorkSpaceAndProvideContactAccess() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5483,7 +5482,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc025_inviteContactAndSendEmailToContact(String environment, String mode) {
+	public void Smoketc025_inviteContactAndSendEmailToContact() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5757,7 +5756,7 @@ public class SmokeTestCase extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc026_addRenameAndDeleteFolderFromManageFolder(String environment, String mode) {
+	public void Smoketc026_addRenameAndDeleteFolderFromManageFolder() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String[] standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath).split("<break>");
@@ -5845,7 +5844,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc027_addRemoveRenameInvestorFromManageInvestor(String environment, String mode) {
+	public void Smoketc027_addRemoveRenameInvestorFromManageInvestor() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5974,7 +5973,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc028_uploadDocumentCRMSide(String environment, String mode) {
+	public void Smoketc028_uploadDocumentCRMSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String standrdFolder=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -6029,7 +6028,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc029_importOnlineDocument(String environment, String mode) {
+	public void Smoketc029_importOnlineDocument() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String folderpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
@@ -6062,7 +6061,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc030_1_approvePendingDocumentAndCheckUI(String environment, String mode) {
+	public void Smoketc030_1_approvePendingDocumentAndCheckUI() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6306,7 +6305,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc030_2_updateDocumentCRMSideAndCheckDuplicatePopUp(String environment, String mode) {
+	public void Smoketc030_2_updateDocumentCRMSideAndCheckDuplicatePopUp() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String commonpath=ExcelUtils.readData(smokeExcelPath,"FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
@@ -6431,7 +6430,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc031_registerInvestorAndCheckFolder(String environment, String mode) {
+	public void Smoketc031_registerInvestorAndCheckFolder() {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -6581,7 +6580,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc032_updateprofileAndFirmProfileInvestorSide(String environment, String mode) {
+	public void Smoketc032_updateprofileAndFirmProfileInvestorSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
 		InvestorProfileBusinessLayer ip = new InvestorProfileBusinessLayer(driver);
@@ -6673,7 +6672,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc033_checkLinksOnFundDetailsPage(String environment, String mode) {
+	public void Smoketc033_checkLinksOnFundDetailsPage() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7455,7 +7454,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc034_checkLinksOnContactDetailsPage(String environment, String mode) {
+	public void Smoketc034_checkLinksOnContactDetailsPage() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -7941,7 +7940,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc035_checkLinkOnInstitutionPage(String environment, String mode) {
+	public void Smoketc035_checkLinkOnInstitutionPage() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8170,7 +8169,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc036_checkLinkOnLPPage(String environment, String mode) {
+	public void Smoketc036_checkLinkOnLPPage() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8408,7 +8407,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void Smoketc037_checkLinkOnCommitmentPage(String environment, String mode) {
+	public void Smoketc037_checkLinkOnCommitmentPage() {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -8648,7 +8647,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc038_1_resetpasswordFromContactPage(String environment, String mode){
+	public void Smoketc038_1_resetpasswordFromContactPage(){
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp=new ContactPageBusinessLayer(driver);
@@ -8793,7 +8792,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc038_2_VerifySendingResetPasswordAndChangePassword(String environment, String mode){
+	public void Smoketc038_2_VerifySendingResetPasswordAndChangePassword(){
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		String updatedPassword = ExcelUtils.readData(smokeExcelPath,"Contact",excelLabel.Variable_Name, "SmokeC2", excelLabel.Updated_Password);
 		driver.get(ExcelUtils.readData(smokeExcelPath,"Contact",excelLabel.Variable_Name, "SmokeC2", excelLabel.Click_HereLink));		
@@ -8826,7 +8825,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc039_1_closeWorkSpace(String environment, String mode) {
+	public void Smoketc039_1_closeWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName,SmokePassword);
@@ -8863,7 +8862,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc039_2_checkFirmNameAfterCloseWorkSpace(String environment, String mode) {
+	public void Smoketc039_2_checkFirmNameAfterCloseWorkSpace() {
 		LoginPageBusinessLayer lp=new LoginPageBusinessLayer(driver);
 		AllFirmsPageBusinesslayer allfm = new AllFirmsPageBusinesslayer(driver);
 		lp.investorLogin(SmokeContact1EmailId, SmokeContactUpdatedPassword);
@@ -8892,7 +8891,7 @@ public class SmokeTestCase extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void Smoketc040_clearWorkSpace(String environment, String mode) {
+	public void Smoketc040_clearWorkSpace() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(SmokeSuperAdminUserName,SmokePassword);

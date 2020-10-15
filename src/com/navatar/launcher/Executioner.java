@@ -26,15 +26,13 @@ public class Executioner {
 		main(null);
 		
 	}
-	public static void testNgXmlSuite(List<String> excludedMethods, String browser, String platform, String mode) {
+public static void testNgXmlSuite(List<String> excludedMethods, String browser) {
 		
 		List<XmlSuite> suites = new ArrayList<XmlSuite>();
 		List<XmlClass> classes = new ArrayList<XmlClass>();
 		List<String> listenerClasses = new ArrayList<String>();
 		Map<String, String> parameters = new LinkedHashMap<String, String>();
 		parameters.put("browser", browser);
-		parameters.put("environment", platform);
-		parameters.put("mode", mode);
 		listenerClasses.add("com.navatar.generic.AppListeners");
 		XmlSuite suite = new XmlSuite();
 		suite.setName("NavatarSuite");
@@ -68,7 +66,7 @@ public class Executioner {
 				Method[] allMethods = classesInScriptPackage[i].getDeclaredMethods();
 				for(Method m : allMethods){
 //					System.out.println(m.toGenericString().split(classesInScriptPackage[i].toString().split("class com.")[1])[1].substring(1).substring(0, m.toGenericString().split(classesInScriptPackage[i].toString().split("class com.")[1])[1].substring(1).length()-2));
-					excludedMethods.add(m.toGenericString().split(classesInScriptPackage[i].toString().split("class com.")[1])[1].substring(1).substring(0, m.toGenericString().split(classesInScriptPackage[i].toString().split("class com.")[1])[1].substring(1).length()-2));
+					excludedMethods.add(m.toGenericString().split(classesInScriptPackage[i].toString().split("class com.")[1])[1].substring(1).substring(0, m.toGenericString().split(classesInScriptPackage[i].toString().split("class com.")[1])[1].substring(1).length()));
 				}
 				
 				System.err.println(("Module: "+(classesInScriptPackage[i].toString().split("class com.")[1]).split("scripts.")[1]+" is switched Off"));
@@ -91,9 +89,7 @@ public class Executioner {
 	public static void main(String[] args) {
 		CommonLib.execution();
 		String browser = ExcelUtils.readDataFromPropertyFile("Browser");
-		String platform = ExcelUtils.readDataFromPropertyFile("Environment");
-		String mode = ExcelUtils.readDataFromPropertyFile("Mode");
-		testNgXmlSuite(CommonLib.excludedMethods, browser, platform, mode);
+		testNgXmlSuite(CommonLib.excludedMethods, browser);
 
 	}
 

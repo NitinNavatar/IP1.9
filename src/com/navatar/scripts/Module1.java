@@ -60,7 +60,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc001_CreateCRMUser1InstallPackageAndThenCreatePassword(String environment, String mode) {
+	public void M1tc001_CreateCRMUser1InstallPackageAndThenCreatePassword() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -166,7 +166,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc002_CreateCRMUser2InstallPackageAndThenCreatePassword(String environment, String mode) {
+	public void M1tc002_CreateCRMUser2InstallPackageAndThenCreatePassword() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -266,7 +266,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc003_CreateCRMUser3InstallPackageAndThenCreatePassword(String environment, String mode) {
+	public void M1tc003_CreateCRMUser3InstallPackageAndThenCreatePassword() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -369,7 +369,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc004_1_CreatePrecondition(String environment, String mode) {
+	public void M1tc004_1_CreatePrecondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -469,7 +469,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc004_2_CheckErrorMessagesForAdminBeforeRegistration(String environment, String mode) {
+	public void M1tc004_2_CheckErrorMessagesForAdminBeforeRegistration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -739,7 +739,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc005_VerifyRegisterForNavatarInvestorPopUpAtNIMTab(String environment, String mode) {
+	public void M1tc005_VerifyRegisterForNavatarInvestorPopUpAtNIMTab() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -843,7 +843,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc006_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages(String environment, String mode) {
+	public void M1tc006_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -1157,7 +1157,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc007_VerifyCompleteAdminRegistration(String environment, String mode) {
+	public void M1tc007_VerifyCompleteAdminRegistration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1360,7 +1360,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc008_CheckErrorMessagesForAdminAfterRegistration(String environment, String mode) {
+	public void M1tc008_CheckErrorMessagesForAdminAfterRegistration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -1607,7 +1607,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc009_CheckErrorMessagesAtCRMUser2Side(String environment, String mode) {
+	public void M1tc009_CheckErrorMessagesAtCRMUser2Side() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -1890,7 +1890,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc010_VerifyRegisterForNavatarInvestorPopUpAtNIMTab(String environment, String mode) {
+	public void M1tc010_VerifyRegisterForNavatarInvestorPopUpAtNIMTab() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2252,7 +2252,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc011_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages(String environment, String mode) {
+	public void M1tc011_VerifyRegisterForNavatarInvestorStep1Of2PopUpAndErrorMessages() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2396,7 +2396,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc012_VerifyCompleteUserRegistrationStep2Of2(String environment, String mode) {
+	public void M1tc012_VerifyCompleteUserRegistrationStep2Of2() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2491,7 +2491,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc013_CheckErrorMessagesForCRMUserAfterRegistration(String environment, String mode) {
+	public void M1tc013_CheckErrorMessagesForCRMUserAfterRegistration() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
@@ -2679,7 +2679,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc014_VerifyInternalUsersFromAdminSideAndEditIcon(String environment, String mode) {
+	public void M1tc014_VerifyInternalUsersFromAdminSideAndEditIcon() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2920,7 +2920,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc015_VerifyConfirmUserPermissionRemovalConfirmUserPermissionAdditionConfirmAccessPopUps(String environment, String mode) {
+	public void M1tc015_VerifyConfirmUserPermissionRemovalConfirmUserPermissionAdditionConfirmAccessPopUps() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3332,7 +3332,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc016_VerifyUncheckingAccessCheckbox(String environment, String mode) {
+	public void M1tc016_VerifyUncheckingAccessCheckbox() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3432,7 +3432,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc017_VerifyCheckingAccessCheckboxAndErrorMessageAtUserSide(String environment, String mode) {
+	public void M1tc017_VerifyCheckingAccessCheckboxAndErrorMessageAtUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3633,7 +3633,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc018_VerifyAdminRadioButton(String environment, String mode) {
+	public void M1tc018_VerifyAdminRadioButton() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3779,7 +3779,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc019_VerifyChangingOfAdminAccessFromUserSide(String environment, String mode) {
+	public void M1tc019_VerifyChangingOfAdminAccessFromUserSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4153,7 +4153,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc020_VerifyChangingOfAdminAccessFromAdminSide(String environment, String mode) {
+	public void M1tc020_VerifyChangingOfAdminAccessFromAdminSide() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4269,7 +4269,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc021_VerifyDeactivatingActivatingACRMUser(String environment, String mode) {
+	public void M1tc021_VerifyDeactivatingActivatingACRMUser() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4526,7 +4526,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc022_VerifyUpdationOfName(String environment, String mode) {
+	public void M1tc022_VerifyUpdationOfName() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4754,7 +4754,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc023_VerifySortingInInternalUsersSection(String environment, String mode) {
+	public void M1tc023_VerifySortingInInternalUsersSection() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4831,7 +4831,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "environment", "mode" }) 
 	@Test
-	public void M1tc024_MakeUserActiveAndUpdateInformation(String environment, String mode) {
+	public void M1tc024_MakeUserActiveAndUpdateInformation() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
@@ -5037,8 +5037,8 @@ public class Module1 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "environment", "mode" }) @Test
-	public void M1tc025_postCondition(String environment, String mode){
+	@Test
+	public void M1tc025_postCondition(){
 		LoginPageBusinessLayer	 lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		SoftAssert saa1 = new SoftAssert();
