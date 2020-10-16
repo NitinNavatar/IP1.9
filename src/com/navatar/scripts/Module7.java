@@ -9075,7 +9075,7 @@ public class Module7 extends BaseLib {
 			} else {
 				appLog.error(stdPath + " is not present in folder structure");
 				sa.assertTrue(false, stdPath + " is not present in folder structure");
-			}
+		}
 			if (fp.verifyFolderPathdummy(stdPath, M7Institution1, null, M7Institution1, PageName.FundsPage,
 					Workspace.FundraisingWorkspace, 60)) {
 				// selecting 2nd file upload_mult2.pdf in fileArray[1]
@@ -9097,7 +9097,7 @@ public class Module7 extends BaseLib {
 					if (sendKeys(driver, fp.getChooseFileButton(60),
 							System.getProperty("user.dir") + "//UploadFiles/Module8/" + update_fileArray[1],
 							"choose file button", action.SCROLLANDBOOLEAN)) {
-						cssSelectorPath = "#a#LinkButton1";
+						cssSelectorPath = "a#LinkButton1";
 						cssFlag = bp.clickUsingCssSelectorPath(cssSelectorPath, "update all button on update window");
 						if (cssFlag/*
 									 * click(driver, fp.getUpdateButtonUpdateWindow(60),
@@ -10471,11 +10471,12 @@ public class Module7 extends BaseLib {
 					int i = 0;
 					boolean flag = false;
 					while (true) {
-						List<WebElement> ele = fp.getColumnHeads();
+					
 						List<WebElement> listOfVisibleElements = fp
 								.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage);
 						for (int j = 0; j < listOfVisibleElements.size(); j++) {
 							String a = listOfVisibleElements.get(j).getText().trim();
+							System.err.println("file Name >>>>>>  : "+a);
 							if (a.equalsIgnoreCase(fileName)) {
 								appLog.info(fileName + " is available in the content grid");
 								flag = true;
@@ -10489,13 +10490,15 @@ public class Module7 extends BaseLib {
 							break;
 						} else {
 							i++;
-							if (i == 2) {
+							if (i == 3) {
 								appLog.error(fileName + " is not available in the content grid ");
 								sa.assertTrue(false, fileName + " is not available in the content grid");
 								break;
 							}
 						}
+						List<WebElement> ele = fp.getColumnHeads();
 						click(driver, ele.get(0), "document name column head", action.SCROLLANDBOOLEAN);
+						ThreadSleep(5000);
 					}
 
 					if (flag == true) {
