@@ -57,7 +57,7 @@ public class PartnershipPage extends BasePage {
 	@FindBy(xpath="//input[@name='Name']")
 	private WebElement partnershipLegalName_Classic;
 	
-	@FindBy(xpath="//span[text()='Partnership Legal Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Partnership Legal Name']/following-sibling::div/input")
 	private WebElement partnershipLegalName_Lighting;
 
 	/**
@@ -75,7 +75,7 @@ public class PartnershipPage extends BasePage {
 	@FindBy(xpath="//span[@class='lookupInput']//input")
 	private WebElement fundTextBox_Classic;
 	
-	@FindBy(xpath="//span[text()='Fund']/../following-sibling::div//input[@title='Search Funds']")
+	@FindBy(xpath="//*[text()='Fund']/following-sibling::div//input[@title='Search Funds' or contains(@placeholder,'Search Funds')]")
 	private WebElement fundTextBox_Lighting;
 
 

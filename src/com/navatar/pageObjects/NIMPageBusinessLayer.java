@@ -1037,8 +1037,6 @@ public class NIMPageBusinessLayer extends NIMPage implements NIMPageErrorMessage
 	public boolean getMyProfileFistNameAndLastNameAndFirmName(String userVariableName) {
 		boolean flag = false;
 		if(clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 60,getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
-			ThreadSleep(3000);
 			switchToFrame(driver, 20, getFrame(PageName.NavatarInvestorManager, 20));
 			if(clickOnSideMenusTab(sideMenu.Profiles)) {
 				if(getMyProfileNameInViewMode(60)!=null) {

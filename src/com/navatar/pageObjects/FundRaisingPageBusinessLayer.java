@@ -449,6 +449,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage implements Fun
 	 * @return true if able to create FundRaising
 	 */
 	public boolean createFundRaising(String environment,String mode,String fundraisingName, String fundName, String legalName) {
+		refresh(driver);
 		ThreadSleep(5000);
 		if (click(driver, getNewButton(environment,mode,60), "New Button", action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(500);
@@ -457,10 +458,10 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage implements Fun
 				if (sendKeys(driver, getFundName(environment,mode,60), fundName, "Fund Name", action.BOOLEAN)) {
 					ThreadSleep(500);
 					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-						ThreadSleep(1000);
+						ThreadSleep(2000);
 						if (click(driver,
 								FindElement(driver,
-										"//div[contains(@class,'listContent')]//a//div[@title='"+fundName+"']",
+										"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+fundName+"']",
 										"Fund Name List", action.THROWEXCEPTION, 30),
 								fundName + "   :   Fund Name", action.BOOLEAN)) {
 							appLog.info(fundName + "  is present in list.");
@@ -474,7 +475,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage implements Fun
 							ThreadSleep(1000);
 							if (click(driver,
 									FindElement(driver,
-											"//div[contains(@class,'uiAutocomplete')]//a//div//div[contains(@class,'primary') and @title='"+legalName+"']",
+											"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+legalName+"']",
 											"Legal Name List", action.THROWEXCEPTION, 30),
 									legalName + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
 								appLog.info(legalName + "  is present in list.");
@@ -482,7 +483,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage implements Fun
 								appLog.info(legalName + "  is not present in the list.");
 							}
 						}
-						if (click(driver, getSaveButton(environment,mode,60), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, getCustomTabSaveBtn(environment,mode,60), "Save Button", action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(500);
 							
 								ThreadSleep(2000);

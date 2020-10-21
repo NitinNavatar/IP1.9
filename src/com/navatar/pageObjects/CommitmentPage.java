@@ -242,7 +242,7 @@ public class CommitmentPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//label[text()='Partnership']/../..//span[@class='lookupInput']/input")
 	private WebElement partnershipTextBox_Classic;
 	
-	@FindBy(xpath="//span[text()='Partnership']/../following-sibling::div//input[@title='Search Partnerships']")
+	@FindBy(xpath="//*[text()='Partnership']/following-sibling::div//input[@title='Search Partnerships' or contains(@placeholder,'Search Partnerships')]")
 	private WebElement partnershipTextBox_Lighting;
 
 	/**
@@ -281,7 +281,7 @@ public class CommitmentPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//label[text()='Limited Partner']/../..//span[@class='lookupInput']/input")
 	private WebElement limitedPartnerTextbox_Classic;
 	
-	@FindBy(xpath="//span[text()='Limited Partner']/../following-sibling::div//input[@title='Search Institutions']")
+	@FindBy(xpath="//*[text()='Limited Partner']/following-sibling::div//input[@title='Search Institutions' or contains(@placeholder,'Search Institutions')]")
 	private WebElement limitedPartnerTextbox_Lighting;
 
 	/**

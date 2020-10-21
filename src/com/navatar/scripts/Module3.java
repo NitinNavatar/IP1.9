@@ -8,7 +8,9 @@ import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.CommonLib.ContentGridArrowKeyFunctions;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.UploadFileActions;
@@ -60,7 +62,7 @@ public class Module3 extends BaseLib {
 		for(int i=0; i<2; i++) {
 			String instutionName=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M3Instituition"+(i+1), excelLabel.Institutions_Name);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ip.createInstitution(instutionName)) {
+			if(ip.createInstitution(environment,mode,instutionName,"Institution",null,null)) {
 				
 			}else {
 				appLog.error("Not able to create institution: "+instutionName);
@@ -77,7 +79,7 @@ public class Module3 extends BaseLib {
 			String ContactFirstName=ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M3Contact"+(i+1), excelLabel.Contact_FirstName);
 			String ContactLastName=ExcelUtils.readData("Contacts",excelLabel.Variable_Name, "M3Contact"+(i+1), excelLabel.Contact_LastName);	
 			if(bp.clickOnTab(TabName.ContactTab)){
-				if(cp.createContact(ContactFirstName, ContactLastName, instutionName, emailId)) {
+				if(cp.createContact(environment,mode,ContactFirstName, ContactLastName, instutionName, emailId,null,null,CreationPage.ContactPage)) {
 					appLog.info("contact is created: "+ContactFirstName+" "+ContactLastName);
 					if (emailId != "") {
 						ExcelUtils.writeData(emailId,"Contacts", excelLabel.Variable_Name, "M3Contact"+(i+1),excelLabel.Contact_EmailId);
@@ -93,7 +95,7 @@ public class Module3 extends BaseLib {
 			if(bp.clickOnTab(TabName.FundsTab)) {
 				String fundType=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M3Fund"+(i+1), excelLabel.Fund_Type);
 				String investmentCategory=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M3Fund"+(i+1), excelLabel.Fund_InvestmentCategory);
-				if(fp.createFund(fundName, fundType, investmentCategory)) {
+				if(fp.createFund(environment,mode,fundName, fundType, investmentCategory,null,null)) {
 					appLog.info("fund is created: "+fundName);
 				}else {
 					appLog.error("Not able to create fund: "+fundName);
@@ -109,7 +111,7 @@ public class Module3 extends BaseLib {
 			if(bp.clickOnTab(TabName.FundraisingsTab)) {
 				String fundName=ExcelUtils.readData("Fundraisings",excelLabel.Variable_Name, "M3FundRaising"+(i+1), excelLabel.Fund_Name);
 				String instutionName=ExcelUtils.readData("Fundraisings",excelLabel.Variable_Name, "M3FundRaising"+(i+1), excelLabel.Institutions_Name);
-				if(frp.createFundRaising(fundraisingName, fundName, instutionName)) {
+				if(frp.createFundRaising(environment,mode,fundraisingName, fundName, instutionName)) {
 					appLog.info("fundraising is created : "+fundraisingName);
 				}else {
 					appLog.error("Not able to create fundraising: "+fundraisingName);
@@ -124,7 +126,7 @@ public class Module3 extends BaseLib {
 			String lpName=ExcelUtils.readData("Limited Partner",excelLabel.Variable_Name, "M3LimitedPartner"+(i+1), excelLabel.LimitedPartner_Name);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
 				String instutionName=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M3Instituition"+(i+1), excelLabel.Institutions_Name);
-				if(ip.createLimitedPartner(lpName, instutionName)) {
+				if(ip.createInstitution(environment,mode,lpName,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), instutionName)) {
 					appLog.info("limited partner is created: "+lpName);
 				}else {
 					appLog.error("Not able to create limited partner: "+lpName);
@@ -135,12 +137,11 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on institution tab so cannot create limite partner: "+lpName);
 			}
 		}
-		
 		for(int i=0; i<2; i++) {
 			String partnershipName=ExcelUtils.readData("Partnerships",excelLabel.Variable_Name, "M3Partnership"+(i+1), excelLabel.PartnerShip_Name);
 			if(bp.clickOnTab(TabName.PartnershipsTab)) {
 				String fundName=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M3Fund"+(i+1), excelLabel.Fund_Name);
-				if(pp.createPartnership(partnershipName,fundName)) {
+				if(pp.createPartnership(environment,mode,partnershipName,fundName)) {
 					appLog.info("partnership is created: "+partnershipName);
 				}else {
 					appLog.error("Not able to create partnership: "+partnershipName);
@@ -165,7 +166,7 @@ public class Module3 extends BaseLib {
 				}else {
 					partnershipName=ExcelUtils.readData("Partnerships",excelLabel.Variable_Name, "M3Partnership2", excelLabel.PartnerShip_Name);
 				}
-				if(cmp.createCommitment(lpName,partnershipName,"M3Commitment"+(i+1), null)) {
+				if(cmp.createCommitment(environment,mode,lpName,partnershipName,"M3Commitment"+(i+1), null)) {
 					appLog.info("commitment is created successfully");
 				}else {
 					appLog.error("Not able to create commitment for limited partner: "+lpName+" and partnership Name: "+partnershipName);
@@ -182,7 +183,7 @@ public class Module3 extends BaseLib {
 			appLog.error("Not able to write CRM User1 first,last name and firm profile in excel");
 			sa.assertTrue(false, "Not able to write CRM User1 first,last name and firm profile in excel");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -221,7 +222,7 @@ public class Module3 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot build fundraising workspace: "+M3FundName1);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace: "+M3FundName1);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -233,7 +234,6 @@ public class Module3 extends BaseLib {
 			lp.CRMLogin(CRMUser1EmailID,adminPassword);
 			if(fp.clickOnTab(TabName.FundsTab)) {
 				if(fp.clickOnCreatedFund(M3FundName1)) {
-					switchToFrame(driver, 30,bp.getFrame( PageName.FundsPage, 30));
 					if(fp.inviteContact(environment,mode, M3Institution1, M3Contact1EmailId,ExcelUtils.readData("FilePath",0, 4, currentlyExecutingTC), FolderType.Standard,"Upload","Yes", "Yes","All Folders", Workspace.FundraisingWorkspace, M3Contact1EmailId)) {
 						appLog.info("contact is invites successfully from fundraising workspace: "+M3Contact1FirstName+" "+M3Contact1LastName);
 					}else {
@@ -268,7 +268,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace and investor: "+M3FundName1);
 			}
 			switchToDefaultContent(driver);
-			lp.CRMlogout();
+			lp.CRMlogout(environment,mode);
 			sa.assertAll();
 		}
 	
@@ -682,7 +682,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -726,7 +726,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -837,7 +837,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -880,7 +880,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -991,7 +991,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -1035,7 +1035,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1146,7 +1146,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -1183,7 +1183,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1324,7 +1324,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -1366,7 +1366,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1456,7 +1456,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
@@ -1496,7 +1496,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1586,7 +1586,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Shared1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileShared);
@@ -1627,7 +1627,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1717,7 +1717,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\UploadUpdateFiles\\Internal1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
@@ -1753,7 +1753,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1844,7 +1844,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, M3Institution1,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -1880,7 +1880,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1991,7 +1991,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2027,7 +2027,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace: "+fileName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2138,7 +2138,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2177,7 +2177,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace: "+fileName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 		
@@ -2288,7 +2288,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2320,7 +2320,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace: "+fileName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2432,7 +2432,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, M3Institution1,null,null,folderpath, docPath, fileName,BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2469,7 +2469,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace: "+fileName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2560,7 +2560,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Common,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2594,7 +2594,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace: "+fileName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 		
@@ -2685,7 +2685,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Shared,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2722,7 +2722,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace: "+fileName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2813,7 +2813,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, null, WorkSpaceAction.UPDATE, FolderType.Internal,PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2842,7 +2842,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace: "+fileName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2933,7 +2933,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, null, FolderType.Standard,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -2969,7 +2969,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3080,7 +3080,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3116,7 +3116,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3227,7 +3227,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3263,7 +3263,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3374,7 +3374,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3403,7 +3403,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 		
@@ -3514,7 +3514,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, null, FolderType.Standard,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3550,7 +3550,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload file via manage version in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3661,7 +3661,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3697,7 +3697,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update file via manage version in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3808,7 +3808,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3844,7 +3844,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload file via manage version in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -3955,7 +3955,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.FundraisingWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -3984,7 +3984,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload file via manage version in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4134,7 +4134,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot make current document via manage version  in fundraising workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4208,7 +4208,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1+"<break>"+M3Institution2+"/"+M3LimitedPartner2, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -4249,7 +4249,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4362,7 +4362,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileCommon);
@@ -4403,7 +4403,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4517,7 +4517,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
@@ -4558,7 +4558,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4672,7 +4672,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileInternal);
@@ -4707,7 +4707,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4827,7 +4827,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\UploadUpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -4868,7 +4868,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4970,7 +4970,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\UploadUpdateFiles\\Common1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileCommon);
@@ -5010,7 +5010,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5113,7 +5113,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileShared);
@@ -5153,7 +5153,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5255,7 +5255,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\UploadUpdateFiles\\Internal1";
 				if(fp.uploadFile(folderpath,null, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileInternal);
@@ -5292,7 +5292,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot updated files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5398,7 +5398,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, M3Institution1,M3LimitedPartner1,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Standard,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5432,7 +5432,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5545,7 +5545,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Common,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5579,7 +5579,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5692,7 +5692,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Shared,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5725,7 +5725,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5838,7 +5838,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPLOAD, FolderType.Internal,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -5867,7 +5867,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5983,7 +5983,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, M3Institution1,M3LimitedPartner1,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Standard,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6015,7 +6015,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6118,7 +6118,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Common,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6150,7 +6150,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6253,7 +6253,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Shared,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6285,7 +6285,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6388,7 +6388,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.onlineImport(environment, mode, null,null,null,folderpath, docPath, fileName, BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute, WorkSpaceAction.UPDATE, FolderType.Internal,PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 					appLog.info("file is imported successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName,fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6417,7 +6417,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot  update online import files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6535,7 +6535,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, M3LimitedPartner1, FolderType.Standard,docPath+fileName[1], multiInstance.ThisInvestorOnly, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6578,7 +6578,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6692,7 +6692,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6735,7 +6735,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6849,7 +6849,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -6892,7 +6892,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7006,7 +7006,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7047,7 +7047,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7162,7 +7162,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], M3Institution1, M3LimitedPartner1, FolderType.Standard,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7205,7 +7205,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7317,7 +7317,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Common,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7360,7 +7360,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7472,7 +7472,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Shared,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7515,7 +7515,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7627,7 +7627,7 @@ public class Module3 extends BaseLib {
 			if(fp.clickOnCreatedFund(M3FundName1)) {
 				if(fp.updateFile(folderpath, fileName[0], null, null, FolderType.Internal,docPath+fileName[1], null, null, ContentGridArrowKeyFunctions.ManageVersions,20, PageName.FundsPage,"Yes",null, Workspace.InvestorWorkspace)) {
 					appLog.info("file is updated successfully: "+fileName+" in :"+folderpath);
-						switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+						switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 						if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 							List<String>result=compareMultipleList(driver,fileName[1],fp.getContentGridDocNameList(Workspace.InvestorWorkspace, PageName.FundsPage));
 							if(!result.isEmpty()) {
@@ -7668,7 +7668,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace: "+fileName[0]+"to "+fileName[1]);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7884,7 +7884,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot update my profile.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8036,7 +8036,7 @@ public class Module3 extends BaseLib {
 		sa.assertTrue(false, "Not able to click on NIM tab so cannot update my  firm profile.");
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 }
 	
@@ -8168,7 +8168,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from: "+M3FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8328,7 +8328,7 @@ public class Module3 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot build workspace: "+M3FundName2);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build workspace: "+M3FundName2);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8398,7 +8398,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from: "+M3FundName2);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8435,7 +8435,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\M3Fund2\\FWR\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -8474,7 +8474,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising and investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
@@ -8490,7 +8490,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\M3Fund2\\INV\\Standard1";				
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1, docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -8531,7 +8531,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
@@ -8675,7 +8675,7 @@ public class Module3 extends BaseLib {
 				String docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\M3Fund2\\FWR\\UploadUpdateDoc\\Standard1";
 				if(fp.uploadFile(folderpath,M3Institution1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -8713,7 +8713,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8729,7 +8729,7 @@ public class Module3 extends BaseLib {
 				
 				if(fp.uploadFile(folderpath,M3Institution1+"/"+M3LimitedPartner1, docpath,UploadFileActions.Update,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is updated successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -8767,7 +8767,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8966,7 +8966,7 @@ public class Module3 extends BaseLib {
 				appLog.error("Not able to write CRM User1 first,last name and firm profile in excel");
 				sa.assertTrue(false, "Not able to write CRM User1 first,last name and firm profile in excel");
 			}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9005,7 +9005,7 @@ public class Module3 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot build workspace: "+M3Org2FundName1);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build workspace: "+M3Org2FundName1);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9050,7 +9050,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from: "+M3Org2FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9101,7 +9101,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\FWR\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -9145,7 +9145,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9160,7 +9160,7 @@ public class Module3 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\INV\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1+"/"+M3Org2LimitedPartner1, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -9203,7 +9203,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9365,7 +9365,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\FWR\\UpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1, FWR_docpath,null,UploadFileActions.Update,Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -9407,7 +9407,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9422,7 +9422,7 @@ public class Module3 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Org2FileUpload\\INV\\UpdateFiles\\Standard1";
 				if(fp.uploadFile(folderpath,M3Org2Institution1+"/"+M3Org2LimitedPartner1, INV_docpath,null,UploadFileActions.Update, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UpdatedFileStandard);
@@ -9463,7 +9463,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -10968,7 +10968,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM Tab so cannot upload logo");
 		}				
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -11051,7 +11051,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM Tab so cannot upload logo");
 		}				
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -11226,7 +11226,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on fund tab so cannot delete files in fundraising workspace");
 			}
 			switchToDefaultContent(driver);
-			lp.CRMlogout();
+			lp.CRMlogout(environment,mode);
 			sa.assertAll();
 	}
 
@@ -11296,7 +11296,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		}
 	
@@ -11529,7 +11529,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on fund tab so cannot delete files in fundraising workspace");
 			}
 			switchToDefaultContent(driver);
-			lp.CRMlogout();
+			lp.CRMlogout(environment,mode);
 			sa.assertAll();
 	}
 	
@@ -11604,7 +11604,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on fund tab so cannot delete files in investor workspace");
 				}
 				switchToDefaultContent(driver);
-				lp.CRMlogout();
+				lp.CRMlogout(environment,mode);
 				sa.assertAll();
 		}
 	
@@ -11803,7 +11803,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot delete files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -11824,7 +11824,7 @@ public class Module3 extends BaseLib {
 				String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Standard1";
 				if(fp.uploadFile(STDFolderpath,M3Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -11855,7 +11855,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from: "+M3FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -11876,7 +11876,7 @@ public class Module3 extends BaseLib {
 				String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\Standard1";
 				if(fp.uploadFile(STDFolderpath,M3Institution1+"/"+M3LimitedPartner1, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 					appLog.info("File is upload successfullly");
-					switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 					if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 						String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -11907,7 +11907,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from: "+M3FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -12040,7 +12040,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot delete files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -12141,7 +12141,7 @@ public class Module3 extends BaseLib {
 							String FWR_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\Standard1";
 							if(fp.uploadFile(STDFolderpath,M3Institution1, FWR_docpath,null,UploadFileActions.Upload, Workspace.FundraisingWorkspace, PageName.FundsPage, 30)) {
 								appLog.info("File is upload successfullly");
-								switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+								switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 								scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "fundraising workspace view");
 								if(click(driver, fp.ContentGridRefreshBtn(Workspace.FundraisingWorkspace, 30),"Fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
 									String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -12185,7 +12185,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot add institution in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -12222,7 +12222,7 @@ public class Module3 extends BaseLib {
 							String INV_docpath="UploadFiles\\Module3\\FileToUploadCRMSide\\InvestorWorkSpace\\Standard1";
 							if(fp.uploadFile(STDFolderpath,M3Institution1+"/"+M3LimitedPartner1, INV_docpath,null,UploadFileActions.Upload, Workspace.InvestorWorkspace, PageName.FundsPage, 30)) {
 								appLog.info("File is upload successfullly");
-								switchToFrame(driver, 30,fp.getFrame( PageName.FundsPage, 20));
+								switchToFrame(driver, 30,fp.getFrame(environment,mode, PageName.FundsPage, 20));
 								scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "investor workspace view");
 								if(click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30),"investor workspace refresh button", action.SCROLLANDBOOLEAN)) {
 									String filesName=ExcelUtils.readData("FilePath", excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
@@ -12266,7 +12266,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot add institution in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -12356,7 +12356,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot add institution in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -12481,7 +12481,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot add institution in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -12618,7 +12618,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact from: "+M3FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -12718,7 +12718,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot add institution in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -12859,7 +12859,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot add institution in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -13054,7 +13054,7 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false, "Not Able to click on NIM Tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -13128,7 +13128,7 @@ public class Module3 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.postCondition().assertAll();
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 	}
 }
