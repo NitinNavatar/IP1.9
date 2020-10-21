@@ -1913,6 +1913,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			boolean dnlbtnVerify, boolean closeBtnVerify,boolean dnload) {
 		WebElement ele=null;
 		boolean flag = true;	
+		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workSpace, 30),"Investor workspace view");
+		ThreadSleep(1000);
 		ele=FindElement(driver, "//a[@title='"+fileName+"']", "File: "+fileName, action.SCROLLANDBOOLEAN, 60);
 		scrollDownThroughWebelement(driver, ele, "scrolling to document "+fileName);
 		if(ele!=null){
@@ -2810,8 +2812,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						appLog.info(">>> WebPage " + folderName + "  " + docName + " " + sizeValue+" "+updatedDate+ " <<<<");
 						appLog.info("<<<<<<<<< pASSING " + folders[i] + "  " + fileName + " "+date+ " <<<<<<<<<");
 						if (folderName.contains(folders[i])
-								&& docName.equalsIgnoreCase(fileName) && !sizeValue.contains("0.00")
-								&& date.contains(updatedDate)) {
+							&& docName.equalsIgnoreCase(fileName) && !sizeValue.contains("0.00")
+							&& date.contains(updatedDate)
+															 ) {
 
 									appLog.info("  <<<<Verified>>>>  "+folders[i] + " having "+fileName+" size "+sizeValue+" date "+updatedDate);
 							break;
@@ -5362,13 +5365,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		try {
 			clickFlag=false;
 			ele.click();
-			appLog.info("click on "+buttonName);
+			appLog.info("Using elementClick click on "+buttonName);
 			clickFlag = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			appLog.info("Not able to click on "+buttonName);
-			BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
-			clickFlag=false;
+			try {
+				if (!clickFlag) {
+					clickFlag=clickUsingJavaScript(driver, ele, buttonName, action.SCROLLANDBOOLEAN);
+					appLog.info("Using javaScript click on "+buttonName);
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				if (click(driver, ele, buttonName, action.SCROLLANDBOOLEAN)) {
+					return true;
+				}
+				appLog.info("Not able to click on "+buttonName);
+				BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
+				clickFlag=false;
+			}
+		
 
 		}
 		return clickFlag;
@@ -5860,11 +5875,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
 			selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
 			if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(3000);
+				
+			ThreadSleep(3000);
 				ThreadSleep(5000);
 
 				if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(5000);
+					
+		ThreadSleep(5000);
 
 					xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
 					ele = FindElement(driver,xpath,alreadyCreated, action.BOOLEAN, 30);
@@ -5888,4 +5905,33 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 
+	/**
+	 * @param projectName
+	 * @param pageName
+	 * @return  true if able to click o Show more action Icon
+	 */
+	public boolean clickOnShowMoreDropdownOnly(PageName pageName) {
+		String xpath = "";int i =1;
+		WebElement ele=null;
+		boolean flag = true;
+
+		xpath="(//a[contains(@title,'more actions')])["+i+"]";
+//		if (PageName.TestCustomObjectPage.equals(pageName) || PageName.Object3Page.equals(pageName)) {
+//			xpath="(//span[contains(text(),'more actions')])[1]/..";
+//		}
+//		else if(PageName.TaskPage.equals(pageName)) {
+//			xpath="//a[@title='Show one more action']";
+//		}
+		ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
+		if(click(driver, ele, "show more action on "+pageName.toString(), action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
+
+		}
+		else {
+			log(LogStatus.FAIL, "cannot click on show more actions icon", YesNo.Yes);
+			flag = false;
+		}
+		return flag;
+	}
+	
 }
