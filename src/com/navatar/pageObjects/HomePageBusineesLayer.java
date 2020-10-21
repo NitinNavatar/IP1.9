@@ -10,8 +10,10 @@ import org.openqa.selenium.WebElement;
 import static com.navatar.generic.AppListeners.*;
 
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
+import com.relevantcodes.extentreports.LogStatus;
 
 /**
  * @author Parul Singh
@@ -59,35 +61,60 @@ public class HomePageBusineesLayer extends HomePage implements HomePageErrorMess
 	 * @return true/false
 	 */
 	public boolean restoreValuesFromRecycleBin(String RestoreValue) {
-		if (clickOnRecycleBin()) {
-			if (sendKeys(driver, getRecycleBinSearchBox(60), RestoreValue,
-					"Recycle Bin Search Text Box value : " + RestoreValue, action.BOOLEAN)) {
+	
+		boolean flag = false;
+		
+		TabName tabName = TabName.RecycleBinTab;
+		int i=0;
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
+		
+			String name = RestoreValue;
+			if (cp.clickOnTab(tabName)) {
+				log(LogStatus.INFO,"Clicked on Tab : "+tabName+" For : "+name,YesNo.No);
+				ThreadSleep(1000);
+				if (cp.clickOnAlreadyCreatedItem(tabName, name, 20)) {
+					log(LogStatus.INFO,"Clicked on  : "+name+" For : "+tabName,YesNo.No);
+					ThreadSleep(2000);
+					
+					 WebElement ele = cp.getCheckboxOfRestoreItemOnRecycleBin(name, 10);
+					 if (clickUsingJavaScript(driver, ele, "Check box against : "+name, action.BOOLEAN)) {
+						 log(LogStatus.INFO,"Click on checkbox for "+name,YesNo.No);
+						 
+						 ThreadSleep(1000);
+							//					scn.nextLine();
+						 ele=cp.getRestoreButtonOnRecycleBin(10);
+						 if (clickUsingJavaScript(driver, ele, "Restore Button : "+name, action.BOOLEAN)) {
+							 log(LogStatus.INFO,"Click on Restore Button for "+name,YesNo.No);
+							 ThreadSleep(1000);
+							 flag = true;
 
-				if (click(driver, getRecycleBinSearchButton(60), "Recycle Bin Search Btn", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(3000);
-					WebElement check = FindElement(driver, "//th[text()='" + RestoreValue + "']/..//input", "CheckBox",
-							action.SCROLLANDBOOLEAN, 30);
-					if (click(driver, check, "CheckBox", action.SCROLLANDBOOLEAN)) {
-						ThreadSleep(3000);
-						if (click(driver, getUnDeleteButton(30), "CheckBox", action.BOOLEAN)) {
-							ThreadSleep(3000);
-							return true;
+								
 						} else {
-							appLog.info("Not Able to Restore value : " + RestoreValue);
+							BaseLib.sa.assertTrue(false,"Not Able to Click on Restore Button for "+name);
+							log(LogStatus.SKIP,"Not Able to Click on Restore Button for "+name,YesNo.Yes);
 						}
+						 
 					} else {
-						appLog.info("Not Able to click on Check Box");
+						BaseLib.sa.assertTrue(false,"Not Able to Click on checkbox for "+name);
+						log(LogStatus.SKIP,"Not Able to Click on checkbox for "+name,YesNo.Yes);
 					}
+
+
+
 				} else {
-					appLog.info("Not Able to click Recycle Bin Search Btn");
+					BaseLib.sa.assertTrue(false,"Item Not Found : "+name+" For : "+tabName);
+					log(LogStatus.SKIP,"Item Not Found : "+name+" For : "+tabName,YesNo.Yes);
 				}
+
 			} else {
-				appLog.info("Not Able to Enter value on  Recycle Bin Search Text Box");
-				}
-		} else {
-			appLog.info("Not Able to click Recycle Bin Link");
-		}
-		return false;
+				BaseLib.sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" For : "+name);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+name,YesNo.Yes);
+			}
+			switchToDefaultContent(driver);
+			return true;
+		
+		
 	}
 		
 	/**
