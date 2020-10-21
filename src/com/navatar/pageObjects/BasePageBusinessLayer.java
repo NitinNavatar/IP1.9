@@ -5887,5 +5887,150 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
+	
+	public boolean verifyActivitiesRelatedList(String environment,String mode,TabName tabName,String subject,String contactName,String relatedTo, String date, String user){
+		WebElement ele;
+		String xpath;
+		if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				if (relatedTo==null) {
+					xpath = "(//h3[text()='Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//th//a[text()='"+subject+"']/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td)[1]";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//h3[text()='Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//th//a[text()='"+subject+"']/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td/a[text()='"+relatedTo+"']";
+				}
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				if (relatedTo==null) {
+					xpath = "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+contactName+"']/../../following-sibling::td";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+contactName+"']/../../following-sibling::td/span/a[text()='"+relatedTo+"']/../../following-sibling::td/span//*[text()='"+date+"']/../../following-sibling::td/span/a[text()='"+user+"']";
+				}
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}	
+		}
+		else if(tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
+			xpath="//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+relatedTo+"']/../../following-sibling::td/span//*[text()='"+date+"']/../../following-sibling::td/span/a[text()='"+user+"']";
+			//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+instOrContact+"']/../../following-sibling::td/span//*[text()='"+date+"']/../../following-sibling::td/span/a[text()='"+user+"']
+			ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+		}
+		else{
+			return false;
+		}
+		
+		if (ele!=null) {
+			return true;
+		} else {
+			return false;
+		}
+		
+		
+	}
 
+	public boolean clickOncreatedRecordOnActivityRelatedList(String environment, String mode,String activity) {
+		WebElement ele=null;
+		boolean flag = false;
+		String xpath="";
+		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
+			xpath="//h1[text()='Activity History']/ancestor::div/div[contains(@class,'slds-grid listDisplays')]//tbody/tr//th//a[contains(text(),'"+activity+"')]";
+		}else {
+			xpath="//h3[text()='Activity History']/../../../../../following-sibling::div//tr/th/a[text()='"+activity+"']";
+		}
+		ele = isDisplayed(driver, FindElement(driver, xpath, activity + " label text in "+mode, action.SCROLLANDBOOLEAN, 30), "visibility", 30, activity + " label text in "+mode);
+		if(ele!=null) {
+			if(click(driver, ele, activity+" label text", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on "+activity+" label text", YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR, "Not able to click on "+activity+" label text", YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.ERROR, activity+" label text is not visible so cannot click on it ", YesNo.Yes);
+		}
+		return flag;
+	}
+
+	public WebElement getLabelForTaskInViewMode(PageName pageName,String label,action action,int timeOut) {
+
+		String xpath="";
+		String fieldLabel=label.replace("_", " ");;
+		switchToDefaultContent(driver);
+		/*if (TaskPageLabel.Related_Associations.toString().equals(label) || PageLabel.Related_Contacts.toString().equals(label)) {
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 20, getTaskPageFrame(projectName,timeOut));
+			xpath="//label[text()='"+fieldLabel+"']//following-sibling::div";
+
+		}*/ if(TaskPageLabel.Comments.toString().equals(label)) {
+		xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span/span"	;
+		}else if(TaskPageLabel.Related_To.toString().equals(label)||(TaskPageLabel.Assigned_To.toString().equals(label))||(TaskPageLabel.Name.toString().equals(label))) {
+			xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span//a"	;
+		}else if(TaskPageLabel.Due_Date.toString().equals(label)) {
+			xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span/span"	;
+		}else {
+			xpath ="//span[text()='"+fieldLabel+"']/../following-sibling::div";
+		} //span/span
+		WebElement ele = FindElement(driver, xpath,fieldLabel , action, timeOut);
+		scrollDownThroughWebelement(driver, ele, fieldLabel);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, fieldLabel);
+		return ele;
+		
+	}
+	
+	public boolean scrollToRelatedListViewAll_Lightning(String environment, String mode, RelatedList rl, boolean viewAllOrNew) {
+		if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
+			String xpath = "";
+			if (viewAllOrNew)
+				xpath = "/ancestor::article//span[text()='View All']";
+			else
+				xpath = "/ancestor::header/following-sibling::div//a[@title='New']";
+			((JavascriptExecutor) driver)
+			.executeScript("window.scrollTo(0,0);");
+			
+			int widgetTotalScrollingWidth = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
+					.executeScript("return window.outerHeight")));
+			appLog.info("total height is: "+widgetTotalScrollingWidth);
+			int j = 50;
+			int i = 0;
+			WebElement el=null;
+			while (el==null) {
+				el=isDisplayed(driver,FindElement(driver, "//span[text()='"+rl.toString().replace("_", " ")+"']"+xpath, rl.toString(), action.BOOLEAN, 5) , "visibility", 5, rl.toString());
+				((JavascriptExecutor) driver).executeScript("window.scrollBy( 0 ,"+j+")");
+				i+=j;
+				if (i >= widgetTotalScrollingWidth) {
+					return false;
+				}
+				else if (el!=null)
+					return true;
+			}
+			return false;
+		}
+		else
+			return true;
+	}
+	
 }

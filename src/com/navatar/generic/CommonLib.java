@@ -348,7 +348,7 @@ public class CommonLib implements Comparator<String> {
 		
 	}
 	public static enum Header{
-		Fund,Contact,Company,Marketing_Initiative;	  
+		Fund,Contact,Company,Marketing_Initiative,Institution;  
 	};
 	
 	public static enum CreationPage{
@@ -446,7 +446,11 @@ public class CommonLib implements Comparator<String> {
 					return "Target Commitments (mn)";
 		}
 		};
+		
 	}
+	public static enum TaskPageLabel{
+		Assigned_To, Status, Priority,Related_To,Name, Due_Date, Subject,Comments
+	};
 	
 	/*****************************************Common Utilities***********************************************************/
 
