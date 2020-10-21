@@ -1134,37 +1134,9 @@ public abstract class BasePage {
 	  * @return webelement/null
 	  */
 	 public WebElement getFrame(PageName pageName,int timeOut) {
-		 WebElement ele=null;
-		 if(pageName.toString().equalsIgnoreCase(PageName.InstitutionsPage.toString())) {
-			 switchToDefaultContent(driver);
-			 switchToFrame(driver, 20, getNIMTabParentFrame_Lightning(PageName.InstitutionsPage));
-			 ele=isDisplayed(driver, institutionPageFrame, "Visibility", timeOut, pageName+" frame");
-		 }else if (pageName.toString().equalsIgnoreCase(PageName.ContactsPage.toString())) {
-			 switchToDefaultContent(driver);
-			 switchToFrame(driver, 20, getNIMTabParentFrame_Lightning(PageName.ContactsPage));
-			 ele=isDisplayed(driver, contactPageFrame, "Visibility", timeOut, pageName+" frame");
-		 }else if (pageName.toString().equalsIgnoreCase(PageName.FundsPage.toString())) {
-			 switchToDefaultContent(driver);
-			 switchToFrame(driver, 20, getNIMTabParentFrame_Lightning(PageName.FundsPage));
-			 ele=isDisplayed(driver, fundPageFrame, "Visibility", timeOut, pageName+" frame");
-		 }else if (pageName.toString().equalsIgnoreCase(PageName.CommitmentsPage.toString())) {
-			 switchToDefaultContent(driver);
-			 switchToFrame(driver, 20, getNIMTabParentFrame_Lightning(PageName.CommitmentsPage));
-			 ele=isDisplayed(driver, commitmentPageFrame, "Visibility", timeOut, pageName+" frame");
-		 }else if(pageName.toString().equalsIgnoreCase(PageName.HomePage.toString())){
-			 switchToDefaultContent(driver);
-			 //  switchToFrame(driver, 20, getNIMTabParentFrame_Lightning(PageName.InstitutionsPage));
-			 //  ele=isDisplayed(driver, homePageAlertsFrame, "Visibility", timeOut, pageName+" frame");
-			 ele=isDisplayed(driver, getNIMTabParentFrame_Lightning(PageName.HomePage), "Visibility", timeOut, pageName+" frame");
-		 }else if(pageName.toString().equalsIgnoreCase(PageName.NavatarInvestorAddOnsPage.toString())){
-			 switchToDefaultContent(driver);
-			 switchToFrame(driver,10,getNavatarInvestorAddOnParentFrame(20));
-			 ele=isDisplayed(driver, navatarInvestorAddOnFrame, "Visibility", timeOut, pageName+" frame");
-		 } else if (pageName.toString().equalsIgnoreCase(PageName.NavatarInvestorManager.toString())){
 
-			 ele=isDisplayed(driver, NIMTabFrame, "Visibility", timeOut, "NIM Frame");
-		 }
-		 return ele;
+		 return getFrame(environment, mode, pageName, timeOut);
+		
 	 }
 	 
 	 //Lightning Method..........
@@ -1564,6 +1536,15 @@ public abstract class BasePage {
 	 */
 	public WebElement getDeleteButton1(int timeOut) {
 		return isDisplayed(driver, deleteButton1, "Visibility", timeOut, "Delete Button");
+	}
+	@FindBy(xpath="//button[@name='Delete']")
+	private WebElement deleteButton2;
+	
+	/**
+	 * @return the addFilterLogicLink
+	 */
+	public WebElement getDeleteButton2(int timeOut) {
+		return isDisplayed(driver, deleteButton2, "Visibility", timeOut, "Delete Button");
 	}
 	/**
 	 * @return the pendingDisclaimerPopUpHeader
@@ -3465,7 +3446,7 @@ public abstract class BasePage {
 	 @FindBy(xpath="//div[@class='pbHeader']//input[@title='Edit']")
 	 private WebElement editButton_Classic;
 	 
-	 @FindBy(xpath="//a[@title='Edit']")
+	 @FindBy(xpath="//*[@title='Edit']")
 	 private WebElement editButton_Lighting;
 	
 	 /**

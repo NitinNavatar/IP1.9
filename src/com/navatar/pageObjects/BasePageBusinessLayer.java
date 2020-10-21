@@ -1913,6 +1913,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			boolean dnlbtnVerify, boolean closeBtnVerify,boolean dnload) {
 		WebElement ele=null;
 		boolean flag = true;	
+		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workSpace, 30),"Investor workspace view");
+		ThreadSleep(1000);
 		ele=FindElement(driver, "//a[@title='"+fileName+"']", "File: "+fileName, action.SCROLLANDBOOLEAN, 60);
 		scrollDownThroughWebelement(driver, ele, "scrolling to document "+fileName);
 		if(ele!=null){
@@ -2810,8 +2812,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						appLog.info(">>> WebPage " + folderName + "  " + docName + " " + sizeValue+" "+updatedDate+ " <<<<");
 						appLog.info("<<<<<<<<< pASSING " + folders[i] + "  " + fileName + " "+date+ " <<<<<<<<<");
 						if (folderName.contains(folders[i])
-								&& docName.equalsIgnoreCase(fileName) && !sizeValue.contains("0.00")
-								&& date.contains(updatedDate)) {
+							&& docName.equalsIgnoreCase(fileName) && !sizeValue.contains("0.00")
+							&& date.contains(updatedDate)
+															 ) {
 
 									appLog.info("  <<<<Verified>>>>  "+folders[i] + " having "+fileName+" size "+sizeValue+" date "+updatedDate);
 							break;
@@ -5362,13 +5365,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		try {
 			clickFlag=false;
 			ele.click();
-			appLog.info("click on "+buttonName);
+			appLog.info("Using elementClick click on "+buttonName);
 			clickFlag = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			appLog.info("Not able to click on "+buttonName);
-			BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
-			clickFlag=false;
+			try {
+				if (!clickFlag) {
+					clickFlag=clickUsingJavaScript(driver, ele, buttonName, action.SCROLLANDBOOLEAN);
+					appLog.info("Using javaScript click on "+buttonName);
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				if (click(driver, ele, buttonName, action.SCROLLANDBOOLEAN)) {
+					return true;
+				}
+				appLog.info("Not able to click on "+buttonName);
+				BaseLib.sa.assertTrue(false, "Not able to click on "+buttonName);
+				clickFlag=false;
+			}
+		
 
 		}
 		return clickFlag;
@@ -5860,11 +5875,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
 			selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
 			if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(3000);
+				
+			ThreadSleep(3000);
 				ThreadSleep(5000);
 
 				if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(5000);
+					
+		ThreadSleep(5000);
 
 					xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
 					ele = FindElement(driver,xpath,alreadyCreated, action.BOOLEAN, 30);
@@ -5887,5 +5904,178 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
+	
+	public boolean verifyActivitiesRelatedList(String environment,String mode,TabName tabName,String subject,String contactName,String relatedTo, String date, String user){
+		WebElement ele;
+		String xpath;
+		if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				if (relatedTo==null) {
+					xpath = "(//h3[text()='Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//th//a[text()='"+subject+"']/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td)[1]";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//h3[text()='Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//th//a[text()='"+subject+"']/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td/a[text()='"+relatedTo+"']";
+				}
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				if (relatedTo==null) {
+					xpath = "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+contactName+"']/../../following-sibling::td";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+contactName+"']/../../following-sibling::td/span/a[text()='"+relatedTo+"']/../../following-sibling::td/span//*[text()='"+date+"']/../../following-sibling::td/span/a[text()='"+user+"']";
+				}
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}	
+		}
+		else if(tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
+			xpath="//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+relatedTo+"']/../../following-sibling::td/span//*[text()='"+date+"']/../../following-sibling::td/span/a[text()='"+user+"']";
+			//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+instOrContact+"']/../../following-sibling::td/span//*[text()='"+date+"']/../../following-sibling::td/span/a[text()='"+user+"']
+			ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+		}
+		else{
+			return false;
+		}
+		
+		if (ele!=null) {
+			return true;
+		} else {
+			return false;
+		}
+		
+		
+	}
 
+	public boolean clickOncreatedRecordOnActivityRelatedList(String environment, String mode,String activity) {
+		WebElement ele=null;
+		boolean flag = false;
+		String xpath="";
+		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
+			xpath="//h1[text()='Activity History']/ancestor::div/div[contains(@class,'slds-grid listDisplays')]//tbody/tr//th//a[contains(text(),'"+activity+"')]";
+		}else {
+			xpath="//h3[text()='Activity History']/../../../../../following-sibling::div//tr/th/a[text()='"+activity+"']";
+		}
+		ele = isDisplayed(driver, FindElement(driver, xpath, activity + " label text in "+mode, action.SCROLLANDBOOLEAN, 30), "visibility", 30, activity + " label text in "+mode);
+		if(ele!=null) {
+			if(click(driver, ele, activity+" label text", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on "+activity+" label text", YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR, "Not able to click on "+activity+" label text", YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.ERROR, activity+" label text is not visible so cannot click on it ", YesNo.Yes);
+		}
+		return flag;
+	}
+
+	public WebElement getLabelForTaskInViewMode(PageName pageName,String label,action action,int timeOut) {
+
+		String xpath="";
+		String fieldLabel=label.replace("_", " ");;
+		switchToDefaultContent(driver);
+		/*if (TaskPageLabel.Related_Associations.toString().equals(label) || PageLabel.Related_Contacts.toString().equals(label)) {
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 20, getTaskPageFrame(projectName,timeOut));
+			xpath="//label[text()='"+fieldLabel+"']//following-sibling::div";
+
+		}*/ if(TaskPageLabel.Comments.toString().equals(label)) {
+		xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span/span"	;
+		}else if(TaskPageLabel.Related_To.toString().equals(label)||(TaskPageLabel.Assigned_To.toString().equals(label))||(TaskPageLabel.Name.toString().equals(label))) {
+			xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span//a"	;
+		}else if(TaskPageLabel.Due_Date.toString().equals(label)) {
+			xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span/span"	;
+		}else {
+			xpath ="//span[text()='"+fieldLabel+"']/../following-sibling::div";
+		} //span/span
+		WebElement ele = FindElement(driver, xpath,fieldLabel , action, timeOut);
+		scrollDownThroughWebelement(driver, ele, fieldLabel);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, fieldLabel);
+		return ele;
+		
+	}
+	
+	public boolean scrollToRelatedListViewAll_Lightning(String environment, String mode, RelatedList rl, boolean viewAllOrNew) {
+		if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
+			String xpath = "";
+			if (viewAllOrNew)
+				xpath = "/ancestor::article//span[text()='View All']";
+			else
+				xpath = "/ancestor::header/following-sibling::div//a[@title='New']";
+			((JavascriptExecutor) driver)
+			.executeScript("window.scrollTo(0,0);");
+			
+			int widgetTotalScrollingWidth = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
+					.executeScript("return window.outerHeight")));
+			appLog.info("total height is: "+widgetTotalScrollingWidth);
+			int j = 50;
+			int i = 0;
+			WebElement el=null;
+			while (el==null) {
+				el=isDisplayed(driver,FindElement(driver, "//span[text()='"+rl.toString().replace("_", " ")+"']"+xpath, rl.toString(), action.BOOLEAN, 5) , "visibility", 5, rl.toString());
+				((JavascriptExecutor) driver).executeScript("window.scrollBy( 0 ,"+j+")");
+				i+=j;
+				if (i >= widgetTotalScrollingWidth) {
+					return false;
+				}
+				else if (el!=null)
+					return true;
+			}
+			return false;
+		}
+		else
+			return true;
+	}
+	/**
+	 * @param projectName
+	 * @param pageName
+	 * @return  true if able to click o Show more action Icon
+	 */
+	public boolean clickOnShowMoreDropdownOnly(PageName pageName) {
+		String xpath = "";int i =1;
+		WebElement ele=null;
+		boolean flag = true;
+
+		xpath="(//a[contains(@title,'more actions')])["+i+"]";
+//		if (PageName.TestCustomObjectPage.equals(pageName) || PageName.Object3Page.equals(pageName)) {
+//			xpath="(//span[contains(text(),'more actions')])[1]/..";
+//		}
+//		else if(PageName.TaskPage.equals(pageName)) {
+//			xpath="//a[@title='Show one more action']";
+//		}
+		ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
+		if(click(driver, ele, "show more action on "+pageName.toString(), action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
+
+		}
+		else {
+			log(LogStatus.FAIL, "cannot click on show more actions icon", YesNo.Yes);
+			flag = false;
+		}
+		return flag;
+	}
+	
 }

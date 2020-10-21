@@ -42,6 +42,8 @@ import com.navatar.pageObjects.InvestorProfileBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageBusinessLayer;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
+import com.relevantcodes.extentreports.LogStatus;
+
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ import java.util.Scanner;
  *
  */
 public class Module7 extends BaseLib {
-
+//	Scanner scn = new Scanner(System.in);
 	@Test
 	public void M7tc001_Module7_preCondition() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -13840,7 +13842,7 @@ public class Module7 extends BaseLib {
 
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
-						"Investor workspace view");
+						"FundraisingWorkspace workspace view");
 
 				// 1st
 
@@ -15166,7 +15168,7 @@ public class Module7 extends BaseLib {
 
 							if (click(driver, bp.getSearchPopSearchTextBoxCrossIcon(30),
 									"Search Pop Search Text Cross Icon", action.BOOLEAN)) {
-
+								ThreadSleep(5000);
 								ele = bp.getNoDataToDisplaySearchPopMsg(30);
 								if (ele != null) {
 									msg = ele.getText().trim();
@@ -15791,9 +15793,9 @@ public class Module7 extends BaseLib {
 						ThreadSleep(5000);
 						parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(60),
+							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(environment,mode,60),
 									"contact name on contacts page");
-							if (cp.getContactFullNameInViewMode(60).getText().trim()
+							if (cp.getContactFullNameInViewMode(environment,mode,60).getText().trim()
 									.equals(M7Contact1FirstName + " " + M7Contact1LastName)) {
 								appLog.info(
 										"contact page has been successfully opened after clicking on name in content grid");
@@ -15855,9 +15857,9 @@ public class Module7 extends BaseLib {
 						ThreadSleep(5000);
 						parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(60),
+							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(environment,mode,60),
 									"contact name on contacts page");
-							if (cp.getContactFullNameInViewMode(60).getText().trim()
+							if (cp.getContactFullNameInViewMode(environment,mode,60).getText().trim()
 									.equals(M7Contact1FirstName + " " + M7Contact1LastName)) {
 								appLog.info(
 										"contact page has been successfully opened after clicking on name in content grid");
@@ -15920,9 +15922,9 @@ public class Module7 extends BaseLib {
 						ThreadSleep(5000);
 						parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(60),
+							scrollDownThroughWebelement(driver, cp.getContactFullNameInViewMode(environment,mode,60),
 									"contact name on contacts page");
-							if (cp.getContactFullNameInViewMode(60).getText().trim()
+							if (cp.getContactFullNameInViewMode(environment,mode,60).getText().trim()
 									.equals(M7Contact1FirstName + " " + M7Contact1LastName)) {
 								appLog.info(
 										"contact page has been successfully opened after clicking on name in content grid");
@@ -16000,21 +16002,30 @@ public class Module7 extends BaseLib {
 				excelLabel.KeyWord_For_Search);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M7Contact1FirstName, M7Contact1LastName, null)) {
-				if ( clickUsingJavaScript(driver, cp.getDeleteButtonContactsPage(60), "delete button on contacts page")) {
 					ThreadSleep(3000);
-					if (true/* isAlertPresent(driver) */) {
-						isAlertPresent = isAlertPresent(driver);
-						appLog.info("isAlertPresent  : " + isAlertPresent);
-						msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+					
+					cp.clickOnShowMoreDropdownOnly(PageName.ContactsPage);
+					ThreadSleep(500);
+					WebElement ele = cp.actionDropdownElement(ShowMoreActionDropDownList.Delete, 15);
+					if (ele==null) {
+						ele =cp.getDeleteButton(30);
+					} 
+
+					if (click(driver, ele, "Delete More Icon", action.BOOLEAN)) {
+						ThreadSleep(1000);
+						if (click(driver, cp.getDeleteButtonOnDeletePopUp(30), "Delete Button", action.BOOLEAN)) {
+							ThreadSleep(10000);
+						} else {
+							appLog.error("Not Able to Click on Delete button on Delete PoPup : ");
+							sa.assertTrue(false, "Not Able to Click on Delete button on Delete PoPup : ");
+						}
+
 					} else {
-						appLog.error("no alert is present");
-						sa.assertTrue(false, "no alert is present");
+						appLog.error("Not Able to Click on Delete more Icon : ");
+						sa.assertTrue(false, "Not Able to Click on Delete more Icon : ");
 					}
-				} else {
-					appLog.error("delete button on contacts page is not clickable");
-					sa.assertTrue(false, "delete button on contacts page is not clickable");
-				}
+
+			
 			} else {
 				appLog.error("contact " + M7Contact1FirstName + " " + M7Contact1LastName + " was not found");
 				sa.assertTrue(false, "contact " + M7Contact1FirstName + " " + M7Contact1LastName + " was not found");
@@ -16069,176 +16080,185 @@ public class Module7 extends BaseLib {
 					appLog.error("folder path " + stdPath + " is not present in folder structrure");
 					sa.assertTrue(false, "folder path " + stdPath + " is not present in folder structrure");
 				}
-				switchToDefaultContent(driver);
-
-				if (hp.restoreValuesFromRecycleBin(M7Contact1FirstName + " " + M7Contact1LastName)) {
-					if (bp.clickOnTab(TabName.ContactTab)) {
-						if (cp.clickOnCreatedContact(M7Contact1FirstName, M7Contact1LastName, null)) {
-							appLog.info("contact has been successfully restored");
-							if (click(driver, cp.getEditButton(60), "edit button on contacts page",
-									action.SCROLLANDBOOLEAN)) {
-								if (sendKeys(driver, cp.getEmailId(60), "**" + M7Contact1EmailId.substring(2),
-										"email id textbox on contact page", action.SCROLLANDBOOLEAN)) {
-									if (click(driver, cp.getSaveButton(60), "contacts page save button",
-											action.SCROLLANDBOOLEAN)) {
-										if (bp.clickOnTab(TabName.FundsTab)) {
-											if (fp.clickOnCreatedFund(M7FundName1)) {
-												switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
-												if (fp.verifyFolderPathdummy(stdPath, M7Institution1, null, M7FundName1,
-														PageName.FundsPage, Workspace.FundraisingWorkspace, 60)) {
-													if (clickUsingJavaScript(driver,
-															fp.getUploadedByFromFileNameContentGrid(fileName,
-																	"Contact"),
-															"contact name in front of file " + fileName
-																	+ " in content grid")) {
-														if (true/* isAlertPresent(driver) */) {
-															isAlertPresent = isAlertPresent(driver);
-															appLog.info("isAlertPresent  : " + isAlertPresent);
-															msg = switchToAlertAndGetMessage(driver, 30,
-																	action.GETTEXT);
-															switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-															if (msg.trim().equals(
-																	FundsPageErrorMessage.couldNotFindContactOrFirm)) {
-																appLog.info(
-																		"correct error message alert is present after editing email id of contact and clicking on contact name");
-															} else {
-																appLog.error(
-																		"error message is wrong when updated contact name and clicking on contact");
-																sa.assertTrue(false,
-																		"error message is wrong when updated contact name and clicking on contact");
-															}
-														} else {
-															appLog.error(
-																	"no alert message is present when clicked on changed email id of contact");
-															sa.assertTrue(false,
-																	"no alert message is present when clicked on changed email id of contact");
-														}
-													}
-													if (clickUsingJavaScript(driver,
-															fp.getFirmNameFromFileNameContentGrid(fileName, "Contact"),
-															"firm name in front of file " + fileName
-																	+ " in content grid")) {
-														if (true/* isAlertPresent(driver) */) {
-															isAlertPresent = isAlertPresent(driver);
-															appLog.info("isAlertPresent  : " + isAlertPresent);
-															msg = switchToAlertAndGetMessage(driver, 30,
-																	action.GETTEXT);
-															switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-															if (msg.trim().equals(
-																	FundsPageErrorMessage.couldNotFindContactOrFirm)) {
-																appLog.info(
-																		"correct error message alert is present after editing email id of contact and clicking on contact name");
-															} else {
-																appLog.error(
-																		"error message is wrong when updated contact name and clicking on firmname");
-																sa.assertTrue(false,
-																		"error message is wrong when updated contact name and clicking on firmname");
-															}
-														} else {
-															appLog.error(
-																	"no alert message is present when clicked on changed email id of contact");
-															sa.assertTrue(false,
-																	"no alert message is present when clicked on changed email id of contact");
-														}
-													}
-
-													// revert back changes
-													switchToDefaultContent(driver);
-													if (fp.clickOnTab(TabName.ContactTab)) {
-														if (cp.clickOnCreatedContact(M7Contact1FirstName,
-																M7Contact1LastName, null)) {
-															if (click(driver, cp.getEditButton(60),
-																	"edit button on contacts page",
-																	action.SCROLLANDBOOLEAN)) {
-																if (sendKeys(driver, cp.getEmailId(60),
-																		M7Contact1EmailId,
-																		"email id textbox on contact page",
-																		action.SCROLLANDBOOLEAN)) {
-																	if (click(driver, cp.getSaveButton(60),
-																			"contacts page save button",
-																			action.SCROLLANDBOOLEAN)) {
-																		appLog.info(
-																				"correct email id has been successfully reverted back of "
-																						+ M7Contact1FirstName + " "
-																						+ M7Contact1LastName);
-																	} else {
-																		appLog.error(
-																				"save button onc contacts page is not clickable");
-																		sa.assertTrue(false,
-																				"save button onc contacts page is not clickable");
-																	}
-																} else {
-																	appLog.error(
-																			"email id textbox is not visible on contacts page");
-																	sa.assertTrue(false,
-																			"email id textbox is not visible on contacts page");
-																}
-															} else {
-																appLog.error(
-																		"edit button on contacts page is not clickable");
-																sa.assertTrue(false,
-																		"edit button on contacts page is not clickable");
-															}
-														} else {
-															appLog.error("contact " + M7Contact1LastName
-																	+ " is not found on contacts page");
-															sa.assertTrue(false, "contact " + M7Contact1LastName
-																	+ " is not found on contacts page");
-														}
-													}
-
-													else {
-														appLog.error("cannot click on uploaded by link in front of "
-																+ fileName);
-														sa.assertTrue(false,
-																"cannot click on uploaded by link in front of "
-																		+ fileName);
-													}
-												} else {
-													appLog.error(stdPath + " is not found in folder structure");
-													sa.assertTrue(false, stdPath + " is not found in folder structure");
-												}
-											} else {
-												appLog.error("cannot find fund " + M7FundName1);
-												sa.assertTrue(false, "cannot find fund " + M7FundName1);
-											}
-										} else {
-											appLog.error("cannot click on funds tab");
-											sa.assertTrue(false, "cannot click on funds tab");
-										}
-									} else {
-										appLog.error("save button on contact page edit page is not clickable");
-										sa.assertTrue(false, "save button on contact page edit page is not clickable");
-									}
-								} else {
-									appLog.error("email id text box is not visible on contact page edit page");
-									sa.assertTrue(false, "email id text box is not visible on contact page edit page");
-								}
-							} else {
-								appLog.error("edit button on contact page is not clickable");
-								sa.assertTrue(false, "edit button on contact page is not clickable");
-							}
-						} else {
-							appLog.error("contact could not be restored from recycle bin");
-							sa.assertTrue(false, "contact could not be restored from recycle bin");
-						}
-					} else {
-						appLog.error("contacts tab is not clickable");
-						sa.assertTrue(false, "contacts tab is not clickable");
-					}
-
-				} else {
-					appLog.error("could not undelete contact " + M7Contact1FirstName + " " + M7Contact1LastName
-							+ " from recycle bin");
-					sa.assertTrue(false, "could not undelete contact " + M7Contact1FirstName + " " + M7Contact1LastName
-							+ " from recycle bin");
-				}
+				
 
 			} else {
 				appLog.error("funds tab is not clickable");
 				sa.assertTrue(false, "funds tab is not clickable");
 			}
 		}
+		
+		switchToDefaultContent(driver);
+		boolean flag = false;
+		if (hp.restoreValuesFromRecycleBin(M7Contact1FirstName + " " + M7Contact1LastName)) {
+			flag = true;
+
+		} else {
+			appLog.error("could not undelete contact " + M7Contact1FirstName + " " + M7Contact1LastName
+					+ " from recycle bin");
+			sa.assertTrue(false, "could not undelete contact " + M7Contact1FirstName + " " + M7Contact1LastName
+					+ " from recycle bin");
+		}
+		switchToDefaultContent(driver);
+		if (flag) {
+			
+			if (bp.clickOnTab(TabName.ContactTab)) {
+				if (cp.clickOnCreatedContact(M7Contact1FirstName, M7Contact1LastName, null)) {
+					appLog.info("contact has been successfully restored");
+					if (click(driver, cp.getEditButton(60), "edit button on contacts page",
+							action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver, cp.getEmailId(60), "**" + M7Contact1EmailId.substring(2),
+								"email id textbox on contact page", action.SCROLLANDBOOLEAN)) {
+							if (click(driver, cp.getSaveButton(60), "contacts page save button",
+									action.SCROLLANDBOOLEAN)) {
+								if (bp.clickOnTab(TabName.FundsTab)) {
+									if (fp.clickOnCreatedFund(M7FundName1)) {
+										switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
+										if (fp.verifyFolderPathdummy(stdPath, M7Institution1, null, M7FundName1,
+												PageName.FundsPage, Workspace.FundraisingWorkspace, 60)) {
+											if (clickUsingJavaScript(driver,
+													fp.getUploadedByFromFileNameContentGrid(fileName,
+															"Contact"),
+													"contact name in front of file " + fileName
+															+ " in content grid")) {
+												if (true/* isAlertPresent(driver) */) {
+													isAlertPresent = isAlertPresent(driver);
+													appLog.info("isAlertPresent  : " + isAlertPresent);
+													msg = switchToAlertAndGetMessage(driver, 30,
+															action.GETTEXT);
+													switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+													if (msg.trim().equals(
+															FundsPageErrorMessage.couldNotFindContactOrFirm)) {
+														appLog.info(
+																"correct error message alert is present after editing email id of contact and clicking on contact name");
+													} else {
+														appLog.error(
+																"error message is wrong when updated contact name and clicking on contact");
+														sa.assertTrue(false,
+																"error message is wrong when updated contact name and clicking on contact");
+													}
+												} else {
+													appLog.error(
+															"no alert message is present when clicked on changed email id of contact");
+													sa.assertTrue(false,
+															"no alert message is present when clicked on changed email id of contact");
+												}
+											}
+											if (clickUsingJavaScript(driver,
+													fp.getFirmNameFromFileNameContentGrid(fileName, "Contact"),
+													"firm name in front of file " + fileName
+															+ " in content grid")) {
+												if (true/* isAlertPresent(driver) */) {
+													isAlertPresent = isAlertPresent(driver);
+													appLog.info("isAlertPresent  : " + isAlertPresent);
+													msg = switchToAlertAndGetMessage(driver, 30,
+															action.GETTEXT);
+													switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+													if (msg.trim().equals(
+															FundsPageErrorMessage.couldNotFindContactOrFirm)) {
+														appLog.info(
+																"correct error message alert is present after editing email id of contact and clicking on contact name");
+													} else {
+														appLog.error(
+																"error message is wrong when updated contact name and clicking on firmname");
+														sa.assertTrue(false,
+																"error message is wrong when updated contact name and clicking on firmname");
+													}
+												} else {
+													appLog.error(
+															"no alert message is present when clicked on changed email id of contact");
+													sa.assertTrue(false,
+															"no alert message is present when clicked on changed email id of contact");
+												}
+											}
+
+											// revert back changes
+											switchToDefaultContent(driver);
+											if (fp.clickOnTab(TabName.ContactTab)) {
+												if (cp.clickOnCreatedContact(M7Contact1FirstName,
+														M7Contact1LastName, null)) {
+													if (click(driver, cp.getEditButton(60),
+															"edit button on contacts page",
+															action.SCROLLANDBOOLEAN)) {
+														if (sendKeys(driver, cp.getEmailId(60),
+																M7Contact1EmailId,
+																"email id textbox on contact page",
+																action.SCROLLANDBOOLEAN)) {
+															if (click(driver, cp.getSaveButton(60),
+																	"contacts page save button",
+																	action.SCROLLANDBOOLEAN)) {
+																appLog.info(
+																		"correct email id has been successfully reverted back of "
+																				+ M7Contact1FirstName + " "
+																				+ M7Contact1LastName);
+															} else {
+																appLog.error(
+																		"save button onc contacts page is not clickable");
+																sa.assertTrue(false,
+																		"save button onc contacts page is not clickable");
+															}
+														} else {
+															appLog.error(
+																	"email id textbox is not visible on contacts page");
+															sa.assertTrue(false,
+																	"email id textbox is not visible on contacts page");
+														}
+													} else {
+														appLog.error(
+																"edit button on contacts page is not clickable");
+														sa.assertTrue(false,
+																"edit button on contacts page is not clickable");
+													}
+												} else {
+													appLog.error("contact " + M7Contact1LastName
+															+ " is not found on contacts page");
+													sa.assertTrue(false, "contact " + M7Contact1LastName
+															+ " is not found on contacts page");
+												}
+											}
+
+											else {
+												appLog.error("cannot click on uploaded by link in front of "
+														+ fileName);
+												sa.assertTrue(false,
+														"cannot click on uploaded by link in front of "
+																+ fileName);
+											}
+										} else {
+											appLog.error(stdPath + " is not found in folder structure");
+											sa.assertTrue(false, stdPath + " is not found in folder structure");
+										}
+									} else {
+										appLog.error("cannot find fund " + M7FundName1);
+										sa.assertTrue(false, "cannot find fund " + M7FundName1);
+									}
+								} else {
+									appLog.error("cannot click on funds tab");
+									sa.assertTrue(false, "cannot click on funds tab");
+								}
+							} else {
+								appLog.error("save button on contact page edit page is not clickable");
+								sa.assertTrue(false, "save button on contact page edit page is not clickable");
+							}
+						} else {
+							appLog.error("email id text box is not visible on contact page edit page");
+							sa.assertTrue(false, "email id text box is not visible on contact page edit page");
+						}
+					} else {
+						appLog.error("edit button on contact page is not clickable");
+						sa.assertTrue(false, "edit button on contact page is not clickable");
+					}
+				} else {
+					appLog.error("contact could not be restored from recycle bin");
+					sa.assertTrue(false, "contact could not be restored from recycle bin");
+				}
+			} else {
+				appLog.error("contacts tab is not clickable");
+				sa.assertTrue(false, "contacts tab is not clickable");
+			}
+			
+		}
+			
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment,mode);
 		sa.assertAll();
@@ -27741,9 +27761,7 @@ public class Module7 extends BaseLib {
 //					appLog.error(fileName+" is not available in the content grid ");
 //					sa.assertTrue(false,fileName+" is not available in the content grid");
 //				}
-					Scanner scn = new Scanner(System.in);
-					System.err.println(">>>>>>><<<<<<<<<<<<<<");
-					scn.nextLine();
+				
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					;

@@ -280,7 +280,14 @@ public class ContactPage extends BasePageBusinessLayer{
 	/**
 	 * @return the contactAcitivityAlertCommentsText
 	 */
-	public WebElement getContactAcitivityAlertCommentsText(int timeOut) {
+	public WebElement getContactAcitivityAlertCommentsText(String mode,int timeOut) {
+		String xpath="";
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			xpath="//span[text()='Comments']/../following-sibling::div//span[contains(@class,'Text')]";
+			return isDisplayed(driver, FindElement(driver, xpath, "comments", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Contact Activity Alert Comments Text");
+
+		}
+		else
 		return isDisplayed(driver, contactAcitivityAlertCommentsText, "Visibility", timeOut, "Contact Activity Alert Comments Text");
 	}
 	
@@ -725,6 +732,7 @@ public class ContactPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//table[@class='detailList']//input[@name='con15']")
 	private WebElement emailId_Clasic;
 	
+
 	@FindBy(xpath="//span[text()='Email']/../following-sibling::input[@inputmode='email' or @type='email']")
 	private WebElement emailId_Lighting;
 
