@@ -5986,7 +5986,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="(//div[@class='requiredInput']//select)[2]")
 	private WebElement investmentCategory_Classic;
 	
-	@FindBy(xpath="//span[text()='Investment Category']/../..//a[@class='select']")
+	@FindBy(xpath="//*[text()='Investment Category']/following-sibling::div//input[@type='text']")
 	private WebElement investmentCategory_Lighting;
 
 	/**
@@ -6020,7 +6020,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//div[@class='requiredInput']//select")
 	private WebElement fundType_Classic;
 	
-	@FindBy(xpath="//span[text()='Fund Type']/../..//div[@class='uiMenu']//a[@class='select']")
+	@FindBy(xpath="//*[text()='Fund Type']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']")
 	private WebElement fundType_Lighting;
 
 	/**

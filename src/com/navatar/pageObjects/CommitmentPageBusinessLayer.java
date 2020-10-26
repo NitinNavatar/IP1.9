@@ -489,6 +489,7 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 	 * @return true/false
 	 */
 	public boolean createCommitment(String environment,String mode,String LimitedPartner, String Partnership, String basedOnValue,String excelPath) {
+		refresh(driver);
 		ThreadSleep(5000);
 		if (click(driver, getNewButton(environment,mode,60), "New Button", action.BOOLEAN)) {
 			ThreadSleep(5000);
@@ -498,8 +499,7 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 					ThreadSleep(1000);
 					if (click(driver,
 							FindElement(driver,
-									"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + LimitedPartner
-											+ "']",
+									"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+LimitedPartner+"']",
 									"LimitedPartner Name List", action.THROWEXCEPTION, 30),
 							LimitedPartner + "   :   LimitedPartner Name", action.BOOLEAN)) {
 						appLog.info(LimitedPartner + "  is present in list.");
@@ -512,8 +512,7 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 						ThreadSleep(1000);
 						if (click(driver,
 								FindElement(driver,
-										"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + Partnership
-												+ "']",
+										"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+Partnership+"']",
 										"Partnership Name List", action.THROWEXCEPTION, 30),
 								Partnership + "   :   Partnership Name", action.BOOLEAN)) {
 							appLog.info(Partnership + "  is present in list.");
@@ -521,7 +520,7 @@ public class CommitmentPageBusinessLayer extends CommitmentPage implements Commi
 							appLog.error(Partnership + "  is not present in the list.");
 						}
 					}
-					if (click(driver, getSaveButton(environment,mode,60), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getCustomTabSaveBtn(environment,mode,60), "Save Button", action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(5000);
 						for(int i=0; i<2; i++) {
 							if (getCommitmentIdInViewMode(environment,mode,20) != null) {

@@ -3555,5 +3555,16 @@ public abstract class BasePage {
 	 	return isDisplayed(driver, nimParentFrame, "Visibility", timeOut, "NIM Parent Frame");
 	 }
 	 
+		
+		
+		public WebElement getCustomTabSaveBtn(String environment, String mode,int timeOut) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString()))
+			return isDisplayed(driver, customTabSaveBtn, "Visibility", timeOut, "Custom Tab Save Button classic");
+			else
+				return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
+			
+		}
+		@FindBy(xpath = "//button[@title='Save']")
+		private WebElement save_Lightning;
 	
 	}

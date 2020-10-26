@@ -732,7 +732,8 @@ public class ContactPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//table[@class='detailList']//input[@name='con15']")
 	private WebElement emailId_Clasic;
 	
-	@FindBy(xpath="//span[text()='Email']/../following-sibling::input[@type='text']")
+
+	@FindBy(xpath="//span[text()='Email']/../following-sibling::input[@inputmode='email' or @type='email']")
 	private WebElement emailId_Lighting;
 
 	/**
