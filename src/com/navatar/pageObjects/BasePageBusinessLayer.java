@@ -4462,6 +4462,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				appLog.error("could not remove watermarking setting from NIM page");
 				sa.assertTrue(false, "could not remove watermarking setting from NIM page");
 			}
+			switchToDefaultContent(driver);
+			np.clickOnTab(TabName.FundsTab);
 			if (np.getMyProfileFistNameAndLastNameAndFirmName("AdminUser")) {
 				appLog.info("written firm name, and user first, last name to excel for admin");
 			}

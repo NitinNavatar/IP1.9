@@ -1546,6 +1546,15 @@ public abstract class BasePage {
 	public WebElement getDeleteButton2(int timeOut) {
 		return isDisplayed(driver, deleteButton2, "Visibility", timeOut, "Delete Button");
 	}
+	@FindBy(xpath="//button[@title='Delete']")
+	private WebElement deleteButtonpopup;
+	
+	/**
+	 * @return the addFilterLogicLink
+	 */
+	public WebElement getdeleteButtonpopup(int timeOut) {
+		return isDisplayed(driver, deleteButtonpopup, "Visibility", timeOut, "Delete Button");
+	}
 	/**
 	 * @return the pendingDisclaimerPopUpHeader
 	 */
