@@ -1427,6 +1427,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public boolean clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions contentGridArrowKeyFunctions,
 			String documentName, Workspace workspace,int timeOut,String scroll) {
 		WebElement ele=null;
+		ThreadSleep(2000);
+		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
+		ThreadSleep(2000);
 		ele = FindElement(driver, "//a[@title='" + documentName + "']/following-sibling::img", "Down Arrow",
 					action.BOOLEAN, timeOut);
 		if (scroll != null && scroll.equalsIgnoreCase("Yes"))
@@ -3091,30 +3094,37 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				}
 				ThreadSleep(3000);
 			if (sendKeys(driver, getChooseFileButton(60), newFilePath, "Choose Button", action.BOOLEAN)) {
-				if (click(driver, getUpdateLinkContentGrid(60), "Update button", action.BOOLEAN)) {
-					String msg=null;
-					if (isAlertPresent(driver)) {
-						 msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-						if (msg.equalsIgnoreCase(updateDocumentSuccessAlertMsg)) {
-							appLog.info("Update confirmation message is verified.");
-							driver.switchTo().window(parentID);
-							
+				try {
+					if (click(driver, getUpdateLinkContentGrid(60), "Update button", action.BOOLEAN)) {
+						String msg=null;
+						if (isAlertPresent(driver)) {
+							 msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
+							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+							if (msg.equalsIgnoreCase(updateDocumentSuccessAlertMsg)) {
+								appLog.info("Update confirmation message is verified.");
+								driver.switchTo().window(parentID);
+								
+							} else {
+								driver.switchTo().window(parentID);
+								appLog.error("Confirmation message is not verified. Expected: "+updateDocumentSuccessAlertMsg+" /tActual: "+msg);
+								BaseLib.sa.assertTrue(false, "Confirmation message is not verified. Expected: "+updateDocumentSuccessAlertMsg+" /t Actual: "+msg);
+							}
 						} else {
+							appLog.error("Confirmation alert message is not present on this window. Expected: "+updateDocumentSuccessAlertMsg+" /tActual: "+msg);
+							BaseLib.sa.assertTrue(false, "Confirmation message is not present on this window. Expected: "+updateDocumentSuccessAlertMsg+" /tActual: "+msg);
+							driver.close();
 							driver.switchTo().window(parentID);
-							appLog.error("Confirmation message is not verified. Expected: "+updateDocumentSuccessAlertMsg+" /tActual: "+msg);
-							BaseLib.sa.assertTrue(false, "Confirmation message is not verified. Expected: "+updateDocumentSuccessAlertMsg+" /t Actual: "+msg);
 						}
-					} else {
-						appLog.error("Confirmation alert message is not present on this window. Expected: "+updateDocumentSuccessAlertMsg+" /tActual: "+msg);
-						BaseLib.sa.assertTrue(false, "Confirmation message is not present on this window. Expected: "+updateDocumentSuccessAlertMsg+" /tActual: "+msg);
-						driver.close();
-						driver.switchTo().window(parentID);
 					}
-				}
-				else {
-					appLog.error("update link on update window is not clickable");
-					BaseLib.sa.assertTrue(false,"update link on update window is not clickable" );
+					else {
+						appLog.error("update link on update window is not clickable");
+						BaseLib.sa.assertTrue(false,"update link on update window is not clickable" );
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					switchToDefaultContent(driver);
+					driver.switchTo().window(parentID);
 				}
 			}
 			else {

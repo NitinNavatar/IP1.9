@@ -16593,7 +16593,7 @@ public class Module7 extends BaseLib {
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner2)) {
 				appLog.info(" Opened Limited Partner : " + M7LimitedPartner2);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -29702,7 +29702,7 @@ public class Module7 extends BaseLib {
 				// Internal
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(intPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -29724,7 +29724,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -29745,7 +29745,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -30496,7 +30496,7 @@ public class Module7 extends BaseLib {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -30522,7 +30522,7 @@ public class Module7 extends BaseLib {
 				// Internal
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(intPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -30544,7 +30544,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -30565,7 +30565,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -30878,6 +30878,7 @@ public class Module7 extends BaseLib {
 					appLog.info(" Folder Structure Verified: " + cmnPath);
 
 					appLog.info("Going To Verify UI of Delete Popup via DownArrow No Button");
+					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 10),"Investor workspace view");
 					if (fp.verifyDeletePopUpUIViaDownArrow(PageName.ContactsPage, Workspace.InvestorWorkspace,
 							filesName, 60, "no", true)) {
 						appLog.info(
@@ -30892,6 +30893,8 @@ public class Module7 extends BaseLib {
 					}
 
 					appLog.info("Going To Verify UI of Delete Popup via DownArrow Cross Icon");
+					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 10),"Investor workspace view");
+					
 					if (fp.verifyDeletePopUpUIViaDownArrow(PageName.ContactsPage, Workspace.InvestorWorkspace,
 							filesName, 60, "no", false)) {
 						appLog.info("File has not been deleted and is present after Clicking on Cross Button: "
@@ -30920,6 +30923,8 @@ public class Module7 extends BaseLib {
 					appLog.info(" Folder Structure Verified: " + shdPath);
 
 					appLog.info("Going To Verify UI of Delete Popup via DownArrow No Button");
+					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 10),"Investor workspace view");
+					
 					if (fp.verifyDeletePopUpUIViaDownArrow(PageName.ContactsPage, Workspace.InvestorWorkspace,
 							filesName, 60, "no", true)) {
 						appLog.info(
@@ -30934,6 +30939,8 @@ public class Module7 extends BaseLib {
 					}
 
 					appLog.info("Going To Verify UI of Delete Popup via DownArrow Cross Icon");
+					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 10),"Investor workspace view");
+					
 					if (fp.verifyDeletePopUpUIViaDownArrow(PageName.ContactsPage, Workspace.InvestorWorkspace,
 							filesName, 60, "no", false)) {
 						appLog.info("File has not been deleted and is present after Clicking on Cross Button: "
@@ -30961,6 +30968,8 @@ public class Module7 extends BaseLib {
 					appLog.info(" Folder Structure Verified: " + stdPath);
 
 					appLog.info("Going To Verify UI of Delete Popup via DownArrow No Button");
+					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 10),"Investor workspace view");
+					
 					if (fp.verifyDeletePopUpUIViaDownArrow(PageName.ContactsPage, Workspace.InvestorWorkspace,
 							filesName, 60, "no", true)) {
 						appLog.info(
@@ -30975,6 +30984,8 @@ public class Module7 extends BaseLib {
 					}
 
 					appLog.info("Going To Verify UI of Delete Popup via DownArrow Cross Icon");
+					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 10),"Investor workspace view");
+					
 					if (fp.verifyDeletePopUpUIViaDownArrow(PageName.ContactsPage, Workspace.InvestorWorkspace,
 							filesName, 60, "no", false)) {
 						appLog.info("File has not been deleted and is present after Clicking on Cross Button: "
@@ -31342,7 +31353,7 @@ public class Module7 extends BaseLib {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -31368,7 +31379,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -31389,7 +31400,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -31608,7 +31619,7 @@ public class Module7 extends BaseLib {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited  : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -31654,7 +31665,7 @@ public class Module7 extends BaseLib {
 				// Internal
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(intPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -31696,7 +31707,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -31737,7 +31748,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -31820,7 +31831,7 @@ public class Module7 extends BaseLib {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -31847,7 +31858,7 @@ public class Module7 extends BaseLib {
 				// Internal
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(intPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -31869,7 +31880,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -31890,7 +31901,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -32939,7 +32950,7 @@ public class Module7 extends BaseLib {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -32985,7 +32996,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -33006,7 +33017,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -33026,8 +33037,8 @@ public class Module7 extends BaseLib {
 				}
 
 			} else {
-				appLog.error("Not able to Click Institution OR Institution is not Present: " + M7Institution1);
-				sa.assertTrue(false, "Not able to Click Institution OR Institution is not Present: " + M7Institution1);
+				appLog.error("Not able to Click Institution OR Institution is not Present: " + M7LimitedPartner1);
+				sa.assertTrue(false, "Not able to Click Institution OR Institution is not Present: " + M7LimitedPartner1);
 			}
 		} else {
 			appLog.error("Not able to Click Institution tab ");
@@ -33357,7 +33368,7 @@ public class Module7 extends BaseLib {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -33403,7 +33414,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -33424,7 +33435,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -34616,7 +34627,7 @@ public class Module7 extends BaseLib {
 			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, ip.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -34707,7 +34718,7 @@ public class Module7 extends BaseLib {
 										}
 
 										switchToDefaultContent(driver);
-										switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+										switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 
 										/*
 										 * // 3RD if (click(driver, bp.getAllFolderRadioButton(30),
@@ -34758,7 +34769,7 @@ public class Module7 extends BaseLib {
 					}
 
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 
 					// 4
 
@@ -34791,7 +34802,7 @@ public class Module7 extends BaseLib {
 
 					// 5
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 					scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 							"Investor workspace view");
 					if (bp.enterValueAndClickonSearchBoxContentGrid(PageName.InstitutionsPage,
@@ -34830,12 +34841,12 @@ public class Module7 extends BaseLib {
 				}
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, ip.getFrame( PageName.LimitedPartnerPage, 20));
 
 				// Internal
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(intPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -34944,7 +34955,7 @@ public class Module7 extends BaseLib {
 				// Shared
 
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(shdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
@@ -34990,7 +35001,7 @@ public class Module7 extends BaseLib {
 
 				// Standard
 				switchToDefaultContent(driver);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M7FundName1, PageName.InstitutionsPage,
 						Workspace.InvestorWorkspace, 60)) {
 
