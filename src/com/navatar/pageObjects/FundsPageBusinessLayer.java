@@ -1484,7 +1484,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public boolean updateFile(String folderPath, String documentName, String institutionName,String limitedPartnername, FolderType FolderType,
 			String filePath, multiInstance multiInstance, String verifyErrorMessage, ContentGridArrowKeyFunctions ContentGridArrowKeyFunctions,
 			int timeOut, PageName pageName, String scroll,String fundName,Workspace Workspace) {
-			switchToFrame(driver, 60, getFrame( pageName, timeOut));			
+			switchToFrame(driver, 60, getFrame(environment,mode,pageName, timeOut));			
 		if (FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
 			if (!verifyFolderPathdummy(folderPath, institutionName , limitedPartnername, fundName, pageName, Workspace, timeOut)) {
 				BaseLib.sa.assertTrue(false, folderPath + " :Folder Structure is not verified.");
@@ -1567,7 +1567,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 							driver.switchTo().window(parentWinID);
 							if (ContentGridArrowKeyFunctions.toString()
 									.equalsIgnoreCase(ContentGridArrowKeyFunctions.ManageVersions.toString())) {
-								switchToFrame(driver, 60, getFrame( pageName, timeOut));
+								switchToFrame(driver, 60, getFrame(environment,mode,pageName, timeOut));
 								if (!click(driver, getManageVersionsPopUpCrossIcon(30), "Manage Versions Cross Icon",
 										action.BOOLEAN)) {
 									if (!click(driver, getManageVersionPopUpCloseButton(30),
@@ -1633,7 +1633,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public boolean updateBulkFile(String loggedInUsername,String folderPath, String documentName, String institutionName,String limitedPartnername, FolderType FolderType,
 			String filePath, multiInstance multiInstance, String verifyErrorMessage, ContentGridArrowKeyFunctions ContentGridArrowKeyFunctions,
 			int timeOut, PageName pageName, String scroll,String fundName,Workspace Workspace) {
-			switchToFrame(driver, 60, getFrame( pageName, timeOut));			
+			switchToFrame(driver, 60, getFrame(environment,mode,pageName, timeOut));			
 		if (FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
 			if (!verifyFolderPathdummy(folderPath, institutionName , limitedPartnername, fundName, pageName, Workspace, timeOut)) {
 				BaseLib.sa.assertTrue(false, folderPath + " :Folder Structure is not verified.");
@@ -1735,7 +1735,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						driver.switchTo().window(parentWinID);
 						if (ContentGridArrowKeyFunctions.toString()
 								.equalsIgnoreCase(ContentGridArrowKeyFunctions.ManageVersions.toString())) {
-							switchToFrame(driver, 60, getFrame( pageName, timeOut));
+							switchToFrame(driver, 60, getFrame(environment,mode,pageName, timeOut));
 							if (!click(driver, getManageVersionsPopUpCrossIcon(30), "Manage Versions Cross Icon",
 									action.BOOLEAN)) {
 								if (!click(driver, getManageVersionPopUpCloseButton(30),
@@ -1777,14 +1777,23 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @return True/False
 	 */
 	public boolean clickOnManageVersionOnContentGrid(String documentName, Workspace workspace, int timeOut) {
+		if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
+			scrollDownThroughWebelement(driver, getFundRaisingWorkSpaceSection(30), "fundraising workspace View");
+			
+		}else if (workspace.toString().equalsIgnoreCase(workspace.InvestorWorkspace.toString())) {
+			scrollDownThroughWebelement(driver, getInvestorWorkSpaceSection(30), "investor workspace View");
+		}
 		WebElement ele = FindElement(driver, "//a[@title='" + documentName + "']/following-sibling::img", "Down Arrow",
-				action.BOOLEAN, timeOut);
+				action.SCROLLANDBOOLEAN, timeOut);
 		if (ele != null) {
 			((JavascriptExecutor) driver).executeScript(
 					"arguments[0].setAttribute('style', 'position: absolute; top: 5px; right: 1px; float: left; margin-top: 10px; cursor: pointer;');",
 					ele);
-			if (click(driver, ele, "Down Arrow", action.THROWEXCEPTION)) {
-				if (click(driver, getManageVersionLinkContentGrid(workspace,timeOut), workspace.toString()+" Manage Version Link", action.BOOLEAN)) {
+			if (click(driver, ele, documentName+" down arrow link", action.BOOLEAN)) {
+				appLog.info("clicked on Down Arrow");
+				if (click(driver, getManageVersionLinkContentGrid(workspace,timeOut), workspace.toString()+" Manage Version Link", action.BOOLEAN
+						)) {
+					appLog.info("Clicked on Managed Version link");
 					return true;
 				}
 			}
@@ -8431,7 +8440,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			String documentPath, String fileName, String boxUserName, String boxPassword,OnlineImportFileAddTo onlineImportFileAddTo,
 			WorkSpaceAction WorkSpaceAction, FolderType FolderType, PageName pageName, Workspace workspace,int timeOut) {
 		if (pageName.toString().equalsIgnoreCase(pageName.FundsPage.toString())) {
-			switchToFrame(driver, 60, getFrame( pageName.FundsPage, 60));
+			switchToFrame(driver, 60, getFrame(environment,mode,pageName.FundsPage, 60));
 		}
 		String parentID = null;
 		if (FolderType.toString().equalsIgnoreCase(FolderType.Standard.toString())) {
@@ -9400,7 +9409,7 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 				} else {
 					if (click(driver, getFundType(environment, mode, 60), "Fund Type ", action.SCROLLANDBOOLEAN)) {
 						WebElement fundTypeEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + fundType + "']", fundType,
+								"//span[@title='"+fundType+"']/../..", fundType,
 								action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, fundTypeEle, fundType, action.SCROLLANDBOOLEAN)) {
@@ -9411,11 +9420,10 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 					} else {
 						appLog.error("Not able to Click on Fund Type");
 					}
-
 					if (click(driver, getInvestmentCategory(environment, mode, 60), "Investment Category",
 							action.SCROLLANDBOOLEAN)) {
 						WebElement InvsCatgEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + investmentCategory + "']",
+								"//label[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']/../..",
 								investmentCategory, action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, InvsCatgEle, investmentCategory, action.SCROLLANDBOOLEAN)) {
@@ -9439,7 +9447,7 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 					}
 					
 				}
-				if (click(driver, getSaveButton(environment, mode, 60), "Save Button", action.BOOLEAN)) {
+				if (click(driver, getCustomTabSaveBtn(environment, mode, 60), "Save Button", action.BOOLEAN)) {
 					ThreadSleep(5000);
 					
 					WebElement ele;

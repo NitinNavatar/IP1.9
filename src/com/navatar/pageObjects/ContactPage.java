@@ -32,7 +32,7 @@ public class ContactPage extends BasePageBusinessLayer{
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath="//input[@name='name_firstcon2']")
+	@FindBy(xpath="//span[text()='First Name']/..//following-sibling::input")
 	private WebElement contactFirstName;
 
 	/**
@@ -42,7 +42,7 @@ public class ContactPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, contactFirstName, "Visibility", timeOut, "Contact First Name");
 	}
 	
-	@FindBy(xpath="//input[@name='name_lastcon2']")
+	@FindBy(xpath="//span[text()='Last Name']/..//following-sibling::input")
 	private WebElement contactLastName;
 
 	/**
@@ -280,7 +280,14 @@ public class ContactPage extends BasePageBusinessLayer{
 	/**
 	 * @return the contactAcitivityAlertCommentsText
 	 */
-	public WebElement getContactAcitivityAlertCommentsText(int timeOut) {
+	public WebElement getContactAcitivityAlertCommentsText(String mode,int timeOut) {
+		String xpath="";
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			xpath="//span[text()='Comments']/../following-sibling::div//span[contains(@class,'Text')]";
+			return isDisplayed(driver, FindElement(driver, xpath, "comments", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Contact Activity Alert Comments Text");
+
+		}
+		else
 		return isDisplayed(driver, contactAcitivityAlertCommentsText, "Visibility", timeOut, "Contact Activity Alert Comments Text");
 	}
 	
@@ -725,7 +732,8 @@ public class ContactPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//table[@class='detailList']//input[@name='con15']")
 	private WebElement emailId_Clasic;
 	
-	@FindBy(xpath="//span[text()='Email']/../following-sibling::input[@type='text']")
+
+	@FindBy(xpath="//span[text()='Email']/../following-sibling::input[@inputmode='email' or @type='email']")
 	private WebElement emailId_Lighting;
 
 	/**

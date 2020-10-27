@@ -12,18 +12,7 @@ import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
-import com.navatar.generic.CommonLib.CreationPage;
-import com.navatar.generic.CommonLib.EnableDisable;
-import com.navatar.generic.CommonLib.FolderType;
-import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
-import com.navatar.generic.CommonLib.PageName;
-import com.navatar.generic.CommonLib.SortOrder;
-import com.navatar.generic.CommonLib.TabName;
-import com.navatar.generic.CommonLib.WorkSpaceAction;
-import com.navatar.generic.CommonLib.Workspace;
-import com.navatar.generic.CommonLib.accessType;
-import com.navatar.generic.CommonLib.action;
-import com.navatar.generic.CommonLib.excelLabel;
+import com.navatar.generic.CommonLib.*;
 import com.navatar.pageObjects.AllFirmsPageBusinesslayer;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.CommitmentPageBusinessLayer;
@@ -2202,6 +2191,8 @@ public class Module10 extends BaseLib {
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
 		SoftAssert sa = new SoftAssert();
+		String date=getDateAccToTimeZone("America/New_York", "M/d/YYYY");
+		
 		WebElement ele = null;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -2457,76 +2448,42 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact1 checkbox");
 						sa.assertTrue(false, "Not able ot click on contact1 checkbox");
 					}
-					appLog.info(">>>>");
-					Scanner scn = new Scanner(System.in);
-					scn.next();
+					
+					
 					ele = FindElement(driver, "//a[text()='" + M10Contact1FirstName + " " + M10Contact1LastName + "']",
 							"Contact 1", action.SCROLLANDBOOLEAN, 30);
 					if (click(driver, ele, "Contact 1 name", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
 							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Contact)) {
+								cp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true);
 								if (bp.clickOnViewAllRelatedList(environment, mode, RelatedList.Activity_History)) {
 
 									scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
-									if (cp.getContactActivityAlertAccountNameText(30).getText().trim()
-											.contains(M10Institution1)) {
-										appLog.info("Activity Alert is available in Contact page.");
-									} else {
-										appLog.info("Activity Alert is not available in Contact page.");
-										sa.assertTrue(false, "Activity Alert is not available in Contact page.");
-									}
-									if (click(driver, cp.getContactAcitivityAlertSubjectLink(30),
-											"Contact Activity Alert Subject Link", action.SCROLLANDBOOLEAN)) {
-										if (cp.getContactAcitivityAlertAssignedToEmailText(30).getText().trim()
-												.contains(CRMUser1LastName)) {
-											appLog.info("Assigned To user name is verified.");
-										} else {
-											appLog.info("Assigned To user name is not verified.");
-											sa.assertTrue(false, "Assigned To user name is not verified.");
-										}
-										if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-												.contains("Invitation from")) {
-											appLog.info("Subject Text is  verified.");
-										} else {
-											appLog.info("Subject Text is not verified.");
-											sa.assertTrue(false, "Subject Text is not verified.");
-										}
-										if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-												.contains(Org1FirmName)) {
-											appLog.info("Subject Text is  verified.");
-										} else {
-											appLog.info("Subject Text is not verified."+cp.getContactAcitivityAlertSubjectText(30).getText().trim()+" and "+Org1FirmName);
-											sa.assertTrue(false, "Subject Text is not verified.");
-										}
-										String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
-										if (bp.verifyDate(date, "Due")) {
-											appLog.info("Due Date is verified.");
-										} else {
-											appLog.error("Due Date is not verified. Actual Result: " + date);
-											sa.assertTrue(false, "Due Date is not verified. Actual Result: " + date);
-										}
-										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains("Subject:")) {
+									if (cp.verifyActivitiesRelatedList(environment, mode, TabName.ContactTab, "Invitation from "+Org1FirmName, null, M10Institution1, date, CRMUser1FirstName+" "+ CRMUser1LastName)) {
+										appLog.info("successfully verified email subject, due date, related to and user name on activities related list");
+										if (cp.clickOncreatedRecordOnActivityRelatedList(environment, mode, "Invitation from "+Org1FirmName)) {
+										if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains("Subject:")) {
 											appLog.info("Comments Text is verified.");
 										} else {
 											appLog.error("Comments Text is not verified.");
 											sa.assertTrue(false, "Comments Text is not verified.");
 										}
-										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+										if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 												.contains("Invitation from " + Org1FirmName)) {
 											appLog.info("Comments subject Text is verified.");
 										} else {
-											appLog.info("Comments subject Text is not verified.."+cp.getContactAcitivityAlertCommentsText(30).getText().trim()+" and "+Org1FirmName);
+											appLog.info("Comments subject Text is not verified.."+cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()+" and "+Org1FirmName);
 											sa.assertTrue(false, "Comments subject Text is not verified.");
 										}
-										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+										if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 												.contains("Hello " + M10Contact1FirstName)) {
 											appLog.info("Comments body Text is verified.");
 										} else {
 											appLog.info("Comments body Text is not verified..");
 											sa.assertTrue(false, "Comments body Text is not verified.");
 										}
-										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+										if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 												.contains("You have been granted access to Potential investments of "
 														+ M10FundName1 + " by")) {
 											appLog.info("Comments body Text is verified.");
@@ -2534,40 +2491,42 @@ public class Module10 extends BaseLib {
 											appLog.info("Comments body Text is not verified..");
 											sa.assertTrue(false, "Comments body Text is not verified.");
 										}
-										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+										if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 												.contains("If you have not yet registered, Click here to register.")) {
 											appLog.info("Comments body Text is verified.");
 										} else {
 											appLog.info("Comments body Text is not verified..");
 											sa.assertTrue(false, "Comments body Text is not verified.");
 										}
-										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+										if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 												.contains("If you have already registered, Click here to login.")) {
 											appLog.info("Comments body Text is verified.");
 										} else {
 											appLog.info("Comments body Text is not verified..");
 											sa.assertTrue(false, "Comments body Text is not verified.");
 										}
-										if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains(
+										if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains(
 												"If you believe this has been sent in error, or if you cannot login, please contact")) {
 											appLog.info("Comments body Text is verified.");
 										} else {
 											appLog.info("Comments body Text is not verified..");
 											sa.assertTrue(false, "Comments body Text is not verified.");
 										}
-										if (cp.getContactActivityAlertStatusText(30).getText().trim().contains("Completed")) {
+										refresh(driver);
+										ThreadSleep(3000);
+										if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Status.toString(), action.BOOLEAN, 30).getText().trim().contains("Completed")) {
 											appLog.info("Status text is verified.");
 										} else {
 											appLog.info("Status text is not verified.");
 											sa.assertTrue(false, "Status text is not verified.");
 										}
-										if (cp.getContactActivityAlertPriorityText(30).getText().trim().contains("Normal")) {
+										if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Priority.toString(), action.BOOLEAN, 30).getText().trim().contains("Normal")) {
 											appLog.info("Priority text is verified.");
 										} else {
 											appLog.info("Priority text is not verified.");
 											sa.assertTrue(false, "Priority text is not verified.");
 										}
-										if (cp.getAccountActivityAlertRelatedToText(60).getText().trim()
+										if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Related_To.toString(), action.BOOLEAN, 30).getText().trim()
 												.contains(M10Institution1)) {
 											appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
 										} else {
@@ -2576,52 +2535,35 @@ public class Module10 extends BaseLib {
 											sa.assertTrue(false,
 													"Institution Name is not verified in Activity Alert on Institution Page.");
 										}
-										if (cp.getContactActivityAlertEmailIdtext(30).getText().trim()
-												.contains(M10Contact1EmailId)) {
-											appLog.info("Email ID is verified.");
-										} else {
-											appLog.info("Email ID is not verified.");
-											sa.assertTrue(false, "Email ID is not verified.");
-										}
-										if (cp.getContactActivityAlertCreatedByText(30).getText().trim()
+										if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Assigned_To.toString(), action.BOOLEAN, 30).getText().trim()
 												.contains(CRMUser1LastName)) {
 											appLog.info("Created By text is verified.");
 										} else {
 											appLog.info("Created By text is not verified.");
 											sa.assertTrue(false, "Created By text is not verified.");
 										}
-										if (cp.getAccountActivityAlertNameText(30).getText().trim()
+										if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Name.toString(), action.BOOLEAN, 30).getText().trim()
 												.contains(M10Contact1LastName)) {
 											appLog.info("Name text is verified.");
 										} else {
 											appLog.info("Name text is not verified.");
 											sa.assertTrue(false, "Name text is not verified.");
 										}
-										String createdByDate = cp.getContactActivityAlertCreatedByDate(60).getText().trim();
-										if (bp.verifyDate(createdByDate, "Created Date")) {
+										if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Due_Date.toString(), action.BOOLEAN, 30).getText().trim()
+												.contains(date)) {
 											appLog.info("Cretaed by date is verified");
 										} else {
 											appLog.info("Created by date is not verified");
 											sa.assertTrue(false, "Created by date is not verified");
 										}
-										if (cp.getContactActivityAlertLastModifiedName(30).getText().trim()
-												.contains(CRMUser1LastName)) {
-											appLog.info("Name text is verified.");
 										} else {
-											appLog.info("Name text is not verified.");
-											sa.assertTrue(false, "Name text is not verified.");
+											appLog.info("Not able to click on activity alert subject link");
+											sa.assertTrue(false, "Not able to click on activity alert subject link");
 										}
-										String lastModifiedDate = cp.getContactActivityAlertLastModifiedDate(60).getText()
-												.trim();
-										if (bp.verifyDate(lastModifiedDate, "Last Modified Date")) {
-											appLog.info("Last Modified Date is verified");
-										} else {
-											appLog.info("Last Modified Date is not verified");
-											sa.assertTrue(false, "Last Modified Date is not verified");
 										}
-									} else {
-										appLog.info("Not able to click on activity alert subject link");
-										sa.assertTrue(false, "Not able to click on activity alert subject link");
+									else {
+										appLog.error("culd not verify activity related list date, username, related to and subject");
+										sa.assertTrue(false,"culd not verify activity related list date, username, related to and subject" );
 									}
 								}
 								else {
@@ -2653,7 +2595,17 @@ public class Module10 extends BaseLib {
 					if (click(driver, ele, "Contact1 firm name ", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, ip.getNoteAndAttachmentText(30), "Activity History");
+							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Institution)) {
+								cp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true);
+								
+								if (bp.clickOnViewAllRelatedList(environment, mode, RelatedList.Activity_History)) {
+
+									scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
+									if (cp.verifyActivitiesRelatedList(environment, mode, TabName.InstituitonsTab, "Invitation from "+Org1FirmName, M10Contact1FirstName + " " + M10Contact1LastName, M10Institution1, date, CRMUser1FirstName+" "+ CRMUser1LastName)) {
+										appLog.info("successfully verified email subject, due date, related to and user name on activities related list");
+										if (cp.clickOncreatedRecordOnActivityRelatedList(environment, mode, "Invitation from "+Org1FirmName)) {
+										
+							/*	scrollDownThroughWebelement(driver, ip.getNoteAndAttachmentText(30), "Activity History");
 							List<WebElement> list = ip.getContactActivityHistoryNameRecords();
 							String contactFullName = M10Contact1FirstName + " " + M10Contact1LastName;
 							String[] contactnames = contactFullName.split(",");
@@ -2695,55 +2647,28 @@ public class Module10 extends BaseLib {
 							} else {
 								appLog.info("Contact Email Id list is not available");
 								sa.assertTrue(false, "Contact Email Id list is not available");
-							}
-							if (cp.getContactAcitivityAlertAssignedToEmailText(30).getText().trim()
-									.contains(CRMUser1LastName)) {
-								appLog.info("Assigned To user name is verified.");
-							} else {
-								appLog.info("Assigned To user name is not verified.");
-								sa.assertTrue(false, "Assigned To user name is not verified.");
-							}
-							if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-									.contains("Invitation from")) {
-								appLog.info("Subject Text is  verified.");
-							} else {
-								appLog.info("Subject Text is not verified.");
-								sa.assertTrue(false, "Subject Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertSubjectText(30).getText().trim().contains(Org1FirmName)) {
-								appLog.info("Subject Text is  verified.");
-							} else {
-								appLog.info("Subject Text is not verified."+cp.getContactAcitivityAlertSubjectText(30).getText().trim()+ " and " +Org1FirmName);
-								sa.assertTrue(false, "Subject Text is not verified.");
-							}
-							String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
-							if (bp.verifyDate(date, "Due")) {
-								appLog.info("Due Date is verified.");
-							} else {
-								appLog.info("Due Date is not verified. Actual Result: " + date);
-								sa.assertTrue(false, "Due Date is not verified. Actual Result: " + date);
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains("Subject:")) {
+							}*/
+							if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains("Subject:")) {
 								appLog.info("Comments Text is verified.");
 							} else {
 								appLog.info("Comments Text is not verified.");
 								sa.assertTrue(false, "Comments Text is not verified.");
 							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+							if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 									.contains("Invitation from " + Org1FirmName)) {
 								appLog.info("Comments subject Text is verified.");
 							} else {
 								appLog.info("Comments subject Text is not verified.."+Org1FirmName);
 								sa.assertTrue(false, "Comments subject Text is not verified.");
 							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+							if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 									.contains("Hello " + M10Contact1FirstName)) {
 								appLog.info("Comments body Text is verified.");
 							} else {
 								appLog.info("Comments body Text is not verified..");
 								sa.assertTrue(false, "Comments body Text is not verified.");
 							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+							if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 									.contains("You have been granted access to Potential investments of " + M10FundName1
 											+ " by")) {
 								appLog.info("Comments body Text is verified.");
@@ -2751,40 +2676,42 @@ public class Module10 extends BaseLib {
 								appLog.info("Comments body Text is not verified..");
 								sa.assertTrue(false, "Comments body Text is not verified.");
 							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains(
+							if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains(
 									"If you believe this has been sent in error, or if you cannot login, please contact")) {
 								appLog.info("Comments body Text is verified.");
 							} else {
 								appLog.info("Comments body Text is not verified..");
 								sa.assertTrue(false, "Comments body Text is not verified.");
 							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+							if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 									.contains("If you have not yet registered, Click here to register.")) {
 								appLog.info("Comments body Text is verified.");
 							} else {
 								appLog.info("Comments body Text is not verified..");
 								sa.assertTrue(false, "Comments body Text is not verified.");
 							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
+							if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
 									.contains("If you have already registered, Click here to login.")) {
 								appLog.info("Comments body Text is verified.");
 							} else {
 								appLog.info("Comments body Text is not verified..");
 								sa.assertTrue(false, "Comments body Text is not verified.");
 							}
-							if (cp.getContactActivityAlertStatusText(30).getText().trim().contains("Completed")) {
+							refresh(driver);
+							ThreadSleep(3000);
+							if (cp.getLabelForTaskInViewMode(null, TaskPageLabel.Status.toString(), action.BOOLEAN, 10).getText().trim().contains("Completed")) {
 								appLog.info("Status text is verified.");
 							} else {
 								appLog.info("Status text is not verified.");
 								sa.assertTrue(false, "Status text is not verified.");
 							}
-							if (cp.getContactActivityAlertPriorityText(30).getText().trim().contains("Normal")) {
+							if (cp.getLabelForTaskInViewMode(null, TaskPageLabel.Priority.toString(), action.BOOLEAN, 10).getText().trim().contains("Normal")) {
 								appLog.info("Priority text is verified.");
 							} else {
 								appLog.info("Priority text is not verified.");
 								sa.assertTrue(false, "Priority text is not verified.");
 							}
-							if (cp.getAccountActivityAlertRelatedToText(60).getText().trim()
+							if (cp.getLabelForTaskInViewMode(null, TaskPageLabel.Related_To.toString(), action.BOOLEAN, 10).getText().trim()
 									.contains(M10Institution1)) {
 								appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
 							} else {
@@ -2792,65 +2719,47 @@ public class Module10 extends BaseLib {
 								sa.assertTrue(false,
 										"Institution Name is not verified in Activity Alert on Institution Page.");
 							}
-							if (cp.getContactActivityAlertEmailIdtext(30).getText().trim()
-									.contains(M10Contact1EmailId)) {
-								appLog.info("Email ID is verified.");
-							} else {
-								appLog.info("Email ID is not verified.");
-								sa.assertTrue(false, "Email ID is not verified.");
-							}
-							if (cp.getContactActivityAlertCreatedByText(30).getText().trim()
+							if (cp.getLabelForTaskInViewMode(null, TaskPageLabel.Assigned_To.toString(), action.BOOLEAN, 10).getText().trim()
 									.contains(CRMUser1LastName)) {
 								appLog.info("Created By text is verified.");
 							} else {
 								appLog.info("Created By text is not verified.");
 								sa.assertTrue(false, "Created By text is not verified.");
 							}
-							if (cp.getAccountActivityAlertNameText(30).getText().trim().contains(M10Contact1LastName)) {
+							if (cp.getLabelForTaskInViewMode(null, TaskPageLabel.Name.toString(), action.BOOLEAN, 10).getText().trim().contains(M10Contact1LastName)) {
 								appLog.info("Name text is verified.");
 							} else {
 								appLog.info("Name text is not verified.");
 								sa.assertTrue(false, "Name text is not verified.");
 							}
-							String createdByDate = cp.getContactActivityAlertCreatedByDate(60).getText().trim();
-							if (bp.verifyDate(createdByDate, "Created By Date")) {
-								appLog.info("Cretaed by date is verified");
-							} else {
-								appLog.info("Created by date is not verified");
-								sa.assertTrue(false, "Created by date is not verified");
 							}
-							if (cp.getContactActivityAlertLastModifiedName(30).getText().trim()
-									.contains(CRMUser1LastName)) {
-								appLog.info("Last Modified Name text is verified.");
-							} else {
-								appLog.info("Last Modified Name text is not verified.");
-								sa.assertTrue(false, "Last Modified Name text is not verified.");
-							}
-							String lastModifiedDate = cp.getContactActivityAlertLastModifiedDate(60).getText().trim();
-							if (bp.verifyDate(lastModifiedDate, "Last Modified Date")) {
-								appLog.info("Last Modified Date is verified");
-							} else {
-								appLog.info("Last Modified Date is not verified");
-								sa.assertTrue(false, "Last Modified Date is not verified");
-							}
-							String result = ip.getAccountActivityAlertNameText(60).getText().trim();
-							for (int i = 0; i < contactnames.length; i++) {
-								if (contactnames[i].equalsIgnoreCase(result)) {
-									appLog.info("Coontact Name is verified: " + result);
-									break;
-								} else {
-									if (i == contactnames.length - 1) {
-										appLog.info("Contact Name is not verified :" + result);
-										sa.assertTrue(false, "Contact Name is not verified :" + result);
+										else {
+											appLog.error("could not click on record on activities, so cannot verify activity");
+											sa.assertTrue(false, "could not click on record on activities, so cannot verify activity");
+										}
+									}
+									else {
+										appLog.error("could not verify related list values user name, related to, contact name, date and subject");
+										sa.assertTrue(false, "could not verify related list values user name, related to, contact name, date and subject");
 									}
 								}
+								else {
+									appLog.error("view all for activity history related list is not clickable");
+									sa.assertTrue(false, "view all for activity history related list is not clickable");
+								}
+							}
+							else {
+								appLog.error("related tab is not clickable, so cannot verify activity");
+								sa.assertTrue(false, "related tab is not clickable, so cannot verify activity");
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-						} else {
-							appLog.info("No new window is open");
-							sa.assertTrue(false, "No new window is open");
 						}
+						else {
+							appLog.error("could not find new window to switch, so cannot verify activity");
+							sa.assertTrue(false, "could not find new window to switch, so cannot verify activity");
+						}
+					
 					} else {
 						appLog.info("Not able to click on firm name");
 						sa.assertTrue(false, "Not able to click on firm name");
@@ -3010,6 +2919,7 @@ public class Module10 extends BaseLib {
 		lp = new LoginPageBusinessLayer(driver);
 		bp = new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M10FundName1)) {
@@ -3044,9 +2954,7 @@ public class Module10 extends BaseLib {
 					if (click(driver, ele, "Contact 1 name", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							ele = isDisplayed(driver,
-									FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40),
-									"visibility", 60, "Contact tab");
+							ele = cp.getContactFullNameInViewMode(environment, mode, 10);
 							if (ele != null) {
 								String header = ele.getText().trim();
 								if (header.contains(M10Contact1FirstName + " " + M10Contact1LastName)) {
@@ -3077,9 +2985,7 @@ public class Module10 extends BaseLib {
 					if (click(driver, ele, "Contact1 firm name ", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							ele = isDisplayed(driver,
-									FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40),
-									"visibility", 60, "Institution tab");
+							ele = cp.verifyCreatedItemOnPage(Header.Institution, M10Institution1);
 							if (ele != null) {
 								String header = ele.getText().trim();
 								if (header.contains(M10Institution1)) {
@@ -4185,13 +4091,26 @@ public class Module10 extends BaseLib {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
 							scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
-							if (cp.getContactActivityHistoryErrorMessage(30).getText().trim()
+							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Contact)) {
+								if (!cp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true)) {
+									appLog.info("successfully verified absence of activity history");
+								}
+								else {
+									appLog.error("activity history is present but it should not be");
+									sa.assertTrue(false, "activity history is present but it should not be");
+								}
+							}
+							else {
+								appLog.error("related tab is not clickable on contact tab, so cannot verify activity history");
+								sa.assertTrue(false, "related tab is not clickable on contact tab, so cannot verify activity history");
+							}
+							/*if (cp.getContactActivityHistoryErrorMessage(30).getText().trim()
 									.contains(ContactPageErrorMessage.activityHistoryErrorMessage)) {
 								appLog.info("Activity Alert is not available in Contact page.");
 							} else {
 								appLog.info("Activity Alert is available in Contact page.");
 								sa.assertTrue(false, "Activity Alert is available in Contact page.");
-							}
+							}*/
 							driver.close();
 							driver.switchTo().window(parentID);
 						} else {
@@ -4210,14 +4129,27 @@ public class Module10 extends BaseLib {
 					if (click(driver, ele, "Contact2 firm name ", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, ip.getNoteAndAttachmentText(30), "Activity History");
+							if (ip.ClickonRelatedTab_Lighting(environment, RecordType.Institution)) {
+								if (!ip.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true)) {
+									appLog.info("successfully verified absence of activity history");
+								}
+								else {
+									appLog.error("activity history is present but it should not be");
+									sa.assertTrue(false, "activity history is present but it should not be");
+								}
+							}
+							else {
+								appLog.error("related tab is not clickable on inst tab, so cannot verify activity history");
+								sa.assertTrue(false, "related tab is not clickable on inst tab, so cannot verify activity history");
+							}
+							/*scrollDownThroughWebelement(driver, ip.getNoteAndAttachmentText(30), "Activity History");
 							if (cp.getContactActivityHistoryErrorMessage(30).getText().trim()
 									.contains(ContactPageErrorMessage.activityHistoryErrorMessage)) {
 								appLog.info("Activity Alert is not available in Contact page.");
 							} else {
 								appLog.info("Activity Alert is available in Contact page.");
 								sa.assertTrue(false, "Activity Alert is available in Contact page.");
-							}
+							}*/
 							driver.close();
 							driver.switchTo().window(parentID);
 						} else {
@@ -4272,7 +4204,6 @@ public class Module10 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
-		SoftAssert sa = new SoftAssert();
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			appLog.info("Clicked on NIM Tab");
@@ -4317,7 +4248,6 @@ public class Module10 extends BaseLib {
 		String commonPath = ExcelUtils.readData("filepath", excelLabel.TestCases_Name, currentlyExecutingTC,
 				excelLabel.CommonPath);
 		String[] folderPaths = {stdPath, sharedPath, commonPath };
-		sa = new SoftAssert();
 		String id = null;
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -4328,6 +4258,7 @@ public class Module10 extends BaseLib {
 				if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 60), "Manage folder icon",
 						action.SCROLLANDBOOLEAN)) {
 					for (int i = 0; i < 3; i++) {
+						ThreadSleep(3000);
 						id = fp.getCreatedFolderId(folderPaths[i], PageName.ManageFolderPopUp, 20);
 						System.err.println("Folder Id is: >>>>>>" + id);
 						if (id != null) {
@@ -4436,7 +4367,7 @@ public class Module10 extends BaseLib {
 				}
 				switchToDefaultContent(driver);
 //		scrollDownThroughWebelement(driver,bp.getFundsTab(60), "Funds Tab");
-			if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+			if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 		if(sendKeys(driver, fp.getFundName(60), M10FundName1+"NUP", "Fund name 1", action.SCROLLANDBOOLEAN)){
 			if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
 				if(fp.getFundNameInViewMode(60).getText().trim().contains(M10FundName1+"NUP")){
@@ -4768,11 +4699,11 @@ public class Module10 extends BaseLib {
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			appLog.info("Clicked on COntact Tab");
 		if(cp.clickOnCreatedContact(M10Contact2FirstName, M10Contact2LastName, null)){
-			if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+			if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 				if(sendKeys(driver, cp.getContactFirstName(60), M10Contact2FirstName+"NUP", "Contact 2 first name", action.SCROLLANDBOOLEAN)){
 				if(sendKeys(driver, cp.getContactLastName(60), M10Contact2LastName+"NUP", "COntact2 last name", action.SCROLLANDBOOLEAN)){
 					if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
-						if(cp.getContactFullNameInViewMode(60).getText().trim().contains(M10Contact2FirstName+"NUP"+" "+M10Contact2LastName+"NUP")){
+						if(cp.getContactFullNameInViewMode(environment, mode, 60).getText().trim().contains(M10Contact2FirstName+"NUP"+" "+M10Contact2LastName+"NUP")){
 							appLog.info("Contact details updtaed successfully");
 						}else{
 							appLog.info("Contact details does not updtae successfully");
@@ -4806,7 +4737,7 @@ public class Module10 extends BaseLib {
 		
 		if(bp.clickOnTab(TabName.InstituitonsTab)){
 			if(ip.clickOnCreatedInstitution(M10Institution2)){
-				if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+				if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 					if(sendKeys(driver, ip.getLegalNameTextBox(60), M10Institution2+"NUP", "Institution name", action.SCROLLANDBOOLEAN)){
 						if(click(driver, bp.getSaveButton(60), "Save buton", action.SCROLLANDBOOLEAN)){
 							if(ip.getLegalNameLabelTextbox(60).getText().trim().contains(M10Institution2+"NUP")){
@@ -4882,7 +4813,7 @@ public class Module10 extends BaseLib {
 			String ContactEMailID ="eal.moralas+"+bp.generateRandomNumber()+"@gmail.com";
 			ExcelUtils.writeData(ContactEMailID, "Contacts", excelLabel.Variable_Name, "M10Contact2", excelLabel.ContactUpdatedEmailID);
 		if(cp.clickOnCreatedContact(M10Contact2FirstName+"NUP", M10Contact2LastName+"NUP", null)){
-		if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+		if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 		if(sendKeys(driver, cp.getEmailId(60), ContactEMailID, "Contact2 email id", action.SCROLLANDBOOLEAN)){
 		if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
 			appLog.info("click on save button");
@@ -4964,27 +4895,33 @@ public class Module10 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		if (bp.clickOnTab(TabName.ContactTab)) {
-			appLog.info("Clicked on COntact Tab");
-			if(cp.clickOnCreatedContact(M10Contact1FirstName, M10Contact1LastName, null)){
-				if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
-		//		if(click(driver, cp.getDeleteButtonContactsPage(60), "Delete button	", action.SCROLLANDBOOLEAN)){
-		switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
-		if(cp.verifyDeletedContact(M10Contact1FirstName+" "+M10Contact1LastName)){
-			appLog.info("Contact get deleted successfully");
-		}else{
-			appLog.info("Contact does not get delete successfully");
-			sa.assertTrue(false, "Contact does not get deleted successfulluy");
-		}
-		}else{
-		appLog.info("Not able to click on delete button");
-		sa.assertTrue(false, "Not able to click on delete bvutton");
-	}
-			}else{
-				appLog.info("Not able to click on created ocntact");
-				sa.assertTrue(false, "Not able to click on created contact");
-			}
-		}else{
+	 if (bp.clickOnTab(TabName.ContactTab)) {
+		 appLog.info("Clicked on COntact Tab");
+		 if(cp.clickOnCreatedContact(M10Contact1FirstName, M10Contact1LastName, null)){
+			 //		if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
+			 if(clickUsingJavaScript(driver, cp.getDeleteButton2(60), "Delete button	", action.SCROLLANDBOOLEAN)){
+				 if (click(driver, cp.getdeleteButtonpopup(10), "delete", action.BOOLEAN)) {
+					 if(!cp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, M10Contact1FirstName+" "+M10Contact1LastName, 10)){
+						 appLog.info("Contact get deleted successfully");
+					 }else{
+						 appLog.error("Contact does not get delete successfully");
+						 sa.assertTrue(false, "Contact does not get deleted successfulluy");
+					 }
+				 }else{
+					 appLog.error("Not able to click on delete button");
+					 sa.assertTrue(false, "Not able to click on delete bvutton");
+
+				 }
+			 }
+			 else {
+				 appLog.error("delete button on contact page is not clickable");
+				 sa.assertTrue(false, "delete button on contact page is not clickable");
+			 }
+		 }else{
+			 appLog.info("Not able to click on created ocntact");
+			 sa.assertTrue(false, "Not able to click on created contact");
+		 }
+	 }else{
 			appLog.info("Not able to click on contact tab");
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
@@ -5000,7 +4937,6 @@ public class Module10 extends BaseLib {
 					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']", "Contact1 name", action.SCROLLANDBOOLEAN, 60);
 					if (clickUsingJavaScript(driver, ele,  "Contact 1")) {
 					//if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
-						if(isAlertPresent(driver)){
 							String errorMessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
 							if (errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)) {
 								appLog.info("Error Message is verified");
@@ -5009,10 +4945,6 @@ public class Module10 extends BaseLib {
 								sa.assertTrue(false, "Error Message is not verified");
 							}
 							switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
-						} else {
-							appLog.error("No Alert is Present for contact1");
-							sa.assertTrue(false, "No Alert is Present for contact1");
-						}
 					} else {
 						appLog.info("Not able to click on contact1 name");
 						sa.assertTrue(false, "Not able to click on contact1 name ");
@@ -5061,7 +4993,7 @@ public class Module10 extends BaseLib {
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			appLog.info("Clicked on COntact Tab");
 		if(cp.clickOnCreatedContact(M10Contact2FirstName+"NUP", M10Contact2LastName+"NUP", null)){
-		if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+		if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 		if(sendKeys(driver, cp.getEmailId(60), M10Contact2EmailId, "Contact2 email id", action.SCROLLANDBOOLEAN)){
 		if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
 			appLog.info("click on save button");
@@ -5102,9 +5034,7 @@ public class Module10 extends BaseLib {
 					if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
 						String parentID=switchOnWindow(driver);
 						if(parentID!=null){
-							ele = isDisplayed(driver,
-									FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40),
-									"visibility", 60, "Contact tab");
+							ele = cp.getContactFullNameInViewMode(environment, mode, 10);
 							if (ele != null) {
 								String header = ele.getText().trim();
 								if (header.contains(M10Contact1FirstName+" " +M10Contact1LastName)) {
@@ -5354,7 +5284,9 @@ public class Module10 extends BaseLib {
 									appLog.info("Not able to click on send button");
 									sa.assertTrue(false, "Not able to click on send button");
 								}
-								if (fp.clickUsingCssSelectorPath("div#searchIddiv > a", "search")) {
+								ThreadSleep(3000);
+								scrollDownThroughWebelement(driver,fp.getManageEmailSearchBtn(10) , "search");
+								if (clickUsingJavaScript(driver, fp.getManageEmailSearchBtn(10), "search")) {
 								//if (click(driver, fp.getManageEmailSearchBtn(60), "Search button",
 								//		action.SCROLLANDBOOLEAN)) {
 									String alertmessage = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
@@ -5362,13 +5294,13 @@ public class Module10 extends BaseLib {
 											FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails)) {
 										appLog.info("Please enter a value eror message is verified");
 									} else {
-										appLog.info("Please enter a value error mesage is not verified");
+										appLog.error("Please enter a value error mesage is not verified");
 										sa.assertTrue(false, "Please enter a value error message is not verified");
 									}
 									switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 								} else {
 									appLog.info("Not able to click on search icon");
-									sa.assertTrue(false, "Not able to click on serach icon");
+									sa.assertTrue(false, "Not able to click on search icon");
 								}
 							} else {
 								appLog.info("Not able to click on manage email custom template cancel button");
@@ -5516,8 +5448,14 @@ public class Module10 extends BaseLib {
 							if (click(driver, fp.getManageEmailPreviewNotRegisteredClickHereLink(30),
 									"Not Registered Click here Link", action.SCROLLANDBOOLEAN)) {
 								String parentid = switchOnWindow(driver);
-								sa.assertTrue(getURL(driver, 60).contains("SiteRegisteration"),
-										"Registration Page is not open after clicking on Resgister Click Here Link.");
+								if (getURL(driver, 60).contains("SiteRegisteration")) {
+									appLog.info("Registration Page is successfully opened after clicking on Resgister Click Here Link.");
+								}
+								else {
+									appLog.error("Registration Page is not open after clicking on Resgister Click Here Link.");
+									sa.assertTrue(false,
+											"Registration Page is not open after clicking on Resgister Click Here Link.");
+								}
 								driver.close();
 								driver.switchTo().window(parentid);
 								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
@@ -5535,8 +5473,14 @@ public class Module10 extends BaseLib {
 							if (click(driver, fp.getManageEmailPreviewRegisteredClickHereLink(30),
 									"Not Registered Click here Link", action.SCROLLANDBOOLEAN)) {
 								String parentid = switchOnWindow(driver);
-								sa.assertTrue(getURL(driver, 60).contains("IP_login"),
-										"Registration Page is not open after clicking on Resgister Click Here Link.");
+								if (getURL(driver, 60).contains("IP_ogin")) {
+									appLog.info("Registration Page is successfully opened after clicking on Resgister Click Here Link.");
+								}
+								else {
+									appLog.error("Registration Page is not open after clicking on Resgister Click Here Link.");
+									sa.assertTrue(false,
+											"Registration Page is not open after clicking on Resgister Click Here Link.");
+								}
 								driver.close();
 								driver.switchTo().window(parentid);
 								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
@@ -5552,7 +5496,7 @@ public class Module10 extends BaseLib {
 						}
 						if (click(driver, fp.getManageEmailPreviewCloseIcon(30), "Close Button",
 								action.SCROLLANDBOOLEAN)) {
-							if (fp.getManageEmailPreviewCloseIcon(30) == null) {
+							if (fp.getManageEmailPreviewCloseIcon(5) == null) {
 								appLog.info("Manage Emails preview Pop Up is closed");
 							} else {
 								appLog.info("Manage Emails preview Pop Up is not closed");
@@ -7507,172 +7451,141 @@ public class Module10 extends BaseLib {
 						appLog.info("Not able to click on contact1 checkbox");
 						sa.assertTrue(false, "Not able ot click on contact1 checkbox");
 					}
+					String date=getDateAccToTimeZone("America/New_York", "M/d/YYYY");
 					ele = FindElement(driver, "//a[text()='" + M10Contact1FirstName+"RUP" + " " + M10Contact1LastName+"RUP" + "']",
 							"Contact 1", action.SCROLLANDBOOLEAN, 30);
 					if (click(driver, ele, "Contact 1 name", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
-							if (cp.getContactActivityAlertAccountNameText(30).getText().trim()
-									.contains(M10Institution1)) {
-								appLog.info("Activity Alert is available in Contact page.");
-							} else {
-								appLog.info("Activity Alert is not available in Contact page.");
-								sa.assertTrue(false, "Activity Alert is not available in Contact page.");
-							}
-							if (click(driver, cp.getContactAcitivityAlertSubjectLink(30),
-									"Contact Activity Alert Subject Link", action.SCROLLANDBOOLEAN)) {
-								if (cp.getContactAcitivityAlertAssignedToEmailText(30).getText().trim()
-										.contains(CRMUser1LastName)) {
-									appLog.info("Assigned To user name is verified.");
-								} else {
-									appLog.info("Assigned To user name is not verified.");
-									sa.assertTrue(false, "Assigned To user name is not verified.");
+							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Contact)) {
+								cp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true);
+								if (cp.clickOnViewAllRelatedList(environment, mode, RelatedList.Activity_History)) {
+									scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
+									if (cp.verifyActivitiesRelatedList(environment, mode, TabName.ContactTab, "Invitation from "+Org1FirmName+"UP", null, M10Institution1, date, CRMUser1FirstName+" "+ CRMUser1LastName)) {
+										appLog.info("successfully verified email subject, due date, related to and user name on activities related list");
+										if (cp.clickOncreatedRecordOnActivityRelatedList(environment, mode, "Invitation from "+Org1FirmName)) {
+
+												
+												if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains("Subject:")) {
+													appLog.info("Comments Text is verified.");
+												} else {
+													appLog.info("Comments Text is not verified.");
+													sa.assertTrue(false, "Comments Text is not verified.");
+												}
+												if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+														.contains("Invitation from " + Org1FirmName+"UP")) {
+													appLog.info("Comments subject Text is verified.");
+												} else {
+													appLog.info("Comments subject Text is not verified..");
+													sa.assertTrue(false, "Comments subject Text is not verified.");
+												}
+												if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+														.contains("Hello " + M10Contact1FirstName)) {
+													appLog.info("Comments body Text is verified.");
+												} else {
+													appLog.info("Comments body Text is not verified..");
+													sa.assertTrue(false, "Comments body Text is not verified.");
+												}
+												if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+														.contains("You have been granted access to Current investments of "+ M10FundName1+"UP" + " by")) {
+													appLog.info("Comments body Text is verified.");
+												} else {
+													appLog.info("Comments body Text is not verified..");
+													sa.assertTrue(false, "Comments body Text is not verified.");
+												}
+												if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+														.contains("If you have not yet registered, Click here to register.")) {
+													appLog.info("Comments body Text is verified.");
+												} else {
+													appLog.info("Comments body Text is not verified..");
+													sa.assertTrue(false, "Comments body Text is not verified.");
+												}
+												if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+														.contains("If you have already registered, Click here to login.")) {
+													appLog.info("Comments body Text is verified.");
+												} else {
+													appLog.info("Comments body Text is not verified..");
+													sa.assertTrue(false, "Comments body Text is not verified.");
+												}
+												if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains(
+														"If you believe this has been sent in error, or if you cannot login, please contact")) {
+													appLog.info("Comments body Text is verified.");
+												} else {
+													appLog.info("Comments body Text is not verified..");
+													sa.assertTrue(false, "Comments body Text is not verified.");
+												}
+												refresh(driver);
+												ThreadSleep(3000);
+												if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Due_Date.toString(), action.BOOLEAN, 30).getText().trim().contains(date)) {
+													appLog.info("date text is verified.");
+												} else {
+													appLog.info("date text is not verified.");
+													sa.assertTrue(false, "date text is not verified.");
+												}
+												if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Status.toString(), action.BOOLEAN, 30).getText().trim().contains("Completed")) {
+													appLog.info("Status text is verified.");
+												} else {
+													appLog.info("Status text is not verified.");
+													sa.assertTrue(false, "Status text is not verified.");
+												}
+												if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Priority.toString(), action.BOOLEAN, 30).getText().trim().contains("Normal")) {
+													appLog.info("Priority text is verified.");
+												} else {
+													appLog.info("Priority text is not verified.");
+													sa.assertTrue(false, "Priority text is not verified.");
+												}
+												if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Related_To.toString(), action.BOOLEAN, 30).getText().trim()
+														.contains(M10Institution1)) {
+													appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
+												} else {
+													appLog.info(
+															"Institution Name is not verified in Activity Alert on Institution Page.");
+													sa.assertTrue(false,
+															"Institution Name is not verified in Activity Alert on Institution Page.");
+												}
+												if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Assigned_To.toString(), action.BOOLEAN, 30).getText().trim()
+														.contains(CRMUser1LastName)) {
+													appLog.info("Created By text is verified.");
+												} else {
+													appLog.info("Created By text is not verified.");
+													sa.assertTrue(false, "Created By text is not verified.");
+												}
+												if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Name.toString(), action.BOOLEAN, 30).getText().trim()
+														.contains(M10Contact1LastName)) {
+													appLog.info("Name text is verified.");
+												} else {
+													appLog.info("Name text is not verified.");
+													sa.assertTrue(false, "Name text is not verified.");
+												}
+											
+
+										}
+										else {
+											appLog.error("subject link on activity related list is not clickable");
+											sa.assertTrue(false, "subject link on activity related list is not clickable");
+										}
+									}
+									else {
+										appLog.error("could not verify activities on view all page");
+										sa.assertTrue(false, "could not verify activities on view all page");
+									}
 								}
-								if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-										.contains("Invitation from")) {
-									appLog.info("Subject Text is  verified.");
-								} else {
-									appLog.info("Subject Text is not verified.");
-									sa.assertTrue(false, "Subject Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-										.contains(Org1FirmName+"UP")) {
-									appLog.info("Subject Text is  verified.");
-								} else {
-									appLog.info("Subject Text is not verified.");
-									sa.assertTrue(false, "Subject Text is not verified.");
-								}
-								String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
-								if (bp.verifyDate(date, "Due")) {
-									appLog.info("Due Date is verified.");
-								} else {
-									appLog.info("Due Date is not verified. Actual Result: " + date);
-									sa.assertTrue(false, "Due Date is not verified. Actual Result: " + date);
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains("Subject:")) {
-									appLog.info("Comments Text is verified.");
-								} else {
-									appLog.info("Comments Text is not verified.");
-									sa.assertTrue(false, "Comments Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("Invitation from " + Org1FirmName+"UP")) {
-									appLog.info("Comments subject Text is verified.");
-								} else {
-									appLog.info("Comments subject Text is not verified..");
-									sa.assertTrue(false, "Comments subject Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("Hello " + M10Contact1FirstName)) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("You have been granted access to Current investments of "+ M10FundName1+"UP" + " by")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("If you have not yet registered, Click here to register.")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-										.contains("If you have already registered, Click here to login.")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains(
-										"If you believe this has been sent in error, or if you cannot login, please contact")) {
-									appLog.info("Comments body Text is verified.");
-								} else {
-									appLog.info("Comments body Text is not verified..");
-									sa.assertTrue(false, "Comments body Text is not verified.");
-								}
-								if (cp.getContactActivityAlertStatusText(30).getText().trim().contains("Completed")) {
-									appLog.info("Status text is verified.");
-								} else {
-									appLog.info("Status text is not verified.");
-									sa.assertTrue(false, "Status text is not verified.");
-								}
-								if (cp.getContactActivityAlertPriorityText(30).getText().trim().contains("Normal")) {
-									appLog.info("Priority text is verified.");
-								} else {
-									appLog.info("Priority text is not verified.");
-									sa.assertTrue(false, "Priority text is not verified.");
-								}
-								if (cp.getAccountActivityAlertRelatedToText(60).getText().trim()
-										.contains(M10Institution1)) {
-									appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
-								} else {
-									appLog.info(
-											"Institution Name is not verified in Activity Alert on Institution Page.");
-									sa.assertTrue(false,
-											"Institution Name is not verified in Activity Alert on Institution Page.");
-								}
-								if (cp.getContactActivityAlertEmailIdtext(30).getText().trim()
-										.contains(M10Contact1EmailId)) {
-									appLog.info("Email ID is verified.");
-								} else {
-									appLog.info("Email ID is not verified.");
-									sa.assertTrue(false, "Email ID is not verified.");
-								}
-								if (cp.getContactActivityAlertCreatedByText(30).getText().trim()
-										.contains(CRMUser1LastName)) {
-									appLog.info("Created By text is verified.");
-								} else {
-									appLog.info("Created By text is not verified.");
-									sa.assertTrue(false, "Created By text is not verified.");
-								}
-								if (cp.getAccountActivityAlertNameText(30).getText().trim()
-										.contains(M10Contact1LastName)) {
-									appLog.info("Name text is verified.");
-								} else {
-									appLog.info("Name text is not verified.");
-									sa.assertTrue(false, "Name text is not verified.");
-								}
-								String createdByDate = cp.getContactActivityAlertCreatedByDate(60).getText().trim();
-								if (bp.verifyDate(createdByDate, "Created By Date")) {
-									appLog.info("Cretaed by date is verified");
-								} else {
-									appLog.info("Created by date is not verified");
-									sa.assertTrue(false, "Created by date is not verified");
-								}
-								if (cp.getContactActivityAlertLastModifiedName(30).getText().trim()
-										.contains(CRMUser1LastName)) {
-									appLog.info("Name text is verified.");
-								} else {
-									appLog.info("Name text is not verified.");
-									sa.assertTrue(false, "Name text is not verified.");
-								}
-								String lastModifiedDate = cp.getContactActivityAlertLastModifiedDate(60).getText()
-										.trim();
-								if (bp.verifyDate(lastModifiedDate, "Last Modified Date")) {
-									appLog.info("Last Modified Date is verified");
-								} else {
-									appLog.info("Last Modified Date is not verified");
-									sa.assertTrue(false, "Last Modified Date is not verified");
-								}
-							} else {
-								appLog.info("Not able to click on activity alert subject link");
-								sa.assertTrue(false, "Not able to click on activity alert subject link");
+								else {
+									appLog.error("view all link is not clickable");
+									sa.assertTrue(false,"view all link is not clickable" );
+								} 
+							}else {
+								appLog.info("related tab is not clickable");
+								sa.assertTrue(false, "related tab is not clickable");
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
-
-						} else {
-							appLog.info("No new weindow is open");
-							sa.assertTrue(false, "No new window is open");
 						}
+						else {
+							appLog.error("could not find new window");
+							sa.assertTrue(false, "could not find new window");
+						}
+
 					} else {
 						appLog.info("Not able to click on contact 1 name");
 						sa.assertTrue(false, "Not able to click on contact1 name");
@@ -7685,197 +7598,124 @@ public class Module10 extends BaseLib {
 					if (click(driver, ele, "Contact1 firm name ", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, ip.getNoteAndAttachmentText(30), "Activity History");
-							List<WebElement> list = ip.getContactActivityHistoryNameRecords();
-							String contactFullName = M10Contact1FirstName+ " " + M10Contact1LastName;
-							String[] contactnames = contactFullName.split(",");
-							if (!list.isEmpty()) {
-								for (int i = 0; i < contactnames.length; i++) {
-									for (int j = 0; j < list.size(); j++) {
-										if (list.get(j).getText().trim().contains(contactnames[i])) {
-											appLog.info("Contact Name is verified: " + contactnames[i]);
-											break;
-										} else {
-											if (j == list.size() - 1) {
-												appLog.info("Contact Name is not verified: " + contactnames[i]);
+							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Institution)) {
+								cp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true);
+								if (cp.clickOnViewAllRelatedList(environment, mode, RelatedList.Activity_History)) {
+									if (cp.verifyActivitiesRelatedList(environment, mode, TabName.InstituitonsTab, "Invitation from "+Org1FirmName+"UP", M10Contact1FirstName+" "+M10Contact1LastName, M10Institution1, date, CRMUser1FirstName+" "+ CRMUser1LastName)) {
+										appLog.info("successfully verified email subject, due date, related to and user name on activities related list");
+										if (cp.clickOncreatedRecordOnActivityRelatedList(environment, mode, "Invitation from "+Org1FirmName+"UP")) {
+
+
+											if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains("Subject:")) {
+												appLog.info("Comments Text is verified.");
+											} else {
+												appLog.info("Comments Text is not verified.");
+												sa.assertTrue(false, "Comments Text is not verified.");
+											}
+											if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+													.contains("Invitation from " + Org1FirmName+"UP")) {
+												appLog.info("Comments subject Text is verified.");
+											} else {
+												appLog.info("Comments subject Text is not verified..");
+												sa.assertTrue(false, "Comments subject Text is not verified.");
+											}
+											if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+													.contains("Hello " + M10Contact1FirstName)) {
+												appLog.info("Comments body Text is verified.");
+											} else {
+												appLog.info("Comments body Text is not verified..");
+												sa.assertTrue(false, "Comments body Text is not verified.");
+											}
+											if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+													.contains("You have been granted access to Current investments of "+M10FundName1+"UP"+" by")) {
+												appLog.info("Comments body Text is verified.");
+											} else {
+												appLog.info("Comments body Text is not verified..");
+												sa.assertTrue(false, "Comments body Text is not verified.");
+											}
+											if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim().contains(
+													"If you believe this has been sent in error, or if you cannot login, please contact")) {
+												appLog.info("Comments body Text is verified.");
+											} else {
+												appLog.info("Comments body Text is not verified..");
+												sa.assertTrue(false, "Comments body Text is not verified.");
+											}
+											if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+													.contains("If you have not yet registered, Click here to register.")) {
+												appLog.info("Comments body Text is verified.");
+											} else {
+												appLog.info("Comments body Text is not verified..");
+												sa.assertTrue(false, "Comments body Text is not verified.");
+											}
+											if (cp.getContactAcitivityAlertCommentsText(mode,30).getText().trim()
+													.contains("If you have already registered, Click here to login.")) {
+												appLog.info("Comments body Text is verified.");
+											} else {
+												appLog.info("Comments body Text is not verified..");
+												sa.assertTrue(false, "Comments body Text is not verified.");
+											}
+											refresh(driver);
+											ThreadSleep(3000);
+											if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Status.toString(), action.BOOLEAN, 30).getText().trim().contains("Completed")) {
+												appLog.info("Status text is verified.");
+											} else {
+												appLog.info("Status text is not verified.");
+												sa.assertTrue(false, "Status text is not verified.");
+											}
+											if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Priority.toString(), action.BOOLEAN, 30).getText().trim().contains("Normal")) {
+												appLog.info("Priority text is verified.");
+											} else {
+												appLog.info("Priority text is not verified.");
+												sa.assertTrue(false, "Priority text is not verified.");
+											}
+											if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Related_To.toString(), action.BOOLEAN, 30).getText().trim()
+													.contains(M10Institution1)) {
+												appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
+											} else {
+												appLog.info("Institution Name is not verified in Activity Alert on Institution Page.");
 												sa.assertTrue(false,
-														"Contact Name is not verified: " + contactnames[i]);
+														"Institution Name is not verified in Activity Alert on Institution Page.");
+											}
+											if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Assigned_To.toString(), action.BOOLEAN, 30).getText().trim()
+													.contains(CRMUser1LastName)) {
+												appLog.info("Created By text is verified.");
+											} else {
+												appLog.info("Created By text is not verified.");
+												sa.assertTrue(false, "Created By text is not verified.");
+											}
+											if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Name.toString(), action.BOOLEAN, 30).getText().trim().contains(M10Contact1LastName)) {
+												appLog.info("Name text is verified.");
+											} else {
+												appLog.info("Name text is not verified.");
+												sa.assertTrue(false, "Name text is not verified.");
+											}
+											if (cp.getLabelForTaskInViewMode( null, TaskPageLabel.Due_Date.toString(), action.BOOLEAN, 30).getText().trim().contains(date)) {
+												appLog.info("date text is verified.");
+											} else {
+												appLog.info("date text is not verified.");
+												sa.assertTrue(false, "date text is not verified.");
 											}
 										}
-									}
-								}
-							} else {
-								appLog.info("Contact Name list is not available");
-								sa.assertTrue(false, "Contact Name list is not available");
-							}
-							List<WebElement> list1 = ip.getAccountActivityAlertSubjectEmailIdList();
-							if (!list1.isEmpty()) {
-								for (int i = 0; i < list1.size(); i++) {
-									System.out.println("Inside Loop, iteration number: " + i);
-									String text = list1.get(i).getText().trim();
-									if (click(driver, list1.get(i), "Subject Email ID", action.SCROLLANDBOOLEAN)) {
-										appLog.info("Clicked on Email ID: " + text);
-										break;
-									} else {
-										if (i == list1.size() - 1) {
-											appLog.info("Not able to click on Account Activity Alert Subject Email Id");
-											sa.assertTrue(false,
-													"Not able to click on Account Activity Alert Subject Email Id");
+										else {
+											appLog.error("could not click on subject link on view all activities page");
+											sa.assertTrue(false, "could not click on subject link on view all activities page");
 										}
 									}
-								}
-							} else {
-								appLog.info("Contact Email Id list is not available");
-								sa.assertTrue(false, "Contact Email Id list is not available");
-							}
-							if (cp.getContactAcitivityAlertAssignedToEmailText(30).getText().trim()
-									.contains(CRMUser1LastName)) {
-								appLog.info("Assigned To user name is verified.");
-							} else {
-								appLog.info("Assigned To user name is not verified.");
-								sa.assertTrue(false, "Assigned To user name is not verified.");
-							}
-							if (cp.getContactAcitivityAlertSubjectText(30).getText().trim()
-									.contains("Invitation from")) {
-								appLog.info("Subject Text is  verified.");
-							} else {
-								appLog.info("Subject Text is not verified.");
-								sa.assertTrue(false, "Subject Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertSubjectText(30).getText().trim().contains(Org1FirmName+"UP")) {
-								appLog.info("Subject Text is  verified.");
-							} else {
-								appLog.info("Subject Text is not verified.");
-								sa.assertTrue(false, "Subject Text is not verified.");
-							}
-							String date = cp.getContactActivityAlertDueDateText(30).getText().trim();
-							if (bp.verifyDate(date, "Due")) {
-								appLog.info("Due Date is verified.");
-							} else {
-								appLog.info("Due Date is not verified. Actual Result: " + date);
-								sa.assertTrue(false, "Due Date is not verified. Actual Result: " + date);
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains("Subject:")) {
-								appLog.info("Comments Text is verified.");
-							} else {
-								appLog.info("Comments Text is not verified.");
-								sa.assertTrue(false, "Comments Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-									.contains("Invitation from " + Org1FirmName+"UP")) {
-								appLog.info("Comments subject Text is verified.");
-							} else {
-								appLog.info("Comments subject Text is not verified..");
-								sa.assertTrue(false, "Comments subject Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-									.contains("Hello " + M10Contact1FirstName)) {
-								appLog.info("Comments body Text is verified.");
-							} else {
-								appLog.info("Comments body Text is not verified..");
-								sa.assertTrue(false, "Comments body Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-									.contains("You have been granted access to Current investments of "+M10FundName1+"UP"+" by")) {
-								appLog.info("Comments body Text is verified.");
-							} else {
-								appLog.info("Comments body Text is not verified..");
-								sa.assertTrue(false, "Comments body Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim().contains(
-									"If you believe this has been sent in error, or if you cannot login, please contact")) {
-								appLog.info("Comments body Text is verified.");
-							} else {
-								appLog.info("Comments body Text is not verified..");
-								sa.assertTrue(false, "Comments body Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-									.contains("If you have not yet registered, Click here to register.")) {
-								appLog.info("Comments body Text is verified.");
-							} else {
-								appLog.info("Comments body Text is not verified..");
-								sa.assertTrue(false, "Comments body Text is not verified.");
-							}
-							if (cp.getContactAcitivityAlertCommentsText(30).getText().trim()
-									.contains("If you have already registered, Click here to login.")) {
-								appLog.info("Comments body Text is verified.");
-							} else {
-								appLog.info("Comments body Text is not verified..");
-								sa.assertTrue(false, "Comments body Text is not verified.");
-							}
-							if (cp.getContactActivityAlertStatusText(30).getText().trim().contains("Completed")) {
-								appLog.info("Status text is verified.");
-							} else {
-								appLog.info("Status text is not verified.");
-								sa.assertTrue(false, "Status text is not verified.");
-							}
-							if (cp.getContactActivityAlertPriorityText(30).getText().trim().contains("Normal")) {
-								appLog.info("Priority text is verified.");
-							} else {
-								appLog.info("Priority text is not verified.");
-								sa.assertTrue(false, "Priority text is not verified.");
-							}
-							if (cp.getAccountActivityAlertRelatedToText(60).getText().trim()
-									.contains(M10Institution1)) {
-								appLog.info("Institution Name is verified in Activity Alert on Institution Page.");
-							} else {
-								appLog.info("Institution Name is not verified in Activity Alert on Institution Page.");
-								sa.assertTrue(false,
-										"Institution Name is not verified in Activity Alert on Institution Page.");
-							}
-							if (cp.getContactActivityAlertEmailIdtext(30).getText().trim()
-									.contains(M10Contact1EmailId)) {
-								appLog.info("Email ID is verified.");
-							} else {
-								appLog.info("Email ID is not verified.");
-								sa.assertTrue(false, "Email ID is not verified.");
-							}
-							if (cp.getContactActivityAlertCreatedByText(30).getText().trim()
-									.contains(CRMUser1LastName)) {
-								appLog.info("Created By text is verified.");
-							} else {
-								appLog.info("Created By text is not verified.");
-								sa.assertTrue(false, "Created By text is not verified.");
-							}
-							if (cp.getAccountActivityAlertNameText(30).getText().trim().contains(M10Contact1LastName)) {
-								appLog.info("Name text is verified.");
-							} else {
-								appLog.info("Name text is not verified.");
-								sa.assertTrue(false, "Name text is not verified.");
-							}
-							String createdByDate = cp.getContactActivityAlertCreatedByDate(60).getText().trim();
-							if (bp.verifyDate(createdByDate, "Created By Date")) {
-								appLog.info("Cretaed by date is verified");
-							} else {
-								appLog.info("Created by date is not verified");
-								sa.assertTrue(false, "Created by date is not verified");
-							}
-							if (cp.getContactActivityAlertLastModifiedName(30).getText().trim()
-									.contains(CRMUser1LastName)) {
-								appLog.info("Last Modified Name text is verified.");
-							} else {
-								appLog.info("Last Modified Name text is not verified.");
-								sa.assertTrue(false, "Last Modified Name text is not verified.");
-							}
-							String lastModifiedDate = cp.getContactActivityAlertLastModifiedDate(60).getText().trim();
-							if (bp.verifyDate(lastModifiedDate, "Last Modified Date")) {
-								appLog.info("Last Modified Date is verified");
-							} else {
-								appLog.info("Last Modified Date is not verified");
-								sa.assertTrue(false, "Last Modified Date is not verified");
-							}
-							String result = ip.getAccountActivityAlertNameText(60).getText().trim();
-							for (int i = 0; i < contactnames.length; i++) {
-								if (contactnames[i].equalsIgnoreCase(result)) {
-									appLog.info("Coontact Name is verified: " + result);
-									break;
-								} else {
-									if (i == contactnames.length - 1) {
-										appLog.info("Contact Name is not verified :" + result);
-										sa.assertTrue(false, "Contact Name is not verified :" + result);
+									else {
+										appLog.error("could not verify email activity on view all page");
+										sa.assertTrue(false, "could not verify email activity on view all page");
 									}
 								}
+								else {
+									appLog.error("could not click on view all link on related list");
+									sa.assertTrue(false, "could not click on view all link on related list");
+								}
 							}
+							else {
+								appLog.error("related tab is not clickable on institution page");
+								sa.assertTrue(false, "related tab is not clickable on institution page");
+							}
+
 							driver.close();
 							driver.switchTo().window(parentID);
 						} else {
@@ -8496,6 +8336,10 @@ public class Module10 extends BaseLib {
 													+ "']/../..//input",
 											M10Contact2EmailId + " contact check box", action.SCROLLANDBOOLEAN, 30);
 									scrollDownThroughWebelement(driver, contactcheckBox, "Checkbox");
+									contactcheckBox = FindElement(driver,
+											"//div[@id='shwTopGridBWINV_MA']//a[text()='" + M10Contact2EmailId
+													+ "']/../..//input",
+											M10Contact2EmailId + " contact check box", action.SCROLLANDBOOLEAN, 30);
 									if (click(driver, contactcheckBox, "check box", action.BOOLEAN)) {
 										appLog.info("clicked on contact check box : " + M10Contact2EmailId);
 										if (click(driver, fp.getaddselectContactBtn(Workspace.InvestorWorkspace, 30),
@@ -9054,13 +8898,17 @@ public class Module10 extends BaseLib {
 					if (click(driver, ele, "Contact 2 name", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, cp.getContactActivityHistory(30), "Activity History");
-							if (cp.getContactActivityHistoryErrorMessage(30).getText().trim()
-									.contains(ContactPageErrorMessage.activityHistoryErrorMessage)) {
-								appLog.info("Activity Alert is not available in Contact page.");
-							} else {
-								appLog.info("Activity Alert is available in Contact page.");
-								sa.assertTrue(false, "Activity Alert is available in Contact page.");
+							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Contact)) {
+								if (!cp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true)) {
+									appLog.info("successfully verified absence of activity history related list");
+								}else {
+									appLog.error("activity history related list found, but it should not be present");
+									sa.assertTrue(false, "activity history related list found, but it should not be present");
+								}
+							}
+							else {
+								appLog.error("related tab is not clickable on contacts tab");
+								sa.assertTrue(false,"related tab is not clickable on contacts tab" );
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
@@ -9080,13 +8928,17 @@ public class Module10 extends BaseLib {
 					if (click(driver, ele, "Contact2 firm name ", action.SCROLLANDBOOLEAN)) {
 						String parentID = switchOnWindow(driver);
 						if (parentID != null) {
-							scrollDownThroughWebelement(driver, ip.getNoteAndAttachmentText(30), "Activity History");
-							if (cp.getContactActivityHistoryErrorMessage(30).getText().trim()
-									.contains(ContactPageErrorMessage.activityHistoryErrorMessage)) {
-								appLog.info("Activity Alert is not available in Contact page.");
-							} else {
-								appLog.info("Activity Alert is available in Contact page.");
-								sa.assertTrue(false, "Activity Alert is available in Contact page.");
+							if (cp.ClickonRelatedTab_Lighting(environment, RecordType.Institution)) {
+								if (!cp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activity_History, true)) {
+									appLog.info("successfully verified absence of activity history related list");
+								}else {
+									appLog.error("activity history related list found, but it should not be present");
+									sa.assertTrue(false, "activity history related list found, but it should not be present");
+								}
+							}
+							else {
+								appLog.error("related tab is not clickable on Institution tab");
+								sa.assertTrue(false,"related tab is not clickable on Institution tab" );
 							}
 							driver.close();
 							driver.switchTo().window(parentID);
@@ -9160,6 +9012,7 @@ public class Module10 extends BaseLib {
 				if (click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 60), "Manage folder icon",
 						action.SCROLLANDBOOLEAN)) {
 					for (int i = 0; i < 3; i++) {
+						ThreadSleep(3000);
 						id = fp.getCreatedFolderId(folderPaths[i], PageName.ManageFolderPopUp, 20);
 						System.err.println("Folder Id is: >>>>>>" + id);
 						if (id != null) {
@@ -9268,7 +9121,7 @@ public class Module10 extends BaseLib {
 				}
 				switchToDefaultContent(driver);
 //		scrollDownThroughWebelement(driver,bp.getFundsTab(60), "Funds Tab");
-			if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+			if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 		if(sendKeys(driver, fp.getFundName(60), M10FundName1+"NUPINV", "Fund name 1", action.SCROLLANDBOOLEAN)){
 			if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
 				if(fp.getFundNameInViewMode(60).getText().trim().contains(M10FundName1+"NUPINV")){
@@ -9682,19 +9535,22 @@ public class Module10 extends BaseLib {
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			appLog.info("Clicked on COntact Tab");
 			if(cp.clickOnCreatedContact(M10Contact1FirstName, M10Contact1LastName, null)){
-				if (fp.clickUsingCssSelectorPath("input[value=Delete]",  "Delete button	")) {
-				//if(click(driver, cp.getDeleteButtonContactsPage(60), "Delete button	", action.SCROLLANDBOOLEAN)){
-					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
-					if(cp.verifyDeletedContact(M10Contact1FirstName+" "+M10Contact1LastName)){
-						appLog.info("Contact get deleted successfully");
-					}else{
-						appLog.info("Contact does not get delete successfully");
-						sa.assertTrue(false, "Contact does not get deleted successfulluy");
-					}
+				if(clickUsingJavaScript(driver, cp.getDeleteButton2(60), "Delete button	", action.SCROLLANDBOOLEAN)){
+					 if (click(driver, cp.getdeleteButtonpopup(10), "delete", action.BOOLEAN)) {
+						 if(!cp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, M10Contact1FirstName+" "+M10Contact1LastName, 10)){
+							 appLog.info("Contact get deleted successfully");
+						 }else{
+							 appLog.error("Contact does not get delete successfully");
+							 sa.assertTrue(false, "Contact does not get deleted successfulluy");
+						 }
+					 }else{
+						 appLog.error("delete button on delete popup is not clickable");
+						 sa.assertTrue(false, "delete button on delete popup is not clickable");
+					 }
 				}else{
-					appLog.info("Not able to click on delete button");
-					sa.assertTrue(false, "Not able to click on delete bvutton");
-				}
+					 appLog.error("delete button on contact detail page is not clickable");
+					 sa.assertTrue(false, "delete button on contact detail page is not clickable");
+				 }
 			}else{
 				appLog.info("Not able to click on created ocntact");
 				sa.assertTrue(false, "Not able to click on created contact");
@@ -9712,34 +9568,34 @@ public class Module10 extends BaseLib {
 						action.SCROLLANDBOOLEAN)) {
 					WebElement	ele=FindElement(driver,"//a[text()='"+M10Contact1FirstName+"RUP"+" "+M10Contact1LastName+"RUP"+"']", "Contact1 name", action.SCROLLANDBOOLEAN, 60);
 					if (clickUsingJavaScript(driver, ele,  "Contact 1")) {
-					//if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
-				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
-				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
-					appLog.info("Error Message is verified");
-				}else{
-					appLog.info("Error Message is not verified");
-					sa.assertTrue(false, "Error Message is not verified");
-				}
-				switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);		
-				}else{
+						//if(click(driver, ele, "Contact 1", action.SCROLLANDBOOLEAN)){
+						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
+						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
+							appLog.info("Error Message is verified");
+						}else{
+							appLog.info("Error Message is not verified");
+							sa.assertTrue(false, "Error Message is not verified");
+						}
+						switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);		
+					}else{
 						appLog.info("Not able to click on contact2 name");
 						sa.assertTrue(false, "Not able to click on contact2 name ");
-				}
-				ele=FindElement(driver,"//a[text()='"+M10Institution1+"RUP"+"']", "Contact1 firm name", action.SCROLLANDBOOLEAN, 60);
-				if (clickUsingJavaScript(driver, ele, "Contact 1 firm name")) {
-				//if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
-				String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
-				if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
-					appLog.info("Error Message is verified");
-				}else{
-					appLog.info("Error Message is not verified");
-					sa.assertTrue(false, "Error Message is not verified");
-				}
-				switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);		
-				}else{
+					}
+					ele=FindElement(driver,"//a[text()='"+M10Institution1+"RUP"+"']", "Contact1 firm name", action.SCROLLANDBOOLEAN, 60);
+					if (clickUsingJavaScript(driver, ele, "Contact 1 firm name")) {
+						//if(click(driver, ele, "Contact 1 firm name", action.SCROLLANDBOOLEAN)){
+						String errorMessage=switchToAlertAndGetMessage(driver, 60, action.GETTEXT);   
+						if(errorMessage.contains(ContactPageErrorMessage.ContactemailChangedErrorMessage)){
+							appLog.info("Error Message is verified");
+						}else{
+							appLog.info("Error Message is not verified");
+							sa.assertTrue(false, "Error Message is not verified");
+						}
+						switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);		
+					}else{
 						appLog.info("Not able to click on contact1 Firm Name");
 						sa.assertTrue(false, "Not able to click on contact1 Firm Name ");
-				}					
+					}					
 				}else{
 					appLog.info("Not bale to click on manage email icon");
 					sa.assertTrue(false, "Not able to click on manage email");

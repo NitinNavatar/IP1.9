@@ -1537,6 +1537,24 @@ public abstract class BasePage {
 	public WebElement getDeleteButton1(int timeOut) {
 		return isDisplayed(driver, deleteButton1, "Visibility", timeOut, "Delete Button");
 	}
+	@FindBy(xpath="//button[@name='Delete']")
+	private WebElement deleteButton2;
+	
+	/**
+	 * @return the addFilterLogicLink
+	 */
+	public WebElement getDeleteButton2(int timeOut) {
+		return isDisplayed(driver, deleteButton2, "Visibility", timeOut, "Delete Button");
+	}
+	@FindBy(xpath="//button[@title='Delete']")
+	private WebElement deleteButtonpopup;
+	
+	/**
+	 * @return the addFilterLogicLink
+	 */
+	public WebElement getdeleteButtonpopup(int timeOut) {
+		return isDisplayed(driver, deleteButtonpopup, "Visibility", timeOut, "Delete Button");
+	}
 	/**
 	 * @return the pendingDisclaimerPopUpHeader
 	 */
@@ -3537,5 +3555,16 @@ public abstract class BasePage {
 	 	return isDisplayed(driver, nimParentFrame, "Visibility", timeOut, "NIM Parent Frame");
 	 }
 	 
+		
+		
+		public WebElement getCustomTabSaveBtn(String environment, String mode,int timeOut) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString()))
+			return isDisplayed(driver, customTabSaveBtn, "Visibility", timeOut, "Custom Tab Save Button classic");
+			else
+				return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
+			
+		}
+		@FindBy(xpath = "//button[@title='Save']")
+		private WebElement save_Lightning;
 	
 	}

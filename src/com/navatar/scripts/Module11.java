@@ -12,6 +12,7 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -84,25 +85,55 @@ public class Module11 extends BaseLib {
 			}
 		}
 		// Azhar end
-		 
+		boolean flag=false;
+		String parentWindow=null;
 		switchToDefaultContent(driver);
-		 if (bp.createPEUser(Org3CRMUser2FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,
-				CRMUserProfile)) {
-			appLog.info("PE User 2 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org3User2", excelLabel.User_Email);
-		} else {
-			appLog.info("PE User2 is not created successfully");
-			saa.assertTrue(false, "PE User2 is not created successfully");
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						}
+					}
+					String emailID=cp.generateRandomEmailId();
+					if (bp.createPEUser(environment, mode,Org3CRMUser2FirstName, UserLastName, emailID, CRMUserLicense,
+							CRMUserProfile)) {
+						appLog.info("PE User 1 created Successfully");
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+						}
+						ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org3User2", excelLabel.User_Email);
+						flag = true;
+						break;
+						
+					}
+					
+				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+			
 		}
-		if (bp.installedPackages(Org3CRMUser2FirstName, Org3CRMUser2LastName)) {
-			appLog.info("Install package is done for PE User 2 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 2 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
+		if (flag) {
+			if (bp.installedPackages(environment, mode,Org3CRMUser2FirstName, Org3CRMUser2LastName)) {
+				appLog.info("Install package is done for PE User 2 succesfully");
+			} else {
+				appLog.info("Install package is not done for PE User 2 succesfully");
+				saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
+			}
 		}
-		//**********provide NIM access to CRM User**********/
+		else {
+			appLog.error("could not create PE user");
+			exit("could not create PE user");
+		}
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 60, np.getNIMTabFrame(60));
 			if (np.clickOnEditIcon()) {
@@ -176,31 +207,8 @@ public class Module11 extends BaseLib {
 			appLog.info("Password is not set for user2");
 			saa.assertTrue(false, "Password is not set for user2");
 		}
-		if (bp.getSalesForceLightingIcon(10) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
 		
-		if (bp.getNavatarInvestorManagerTab(20) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(20) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
-			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
-			}
-		}
+		
 		
 		/*********registering CRM User*********/
 			if (bp.clickOnTab(TabName.NIMTab)){
@@ -238,7 +246,7 @@ public class Module11 extends BaseLib {
 						"Not able to click on navatar investor manager tab so cannot verify error messages");
 			}
 
-		/**************************************/
+		/**************************************//*
 		ThreadSleep(1000);
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
@@ -251,29 +259,61 @@ public class Module11 extends BaseLib {
 		ThreadSleep(5000);
 		/******** for 3rd user******/
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
-
+		parentWindow=null;
+		flag=false;
 		lst.clear();
 		splitedUserName = removeNumbersFromString(Org3CRMUser3LastName); 
 		UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(UserLastName, "Users", excelLabel.Variable_Name, "Org3User3", excelLabel.User_Last_Name);
 		cv = new CommonVariables(this);
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (bp.clickOnSetUpLink(environment, mode)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							appLog.error("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						}
+					}
+					String emailID=cp.generateRandomEmailId();
+					if (bp.createPEUser(environment, mode,Org3CRMUser3FirstName, UserLastName, emailID, CRMUserLicense,
+							CRMUserProfile)) {
+						appLog.info("PE User 3 created Successfully");
+						ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org3User3", excelLabel.User_Email);
+						flag = true;
+						break;
+					} else {
+						appLog.info("PE User3 is not created successfully");
+						saa.assertTrue(false, "PE User3 is not created successfully");
+					}	
+					
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+						}
+						
+					
+				}
+			} catch (Exception e) {
+				appLog.error("could not find setup link, trying again..");
+			}
+			
+		}
+		if (flag) {
+			if (bp.installedPackages(environment, mode,Org3CRMUser3FirstName, Org3CRMUser3LastName)) {
+				appLog.info("Install package is done for PE User 3 succesfully");
+			} else {
+				appLog.info("Install package is not done for PE User 3 succesfully");
+				saa.assertTrue(false, "Install package is not done for PE User 3 succesfully");
+			}
+		}
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
 		
-		if (bp.createPEUser(Org3CRMUser3FirstName, UserLastName, cp.generateRandomEmailId(), CRMUserLicense,
-				CRMUserProfile)) {
-			appLog.info("PE User 3 created Successfully");
-			String emailID = isDisplayed(driver, bp.getUserEmailIDLabeltext(60), "visibility", 60,
-					"User Email ID Text Label", action.THROWEXCEPTION).getText().trim();
-			ExcelUtils.writeData(emailID, "Users", excelLabel.Variable_Name, "Org3User3", excelLabel.User_Email);
-		} else {
-			appLog.info("PE User3 is not created successfully");
-			saa.assertTrue(false, "PE User3 is not created successfully");
-		}
-		if (bp.installedPackages(Org3CRMUser3FirstName, Org3CRMUser3LastName)) {
-			appLog.info("Install package is done for PE User 3 succesfully");
-		} else {
-			appLog.info("Install package is not done for PE User 3 succesfully");
-			saa.assertTrue(false, "Install package is not done for PE User 3 succesfully");
-		}
+		switchToDefaultContent(driver);
 		/**********provide NIM access to CRM User**********/
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 60, np.getNIMTabFrame(60));
@@ -348,31 +388,6 @@ public class Module11 extends BaseLib {
 		} else {
 			appLog.info("Password is not set for user3");
 			saa.assertTrue(false, "Password is not set for user3");
-		}
-		if (bp.getSalesForceLightingIcon(10) != null) {
-			ThreadSleep(2000);
-			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
-			ThreadSleep(1000);
-			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-			appLog.info("Sales Force is switched in classic mode successfully.");
-		} else {
-			appLog.info("Sales Force is open in classic mode.");
-		}
-		
-		if (bp.getNavatarInvestorManagerTab(20) == null) {
-			lst=bp.addRemoveCustomTab("Navatar Investor Manager", customTabActionType.Add);
-			if(!lst.isEmpty()){
-				for (int i = 0; i < lst.size(); i++) {
-					appLog.error(lst.get(i));
-					saa.assertTrue(false,lst.get(i));
-				}
-			}
-			if (bp.getNavatarInvestorManagerTab(20) != null) {
-				appLog.info("Navatar Investor Manager Tab is displaying in Tab Row.");
-			} else {
-				appLog.info("Navatar Investor Manager Tab is not displaying in  Tab Row.");
-				saa.assertTrue(false, "Navatar Investor Manager Tab is not displaying in Tab Row.");
-			}
 		}
 		
 /*********registering CRM User*********/
