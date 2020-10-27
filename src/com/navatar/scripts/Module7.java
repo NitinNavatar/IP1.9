@@ -6107,7 +6107,7 @@ public class Module7 extends BaseLib {
 
 				if (fp.onlineImport(environment, mode, null, null, null, folderpath, docPath, fileName,
 						BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute,
-						WorkSpaceAction.UPDATE, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
+						WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.FundraisingWorkspace, 20)) {
 
 					appLog.info("File is upload successfullly");
 					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 20));
@@ -9713,7 +9713,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -10010,7 +10010,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -10214,7 +10214,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -10550,7 +10550,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -16566,9 +16566,9 @@ public class Module7 extends BaseLib {
 		// Institution Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -16591,7 +16591,7 @@ public class Module7 extends BaseLib {
 		// Institution Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner2)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner2)) {
 				appLog.info(" Opened Limited Partner : " + M7LimitedPartner2);
 				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -17489,9 +17489,9 @@ public class Module7 extends BaseLib {
 		// Limited Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -17528,7 +17528,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -17789,9 +17789,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -17828,7 +17828,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -18006,9 +18006,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -18047,7 +18047,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -18671,9 +18671,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -18710,7 +18710,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -19944,9 +19944,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -20026,7 +20026,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -22177,9 +22177,9 @@ public class Module7 extends BaseLib {
 		// Limited Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -22216,7 +22216,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -22474,9 +22474,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -22513,7 +22513,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -22581,7 +22581,7 @@ public class Module7 extends BaseLib {
 
 				if (fp.onlineImport(environment, mode, null, null, null, folderpath, docPath, fileName,
 						BoxUserName, BoxPassword, OnlineImportFileAddTo.SingleInstitute,
-						WorkSpaceAction.UPDATE, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
+						WorkSpaceAction.UPLOAD, FolderType.Shared, PageName.FundsPage, Workspace.InvestorWorkspace, 20)) {
 
 					appLog.info("File is upload successfullly");
 					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 20));
@@ -22695,9 +22695,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -22734,7 +22734,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -22997,9 +22997,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -23038,7 +23038,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -23784,10 +23784,10 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -23883,7 +23883,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -24359,9 +24359,9 @@ public class Module7 extends BaseLib {
 		// Limited Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -24398,7 +24398,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -24868,9 +24868,9 @@ public class Module7 extends BaseLib {
 		// Limited Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -24907,7 +24907,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -25294,9 +25294,9 @@ public class Module7 extends BaseLib {
 		// Limited Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -25333,7 +25333,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -25820,9 +25820,9 @@ public class Module7 extends BaseLib {
 		// Limited Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -25859,7 +25859,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -26790,7 +26790,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -26910,9 +26910,9 @@ public class Module7 extends BaseLib {
 		// Institution Tab
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -26951,7 +26951,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -27148,7 +27148,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -27269,9 +27269,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -27308,7 +27308,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -27421,7 +27421,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -27543,9 +27543,9 @@ public class Module7 extends BaseLib {
 		// Limited
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -27584,7 +27584,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -27736,31 +27736,31 @@ public class Module7 extends BaseLib {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M7Institution1, M7LimitedPartner1, M7FundName1,
 						PageName.FundsPage, Workspace.InvestorWorkspace, 60)) {
-//				if(bp.fileinContengGRID(PageName.FundsPage, Workspace.InvestorWorkspace, fileName)){
-//				if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.ManageVersions, fileName, Workspace.InvestorWorkspace, 30, "Yes")) {
-//					//verify manage version ui
-//					//v3 version
-//					if (fp.verifyManageVersionUI(updatedFileName, System.getProperty("user.dir")+path, fileName,"V3", true,false,true,null)) {
-//						appLog.info("manage version ui 1st time is successfully verified");
-//					}
-//					else {
-//						appLog.error("manage version ui 1st time could not be verified");
-//						sa.assertTrue(false, "manage version ui 1st time could not be verified");
-//					}
-//					if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version pop up close button", action.SCROLLANDBOOLEAN)) {
-//						if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
-//							
-//						}
-//					}
-//					else {
-//						appLog.error("manage version popup close button is not clickable");
-//						sa.assertTrue(false, "manage version popup close button is not clickable");
-//					}
-//				}
-//				}else{
-//					appLog.error(fileName+" is not available in the content grid ");
-//					sa.assertTrue(false,fileName+" is not available in the content grid");
-//				}
+				if(bp.fileinContengGRID(PageName.FundsPage, Workspace.InvestorWorkspace, fileName)){
+				if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.ManageVersions, fileName, Workspace.InvestorWorkspace, 30, "Yes")) {
+					//verify manage version ui
+					//v3 version
+					if (fp.verifyManageVersionUI(updatedFileName, System.getProperty("user.dir")+path, fileName,"V3", true,false,true,null)) {
+						appLog.info("manage version ui 1st time is successfully verified");
+					}
+					else {
+						appLog.error("manage version ui 1st time could not be verified");
+						sa.assertTrue(false, "manage version ui 1st time could not be verified");
+					}
+					if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version pop up close button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
+							
+						}
+					}
+					else {
+						appLog.error("manage version popup close button is not clickable");
+						sa.assertTrue(false, "manage version popup close button is not clickable");
+					}
+				}
+				}else{
+					appLog.error(fileName+" is not available in the content grid ");
+					sa.assertTrue(false,fileName+" is not available in the content grid");
+				}
 				
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
@@ -27785,7 +27785,7 @@ public class Module7 extends BaseLib {
 							appLog.info("make current functionality is successfully verified");
 						} else {
 							appLog.error("make current functionality cannot be verified");
-							sa.assertTrue(false, "make current funcionality cannot be verified");
+							sa.assertTrue(false, "make current functionality cannot be verified");
 						}
 						// closing manage version popup
 						if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version close button",
@@ -27908,9 +27908,9 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited Partner : " + M7LimitedPartner1);
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 
@@ -27947,7 +27947,7 @@ public class Module7 extends BaseLib {
 		// Committment Tab
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -29673,10 +29673,10 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
 						"Investor workspace view");
 				// Common
@@ -29859,7 +29859,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -30493,7 +30493,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
 				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
@@ -30679,7 +30679,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -31339,7 +31339,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
 				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
@@ -31421,7 +31421,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -31605,7 +31605,7 @@ public class Module7 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Limited  : " + M7LimitedPartner1);
 
 				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
@@ -31817,7 +31817,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
 				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
@@ -32241,7 +32241,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -32426,7 +32426,7 @@ public class Module7 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -32632,7 +32632,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
@@ -32936,7 +32936,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
 				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
@@ -33354,7 +33354,7 @@ public class Module7 extends BaseLib {
 
 		switchToDefaultContent(driver);
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
 				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 20));
@@ -34613,7 +34613,7 @@ public class Module7 extends BaseLib {
 		String alertMessage;
 
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M7LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M7LimitedPartner1)) {
 				appLog.info("Opened Institution : " + M7LimitedPartner1);
 
 				switchToFrame(driver, 30, ip.getFrame( PageName.InstitutionsPage, 20));
@@ -35464,7 +35464,7 @@ public class Module7 extends BaseLib {
 		String alertMessage;
 
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M7Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M7Commitment1ID)) {
 				appLog.info("Opened Commitment  : " + M7Commitment1ID);
 				switchToFrame(driver, 30, ip.getFrame( PageName.CommitmentsPage, 20));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30),
