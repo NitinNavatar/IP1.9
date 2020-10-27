@@ -73,7 +73,7 @@ public class HomePageBusineesLayer extends HomePage implements HomePageErrorMess
 			if (cp.clickOnTab(tabName)) {
 				log(LogStatus.INFO,"Clicked on Tab : "+tabName+" For : "+name,YesNo.No);
 				ThreadSleep(1000);
-				if (cp.clickOnAlreadyCreatedItem(tabName, name, 20)) {
+				//if (cp.clickOnAlreadyCreatedItem(tabName, name, 20)) {
 					log(LogStatus.INFO,"Clicked on  : "+name+" For : "+tabName,YesNo.No);
 					ThreadSleep(2000);
 					
@@ -101,11 +101,11 @@ public class HomePageBusineesLayer extends HomePage implements HomePageErrorMess
 					}
 
 
-
+/*
 				} else {
 					BaseLib.sa.assertTrue(false,"Item Not Found : "+name+" For : "+tabName);
 					log(LogStatus.SKIP,"Item Not Found : "+name+" For : "+tabName,YesNo.Yes);
-				}
+				}*/
 
 			} else {
 				BaseLib.sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" For : "+name);
