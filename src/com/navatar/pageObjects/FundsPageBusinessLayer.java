@@ -548,6 +548,12 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					}
 					if(contactcheckBox!=null) {
 						ThreadSleep(3000);
+						if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
+							scrollDownThroughWebelement(driver, getFundRaisingWorkSpaceSection(30), "fundraising workspace View");
+							
+						}else if (workspace.toString().equalsIgnoreCase(workspace.InvestorWorkspace.toString())) {
+							scrollDownThroughWebelement(driver, getInvestorWorkSpaceSection(30), "investor workspace View");
+						}
 						if(click(driver, contactcheckBox, emailID+"check box", action.BOOLEAN)) {
 							appLog.info("clicked on contact check box : "+emailID);
 							if(click(driver, getaddselectContactBtn(workspace, 30), workspace+" add select contact active button", action.SCROLLANDBOOLEAN)) {
@@ -1427,9 +1433,18 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public boolean clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions contentGridArrowKeyFunctions,
 			String documentName, Workspace workspace,int timeOut,String scroll) {
 		WebElement ele=null;
+
 		ThreadSleep(2000);
 		scrollDownThroughWebelement(driver, getWorkspaceSectionView(workspace, timeOut), workspace.toString()+" View.");
 		ThreadSleep(2000);
+
+		if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
+			scrollDownThroughWebelement(driver, getFundRaisingWorkSpaceSection(30), "fundraising workspace View");
+			
+		}else if (workspace.toString().equalsIgnoreCase(workspace.InvestorWorkspace.toString())) {
+			scrollDownThroughWebelement(driver, getInvestorWorkSpaceSection(30), "investor workspace View");
+		}
+
 		ele = FindElement(driver, "//a[@title='" + documentName + "']/following-sibling::img", "Down Arrow",
 					action.BOOLEAN, timeOut);
 		if (scroll != null && scroll.equalsIgnoreCase("Yes"))
