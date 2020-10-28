@@ -7789,7 +7789,7 @@ public class Module3 extends BaseLib {
 		String linkedin =ExcelUtils.readData("Users",excelLabel.Variable_Name, "User1", excelLabel.Linkedin);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.NIMTab)) {
-			switchToFrame(driver, 30,bp.getFrame( PageName.NavatarInvestorManager, 30));
+			switchToFrame(driver, 30,bp.getFrame(PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnSideMenusTab(sideMenu.Profiles)) {
 				if(nim.clickOnEditIcon()) {
 					if(sendKeys(driver,nim.getMyProfileFirstName(60),fristName,"first name text box", action.BOOLEAN)) {
@@ -8869,7 +8869,7 @@ public class Module3 extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminOrg2UserName,adminPasswordOrg2);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
-				if(ip.createInstitution(M3Org2Institution1)) {
+				if(ip.createInstitution(environment,mode,M3Org2Institution1,"Institution",null,null)) {
 				
 			}else {
 				appLog.error("Not able to create institution: "+M3Org2Institution1);
@@ -8890,7 +8890,7 @@ public class Module3 extends BaseLib {
 				if(i==0) {
 					emailId=M3Contact1EmailId;
 				}
-				if(cp.createContact(ContactFirstName, ContactLastName, M3Org2Institution1, emailId)) {
+				if(cp.createContact(environment,mode,ContactFirstName, ContactLastName, M3Org2Institution1, emailId,null,null,CreationPage.ContactPage)) {
 					appLog.info("contact is created: "+ContactFirstName+" "+ContactLastName);
 					if (emailId != "") {
 						ExcelUtils.writeData(emailId,"Contacts", excelLabel.Variable_Name, "M3Org2Contact"+(i+1),excelLabel.Contact_EmailId);
@@ -8906,7 +8906,7 @@ public class Module3 extends BaseLib {
 			}
 		}
 			if(bp.clickOnTab(TabName.FundsTab)) {
-				if(fp.createFund(M3Org2FundName1, M3Org2FundType, M3Org2FundInvestmentCategory)) {
+				if(fp.createFund(environment,mode,M3Org2FundName1, M3Org2FundType, M3Org2FundInvestmentCategory,null,null)) {
 					appLog.info("fund is created: "+M3Org2FundName1);
 				}else {
 					appLog.error("Not able to create fund: "+M3Org2FundName1);
@@ -8917,7 +8917,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on fund tab so cannot create fund: "+M3Org2FundName1);
 			}
 			if(bp.clickOnTab(TabName.FundraisingsTab)) {
-				if(frp.createFundRaising(M3Org2FundRaisingName1, M3Org2FundName1, M3Org2Institution1)) {
+				if(frp.createFundRaising(environment,mode,M3Org2FundRaisingName1, M3Org2FundName1, M3Org2Institution1)) {
 					appLog.info("fundraising is created : "+M3Org2FundRaisingName1);
 				}else {
 					appLog.error("Not able to create fundraising: "+M3Org2FundRaisingName1);
@@ -8928,7 +8928,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+M3Org2FundRaisingName1);
 			}
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
-				if(ip.createLimitedPartner(M3Org2LimitedPartner1, M3Org2Institution1)) {
+				if(ip.createInstitution(environment,mode,M3Org2LimitedPartner1,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M3Org2Institution1)) {
 					appLog.info("limited partner is created: "+M3Org2LimitedPartner1);
 				}else {
 					appLog.error("Not able to create limited partner: "+M3Org2LimitedPartner1);
@@ -8939,7 +8939,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on institution tab so cannot create limite partner: "+M3Org2LimitedPartner1);
 			}
 			if(bp.clickOnTab(TabName.PartnershipsTab)) {
-				if(pp.createPartnership(M3Org2Partnership1,M3Org2FundName1)) {
+				if(pp.createPartnership(environment,mode,M3Org2Partnership1,M3Org2FundName1)) {
 					appLog.info("partnership is created: "+M3Org2Partnership1);
 				}else {
 					appLog.error("Not able to create partnership: "+M3Org2Partnership1);
@@ -8950,7 +8950,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on partnership tab so cannot create partnership: "+M3Org2Partnership1);
 			}
 			if(bp.clickOnTab(TabName.CommitmentsTab)) {
-				if(cmp.createCommitment(M3Org2LimitedPartner1,M3Org2Partnership1,"M3Org2Commitment1", null)) {
+				if(cmp.createCommitment(environment,mode,M3Org2LimitedPartner1,M3Org2Partnership1,"M3Org2Commitment1", null)) {
 					appLog.info("commitment is created successfully");
 				}else {
 					appLog.error("Not able to create commitment for limited partner: "+M3Org2LimitedPartner1+" and partnership Name: "+M3Org2Partnership1);
