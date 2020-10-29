@@ -557,7 +557,7 @@ public class Module5 extends BaseLib {
 		} else {
 			appLog.error("Funds tab cannot be clicked, so cannot create workspace and cannot continue with tc.");
 			sa.assertTrue(false,"Funds tab cannot be clicked, so cannot create workspace and cannot continue with tc.");
-//		}
+		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment,mode);
 		sa.assertAll();
