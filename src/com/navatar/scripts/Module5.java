@@ -19,7 +19,9 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.WorkSpaceAction;
@@ -61,7 +63,7 @@ public class Module5 extends BaseLib {
 		InstitutionPageBusinessLayer inst = new InstitutionPageBusinessLayer(driver);
 		for(int i = 1; i < 3; i++)
 			if(lp.clickOnTab(TabName.InstituitonsTab)){
-				if(inst.createInstitution(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M5I"+i, excelLabel.Institutions_Name))){
+				if(inst.createInstitution(environment,mode,ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M5I"+i, excelLabel.Institutions_Name),"Institution",null,null)){
 					appLog.info("Institution '"+ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M5I"+i, excelLabel.Institutions_Name)+"' is created successfully.");
 				} else {
 					appLog.error(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M5I"+i, excelLabel.Institutions_Name)+" institution is not created.");
@@ -72,7 +74,7 @@ public class Module5 extends BaseLib {
 				sa.assertTrue(false,"Insitution Tab cannot be clicked, So cannot create institution.");
 			}
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createLimitedPartner(M5LP1, M5I1)){
+			if(inst.createInstitution(environment,mode,M5LP1,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M5I1)){
 				appLog.info(M5LP1+" LP Created successfully.");
 			} else {
 				appLog.error(M5LP1+" LP created successfully.");
@@ -83,7 +85,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Insitution Tab cannot be clicked, So cannot create LP.");
 		}
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createLimitedPartner(M5LP2, M5I2)){
+			if(inst.createInstitution(environment,mode,M5LP2,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M5I2)){
 				appLog.info(M5LP2+" LP Created successfully.");
 			} else {
 				appLog.error(M5LP2+" LP created successfully.");
@@ -96,7 +98,7 @@ public class Module5 extends BaseLib {
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
 		String emailId = cp.generateRandomEmailId();
 		if(lp.clickOnTab(TabName.ContactTab)){
-			if(cp.createContact(M5CFN1, M5CLN1, M5I1, emailId)){
+			if(cp.createContact(environment,mode,M5CFN1, M5CLN1, M5I1, emailId,null,null,CreationPage.ContactPage)){
 				appLog.info(M5CFN1+" "+M5CLN1+" contact is created successfully.");
 				ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M5Contact1", excelLabel.Contact_EmailId);
 			} else {
@@ -110,7 +112,7 @@ public class Module5 extends BaseLib {
 		
 		emailId = cp.generateRandomEmailId();
 		if(lp.clickOnTab(TabName.ContactTab)){
-			if(cp.createContact(M5CFN2, M5CLN2, M5I2, emailId)){
+			if(cp.createContact(environment,mode,M5CFN2, M5CLN2, M5I2, emailId,null,null,CreationPage.ContactPage)){
 				appLog.info(M5CFN2+" "+M5CLN2+" contact is created successfully.");
 				ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M5Contact2", excelLabel.Contact_EmailId);
 			} else {
@@ -124,7 +126,7 @@ public class Module5 extends BaseLib {
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M5F1, M5FT1, M5FIC1)){
+			if(fp.createFund(environment,mode,M5F1, M5FT1, M5FIC1,null,null)){
 				appLog.info(M5F1+" fund created successfully");
 			} else {
 				appLog.error(M5F1+" fund cannot be created.");
@@ -136,7 +138,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M5F2, M5FT2, M5FIC2)){
+			if(fp.createFund(environment,mode,M5F2, M5FT2, M5FIC2,null,null)){
 				appLog.info(M5F2+" fund created successfully");
 			} else {
 				appLog.error(M5F2+" fund cannot be created.");
@@ -148,7 +150,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M5F3, M5FT3, M5FIC3)){
+			if(fp.createFund(environment,mode,M5F3, M5FT3, M5FIC3,null,null)){
 				appLog.info(M5F3+" fund created successfully");
 			} else {
 				appLog.error(M5F3+" fund cannot be created.");
@@ -161,7 +163,7 @@ public class Module5 extends BaseLib {
 		
 		FundRaisingPageBusinessLayer fdr = new FundRaisingPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M5FR1, M5F1, M5I1)){
+			if(fdr.createFundRaising(environment,mode,M5FR1, M5F1, M5I1)){
 				appLog.info(M5FR1+" fundraising created successfully.");
 			} else {
 				appLog.error(M5FR1+" fundraising not created.");
@@ -173,7 +175,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M5FR2, M5F2, M5I1)){
+			if(fdr.createFundRaising(environment,mode,M5FR2, M5F2, M5I1)){
 				appLog.info(M5FR2+" fundraising created successfully.");
 			} else {
 				appLog.error(M5FR2+" fundraising not created.");
@@ -185,7 +187,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M5FR3, M5F2, M5I2)){
+			if(fdr.createFundRaising(environment,mode,M5FR3, M5F2, M5I2)){
 				appLog.info(M5FR3+" fundraising created successfully.");
 			} else {
 				appLog.error(M5FR3+" fundraising not created.");
@@ -198,7 +200,7 @@ public class Module5 extends BaseLib {
 		
 		PartnershipPageBusinessLayer prt= new PartnershipPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.PartnershipsTab)){
-			if(prt.createPartnership(M5P1, M5F2)){
+			if(prt.createPartnership(environment,mode,M5P1, M5F2)){
 				appLog.info(M5P1+" PartnerShip created successfully.");
 			} else {
 				appLog.error(M5P1+" partnership not created.");
@@ -210,7 +212,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(lp.clickOnTab(TabName.PartnershipsTab)){
-			if(prt.createPartnership(M5P2, M5F1)){
+			if(prt.createPartnership(environment,mode,M5P2, M5F1)){
 				appLog.info(M5P2+" PartnerShip created successfully.");
 			} else {
 				appLog.error(M5P2+" partnership not created.");
@@ -223,7 +225,7 @@ public class Module5 extends BaseLib {
 		
 		CommitmentPageBusinessLayer cmt = new CommitmentPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M5LP1, M5P2, "M5CMT1", null)){
+			if(cmt.createCommitment(environment,mode,M5LP1, M5P2, "M5CMT1", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -235,7 +237,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M5LP1, M5P1, "M5CMT2", null)){
+			if(cmt.createCommitment(environment,mode,M5LP1, M5P1, "M5CMT2", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -247,7 +249,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M5LP2, M5P1, "M5CMT3", null)){
+			if(cmt.createCommitment(environment,mode,M5LP2, M5P1, "M5CMT3", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -272,7 +274,7 @@ public class Module5 extends BaseLib {
 			appLog.error("NIM tab cannot be clicked, So cannot create folder template.");
 			sa.assertTrue(false,"NIM tab cannot be clicked, So cannot create folder template.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -374,7 +376,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Funds tab cannot be clicked, so cannot create workspace and cannot continue with tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -466,8 +468,8 @@ public class Module5 extends BaseLib {
 					}
 					
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
-						if(instiPage.clickOnCreatedLP(M5LP1)){
-							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
+						if(instiPage.clickOnCreatedLP(environment, mode,M5LP1)){
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.LimitedPartnerPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, null, M5F2, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
@@ -486,8 +488,8 @@ public class Module5 extends BaseLib {
 					}
 					
 					if(fp.clickOnTab(TabName.InstituitonsTab)){
-						if(instiPage.clickOnCreatedLP(M5LP2)){
-							switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
+						if(instiPage.clickOnCreatedLP(environment, mode,M5LP2)){
+							switchToFrame(driver, 30, instiPage.getFrame( PageName.LimitedPartnerPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, null, M5F2, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 								appLog.info("Folder structure is verified on LP page of '"+M5LP2+"'.");
@@ -506,7 +508,7 @@ public class Module5 extends BaseLib {
 					}
 					
 					if(fp.clickOnTab(TabName.CommitmentsTab)){
-						if(com.clickOnCreatedCommitmentId(M5CMT2)){
+						if(com.clickOnCreatedCommitmentId(environment, mode,M5CMT2)){
 							switchToFrame(driver, 30, instiPage.getFrame( PageName.CommitmentsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, M5LP1, null, Workspace.InvestorWorkspace, PageName.CommitmentsPage, 30)){
@@ -526,7 +528,7 @@ public class Module5 extends BaseLib {
 					}
 					
 					if(fp.clickOnTab(TabName.CommitmentsTab)){
-						if(com.clickOnCreatedCommitmentId(M5CMT3)){
+						if(com.clickOnCreatedCommitmentId(environment, mode,M5CMT3)){
 							switchToFrame(driver, 30, instiPage.getFrame( PageName.CommitmentsPage, 30));
 							scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 							if(instiPage.VerifyFolderStructure("FolderTemp", null, M5LP2, null, Workspace.InvestorWorkspace, PageName.CommitmentsPage, 30)){
@@ -555,9 +557,9 @@ public class Module5 extends BaseLib {
 		} else {
 			appLog.error("Funds tab cannot be clicked, so cannot create workspace and cannot continue with tc.");
 			sa.assertTrue(false,"Funds tab cannot be clicked, so cannot create workspace and cannot continue with tc.");
-		}
+//		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -661,7 +663,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Funds tab cannot be clicked, so cannot create workspace and cannot continue with tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1242,10 +1244,11 @@ public class Module5 extends BaseLib {
 						appLog.error("Add Rename Delete Button are not verified for folder Shared Folder New (Shared).");
 						sa.assertTrue(false,"Add Rename Delete Button are not verified for folder Shared Folder New (Shared).");
 					}
+					scrollDownThroughWebelement(driver, fp.getFundRaisingWorkSpaceSection(30), "fundraising workspace View");
 					if(fp.clickOnAddAFolderButton(null, FolderType.Common, Workspace.FundraisingWorkspace, 30)){
 						String text = trim(getText(driver, fp.getAddFolderChildHeader(Workspace.FundraisingWorkspace, 30), "", action.BOOLEAN));
 						if(text.equalsIgnoreCase("Add a folder")){
-							appLog.info("Pop UJp header is verified.");
+							appLog.info("Pop Up header is verified.");
 						} else {
 							appLog.error("Pop Up Header is not verified. Expected: Add a folder\tActual: "+text);
 							sa.assertTrue(false,"Pop Up Header is not verified. Expected: Add a folder\tActual: "+text);
@@ -1916,7 +1919,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Funds tab cannot be clicked, So cannot check add a folder pop up.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2193,7 +2196,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund Tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2533,7 +2536,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund Tab so cannot continue with the tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2649,7 +2652,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2829,7 +2832,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2930,7 +2933,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3026,7 +3029,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3074,7 +3077,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3162,7 +3165,7 @@ public class Module5 extends BaseLib {
 							appLog.error("Add a folder pop up cancel button si not verified.");
 							sa.assertTrue(false,"Add a folder pop up cancel button si not verified.");
 						}
-						
+					
 						if(mouseOverOperation(driver, fp.getAddFolderInformationIcon(Workspace.InvestorWorkspace, 30))){
 							text = trim(getText(driver, fp.getAddFolderInfoIconMessage(30), "", action.BOOLEAN));
 							System.err.println(text);
@@ -3343,8 +3346,8 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Insitutions Tab cannot be clicked, So cannot verify folder structure on institution page.");
 		}
 		if(fp.clickOnTab(TabName.InstituitonsTab)){
-			if(instiPage.clickOnCreatedLP(M5LP1)){
-				switchToFrame(driver, 30, instiPage.getFrame( PageName.InstitutionsPage, 30));
+			if(instiPage.clickOnCreatedLP(environment, mode,M5LP1)){
+				switchToFrame(driver, 30, instiPage.getFrame( PageName.LimitedPartnerPage, 30));
 				scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 				if(fp.verifyFolderPathdummy("Standard Folder New", null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5LP1+"'.");
@@ -3394,7 +3397,7 @@ public class Module5 extends BaseLib {
 		}
 		
 		if(fp.clickOnTab(TabName.CommitmentsTab)){
-			if(com.clickOnCreatedCommitmentId(M5CMT2)){
+			if(com.clickOnCreatedCommitmentId(environment, mode,M5CMT2)){
 				switchToFrame(driver, 30, instiPage.getFrame( PageName.CommitmentsPage, 30));
 				scrollDownThroughWebelement(driver, instiPage.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
 				if(fp.verifyFolderPathdummy("Standard Folder New", null, M5LP1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
@@ -3419,7 +3422,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Insitutions Tab cannot be clicked, So cannot verify folder structure on institution page.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3469,6 +3472,7 @@ public class Module5 extends BaseLib {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
+					scrollDownThroughWebelement(driver, fp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 2), "");
 					if(fp.verifyAddRenameDeleteButton(null, FolderType.Common, YesNo.Yes, Workspace.InvestorWorkspace, 30)){
 						appLog.info("Add Rename Delete Button are verified for folder type Common.");
 					} else {
@@ -3721,52 +3725,52 @@ public class Module5 extends BaseLib {
 			if(ins.clickOnCreatedInstitution(M5I1)){
 				switchToFrame(driver, 30, ins.getFrame( PageName.InstitutionsPage, 30));
 				scrollDownThroughWebelement(driver, ins.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), Workspace.InvestorWorkspace+" View.");
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
 
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
 				
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], null, M5LP1, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], null, M5LP1, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], null, M5LP1, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], null, M5LP1, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
 				
-				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
@@ -3784,27 +3788,27 @@ public class Module5 extends BaseLib {
 		if(lp.clickOnTab(TabName.ContactTab)){
 			if(con .clickOnCreatedContact(M5CFN1, M5CLN1, null)){
 				switchToFrame(driver, 30, con.getFrame( PageName.ContactsPage, 30));
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
 
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
 				
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], M5I1, M5LP1, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], M5I1, M5LP1, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on instituion page of '"+M5I1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], M5I1, M5LP1, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], M5I1, M5LP1, M5F2, PageName.ContactsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on instituion page of '"+M5I1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on instituion page of '"+M5I1+"'.");
@@ -3820,54 +3824,54 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Contact tab cannot be clicked, So cannot continue.");
 		}
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+			if(ins.clickOnCreatedLP(environment, mode,M5LP1)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on LP page of '"+M5LP1+"'.");
 				}
 
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on LP page of '"+M5LP1+"'.");
 				}
 				
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on LP page of '"+M5LP1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on LP page of '"+M5LP1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on LP page of '"+M5LP1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on LP page of '"+M5LP1+"'.");
 				}
 				
-				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[0], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on LP page of '"+M5LP1+"'.");
 				}
-				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[1], null, null, M5F2, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on LP page of '"+M5LP1+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on LP page of '"+M5LP1+"'.");
@@ -3883,54 +3887,54 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on institution tab so cannot continue with tc");
 		}
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
+			if(com.clickOnCreatedCommitmentId(environment, mode,M5CMT2)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[0], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 				}
 
-				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(commonFolderPath.split(",")[1], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 				}
 				
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], null, M5LP1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[1], null, M5LP1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 				}
-				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], null, M5LP1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(standardFolderPath.split(",")[2], null, M5LP1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 				}
-				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[0], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[0], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 				}
-				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[1], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(sharedFolderPath.split(",")[1], null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 				}
 				
-				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[0], null, null, M5F2, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[0], null, null, M5F2, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 					sa.assertTrue(false,"Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
 				}
-				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[1], null, null, M5F2, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)){
+				if(fp.verifyFolderPathdummy(internalFolderPath.split(",")[1], null, null, M5F2, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 10)){
 					appLog.info("Folder structure is verified on Commitment page of '"+M5CMT2+"'.");
 				} else {
 					appLog.error("Folder structure is not verified on Commitment page of '"+M5CMT2+"'.");
@@ -3946,7 +3950,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Commitment tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4313,7 +4317,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false,"Funds tab cannot be clicked, So cannot check add a folder pop up.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4588,7 +4592,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund Tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4927,7 +4931,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund Tab so cannot continue with the tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5000,8 +5004,8 @@ public class Module5 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if(ins.clickOnCreatedLP(environment, mode,M5LP1)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace, 60)) {
 						appLog.info(CommonPath+" is verified on LP page: "+M5I1);
@@ -5101,7 +5105,7 @@ public class Module5 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
+			if(com.clickOnCreatedCommitmentId(environment, mode,M5CMT2)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
 				if(!CommonPath.isEmpty() && !CommonPath.equalsIgnoreCase("CommonPath")) {
 					if(fp.verifyFolderPathdummy(CommonPath, null, null, M5F2, PageName.CommitmentsPage,Workspace.InvestorWorkspace, 60)) {
@@ -5156,7 +5160,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Commitment tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5336,7 +5340,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5397,8 +5401,8 @@ public class Module5 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if(ins.clickOnCreatedLP(environment, mode,M5LP1)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 					if(!fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace, 5)) {
 						appLog.info(updateCommonFolder[0]+" is not available on LP page: "+M5LP1);
 					}else {
@@ -5483,7 +5487,7 @@ public class Module5 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
+			if(com.clickOnCreatedCommitmentId(environment, mode,M5CMT2)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
 					if(fp.verifyFolderPathdummy(updateCommonFolder[0], null, null, M5F2, PageName.CommitmentsPage,Workspace.InvestorWorkspace, 5)) {
 						appLog.info(updateCommonFolder[0]+" is verified on Commitment page: "+M5LP1);
@@ -5520,7 +5524,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Commitment tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5623,7 +5627,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5655,8 +5659,8 @@ public class Module5 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M5LP1)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if(ins.clickOnCreatedLP(environment, mode,M5LP1)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 					if(!fp.verifyFolderPathdummy(updateSTDFolder, null, null, M5F2, PageName.InstitutionsPage,Workspace.InvestorWorkspace,5)) {
 						appLog.info(updateSTDFolder+" is not available on LP page: "+M5LP1);
 					}else {
@@ -5691,7 +5695,7 @@ public class Module5 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.clickOnCreatedCommitmentId(M5CMT2)) {
+			if(com.clickOnCreatedCommitmentId(environment, mode,M5CMT2)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.CommitmentsPage, 30));
 					if(fp.verifyFolderPathdummy(updateSTDFolder, null, M5LP1, null, PageName.CommitmentsPage,Workspace.InvestorWorkspace, 5)) {
 						appLog.info(updateSTDFolder+" is available on Commitment page: "+M5CMT2);
@@ -5708,7 +5712,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Commitment tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5913,7 +5917,7 @@ public class Module5 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5970,7 +5974,7 @@ public class Module5 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.postCondition().assertAll();
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 
 	}
 }

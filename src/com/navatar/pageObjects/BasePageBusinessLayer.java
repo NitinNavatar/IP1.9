@@ -1665,7 +1665,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		scrollDownThroughWebelement(driver, FindElement(driver,
 				"//label[@id='" + id + "']//span[@title='Add a Folder']", "Add folder Button", action.BOOLEAN, 20),
 				"Add Folder Button");
-		return click(driver, FindElement(driver, "//label[@id='" + id + "']//span[@title='Add a Folder']",
+		return clickUsingJavaScript(driver, FindElement(driver, "//label[@id='" + id + "']//span[@title='Add a Folder']",
 				"Add folder Button", action.BOOLEAN, 20), "Add a folder", action.BOOLEAN);
 	}
 

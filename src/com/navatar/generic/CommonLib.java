@@ -673,6 +673,48 @@ public class CommonLib implements Comparator<String> {
 		}
 		return true;
 	}
+	
+	
+	
+	public static boolean mouseHoverJScript(WebDriver driver,WebElement HoverElement) {
+		try {
+			if (isElementPresent(HoverElement)) {
+				String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+			((JavascriptExecutor) driver).executeScript(mouseOverScript,HoverElement);
+			return true;
+
+		} else {
+			System.out.println("Element was not visible to hover " + "\n");
+		}
+	} catch (StaleElementReferenceException e) {
+			System.out.println("Element with " + HoverElement
+					+ "is not attached to the page document"
+					+ e.getStackTrace());
+		} catch (NoSuchElementException e) {
+			System.out.println("Element " + HoverElement + " was not found in DOM"
+					+ e.getStackTrace());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error occurred while hovering"
+					+ e.getStackTrace());
+		}
+		return false;
+	}
+	
+	
+	public static boolean isElementPresent(WebElement element) {
+		boolean flag = false;
+		try {
+			if (element.isDisplayed()
+					|| element.isEnabled())
+				flag = true;
+		} catch (NoSuchElementException e) {
+			flag = false;
+		} catch (StaleElementReferenceException e) {
+			flag = false;
+		}
+		return flag;
+	}
 
 	/**
 	 * @author Ankur Rana
@@ -1295,6 +1337,25 @@ public class CommonLib implements Comparator<String> {
 						} else {
 							AppListeners.appLog.info("*******Cannot recover from overlay problem**********");
 						}
+					}
+				}else if (e.getMessage().contains("element not interactable")) {
+					String xpath = getXpath(element);
+					if(xpath!=null){
+						List<WebElement> lst = FindElements(driver, xpath, elementName);
+//						WebElement ele = FindElement(driver, xpath, elementName, action, 10);
+						for(int i=0; i<lst.size(); i++) {
+							try{
+//								((JavascriptExecutor) driver).executeScript("arguments[0].click();", ele);
+								lst.get(i).click();
+								AppListeners.appLog.info("************Recovered interactable element problem*************");
+								return true;
+							} catch(Exception e1){
+								if(i==lst.size()-1) {
+									System.out.println("*******Cannot recover interactable element problem**********");
+								}
+							}
+						}
+						
 					}
 				}
 			if(elementName!=null && !elementName.isEmpty()){
