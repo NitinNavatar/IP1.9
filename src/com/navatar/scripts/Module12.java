@@ -28,8 +28,11 @@ import com.navatar.generic.CommonLib;
 import static com.navatar.generic.CommonLib.*;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.CommonLib.ContentGridArrowKeyFunctions;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.Header;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -91,8 +94,8 @@ public class Module12 extends BaseLib {
 			instutionName = ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M12Institution" + (i + 1),
 					excelLabel.Institutions_Name);
 			if (bp.clickOnTab(TabName.InstituitonsTab)) {
-				if (ip.createInstitution(instutionName)) {
-
+				if (ip.createInstitution(environment, mode,instutionName,"Institution",null,null)) {
+					appLog.info("successfully created institution "+instutionName);
 				} else {
 					appLog.error("Not able to create institution: " + instutionName);
 					saa.assertTrue(false, "Not able to create institution: " + instutionName);
@@ -111,7 +114,7 @@ public class Module12 extends BaseLib {
 						excelLabel.Fund_Type);
 				String investmentCategory = ExcelUtils.readData("Funds", excelLabel.Variable_Name, "M12Fund" + (i + 1),
 						excelLabel.Fund_InvestmentCategory);
-				if (fp.createFund(fundName, fundType, investmentCategory)) {
+				if (fp.createFund(environment, mode,fundName, fundType, investmentCategory,null,null)) {
 					appLog.info("fund is created: " + fundName);
 				} else {
 					appLog.error("Not able to create fund: " + fundName);
@@ -131,7 +134,7 @@ public class Module12 extends BaseLib {
 			String ContactLastName = ExcelUtils.readData("Contacts", excelLabel.Variable_Name, "M12Contact" + (i + 1),
 					excelLabel.Contact_LastName);
 			if (bp.clickOnTab(TabName.ContactTab)) {
-				if (cp.createContact(ContactFirstName, ContactLastName, instutionName, emailId)) {
+				if (cp.createContact(environment, mode,ContactFirstName, ContactLastName, instutionName, emailId,null,null,CreationPage.ContactPage)) {
 					appLog.info("contact is created: " + ContactFirstName + " " + ContactLastName);
 					if (emailId != "") {
 						ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M12Contact" + (i + 1),
@@ -151,7 +154,7 @@ public class Module12 extends BaseLib {
 						"M12FundRaising" + (i + 1), excelLabel.Fund_Name);
 				instutionName = ExcelUtils.readData("Fundraisings", excelLabel.Variable_Name,
 						"M12FundRaising" + (i + 1), excelLabel.Institutions_Name);
-				if (frp.createFundRaising(fundraisingName, fundName, instutionName)) {
+				if (frp.createFundRaising(environment, mode,fundraisingName, fundName, instutionName)) {
 					appLog.info("fundraising is created : " + fundraisingName);
 				} else {
 					appLog.error("Not able to create fundraising: " + fundraisingName);
@@ -169,7 +172,7 @@ public class Module12 extends BaseLib {
 			if (bp.clickOnTab(TabName.InstituitonsTab)) {
 				instutionName = ExcelUtils.readData("Institutions", excelLabel.Variable_Name,
 						"M12Institution" + (i + 1), excelLabel.Institutions_Name);
-				if (ip.createLimitedPartner(lpName, instutionName)) {
+					if(ip.createInstitution(environment, mode, lpName, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), instutionName)) {
 					appLog.info("limited partner is created: " + lpName);
 				} else {
 					appLog.error("Not able to create limited partner: " + lpName);
@@ -188,7 +191,7 @@ public class Module12 extends BaseLib {
 			if (bp.clickOnTab(TabName.PartnershipsTab)) {
 				String fundName = ExcelUtils.readData("Funds", excelLabel.Variable_Name, "M12Fund" + (i + 1),
 						excelLabel.Fund_Name);
-				if (pp.createPartnership(partnershipName, fundName)) {
+				if (pp.createPartnership(environment, mode,partnershipName, fundName)) {
 					appLog.info("partnership is created: " + partnershipName);
 				} else {
 					appLog.error("Not able to create partnership: " + partnershipName);
@@ -219,7 +222,7 @@ public class Module12 extends BaseLib {
 							excelLabel.PartnerShip_Name);
 				}
 
-				if (cmp.createCommitment(lpName, partnershipName, "M12Commitment" + (i + 1), null)) {
+				if (cmp.createCommitment(environment, mode,lpName, partnershipName, "M12Commitment" + (i + 1), null)) {
 					appLog.info("commitment is created successfully");
 				} else {
 					appLog.error("Not able to create commitment for limited partner: " + lpName
@@ -242,7 +245,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to write CRM User first,last name and firm profile in excel");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -384,7 +387,7 @@ public class Module12 extends BaseLib {
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -609,7 +612,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();
@@ -624,7 +627,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact1FirstName, M12Contact1LastName,
 				Workspace.FundraisingWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -1081,7 +1084,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1536,15 +1539,10 @@ public class Module12 extends BaseLib {
 							appLog.info("Clicked on Go to firm button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								WebElement ele = FindElement(driver, "//div[@class='content']", "Page Header",
-										action.BOOLEAN, 40);
+								WebElement ele = bp.verifyCreatedItemOnPage(Header.Institution, M12Institution1);
+								
 								if (ele != null) {
-									if (ele.getText().trim().equalsIgnoreCase(M12Institution1)) {
 										appLog.info(M12Institution1 + " Page is opened");
-									} else {
-										appLog.info(M12Institution1 + " Page is not opened");
-										sa.assertTrue(false, M12Institution1 + " Page is not opened");
-									}
 								} else {
 									appLog.info("Not able to find page header");
 									sa.assertTrue(false, "Not able to find page header");
@@ -1600,7 +1598,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1729,15 +1727,9 @@ public class Module12 extends BaseLib {
 				appLog.info("Clicked on Go to Contact button");
 				String parentID = switchOnWindow(driver);
 				if (parentID != null) {
-					WebElement ele = FindElement(driver, "//div[@class='content']", "Page Header", action.BOOLEAN, 40);
+					WebElement ele = bp.verifyCreatedItemOnPage(Header.Contact, M12Contact1FirstName + " " + M12Contact1LastName);
 					if (ele != null) {
-						if (ele.getText().trim().equalsIgnoreCase(M12Contact1FirstName + " " + M12Contact1LastName)) {
 							appLog.info(M12Contact1FirstName + " " + M12Contact1LastName + " Page is opened");
-						} else {
-							appLog.info(M12Contact1FirstName + " " + M12Contact1LastName + " Page is not opened");
-							sa.assertTrue(false,
-									M12Contact1FirstName + " " + M12Contact1LastName + " Page is not opened");
-						}
 					} else {
 						appLog.info("Not able to find page header");
 						sa.assertTrue(false, "Not able to find page header");
@@ -1887,8 +1879,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Clicked on Go to Contact button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								WebElement ele = FindElement(driver, "//div[@class='content']", "Page Header",
-										action.BOOLEAN, 40);
+								WebElement ele = bp.verifyCreatedItemOnPage(Header.Contact, M12Contact1FirstName + " " + M12Contact1LastName);
 								if (ele != null) {
 									if (ele.getText().trim()
 											.equalsIgnoreCase(M12Contact1FirstName + " " + M12Contact1LastName)) {
@@ -2087,8 +2078,7 @@ public class Module12 extends BaseLib {
 							appLog.info("Clicked on Go to Contact button");
 							String parentID = switchOnWindow(driver);
 							if (parentID != null) {
-								WebElement ele = FindElement(driver, "//div[@class='content']", "Page Header",
-										action.BOOLEAN, 40);
+								WebElement ele = bp.verifyCreatedItemOnPage(Header.Contact, M12Contact1FirstName + " " + M12Contact1LastName);
 								if (ele != null) {
 									if (ele.getText().trim()
 											.equalsIgnoreCase(M12Contact1FirstName + " " + M12Contact1LastName)) {
@@ -2155,7 +2145,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2168,7 +2158,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact2FirstName, M12Contact2LastName,
 				Workspace.FundraisingWorkspace, "M12Contact2","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -2665,7 +2655,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2677,7 +2667,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact1FirstName, M12Contact1LastName,
 				Workspace.FundraisingWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -3202,7 +3192,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -3214,7 +3204,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact2FirstName, M12Contact2LastName,
 				Workspace.FundraisingWorkspace, "M12Contact2","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -3734,7 +3724,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -3746,7 +3736,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact1FirstName, M12Contact1LastName,
 				Workspace.FundraisingWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -4273,7 +4263,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4285,7 +4275,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact2FirstName, M12Contact2LastName,
 				Workspace.FundraisingWorkspace, "M12Contact2","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -4834,7 +4824,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 		}
 
@@ -4965,7 +4955,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();	
@@ -4979,7 +4969,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName2, M12Contact1FirstName, M12Contact1LastName,
 				Workspace.FundraisingWorkspace, "M12Contact1","M12Fund2");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -5500,7 +5490,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		}
 	
@@ -5512,7 +5502,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact1FirstName, M12Contact1LastName,
 				Workspace.FundraisingWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -5707,7 +5697,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -5720,7 +5710,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact1FirstName, M12Contact1LastName,
 				Workspace.FundraisingWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -5905,7 +5895,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -6202,7 +6192,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -6305,7 +6295,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to select dropdown value");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		}
 	
@@ -6433,7 +6423,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -6563,7 +6553,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -6630,7 +6620,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on workspace label");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();		
@@ -6717,7 +6707,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();	
@@ -6806,7 +6796,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Contacts tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();	
@@ -6870,7 +6860,7 @@ public class Module12 extends BaseLib {
 		saa.assertTrue(false, "Not able to select value from the show dropdown");
 	}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();
@@ -6965,7 +6955,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();	
@@ -7061,7 +7051,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();			
@@ -7451,7 +7441,7 @@ public class Module12 extends BaseLib {
 			appLog.error("Not able to click on contact tab");
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();
@@ -7900,7 +7890,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		saa.assertAll();
 	}
 
@@ -7912,7 +7902,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		saa = bp.writeAlertCountInExcel(M12FundName1, M12Contact1FirstName, M12Contact1LastName,
 				Workspace.FundraisingWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		driver.close();
 		config(browserToLaunch);
@@ -8137,7 +8127,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -9125,7 +9115,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		saa.assertAll();
 		}
 	
@@ -9137,7 +9127,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1, M12Contact2FirstName, M12Contact2LastName,
 				Workspace.FundraisingWorkspace, "M12Contact2","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -9547,7 +9537,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();			
 	}
 
@@ -9790,7 +9780,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}	
 		
@@ -10001,7 +9991,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		}
 
@@ -10437,7 +10427,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -10638,7 +10628,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -10973,7 +10963,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		}
 	
@@ -11017,7 +11007,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		 fp=new FundsPageBusinessLayer(driver);
@@ -11191,7 +11181,7 @@ public class Module12 extends BaseLib {
 		sa.assertTrue(false, "Not able to click on funds tab");
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment, mode);
 	sa.assertAll();			
 	}
 	
@@ -11488,7 +11478,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 
@@ -11715,7 +11705,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -12033,7 +12023,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -12182,7 +12172,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		;
@@ -12295,7 +12285,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to select All Alerts option");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -12633,7 +12623,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -12660,7 +12650,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();			
 	}
@@ -12954,7 +12944,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able ot click on home tab");
 		}
 		switchToDefaultContent(driver);		
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();	
@@ -12968,7 +12958,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP",
 				Workspace.InvestorWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -13463,7 +13453,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -13475,7 +13465,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact2FirstName, M12Contact2LastName,
 				Workspace.InvestorWorkspace, "M12Contact2","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -13906,7 +13896,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 
@@ -13918,7 +13908,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP",
 				Workspace.InvestorWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -14355,7 +14345,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -14367,7 +14357,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact2FirstName, M12Contact2LastName,
 				Workspace.InvestorWorkspace, "M12Contact2","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -14827,7 +14817,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -14950,7 +14940,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();		
@@ -14964,7 +14954,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName2, M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP",
 				Workspace.InvestorWorkspace, "M12Contact1","M12Fund2");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -15384,7 +15374,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 
@@ -15396,7 +15386,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP",
 				Workspace.InvestorWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -15586,7 +15576,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -15599,7 +15589,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP",
 				Workspace.InvestorWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -15780,7 +15770,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();			
 	}
 	
@@ -16003,7 +15993,7 @@ public class Module12 extends BaseLib {
 				sa.assertTrue(false, "Not able to click on funds tab");
 			}
 			switchToDefaultContent(driver);
-			lp.CRMlogout();
+			lp.CRMlogout(environment, mode);
 			sa.assertAll();		
 	}
 	
@@ -16137,7 +16127,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		}
 	
@@ -16274,7 +16264,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();			
 	}
 	
@@ -16359,7 +16349,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();			
@@ -16447,7 +16437,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Contacts tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();			
@@ -16725,7 +16715,7 @@ public class Module12 extends BaseLib {
 			appLog.error("Not able to click on contact tab");
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 		saa.assertAll();		
@@ -17174,7 +17164,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		saa.assertAll();	
 	}
 
@@ -17186,7 +17176,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		saa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP",
 				Workspace.InvestorWorkspace, "M12Contact1","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		driver.close();
 		config(browserToLaunch);
@@ -17384,7 +17374,7 @@ public class Module12 extends BaseLib {
 		sa.assertTrue(false, "Not able to click on contact tab");
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment, mode);
 	sa.assertAll();		
 	}
 
@@ -18390,7 +18380,7 @@ public class Module12 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		saa.assertAll();		
 	}
 	
@@ -18402,7 +18392,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		sa = bp.writeAlertCountInExcel(M12FundName1+"NUP", M12Contact2FirstName, M12Contact2LastName,
 				Workspace.InvestorWorkspace, "M12Contact2","M12Fund1");
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(sa);
 		driver.close();
 		config(browserToLaunch);
@@ -18810,7 +18800,7 @@ public class Module12 extends BaseLib {
 		sa.assertTrue(false, "Not able to click on contact tab");
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment, mode);
 	sa.assertAll();	
 }
 	
@@ -18964,7 +18954,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();				
 	}
 	
@@ -19177,7 +19167,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -19618,7 +19608,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 		}
 	
@@ -19825,7 +19815,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 		}
 	
@@ -20162,7 +20152,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -20206,7 +20196,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		 fp=new FundsPageBusinessLayer(driver);
@@ -20387,7 +20377,7 @@ public class Module12 extends BaseLib {
 		sa.assertTrue(false, "Not able to click on funds tab");
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment, mode);
 	sa.assertAll();					
 	}
 	
@@ -20698,7 +20688,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -20936,7 +20926,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 	
@@ -21272,7 +21262,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();			
 	}
 	
@@ -21419,7 +21409,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -21519,7 +21509,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to select All Alerts option");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();	
 	}
 	
@@ -21872,7 +21862,7 @@ public class Module12 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();		
+		lp.CRMlogout(environment, mode);		
 		sa.assertAll();	
 }
 
@@ -21884,7 +21874,7 @@ public class Module12 extends BaseLib {
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	saa1=bp.postCondition();
 	sa.combineAssertions(saa1);
-	lp.CRMlogout();
+	lp.CRMlogout(environment, mode);
 	sa.assertAll();		
 	}
 

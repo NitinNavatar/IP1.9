@@ -184,7 +184,7 @@ public class Module11 extends BaseLib {
 		}
 		//***********/
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		bp = new BasePageBusinessLayer(driver);
@@ -209,7 +209,15 @@ public class Module11 extends BaseLib {
 		}
 		
 		
-		
+		 String addRemoveTabName="Navatar Investor Manager";
+			if (lp.addTab_Lighting(mode,addRemoveTabName , 5)) {
+				appLog.info("Tab added : "+addRemoveTabName);
+//				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+			} else {
+				appLog.error("Tab not added : "+addRemoveTabName);
+//				log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+				sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+			}	
 		/*********registering CRM User*********/
 			if (bp.clickOnTab(TabName.NIMTab)){
 				ThreadSleep(5000);
@@ -246,10 +254,10 @@ public class Module11 extends BaseLib {
 						"Not able to click on navatar investor manager tab so cannot verify error messages");
 			}
 
-		/**************************************//*
+		/**************************************/
 		ThreadSleep(1000);
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		bp = new BasePageBusinessLayer(driver);
@@ -261,9 +269,10 @@ public class Module11 extends BaseLib {
 		lp.CRMLogin(superAdminOrg3UserName, adminPassword);
 		parentWindow=null;
 		flag=false;
+		
 		lst.clear();
-		splitedUserName = removeNumbersFromString(Org3CRMUser3LastName); 
-		UserLastName =splitedUserName[0]+bp.generateRandomNumber();
+		 splitedUserName = removeNumbersFromString(Org3CRMUser3LastName); 
+		 UserLastName =splitedUserName[0]+bp.generateRandomNumber();
 		ExcelUtils.writeData(UserLastName, "Users", excelLabel.Variable_Name, "Org3User3", excelLabel.User_Last_Name);
 		cv = new CommonVariables(this);
 		for (int i = 0; i < 3; i++) {
@@ -366,9 +375,10 @@ public class Module11 extends BaseLib {
 		/***********/
 		
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
+		passwordResetLink =null;
 		bp = new BasePageBusinessLayer(driver);
 		lp = new LoginPageBusinessLayer(driver);
 		cp = new ContactPageBusinessLayer(driver);
@@ -389,7 +399,15 @@ public class Module11 extends BaseLib {
 			appLog.info("Password is not set for user3");
 			saa.assertTrue(false, "Password is not set for user3");
 		}
-		
+		addRemoveTabName="Navatar Investor Manager";
+		if (lp.addTab_Lighting(mode,addRemoveTabName , 5)) {
+			appLog.info("Tab added : "+addRemoveTabName);
+//			log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+		} else {
+			appLog.error("Tab not added : "+addRemoveTabName);
+//			log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+			sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+		}	
 /*********registering CRM User*********/
 			if (bp.clickOnTab(TabName.NIMTab)) {
 				ThreadSleep(5000);
@@ -429,7 +447,7 @@ public class Module11 extends BaseLib {
 			
 		ThreadSleep(1000);
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		driver.close();
 		config(browserToLaunch);
 		bp = new BasePageBusinessLayer(driver);
@@ -477,7 +495,6 @@ public class Module11 extends BaseLib {
 							appLog.info("Clicked on  admin user radio button of user: " + Org3CRMUser2FirstName+" "+Org3CRMUser2LastName);
 							if (click(driver, nim.getYesAdminButton(60), "Yes button for Admin access", action.BOOLEAN)) {
 								appLog.info("successfully provided admin user access to user: " + Org3CRMUser2FirstName+" "+Org3CRMUser2LastName);
-									driver.switchTo().defaultContent();
 							}
 						}
 					} else {
@@ -494,7 +511,7 @@ public class Module11 extends BaseLib {
 			}	
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -620,7 +637,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -783,7 +800,7 @@ public class Module11 extends BaseLib {
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -862,7 +879,7 @@ public class Module11 extends BaseLib {
 		} else {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -944,7 +961,8 @@ public class Module11 extends BaseLib {
 																				}
 																				driver.close();
 																				driver.switchTo().window(parentId);
-																				switchToFrame(driver, 10, nim.getFrame( PageName.NavatarInvestorManager, 10));
+																				switchToFrame(driver, 30,lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
+																				switchToFrame(driver, 30, lp.getFrame(PageName.NavatarInvestorManager, 30));
 																			} else {
 																				appLog.error("LinkedIn Link is not opened in New tab.");
 																				sa.assertTrue(false, "LinkedIn Link is not opened in New tab.");
@@ -962,13 +980,13 @@ public class Module11 extends BaseLib {
 																				String tempHandle = driver.getWindowHandle();
 																				if(!tempHandle.equals(parentId)){
 																					appLog.info("Facebook Link is opened successfully.");
-																					driver.close();
-																					driver.switchTo().window(parentId);
+																					
 																				}else{
 																					appLog.error("On Clicking Facebook link user in not directed to right URL.");
 																					sa.assertTrue(false, "On Clicking Facebook link user in not directed to right URL.");
-																					driver.close();
-																					driver.switchTo().window(parentId);} 
+																					} 
+																				driver.close();
+																				driver.switchTo().window(parentId);
 																			} else {
 																				appLog.error("Facebook Link is not opened in New tab.");
 																				sa.assertTrue(false, "Facebook Link is not opened in New tab.");
@@ -1022,12 +1040,12 @@ public class Module11 extends BaseLib {
 			} else {
 				appLog.error("Can not click on Profile Link");
 				sa.assertTrue(false, "Can not click on Profile Link");}
-			switchToDefaultContent(driver);
+			
 		} else {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");}
-
-		lp.CRMlogout();
+		switchToDefaultContent(driver);
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1210,7 +1228,7 @@ public class Module11 extends BaseLib {
 		} else {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1543,7 +1561,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 
 	}
@@ -1661,7 +1679,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1772,7 +1790,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2051,7 +2069,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2109,7 +2127,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2167,7 +2185,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	} 
 
@@ -2225,7 +2243,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2278,7 +2296,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();		
 	}
 
@@ -2398,10 +2416,12 @@ public class Module11 extends BaseLib {
 												appLog.info("Succesffuly accepted Alert while uploading logo and Logo is Upload successfully for."+UploadImage[length-1]);
 												ThreadSleep(10000);
 												driver.switchTo().window(parentID);
+												switchToFrame(driver, 10, lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 												switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 											} else{
 												driver.close();
 												driver.switchTo().window(parentID);
+												switchToFrame(driver, 10, lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 												switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 												appLog.error("Alert is not accepted.for."+UploadImage[length-1]);
 												sa.assertTrue(false, "Alert is not accepted.for."+UploadImage[length-1]);
@@ -2409,6 +2429,7 @@ public class Module11 extends BaseLib {
 										}else{
 											driver.close();
 											driver.switchTo().window(parentID);
+											switchToFrame(driver, 10, lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 											switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 											appLog.error("Alert is not available after clicking on Save button so not able to upload logo for."+UploadImage[length-1]);
 											sa.assertTrue(false,"Alert is not available after clicking on Save button so not able to upload logofor."+UploadImage[length-1]);
@@ -2416,6 +2437,7 @@ public class Module11 extends BaseLib {
 									}else{
 										driver.close();
 										driver.switchTo().window(parentID);
+										switchToFrame(driver, 10, lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 										switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 										appLog.error("Save button is not clicked.");
 										sa.assertTrue(false,"Save button is not clicked.");
@@ -2423,6 +2445,7 @@ public class Module11 extends BaseLib {
 								}else{
 									driver.close();
 									driver.switchTo().window(parentID);
+									switchToFrame(driver, 10, lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 									switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 									appLog.error("Submit button is not working right.");
 									sa.assertTrue(false,"Submit button is not working right.");
@@ -2430,6 +2453,7 @@ public class Module11 extends BaseLib {
 							}else{
 								driver.close();
 								driver.switchTo().window(parentID);
+								switchToFrame(driver, 10, lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 								switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 								appLog.error("Broswe Button is not working, Can not proceed.");
 								sa.assertTrue(false, "Broswe Button is not working so cannot check functionality.");
@@ -2437,6 +2461,7 @@ public class Module11 extends BaseLib {
 						}else{
 							driver.close();
 							driver.switchTo().window(parentID);
+							switchToFrame(driver, 10, lp.getNIMTabParentFrame_Lightning(PageName.NavatarInvestorManager));
 							switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 							appLog.info("Change logo link is not working so cannot check the functionality.");
 							sa.assertTrue(false, "Change logo link is not working so cannot check the functionality.");
@@ -2456,7 +2481,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2652,7 +2677,7 @@ public class Module11 extends BaseLib {
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2882,7 +2907,7 @@ public class Module11 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3231,7 +3256,7 @@ public class Module11 extends BaseLib {
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3353,7 +3378,7 @@ public class Module11 extends BaseLib {
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3709,7 +3734,7 @@ public class Module11 extends BaseLib {
 			}
 			switchToDefaultContent(driver);
 		}
-	lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 	sa.assertAll();
 	}
 	
@@ -4038,7 +4063,7 @@ public class Module11 extends BaseLib {
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 		
@@ -4482,7 +4507,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 
 	}
@@ -4775,7 +4800,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4894,7 +4919,7 @@ public class Module11 extends BaseLib {
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5045,7 +5070,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5178,7 +5203,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5243,7 +5268,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		
 	}
@@ -5387,7 +5412,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		
 	}
@@ -5537,7 +5562,7 @@ public class Module11 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Folder template link in side menu");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		
 	}
@@ -5638,7 +5663,7 @@ public class Module11 extends BaseLib {
 			appLog.error("Can not click on NIM Tab");
 			sa.assertTrue(false, "Can not click on NIM Tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 		
 
