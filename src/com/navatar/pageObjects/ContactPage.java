@@ -150,7 +150,11 @@ public class ContactPage extends BasePageBusinessLayer{
 	 * @return the contactFullNameLabel
 	 */
 	public WebElement getContactFullNameInViewMode(int timeOut) {
-		return isDisplayed(driver, contactFullNameInViewMode, "Visibility", timeOut, "Contact Full Name In View Mode");
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, contactFullNameInViewMode_Classic, "Visibility", timeOut, "Contact Full Name In View Mode Classic");
+		}else{
+			return isDisplayed(driver, contactFullNameInViewMode_Lighting, "Visibility", timeOut, "Contact Full Name In View Mode Lighting");
+		}
 	}
 	
 	@FindBy(xpath="//iframe[@title='Investor_Portal_Contact_Enabled']")

@@ -2200,7 +2200,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @return
 	 */
 	public boolean clickOnRenameManageTargetInstitution(String Institution) {
-		WebElement targetRename=FindElement(driver, "//div[text()='"+Institution+"']/span","Institution Account Id", action.BOOLEAN,50);
+		WebElement targetRename=FindElement(driver, "//div[text()='"+Institution+"']/span","Institution Account Id", action.BOOLEAN,5);
 		try{
 			for(int i=0;i<2;i++){
 				((JavascriptExecutor) driver).executeScript(
@@ -2372,7 +2372,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		//../../../following-sibling::ul/li[1]/div/a/span/label
 		ele = FindElement(driver, workspaceSelector+"//label[contains(text(),'"+identifier+"')]", foldertype+" parent folder", action.BOOLEAN, 30);
 		if(ele!=null){
-			if(mouseOverOperation(driver, ele)){
+			if(mouseHoverJScript(driver, ele)){
 				ele = FindElement(driver, workspaceSelector+"//label[contains(text(),'"+identifier+"')]//span[@title='Rename Folder']", "Rename Folder Icon", action.BOOLEAN, timeOut);
 				if(ele != null){
 					appLog.info("Rename icon is verified for "+foldertype.toString()+" parent folder.");
@@ -2410,7 +2410,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		if(checkForChildFolder.toString().equalsIgnoreCase(YesNo.Yes.toString())){
 			ele = FindElement(driver, workspaceSelector+"//label[contains(text(),'"+identifier+"')]/../../../following-sibling::ul/li[1]/div/a/span/label", foldertype+" child folder", action.BOOLEAN, 30);
 			if(ele!=null){
-				if(mouseOverOperation(driver, ele)){
+				if(mouseHoverJScript(driver, ele)){
 					ele = FindElement(driver, workspaceSelector+"//label[contains(text(),'"+identifier+"')]/../../../following-sibling::ul/li[1]/div/a/span/label//span[@title='Rename Folder']", "Rename Folder Icon", action.BOOLEAN, timeOut);
 					if(ele != null){
 						appLog.info("Rename icon is verified for "+foldertype.toString()+" child folder.");
@@ -2485,9 +2485,15 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		} else {
 			xpath = workspaceSelector+"//label[contains(text(),'"+identifier+"')]";
 		}
+		if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
+			scrollDownThroughWebelement(driver, getFundRaisingWorkSpaceSection(30), "fundraising workspace View");
+			
+		}else if (workspace.toString().equalsIgnoreCase(workspace.InvestorWorkspace.toString())) {
+			scrollDownThroughWebelement(driver, getInvestorWorkSpaceSection(30), "investor workspace View");
+		}
 		ele = FindElement(driver, xpath, foldertype+" parent folder", action.BOOLEAN, 30);
 		if(ele!=null){
-			if(mouseOverOperation(driver, ele)){
+			if(mouseHoverJScript(driver, ele)){
 //				ele = FindElement(driver, workspaceSelector+"//label[contains(text(),'"+identifier+"')]//span[@title='Rename Folder']", "Rename Folder Icon", action.BOOLEAN, timeOut);
 //				if(ele != null){
 //					appLog.info("Rename icon is verified for "+foldertype.toString()+" parent folder.");
@@ -2497,7 +2503,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 //					returnValue = false;
 //				}
 				ele = FindElement(driver, xpath+"//span[@title='Add a Folder']", "Add a Folder Icon", action.BOOLEAN, timeOut);
-				if(click(driver, ele, "Add a Folder BUtton", action.BOOLEAN)){
+				if(clickUsingJavaScript(driver, ele, "Add a Folder BUtton")){
 					appLog.info("Add a Folder icon is clicked for "+foldertype.toString()+" parent folder.");
 				} else {
 					appLog.error("Add a Folder icon is not clicked for "+foldertype.toString()+" parent folder.");

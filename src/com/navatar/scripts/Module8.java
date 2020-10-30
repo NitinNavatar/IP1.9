@@ -13,6 +13,7 @@ import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.ErrorMessageType;
 import com.navatar.generic.CommonLib.ExpandCollapse;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -56,7 +57,7 @@ public class Module8 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		InstitutionPageBusinessLayer inst = new InstitutionPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createInstitution(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I1", excelLabel.Institutions_Name))){
+			if(inst.createInstitution(environment, mode,ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I1", excelLabel.Institutions_Name),"Institution",null,null)){
 				appLog.info("Institution '"+ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I1", excelLabel.Institutions_Name)+"' is created successfully.");
 			} else {
 				appLog.error(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I1", excelLabel.Institutions_Name)+" institution is not created.");
@@ -67,7 +68,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Insitution Tab cannot be clicked, So cannot create institution '"+ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I2", excelLabel.Institutions_Name)+"'.");
 		}
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createInstitution(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I2", excelLabel.Institutions_Name))){
+			if(inst.createInstitution(environment, mode,ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I2", excelLabel.Institutions_Name),"Institution",null,null)){
 				appLog.info("Institution '"+ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I2", excelLabel.Institutions_Name)+"' is created successfully.");
 			} else {
 				appLog.error(ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I2", excelLabel.Institutions_Name)+" institution is not created.");
@@ -78,8 +79,8 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Insitution Tab cannot be clicked, So cannot create institution '"+ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M8I2", excelLabel.Institutions_Name)+"'.");
 		}
 		
-		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createLimitedPartner(M8LP1, M8I1)){
+			if(lp.clickOnTab(TabName.InstituitonsTab)){
+			if(inst.createInstitution(environment, mode,M8LP1, "Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(),M8I1)){
 				appLog.info(M8LP1+" LP Created successfully.");
 			} else {
 				appLog.error(M8LP1+" LP is not created successfully.");
@@ -90,7 +91,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Insitution Tab cannot be clicked, So cannot create LP '"+M8LP1+"'.");
 		}
 		if(lp.clickOnTab(TabName.InstituitonsTab)){
-			if(inst.createLimitedPartner(M8LP2, M8I2)){
+			if(inst.createInstitution(environment, mode,M8LP2, "Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M8I2)){
 				appLog.info(M8LP2+" LP Created successfully.");
 			} else {
 				appLog.error(M8LP2+" LP is not created successfully.");
@@ -103,7 +104,7 @@ public class Module8 extends BaseLib{
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M8F1, M8FT1, M8FIC1)){
+			if(fp.createFund(environment, mode,M8F1, M8FT1, M8FIC1,null,null)){
 				appLog.info(M8F1+" fund created successfully");
 			} else {
 				appLog.error(M8F1+" fund cannot be created.");
@@ -115,7 +116,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M8F2, M8FT2, M8FIC2)){
+			if(fp.createFund(environment, mode,M8F2, M8FT2, M8FIC2,null,null)){
 				appLog.info(M8F2+" fund created successfully");
 			} else {
 				appLog.error(M8F2+" fund cannot be created.");
@@ -127,7 +128,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M8F3, M8FT3, M8FIC3)){
+			if(fp.createFund(environment, mode,M8F3, M8FT3, M8FIC3,null,null)){
 				appLog.info(M8F3+" fund created successfully");
 			} else {
 				appLog.error(M8F3+" fund cannot be created.");
@@ -139,7 +140,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M8F4, M8FT4, M8FIC4)){
+			if(fp.createFund(environment, mode,M8F4, M8FT4, M8FIC4,null,null)){
 				appLog.info(M8F4+" fund created successfully");
 			} else {
 				appLog.error(M8F4+" fund cannot be created.");
@@ -151,7 +152,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M8F5, M8FT5, M8FIC5)){
+			if(fp.createFund(environment, mode,M8F5, M8FT5, M8FIC5,null,null)){
 				appLog.info(M8F5+" fund created successfully");
 			} else {
 				appLog.error(M8F5+" fund cannot be created.");
@@ -163,7 +164,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundsTab)){
-			if(fp.createFund(M8F6, M8FT6, M8FIC6)){
+			if(fp.createFund(environment, mode,M8F6, M8FT6, M8FIC6,null,null)){
 				appLog.info(M8F6+" fund created successfully");
 			} else {
 				appLog.error(M8F6+" fund cannot be created.");
@@ -176,7 +177,7 @@ public class Module8 extends BaseLib{
 		
 		FundRaisingPageBusinessLayer fdr = new FundRaisingPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M8FR1, M8F2, M8I1)){
+			if(fdr.createFundRaising(environment, mode,M8FR1, M8F2, M8I1)){
 				appLog.info(M8FR1+" fundraising created successfully.");
 			} else {
 				appLog.error(M8FR1+" fundraising not created.");
@@ -188,7 +189,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M8FR2, M8F2, M8I2)){
+			if(fdr.createFundRaising(environment, mode,M8FR2, M8F2, M8I2)){
 				appLog.info(M8FR2+" fundraising created successfully.");
 			} else {
 				appLog.error(M8FR2+" fundraising not created.");
@@ -200,7 +201,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M8FR3, M8F3, M8I1)){
+			if(fdr.createFundRaising(environment, mode,M8FR3, M8F3, M8I1)){
 				appLog.info(M8FR3+" fundraising created successfully.");
 			} else {
 				appLog.error(M8FR3+" fundraising not created.");
@@ -212,7 +213,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.FundraisingsTab)){
-			if(fdr.createFundRaising(M8FR4, M8F3, M8I2)){
+			if(fdr.createFundRaising(environment, mode,M8FR4, M8F3, M8I2)){
 				appLog.info(M8FR4+" fundraising created successfully.");
 			} else {
 				appLog.error(M8FR4+" fundraising not created.");
@@ -225,7 +226,7 @@ public class Module8 extends BaseLib{
 		
 		PartnershipPageBusinessLayer prt= new PartnershipPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.PartnershipsTab)){
-			if(prt.createPartnership(M8P1, M8F5)){
+			if(prt.createPartnership(environment, mode,M8P1, M8F5)){
 				appLog.info(M8P1+" PartnerShip created successfully.");
 			} else {
 				appLog.error(M8P1+" partnership not created.");
@@ -237,7 +238,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.PartnershipsTab)){
-			if(prt.createPartnership(M8P2, M8F6)){
+			if(prt.createPartnership(environment, mode,M8P2, M8F6)){
 				appLog.info(M8P2+" PartnerShip created successfully.");
 			} else {
 				appLog.error(M8P2+" partnership not created.");
@@ -250,7 +251,7 @@ public class Module8 extends BaseLib{
 		
 		CommitmentPageBusinessLayer cmt = new CommitmentPageBusinessLayer(driver);
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M8LP1, M8P1, "M8CMT1", null)){
+			if(cmt.createCommitment(environment, mode,M8LP1, M8P1, "M8CMT1", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -262,7 +263,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M8LP2, M8P1, "M8CMT2", null)){
+			if(cmt.createCommitment(environment, mode,M8LP2, M8P1, "M8CMT2", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -274,7 +275,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M8LP1, M8P2, "M8CMT3", null)){
+			if(cmt.createCommitment(environment, mode,M8LP1, M8P2, "M8CMT3", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -286,7 +287,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		if(lp.clickOnTab(TabName.CommitmentsTab)){
-			if(cmt.createCommitment(M8LP2, M8P2, "M8CMT4", null)){
+			if(cmt.createCommitment(environment, mode,M8LP2, M8P2, "M8CMT4", null)){
 				appLog.info("Commitment created successfully.");
 			} else {
 				appLog.error("Commitment not created.");
@@ -2335,7 +2336,7 @@ public class Module8 extends BaseLib{
 								appLog.info("Step 2 of 3 pop up is successfully opened.");
 								if(click(driver, FindElement(driver, "//span[@id='add0000'][@title='Add a Folder']", "+Icon",
 										action.BOOLEAN, 30), "", action.BOOLEAN)){
-									if(mouseOverOperation(driver, fp.getAddFolderInformationIconOnBuildProcess(Workspace.FundraisingWorkspace, 30))){
+									if(mouseHoverJScript(driver, fp.getAddFolderInformationIconOnBuildProcess(Workspace.FundraisingWorkspace, 30))){
 										String text = trim(getText(driver, fp.getAddFolderInfoIconMessage(30), "", action.BOOLEAN));
 										if(text.contains(BasePageErrorMessage.AddFolderInfoIconMessage) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage1) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage2) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage3) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage4)){
 											appLog.info("Tool tip error message is verified.");
