@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import static com.navatar.generic.CommonLib.*;
 
@@ -7068,7 +7069,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)){
-		if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+		if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 			if(sendKeys(driver, cp.getEmailId(60), "test@gmail.com", "Contact1 email id", action.SCROLLANDBOOLEAN)){
 				if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
 					appLog.info("click on save button");
@@ -7118,20 +7119,24 @@ public class Module12 extends BaseLib {
 	switchToDefaultContent(driver);
 	if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-			if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
-			//if(click(driver,cp.getDeleteButtonContactsPage(60), "Delete button", action.SCROLLANDBOOLEAN)){
-			switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
-			ThreadSleep(3000);
-			if(cp.verifyDeletedContact(M12Contact2FirstName+" "+M12Contact2LastName)){
-				appLog.info("Contact get deleted successfully ");
+			//if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
+			if(click(driver,cp.getDeleteButton2(60), "Delete button", action.SCROLLANDBOOLEAN)){
+				if (click(driver, cp.getdeleteButtonpopup(10), "delete button on popup", action.BOOLEAN)) {
+					ThreadSleep(3000);
+					if(!cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
+						appLog.info("Contact get deleted successfully ");
+					}else{
+						appLog.error("Contact does not get deleted successfully ");
+						saa.assertTrue(false, "Contact does not get deleted successfully ");
+					}		
+				}else{
+					appLog.error("Not able to delete contact");
+					saa.assertTrue(false, "Not able to delete contact");
+				}	
 			}else{
-				appLog.error("Contact does not get deleted successfully ");
-				saa.assertTrue(false, "Contact does not get deleted successfully ");
-			}			
-		}else{
-			appLog.error("Not able to click on delete button");
-			saa.assertTrue(false, "Not able to click on delete button");
-		}		
+				appLog.error("Not able to click on delete button");
+				saa.assertTrue(false, "Not able to click on delete button");
+			}		
 		}else{
 			appLog.error("Not able to click on created contact");
 			saa.assertTrue(false, "Not able to click on created contact");
@@ -8043,7 +8048,7 @@ public class Module12 extends BaseLib {
 			appLog.info("Record count get matched at home page");
 		} else {
 			appLog.info("Record count not match at home page");
-			sa.assertTrue(false, "Recoord count not matched at home page");
+			sa.assertTrue(false, "Record count not matched at home page");
 		}
 		switchToDefaultContent(driver);
 		scrollDownThroughWebelement(driver, bp.getFundsTab(60), "Funds tab");
@@ -8514,6 +8519,8 @@ public class Module12 extends BaseLib {
 				scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
 				switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 			if(click(driver, bp.getAlertHistoryLink(Workspace.FundraisingWorkspace, PageName.FundsPage, 60), "Alert history link", action.SCROLLANDBOOLEAN)){
+				ThreadSleep(3000);
+				scrollDownThroughWebelement(driver, bp.getAlertHistoryCrossIcon(Workspace.FundraisingWorkspace, 10),"top of alert history");
 				if(bp.clickOnDocumentNameInAlert(CommonfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -8607,6 +8614,7 @@ public class Module12 extends BaseLib {
 			}
 			scrollDownThroughWebelement(driver, bp.getFrame( PageName.FundsPage, 60), "Fund Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
+			ThreadSleep(3000);
 			if(bp.clickOnDocumentNameInAlert(SharedfileName, "Document Viewed", M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, fp.getAlertHistoryScrollbox(Workspace.FundraisingWorkspace, 60), PageName.FundsPage, null, null)){
 				      String parentid=switchOnWindow(driver);
 				      if(parentid!=null){
@@ -9552,11 +9560,15 @@ public class Module12 extends BaseLib {
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			appLog.info("Clicked on COntact Tab");
 		if(cp.clickOnCreatedContact(M12Contact1FirstName, M12Contact1LastName, null)){
-			if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+			if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 				if(sendKeys(driver, cp.getContactFirstName(60), M12Contact1FirstName+"FNNP", "Contact 1 first name", action.SCROLLANDBOOLEAN)){
 				if(sendKeys(driver, cp.getContactLastName(60), M12Contact1LastName+"LNNP", "COntact1 last name", action.SCROLLANDBOOLEAN)){
 					if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
-						if(cp.getContactFullNameInViewMode(60).getText().trim().contains(M12Contact1FirstName+"FNNP"+" "+M12Contact1LastName+"LNNP")){
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
+						WebElement ele=cp.verifyCreatedItemOnPage(Header.Contact, M12Contact1FirstName+"FNNP"+" "+M12Contact1LastName+"LNNP");
+						if(ele!=null){
 							appLog.info("Contact details updtaed successfully");
 						}else{
 							appLog.info("Contact details does not updtae successfully");
@@ -9590,7 +9602,7 @@ public class Module12 extends BaseLib {
 		
 		if(bp.clickOnTab(TabName.InstituitonsTab)){
 			if(ip.clickOnCreatedInstitution(M12Institution1)){
-				if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+				if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 					if(sendKeys(driver, ip.getLegalNameTextBox(60), M12Institution1+"NUP", "Institution name", action.SCROLLANDBOOLEAN)){
 						if(click(driver, bp.getSaveButton(60), "Save buton", action.SCROLLANDBOOLEAN)){
 							if(ip.getLegalNameLabelTextbox(60).getText().trim().contains(M12Institution1+"NUP")){
@@ -9621,10 +9633,14 @@ public class Module12 extends BaseLib {
 		}
 		if(bp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M12FundName1)){
-			if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+			if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 					if(sendKeys(driver, fp.getFundName(60), M12FundName1+"NUP", "Fund name 1", action.SCROLLANDBOOLEAN)){
-						if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
-							if(fp.getFundNameInViewMode(60).getText().trim().contains(M12FundName1+"NUP")){
+						if(click(driver, bp.getCustomTabSaveBtn(environment, mode, 60), "Save button", action.SCROLLANDBOOLEAN)){
+							ThreadSleep(3000);
+							refresh(driver);
+							ThreadSleep(3000);
+							WebElement ele=fp.verifyCreatedItemOnPage(Header.Fund, M12FundName1+"NUP");
+							if(ele!=null){
 								appLog.info("Fund NAme get updated successfully");
 							}else{
 								appLog.info("Fund name does not get updated successfully");
@@ -9800,16 +9816,20 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
+			scrollDownThroughWebelement(driver, cp.getremoveLink(10), "remove link");
 			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
 			//ele=FindElement(driver,"//label[text()='"+M12FundName1+"UP"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
 				//if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+				ThreadSleep(3000);
 				String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
 					ThreadSleep(5000);
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					driver.switchTo().window(ParentID);
 					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
-					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace Section view");
+					
+						
+						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30), "Fundraising Workspace Section view");
 					if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access close button", action.SCROLLANDBOOLEAN)){
 						List<WebElement> listOfWorkspace=FindElements(driver, "//span[contains(@id,'ContactDetail_grid1-cell-1-')]//label", "WorkspacesName");
 						if(listOfWorkspace.contains(M12FundName1+"UP")){
@@ -9833,7 +9853,7 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "No new window to switch");
 				}
 				}else{
-					appLog.info("Not bale ot click on remove link");
+					appLog.info("Not able to click on remove link");
 					sa.assertTrue(false, "Not able to click on remove link");
 				}
 		}else{
@@ -9842,7 +9862,7 @@ public class Module12 extends BaseLib {
 		}		
 		}else{
 			appLog.error("Not able to click on created contact");
-			sa.assertTrue(false, "Not able ot click on created contact");
+			sa.assertTrue(false, "Not able to click on created contact");
 		}
 		}else{
 			appLog.error("Not able to click on contact tab so cannot remove contact access");
@@ -10013,9 +10033,9 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-				//ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
-				//if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
-			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
+				ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
+				if(clickUsingJavaScript(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+			//if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
 					
 			String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
@@ -10047,12 +10067,12 @@ public class Module12 extends BaseLib {
 					sa.assertTrue(false, "No new window to switch");
 				}
 				}else{
-					appLog.info("Not bale ot click on remove link");
+					appLog.info("Not able to click on remove link");
 					sa.assertTrue(false, "Not able to click on remove link");
 				}
 		}else{
-			appLog.error("Not able to clcik on remove contact access button");
-			sa.assertTrue(false, "Not able to clcik on remove contact access button");
+			appLog.error("Not able to click on remove contact access button");
+			sa.assertTrue(false, "Not able to click on remove contact access button");
 		}		
 		}else{
 			appLog.error("Not able to click on created contact");
