@@ -16004,21 +16004,10 @@ public class Module7 extends BaseLib {
 			if (cp.clickOnCreatedContact(M7Contact1FirstName, M7Contact1LastName, null)) {
 					ThreadSleep(3000);
 					
-					cp.clickOnShowMoreDropdownOnly(PageName.ContactsPage);
-					ThreadSleep(500);
-					WebElement ele = cp.actionDropdownElement(ShowMoreActionDropDownList.Delete, 15);
-					if (ele==null) {
-						ele =cp.getDeleteButton(30);
-					} 
-
+						WebElement ele = cp.getDeleteButton(30);
 					if (click(driver, ele, "Delete More Icon", action.BOOLEAN)) {
-						ThreadSleep(1000);
-						if (click(driver, cp.getDeleteButtonOnDeletePopUp(30), "Delete Button", action.BOOLEAN)) {
-							ThreadSleep(10000);
-						} else {
-							appLog.error("Not Able to Click on Delete button on Delete PoPup : ");
-							sa.assertTrue(false, "Not Able to Click on Delete button on Delete PoPup : ");
-						}
+						ThreadSleep(10000);
+						appLog.error("Click on Delete more Icon : ");
 
 					} else {
 						appLog.error("Not Able to Click on Delete more Icon : ");
@@ -36809,19 +36798,19 @@ public class Module7 extends BaseLib {
 				excelLabel.KeyWord_For_Search);
 		if (bp.clickOnTab(TabName.ContactTab)) {
 			if (cp.clickOnCreatedContact(M7Contact1FirstName, M7Contact1LastName, null)) {
-				if (clickUsingJavaScript(driver, cp.getDeleteButtonContactsPage(60),"delete button on contacts page")) {
-					ThreadSleep(3000);
-					if (true) {
-						msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-					} else {
-						appLog.error("no alert is present");
-						sa.assertTrue(false, "no alert is present");
-					}
+				ThreadSleep(3000);
+
+				if (click(driver, cp.getDeleteButton(30), "Delete More Icon", action.BOOLEAN)) {
+					appLog.info("Click on Delete more Icon : ");
+					ThreadSleep(5000);
+					
+
 				} else {
-					appLog.error("delete button on contacts page is not clickable");
-					sa.assertTrue(false, "delete button on contacts page is not clickable");
+					appLog.error("Not Able to Click on Delete more Icon : ");
+					sa.assertTrue(false, "Not Able to Click on Delete more Icon : ");
 				}
+
+				
 			} else {
 				appLog.error("contact " + M7Contact1FirstName + " " + M7Contact1LastName + " was not found");
 				sa.assertTrue(false, "contact " + M7Contact1FirstName + " " + M7Contact1LastName + " was not found");
@@ -36872,9 +36861,28 @@ public class Module7 extends BaseLib {
 					appLog.error("folder path " + stdPath + " is not present in folder structrure");
 					sa.assertTrue(false, "folder path " + stdPath + " is not present in folder structrure");
 				}
-				switchToDefaultContent(driver);
-				if (hp.clickOnRecycleBin()) {
-					if (hp.restoreValuesFromRecycleBin(M7Contact1FirstName + " " + M7Contact1LastName)) {
+			} else {
+				appLog.error("funds not found : "+M7FundName1);
+				sa.assertTrue(false, "funds not found : "+M7FundName1);
+			}
+		}else {
+			appLog.error("funds tab is not clickable ");
+			sa.assertTrue(false, "funds tab is not clickable");
+		}
+		
+		switchToDefaultContent(driver);
+		boolean flag = false;
+		if (hp.restoreValuesFromRecycleBin(M7Contact1FirstName + " " + M7Contact1LastName)) {
+			flag = true;
+
+		} else {
+			appLog.error("could not undelete contact " + M7Contact1FirstName + " " + M7Contact1LastName
+					+ " from recycle bin");
+			sa.assertTrue(false, "could not undelete contact " + M7Contact1FirstName + " " + M7Contact1LastName
+					+ " from recycle bin");
+		}
+		switchToDefaultContent(driver);
+					if (flag) {
 						if (bp.clickOnTab(TabName.ContactTab)) {
 							if (cp.clickOnCreatedContact(M7Contact1FirstName, M7Contact1LastName, null)) {
 								appLog.info("contact has been successfully restored");
@@ -37032,15 +37040,9 @@ public class Module7 extends BaseLib {
 						sa.assertTrue(false, "could not undelete contact " + M7Contact1FirstName + " "
 								+ M7Contact1LastName + " from recycle bin");
 					}
-				} else {
-					appLog.error("recycle button link is not clickable on home page");
-					sa.assertTrue(false, "recycle button link is not clickable on home page");
-				}
-			} else {
-				appLog.error("funds tab is not clickable");
-				sa.assertTrue(false, "funds tab is not clickable");
-			}
-		}
+				
+			
+		
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment,mode);
 		sa.assertAll();
@@ -37080,11 +37082,15 @@ public class Module7 extends BaseLib {
 				appLog.error("could not remove watermarking setting from NIM page");
 				sa.assertTrue(false, "could not remove watermarking setting from NIM page");
 			}
-			if (np.getMyProfileFistNameAndLastNameAndFirmName("AdminUser")) {
-				appLog.info("written firm name, and user first, last name to excel for admin");
-			}
+			
 
 			switchToDefaultContent(driver);
+		}
+		if (np.getMyProfileFistNameAndLastNameAndFirmName("AdminUser")) {
+			appLog.info("written firm name, and user first, last name to excel for admin");
+		} else {
+			appLog.error("Not Able to write firm name, and user first, last name to excel for admin");
+			sa.assertTrue(false, "Not Able to write firm name, and user first, last name to excel for admin");
 		}
 		lp.CRMlogout(environment,mode);
 		sa.assertAll();
