@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.sikuli.script.App;
 
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
 import com.navatar.generic.BaseLib;
@@ -803,17 +804,23 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 	 * @return true/false
 	 */
 	public boolean verifyDeletedInstitution(String InstitutionName) {
-		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
-				.equalsIgnoreCase("All Institutions")) {
-			if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+		WebElement ele, selectListView;
+		ele = null;
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			selectListView = FindElement(driver, "//div[@class='listContent']//li/a/span[text()='All Institutions']",
+					"Select List View", action.SCROLLANDBOOLEAN, 30);
+			if (click(driver, selectListView, "select List View", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					refresh(driver);
+					ThreadSleep(5000);
+				}
 			} else {
-				appLog.error("Go button not found");
+				appLog.error("Not able to select on Select View List");
 			}
 		} else {
-			if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", "All Institutions")) {
-			} else {
-				appLog.error("All institutions not found in dropdown");
-			}
+			appLog.error("Not able to click on Select List Icon");
 		}
 		for (int i = 0; i < getAllInstitutions().size(); i++) {
 			if (getAllInstitutions().contains(InstitutionName)) {
@@ -833,17 +840,23 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 	 * @return true/false
 	 */
 	public boolean verifyDeletedLimitedPartner(String LimitedPartner) {
-		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
-				.equalsIgnoreCase("All Limited Partners")) {
-			if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+		WebElement ele, selectListView;
+		ele = null;
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			selectListView = FindElement(driver, "//div[@class='listContent']//li/a/span[text()='All Limited Partners']",
+					"Select List View", action.SCROLLANDBOOLEAN, 30);
+			if (click(driver, selectListView, "select List View", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					refresh(driver);
+					ThreadSleep(5000);
+				}
 			} else {
-				appLog.error("Go button not found");
+				appLog.error("Not able to select on Select View List");
 			}
 		} else {
-			if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", "All Limited Partners")) {
-			} else {
-				appLog.error("All All Limited Partners not found in dropdown");
-			}
+			appLog.error("Not able to click on Select List Icon");
 		}
 		for (int i = 0; i < getAllInstitutions().size(); i++) {
 			if (getAllInstitutions().contains(LimitedPartner)) {

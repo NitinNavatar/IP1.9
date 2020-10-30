@@ -10,8 +10,10 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -37,6 +39,10 @@ import com.navatar.pageObjects.PartnershipPageBusinessLayer;
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +74,7 @@ public class Module6 extends BaseLib {
 			instutionName = ExcelUtils.readData("Institutions", excelLabel.Variable_Name, "M6Instituition" + (i + 1),
 					excelLabel.Institutions_Name);
 			if (bp.clickOnTab(TabName.InstituitonsTab)) {
-				if (ip.createInstitution(instutionName)) {
+				if (ip.createInstitution(environment,mode,instutionName,"Institution",null,null)) {
 
 				} else {
 					appLog.error("Not able to create institution: " + instutionName);
@@ -88,7 +94,7 @@ public class Module6 extends BaseLib {
 						excelLabel.Fund_Type);
 				String investmentCategory = ExcelUtils.readData("Funds", excelLabel.Variable_Name, "M6Fund" + (i + 1),
 						excelLabel.Fund_InvestmentCategory);
-				if (fp.createFund(fundName, fundType, investmentCategory)) {
+				if (fp.createFund(environment,mode,fundName, fundType, investmentCategory,null,null)) {
 					appLog.info("fund is created: " + fundName);
 				} else {
 					appLog.error("Not able to create fund: " + fundName);
@@ -108,7 +114,7 @@ public class Module6 extends BaseLib {
 			String ContactLastName = ExcelUtils.readData("Contacts", excelLabel.Variable_Name, "M6Contact" + (i + 1),
 					excelLabel.Contact_LastName);
 			if (bp.clickOnTab(TabName.ContactTab)) {
-				if (cp.createContact(ContactFirstName, ContactLastName, instutionName, emailId)) {
+				if (cp.createContact(environment,mode,ContactFirstName, ContactLastName, instutionName, emailId,null,null,CreationPage.ContactPage)) {
 					appLog.info("contact is created: " + ContactFirstName + " " + ContactLastName);
 					if (emailId != "") {
 						ExcelUtils.writeData(emailId, "Contacts", excelLabel.Variable_Name, "M6Contact" + (i + 1),
@@ -128,7 +134,7 @@ public class Module6 extends BaseLib {
 					instutionName = ExcelUtils.readData("Institutions", excelLabel.Variable_Name,
 							"M6Instituition" + (i + 1), excelLabel.Institutions_Name);
 				}
-				if (ip.createLimitedPartner(lpName, instutionName)) {
+				if (ip.createInstitution(environment, mode,lpName,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), instutionName)) {
 					appLog.info("limited partner is created: " + lpName);
 				} else {
 					appLog.error("Not able to create limited partner: " + lpName);
@@ -146,7 +152,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to write CRM User first,last name and firm profile in excel");
 		}
 			switchToDefaultContent(driver);
-			lp.CRMlogout();
+			lp.CRMlogout(environment,mode);
 			sa.combineAssertions(saa);
 			sa.assertAll();
 		}
@@ -287,7 +293,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -313,7 +319,7 @@ public class Module6 extends BaseLib {
 						"M6FundRaising" + (i + 1), excelLabel.Fund_Name);
 				String instutionName = ExcelUtils.readData("Fundraisings", excelLabel.Variable_Name,
 						"M6FundRaising" + (i + 1), excelLabel.Institutions_Name);
-				if (frp.createFundRaising(fundraisingName, fundName, instutionName)) {
+				if (frp.createFundRaising(environment,mode,fundraisingName, fundName, instutionName)) {
 					appLog.info("fundraising is created : " + fundraisingName);
 				} else {
 					appLog.error("Not able to create fundraising: " + fundraisingName);
@@ -334,10 +340,10 @@ public class Module6 extends BaseLib {
 					for (int j = 0; j < institutions.size(); j++) {
 						String institutiontext = institutions.get(j).getText().trim();
 						if (compareMultipleListWithoutAssertion(institutiontext, institutionName)) {
-							appLog.info("ALl institution are displaying");
+							appLog.info("All institution are displaying");
 						} else {
-							appLog.info("ALl institution are displaying");
-							saa.assertTrue(false, "ALl institution are displaying");
+							appLog.info("All institution are not displaying");
+							saa.assertTrue(false, "All institution are not displaying");
 						}
 					}
 					List<WebElement> allInstitutionCheckbox = FindElements(driver,
@@ -382,10 +388,10 @@ public class Module6 extends BaseLib {
 						for (int j = 0; j < institutions.size(); j++) {
 							String institutiontext = institutions.get(j).getText().trim();
 							if (compareMultipleListWithoutAssertion(institutiontext, institutionName)) {
-								appLog.info("ALl institution are displaying");
+								appLog.info("All institution are displaying");
 							} else {
-								appLog.info("ALl institution are displaying");
-								saa.assertTrue(false, "ALl institution are displaying");
+								appLog.info("All institution are not displaying");
+								saa.assertTrue(false, "All institution are not displaying");
 							}
 						}
 						allInstitutionCheckbox = FindElements(driver,
@@ -546,10 +552,10 @@ public class Module6 extends BaseLib {
 							for (int j = 0; j < institutions.size(); j++) {
 								String institutiontext = institutions.get(j).getText().trim();
 								if (compareMultipleListWithoutAssertion(institutiontext, institutionName)) {
-									appLog.info("ALl institution are displaying");
+									appLog.info("All institution are displaying");
 								} else {
-									appLog.info("ALl institution are displaying");
-									saa.assertTrue(false, "ALl institution are displaying");
+									appLog.info("All institution are not displaying");
+									saa.assertTrue(false, "All institution are not displaying");
 								}
 							}
 							allInstitutionCheckbox = FindElements(driver,
@@ -588,8 +594,8 @@ public class Module6 extends BaseLib {
 								if (compareMultipleListWithoutAssertion(institutiontext, institutionName)) {
 									appLog.info("ALL institution are displaying");
 								} else {
-									appLog.info("ALL institution are displaying");
-									saa.assertTrue(false, "ALL institution are displaying");
+									appLog.info("All institution are not displaying");
+									saa.assertTrue(false, "All institution are not displaying");
 								}
 							}
 							allInstitutionCheckbox = FindElements(driver,
@@ -627,7 +633,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -677,7 +683,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		bp = new BasePageBusinessLayer(driver);
@@ -742,7 +748,7 @@ public class Module6 extends BaseLib {
 				appLog.info("Firm Page is not opened");
 				saa.assertTrue(false, "Firm Page is not opened");
 			}
-			if (isDisplayed(driver, ifp.getActivitiesCreatedOnLabel(60), "Visibility", 60,
+			if (isDisplayed(driver, ifp.getActivitiesCreatedOnLabel(5), "Visibility", 5,
 					"Activity created on label") == null) {
 				appLog.info("All Document Tab is opened");
 			} else {
@@ -834,7 +840,7 @@ public class Module6 extends BaseLib {
 				appLog.info("Firm Page is not opened");
 				saa.assertTrue(false, "Firm Page is not opened");
 			}
-			if (isDisplayed(driver, ifp.getActivitiesCreatedOnLabel(60), "Visibility", 60,
+			if (isDisplayed(driver, ifp.getActivitiesCreatedOnLabel(5), "Visibility", 5,
 					"Activity created on label") == null) {
 				appLog.info("All Document Tab is opened");
 			} else {
@@ -844,7 +850,7 @@ public class Module6 extends BaseLib {
 			if (ifp.clickOnInvestmentsTab(investorSideWorkSpace.PotentialInvestment)) {
 				appLog.info("Clicked on potential investments tab");
 				String investment = getSelectedOptionOfDropDown(driver,
-						ifp.getPotentialAndCurrentInvestmentInvestmentDropdown(60), "Potential Investment dropdown",
+						ifp.getPotentialAndCurrentInvestmentInvestmentDropdown(5), "Potential Investment dropdown",
 						"text");
 				if (investment.equalsIgnoreCase(M6FundName1)) {
 					appLog.info("Workspace is visible");
@@ -949,7 +955,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Instituitions tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -1114,7 +1120,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -1143,12 +1149,12 @@ public class Module6 extends BaseLib {
 						appLog.info("Rename icon is not visible for institution" + M6Institution3);
 					}
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
+					switchToFrame(driver, 10, bp.getFrame( PageName.FundsPage, 10));
 					if (fp.clickOnRenameManageTargetInstitution(M6Institution1 + "Renamed")) {
 						appLog.info("Rename icon is visible for institution" + M6Institution1);
 
 						ThreadSleep(2000);
-						String renamePopup = fp.getManageInvestorRenamePopupHeader(Workspace.FundraisingWorkspace, 60)
+						String renamePopup = fp.getManageInvestorRenamePopupHeader(Workspace.FundraisingWorkspace, 10)
 								.getText().trim();
 						if (renamePopup.equalsIgnoreCase("Rename Investor Account")) {
 							appLog.info("Rename Manage Investor poup is displaying");
@@ -1188,12 +1194,12 @@ public class Module6 extends BaseLib {
 							}
 							if (sendKeys(driver,
 									fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
-									M6Institution1 + "Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
+									M6Institution1 + "Update", "Text Box ", action.BOOLEAN)) {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver,
 										fp.getManageInvestorRenamePopupCancelButton(Workspace.FundraisingWorkspace, 60),
-										"Cancel button", action.SCROLLANDBOOLEAN)) {
+										"Cancel button", action.BOOLEAN)) {
 									appLog.info("Clicked on cancel button");
 									List<WebElement> institutionName = fp.getManageInvestorPopupInstitutionList();
 									for (int i = 0; i < institutionName.size(); i++) {
@@ -1228,12 +1234,22 @@ public class Module6 extends BaseLib {
 						saa.assertTrue(false, "Rename icon is visible for institution" + M6Institution1);
 					}
 					switchToDefaultContent(driver);
+					try {
+						Robot robot = new Robot();
+						for(int i=0;i<4;i++){
+							robot.keyPress(KeyEvent.VK_UP);
+							robot.keyRelease(KeyEvent.VK_UP);
+						}
+					} catch (AWTException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 					if (fp.clickOnRenameManageTargetInstitution(M6Institution1 + "Renamed")) {
 						switchToDefaultContent(driver);
 						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
-								M6Institution1 + "Update&*", "Text Box ", action.SCROLLANDBOOLEAN)) {
+								M6Institution1 + "Update&*", "Text Box ", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
 							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							boolean cssFlag=false;
@@ -1243,6 +1259,7 @@ public class Module6 extends BaseLib {
 									fp.getManageInvestorRenamePopupApplyButton(Workspace.FundraisingWorkspace, 60),
 									"Apply button", action.SCROLLANDBOOLEAN)*/) {
 								String alerttext = switchToAlertAndGetMessage(driver, 60, action.GETTEXT);
+								switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 								if (alerttext.equalsIgnoreCase(
 										FundsPageErrorMessage.manageInvestorRenameSpecialCharacterMessage)) {
 									appLog.info("Alert text is verified");
@@ -1251,12 +1268,12 @@ public class Module6 extends BaseLib {
 									saa.assertTrue(false, "Alert text is not veriifed");
 								}
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
-								switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
-								fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60).clear();
+								switchToFrame(driver, 5, bp.getFrame( PageName.FundsPage, 5));
+//								switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
+								fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 10).clear();
 								if (click(driver,
-										fp.getManageInvestorRenamePopupApplyButton(Workspace.FundraisingWorkspace, 60),
-										"Apply button", action.SCROLLANDBOOLEAN)) {
+										fp.getManageInvestorRenamePopupApplyButton(Workspace.FundraisingWorkspace, 10),
+										"Apply button", action.BOOLEAN)) {
 									if (bp.verifyErrorMessageOnPage(
 											FundsPageErrorMessage.manageInvestorRenameFieldBlankErrorMessage,
 											fp.getManageInvestorRenamePopupFieldBlankErrorMessage(
@@ -1290,12 +1307,12 @@ public class Module6 extends BaseLib {
 						switchToDefaultContent(driver);
 						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
-								M6Institution1 + "Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
+								M6Institution1 + "Update", "Text Box ", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
 							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							if (click(driver,
 									fp.getManageInvestorRenamePopupCrossIcon(Workspace.FundraisingWorkspace, 60),
-									"Cross Icon", action.SCROLLANDBOOLEAN)) {
+									"Cross Icon", action.BOOLEAN)) {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								institutionList.clear();
@@ -1337,12 +1354,12 @@ public class Module6 extends BaseLib {
 						switchToDefaultContent(driver);
 						switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 						if (sendKeys(driver, fp.getManageInvestorRenamePopupTextBox(Workspace.FundraisingWorkspace, 60),
-								M6Institution1 + "Update", "Text Box ", action.SCROLLANDBOOLEAN)) {
+								M6Institution1 + "Update", "Text Box ", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
 							switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 							if (click(driver,
 									fp.getManageInvestorRenamePopupApplyButton(Workspace.FundraisingWorkspace, 60),
-									"Apply button", action.SCROLLANDBOOLEAN)) {
+									"Apply button", action.BOOLEAN)) {
 								institutionList.clear();
 								List<WebElement> institutionName = fp.getManageInvestorPopupInstitutionList();
 								for (int i = 0; i < institutionName.size(); i++) {
@@ -1367,7 +1384,7 @@ public class Module6 extends BaseLib {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 								if (click(driver, fp.getManageInvestorDoneButton(Workspace.FundraisingWorkspace, 60),
-										"Done Button", action.SCROLLANDBOOLEAN)) {
+										"Done Button", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
 									if (fp.clickOnInstituionFolder(M6Institution1 + "Update",
@@ -1442,7 +1459,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to lcick on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -1540,7 +1557,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -1671,7 +1688,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -1803,7 +1820,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -1900,7 +1917,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -2003,7 +2020,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Institution tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -2078,7 +2095,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Institution tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -2139,7 +2156,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -2253,7 +2270,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -2789,7 +2806,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -2840,7 +2857,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -3115,7 +3132,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Instituitions tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		saa.assertAll();
 	}
@@ -3437,7 +3454,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to lcick on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -3586,7 +3603,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -3723,7 +3740,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -3823,7 +3840,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -3998,7 +4015,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Commitment tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -4121,7 +4138,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Commitment tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -4182,7 +4199,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 //		driver.close();
 //		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 //		lp = new LoginPageBusinessLayer(driver);
@@ -4215,7 +4232,7 @@ public class Module6 extends BaseLib {
 //			appLog.info("Not able to click on NIM Tab");
 //			saa.assertTrue(false, "Not able to click on NIM Tab");
 //		}
-//		lp.CRMlogout();
+//		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -4581,7 +4598,7 @@ public class Module6 extends BaseLib {
 				saa.assertTrue(false, "Not able to click on FundRaising tab so cannot create FundRaising Contacts");
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -4620,7 +4637,7 @@ public class Module6 extends BaseLib {
 			appLog.info("Not able to click on Funds tab so we cannot create workspace");
 			saa.assertTrue(false, "Not able to click on Funds tab so we cannot create workspace");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -4710,7 +4727,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -4847,7 +4864,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -4993,7 +5010,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -5335,7 +5352,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -5380,7 +5397,7 @@ public class Module6 extends BaseLib {
 	}
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	try{
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -5479,7 +5496,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -5614,7 +5631,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -5760,7 +5777,7 @@ public class Module6 extends BaseLib {
 			saa.assertTrue(false, "Not able to click on Funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
@@ -6106,7 +6123,7 @@ public class Module6 extends BaseLib {
 	}
 
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.combineAssertions(saa);
 	sa.assertAll();
 }
@@ -6151,7 +6168,7 @@ public class Module6 extends BaseLib {
 	}
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();	
+	lp.CRMlogout(environment,mode);	
 	try{
 		sa.combineAssertions(saa);
 		sa.assertAll();
@@ -6174,7 +6191,7 @@ public class Module6 extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		saa1=bp.postCondition();
 		sa.combineAssertions(saa1);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();		
 		}
 }

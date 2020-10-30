@@ -177,7 +177,7 @@ public class InstitutionPage extends BasePageBusinessLayer{
 	}
 	
 	public List<WebElement> getAllInstitutions() {
-		return FindElements(driver, "//div[contains(@class,'x-grid3-cell-inner x-grid3-col-Name')]//span", "All Institution");
+		return FindElements(driver, "//*[@data-aura-class='uiVirtualDataTable']//tbody/tr/th//a", "All Institution");
 	}
 	
 	public List<WebElement> getAllAccountscustomFields() {

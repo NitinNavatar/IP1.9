@@ -2200,7 +2200,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @return
 	 */
 	public boolean clickOnRenameManageTargetInstitution(String Institution) {
-		WebElement targetRename=FindElement(driver, "//div[text()='"+Institution+"']/span","Institution Account Id", action.BOOLEAN,50);
+		WebElement targetRename=FindElement(driver, "//div[text()='"+Institution+"']/span","Institution Account Id", action.BOOLEAN,5);
 		try{
 			for(int i=0;i<2;i++){
 				((JavascriptExecutor) driver).executeScript(
