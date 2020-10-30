@@ -2321,9 +2321,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @return true/false
 	 */
 	public boolean clickOnRenameManageTargetLimitedPartner(String InstitutionName,String LimitedPartner) {
-		WebElement xpath=FindElement(driver, "//label[@title='"+InstitutionName+"']", "Institution Name", action.SCROLLANDBOOLEAN, 60);
-		if(click(driver, xpath, "InstitutionName", action.SCROLLANDBOOLEAN)){
-			WebElement targetRename=FindElement(driver, "//label[@title='"+LimitedPartner+"']//div", "Limited PArtner", action.SCROLLANDBOOLEAN, 60);
+		WebElement xpath=FindElement(driver, "//label[@title='"+InstitutionName+"']", "Institution Name", action.BOOLEAN, 5);
+		if(click(driver, xpath, "InstitutionName", action.BOOLEAN)){
+			WebElement targetRename=FindElement(driver, "//label[@title='"+LimitedPartner+"']//div", "Limited PArtner", action.BOOLEAN, 5);
 			try{
 				for(int i=0;i<2;i++){
 					((JavascriptExecutor) driver).executeScript(

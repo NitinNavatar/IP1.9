@@ -3476,7 +3476,7 @@ public abstract class BasePage {
 	 */
 	public WebElement actionDropdownElement(ShowMoreActionDropDownList smaddl, int timeOut) {
 		String actionDropDown = smaddl.toString().replace("_", " ");
-		String xpath ="//li/a[@title='"+actionDropDown+"']";
+		String xpath ="//*[@name ='"+actionDropDown+"' or text()='"+actionDropDown+"' or @title='"+actionDropDown+"']";
 		
 		
 		return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
@@ -3488,11 +3488,11 @@ public abstract class BasePage {
 	 * @return  true if able to click o Show more action Icon
 	 */
 	public boolean clickOnShowMoreDropdownOnly() {
-		String xpath = "";int i =1;
+		String xpath = "";int i =2;
 		WebElement ele=null;
 		boolean flag = true;
 
-		xpath="(//a[contains(@title,'more actions')])["+i+"]";
+		xpath="(//*[contains(@title,'more actions') or contains(text(),'more actions')])["+i+"]";
 		
 		ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
 		if(click(driver, ele, "show more action ", action.SCROLLANDBOOLEAN)) {

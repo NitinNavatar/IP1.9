@@ -6057,11 +6057,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @return  true if able to click o Show more action Icon
 	 */
 	public boolean clickOnShowMoreDropdownOnly(PageName pageName) {
-		String xpath = "";int i =1;
+		String xpath = "";int i =2;
 		WebElement ele=null;
 		boolean flag = true;
 
-		xpath="(//a[contains(@title,'more actions')])["+i+"]";
+		xpath="(//*[contains(@title,'more actions') or contains(text(),'more actions')])["+i+"]";
 //		if (PageName.TestCustomObjectPage.equals(pageName) || PageName.Object3Page.equals(pageName)) {
 //			xpath="(//span[contains(text(),'more actions')])[1]/..";
 //		}
