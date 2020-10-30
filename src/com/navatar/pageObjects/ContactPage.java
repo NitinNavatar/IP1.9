@@ -137,6 +137,12 @@ public class ContactPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, ele, "Visibility", timeOut, "scroll box on contact page");
 	}
 
+	@FindBy(xpath = "//a[@title='Remove']")
+	private WebElement removeLink;
+	
+	public WebElement getremoveLink(int timeOut) {
+		return isDisplayed(driver, removeLink, "Visibility", timeOut, "Contact Full Name In View Mode");
+	}
 	@FindBy(xpath="//div[@class='pbSubsection']//div[@id='con2_ileinner']")
 	private WebElement contactFullNameInViewMode;
 
