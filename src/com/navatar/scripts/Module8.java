@@ -317,6 +317,7 @@ public class Module8 extends BaseLib{
 			appLog.error("NIM Tab cannot be clicked, SO cannot continue with the tc.");
 			sa.assertTrue(false,"NIM Tab cannot be clicked, SO cannot continue with the tc.");
 		}
+		switchToDefaultContent(driver);
 		if(lp.clickOnTab(TabName.NIMTab)){
 			switchToFrame(driver, 30, nim.getNIMTabFrame(30));
 			if(click(driver, nim.getFolderTemplatetab(30), "Folder template tab", action.BOOLEAN)){
@@ -2335,7 +2336,7 @@ public class Module8 extends BaseLib{
 								appLog.info("Step 2 of 3 pop up is successfully opened.");
 								if(click(driver, FindElement(driver, "//span[@id='add0000'][@title='Add a Folder']", "+Icon",
 										action.BOOLEAN, 30), "", action.BOOLEAN)){
-									if(mouseOverOperation(driver, fp.getAddFolderInformationIconOnBuildProcess(Workspace.FundraisingWorkspace, 30))){
+									if(mouseHoverJScript(driver, fp.getAddFolderInformationIconOnBuildProcess(Workspace.FundraisingWorkspace, 30))){
 										String text = trim(getText(driver, fp.getAddFolderInfoIconMessage(30), "", action.BOOLEAN));
 										if(text.contains(BasePageErrorMessage.AddFolderInfoIconMessage) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage1) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage2) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage3) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage4)){
 											appLog.info("Tool tip error message is verified.");
