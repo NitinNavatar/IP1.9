@@ -361,7 +361,7 @@ public class Module9 extends BaseLib{
 			appLog.error("'no data to display' error is not found");
 			sa.assertTrue(false, "'no data to display' error is not found");
 		}
-		if (mouseOverOperation(driver, np.getInfoIconManageApproval(60))) {
+		if (mouseHoverJScript(driver, np.getInfoIconManageApproval(60))) {
 			ThreadSleep(3000);
 			if (np.getToolTipInfoIconManageApproval(60).getText().trim().equals(NIMPageErrorMessage.toolTipMessage)) {
 				appLog.info("tool tip message is successfully verified. It is "+np.getToolTipInfoIconManageApproval(60).getText().trim());

@@ -27709,34 +27709,34 @@ public class Module7 extends BaseLib {
 				switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, M7Institution1, M7LimitedPartner1, M7FundName1,
 						PageName.FundsPage, Workspace.InvestorWorkspace, 60)) {
-//				if(bp.fileinContengGRID(PageName.FundsPage, Workspace.InvestorWorkspace, fileName)){
-//				if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.ManageVersions, fileName, Workspace.InvestorWorkspace, 30, "Yes")) {
-//					//verify manage version ui
-//					//v3 version
-//					if (fp.verifyManageVersionUI(updatedFileName, System.getProperty("user.dir")+path, fileName,"V3", true,false,true,null)) {
-//						appLog.info("manage version ui 1st time is successfully verified");
-//					}
-//					else {
-//						appLog.error("manage version ui 1st time could not be verified");
-//						sa.assertTrue(false, "manage version ui 1st time could not be verified");
-//					}
-//					if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version pop up close button", action.SCROLLANDBOOLEAN)) {
-//						if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
-//							
-//						}
-//					}
-//					else {
-//						appLog.error("manage version popup close button is not clickable");
-//						sa.assertTrue(false, "manage version popup close button is not clickable");
-//					}
-//				}
-//				}else{
-//					appLog.error(fileName+" is not available in the content grid ");
-//					sa.assertTrue(false,fileName+" is not available in the content grid");
-//				}
-					Scanner scn = new Scanner(System.in);
-					System.err.println(">>>>>>><<<<<<<<<<<<<<");
-					scn.nextLine();
+				if(bp.fileinContengGRID(PageName.FundsPage, Workspace.InvestorWorkspace, fileName)){
+				if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.ManageVersions, fileName, Workspace.InvestorWorkspace, 30, "Yes")) {
+					//verify manage version ui
+					//v3 version
+					if (fp.verifyManageVersionUI(updatedFileName, System.getProperty("user.dir")+path, fileName,"V3", true,false,true,null)) {
+						appLog.info("manage version ui 1st time is successfully verified");
+					}
+					else {
+						appLog.error("manage version ui 1st time could not be verified");
+						sa.assertTrue(false, "manage version ui 1st time could not be verified");
+					}
+					if (click(driver, fp.getManageVersionPopUpCloseButton(60), "manage version pop up close button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, fp.ContentGridRefreshBtn(Workspace.InvestorWorkspace, 30), "fundraising workspace refresh button", action.SCROLLANDBOOLEAN)) {
+							
+						}
+					}
+					else {
+						appLog.error("manage version popup close button is not clickable");
+						sa.assertTrue(false, "manage version popup close button is not clickable");
+					}
+				}
+				}else{
+					appLog.error(fileName+" is not available in the content grid ");
+					sa.assertTrue(false,fileName+" is not available in the content grid");
+				}
+//					Scanner scn = new Scanner(System.in);
+//					System.err.println(">>>>>>><<<<<<<<<<<<<<");
+//					scn.nextLine();
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 30, fp.getFrame(PageName.FundsPage, 30));
 					;

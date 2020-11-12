@@ -2062,6 +2062,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 			process = Runtime.getRuntime().exec(".\\AutoIT\\activateFilesToUpload.exe" + " " + dragFromFolder);
 			process.waitFor();
+			ThreadSleep(5000);
 			screen.keyDown(Key.CTRL);
 			screen.type("a");
 			screen.keyUp(Key.CTRL);
