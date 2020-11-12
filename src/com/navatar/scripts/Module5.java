@@ -935,7 +935,7 @@ public class Module5 extends BaseLib {
 							sa.assertTrue(false,"Add a folder pop up cancel button si not verified.");
 						}
 						
-						if(mouseOverOperation(driver, fp.getAddFolderInformationIcon(Workspace.FundraisingWorkspace, 30))){
+						if(mouseHoverJScript(driver, fp.getAddFolderInformationIcon(Workspace.FundraisingWorkspace, 30))){
 							text = trim(getText(driver, fp.getAddFolderInfoIconMessage(30), "", action.BOOLEAN));
 							if(text.contains(BasePageErrorMessage.AddFolderInfoIconMessage) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage1) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage2) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage3) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage4)){
 								appLog.info("Tool tip error message is verified.");
@@ -3163,7 +3163,7 @@ public class Module5 extends BaseLib {
 							sa.assertTrue(false,"Add a folder pop up cancel button si not verified.");
 						}
 						
-						if(mouseOverOperation(driver, fp.getAddFolderInformationIcon(Workspace.InvestorWorkspace, 30))){
+						if(mouseHoverJScript(driver, fp.getAddFolderInformationIcon(Workspace.InvestorWorkspace, 30))){
 							text = trim(getText(driver, fp.getAddFolderInfoIconMessage(30), "", action.BOOLEAN));
 							System.err.println(text);
 							if(text.contains(BasePageErrorMessage.AddFolderInfoIconMessage) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage1) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage2) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage3) && text.contains(BasePageErrorMessage.AddFolderInfoIconMessage4)){
