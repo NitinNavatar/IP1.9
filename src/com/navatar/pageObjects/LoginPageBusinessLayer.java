@@ -43,9 +43,6 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		click(driver, getLoginButton(20), "Login Button", action.THROWEXCEPTION);
 		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
 		ThreadSleep(1000);
-		
-		String mode=ExcelUtils.readDataFromPropertyFile("Mode");
-		
 		if (mode.contains("Light") || mode.contains("light") ) {
 			appLog.info("Going for Lighting");
 			if (switchToLighting()) {

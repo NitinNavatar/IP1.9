@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
@@ -15,6 +16,7 @@ import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
 import com.navatar.generic.CommonLib.Header;
 import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -28,6 +30,7 @@ import com.navatar.pageObjects.AllFirmsPageBusinesslayer;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.CommitmentPageBusinessLayer;
 import com.navatar.pageObjects.ContactPageBusinessLayer;
+import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageErrorMessage;
@@ -37,6 +40,7 @@ import com.navatar.pageObjects.InvestorFirmPageBusinesslayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageBusinessLayer;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
+import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.appLog;
@@ -3880,6 +3884,8 @@ public class Module6 extends BaseLib {
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
+		lp.switchToClassic();
+		mode=Mode.Classic.toString();
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
 			if (click(driver, bp.getGoButton(60), "Go Button", action.SCROLLANDBOOLEAN)) {
 				WebElement ele = FindElement(driver,
@@ -3895,14 +3901,14 @@ public class Module6 extends BaseLib {
 						if(click(driver, cmp.getCommitmentDeletedOKButton(60), "OK button", action.SCROLLANDBOOLEAN)){	
 							if (cmp.verifyDeletedCommitmentID(M6commitmentID1)) {
 								appLog.info("Commitment get deleted successfully");
+								ThreadSleep(2000);
+								lp.switchToLighting();
+								mode=Mode.Lightning.toString();
 								if (bp.clickOnTab(TabName.InstituitonsTab)) {
 									if (ip.clickOnCreatedLP(environment, mode,M6LimitedPartner1 + "Renamed")) {
-										 cssFlag=false;
-										 cssSelectorPath="td#topButtonRow input[title=Delete]";
-										cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
-										if (cssFlag/*click(driver, bp.getDeleteButton(60), "Delete Button",
-												action.SCROLLANDBOOLEAN)*/) {
-											switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
+										 appLog.info("Clicked on Created LP : "+M6LimitedPartner1 + "Renamed");
+										if(click(driver, ip.getDeleteButton(30), "Delete PopUp", action.BOOLEAN)) {
+											appLog.info("Create LP is deleted : "+M6LimitedPartner1 + "Renamed");
 											if (ip.verifyDeletedLimitedPartner(M6LimitedPartner1 + "Renamed")) {
 												appLog.info("Limited Partner get deleted successfully");
 											} else {
@@ -3912,7 +3918,7 @@ public class Module6 extends BaseLib {
 											}
 											if (bp.clickOnTab(TabName.FundsTab)) {
 												if (fp.clickOnCreatedFund(M6FundName1)) {
-													switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
+													switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 30));
 													scrollDownThroughWebelement(driver,
 															fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 															"InvestorWorkspace View.");
@@ -3920,7 +3926,7 @@ public class Module6 extends BaseLib {
 															fp.getManageInvestorIcon(Workspace.InvestorWorkspace, 60),
 															"Manage Investor Icon", action.SCROLLANDBOOLEAN)) {
 														switchToDefaultContent(driver);
-														switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 60));
+														switchToFrame(driver, 30, bp.getFrame( PageName.FundsPage, 10));
 														scrollDownThroughWebelement(driver,
 																fp.getWorkspaceSectionView(Workspace.InvestorWorkspace,
 																		60),
@@ -3955,7 +3961,7 @@ public class Module6 extends BaseLib {
 										scrollDownThroughWebelement(driver,
 												fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),
 												"InvestorWorkspace View.");	
-										if(fp.verifyFolderPathdummy("", null, M6LimitedPartner1+"Renamed", M6FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 60)){
+										if(fp.verifyFolderPathdummy("", null, M6LimitedPartner1+"Renamed", M6FundName1, PageName.ContactsPage, Workspace.InvestorWorkspace, 30)){
 											appLog.info("Limited partner is displaying in folder structure");
 									}else{
 											appLog.info("Limited partner is not displaying in folder structure");
@@ -4025,6 +4031,8 @@ public class Module6 extends BaseLib {
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
+		lp.switchToClassic();
+		mode=Mode.Classic.toString();
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
 			if (click(driver, bp.getGoButton(60), "Go Button", action.SCROLLANDBOOLEAN)) {
 				WebElement ele = FindElement(driver,
@@ -4040,14 +4048,14 @@ public class Module6 extends BaseLib {
 						if(click(driver, cmp.getCommitmentDeletedOKButton(60), "OK button", action.SCROLLANDBOOLEAN)){	
 							if (cmp.verifyDeletedCommitmentID(M6commitmentID3)) {
 								appLog.info("Commitment get deleted successfully");
+								ThreadSleep(2000);
+								lp.switchToLighting();
+								mode=Mode.Lightning.toString();
 								if (bp.clickOnTab(TabName.InstituitonsTab)) {
 									if (ip.clickOnCreatedLP(environment, mode,M6LimitedPartner3)) {
-										  cssFlag = false;
-										  cssSelectorPath = "td#topButtonRow input[title=Delete]";
-										cssFlag=bp.clickUsingCssSelectorPath(cssSelectorPath, "Delete Button");
-										if (cssFlag/*click(driver, bp.getDeleteButton(60), "Delete Button",
-												action.SCROLLANDBOOLEAN)*/) {
-											switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
+										 appLog.info("Clicked on Created LP : "+M6LimitedPartner3);
+											if(click(driver, ip.getDeleteButton(30), "Delete PopUp", action.BOOLEAN)) {
+												appLog.info("Create LP is deleted : "+M6LimitedPartner3);
 											if (ip.verifyDeletedLimitedPartner(M6LimitedPartner3)) {
 												appLog.info("Limited Partner get deleted successfully");
 											} else {
@@ -4234,7 +4242,7 @@ public class Module6 extends BaseLib {
 	}
 
 	@Test
-	public void M6tc023_CreatePreconditionData() {
+	public void M6tc023_1_customFieldsCreation() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4243,361 +4251,543 @@ public class Module6 extends BaseLib {
 		PartnershipPageBusinessLayer pp = new PartnershipPageBusinessLayer(driver);
 		CommitmentPageBusinessLayer cmp = new CommitmentPageBusinessLayer(driver);
 		ContactPageBusinessLayer cp = new ContactPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		String parentWindow=null;
 		SoftAssert saa = new SoftAssert();
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (click(driver, bp.getUserMenuTab(60), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			if (click(driver, bp.getUserMenuSetupLink(60), "Setup link", action.SCROLLANDBOOLEAN)) {
-				if (click(driver, bp.getCustomizeIcon(60), "Customize icon", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, bp.getAccountsIconUnderCustomizeIcon(60), "Accounts Icon under customize icon",
-							action.SCROLLANDBOOLEAN)) {
-						if (click(driver, bp.getFieldsLabelUnderAccountIcon(60), "Fields Label",
-								action.SCROLLANDBOOLEAN)) {
-						} else {
-							appLog.info("Not able to click on Fields Label");
-							saa.assertTrue(false, "Not able to click on fileds label");
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			appLog.info("Clicked on StepUp Link");
+			parentWindow = switchOnWindow(driver);
+			if(parentWindow!=null) {
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Institution)) {
+					appLog.info("object searched : "+object.Institution.toString());
+					ThreadSleep(5000);
+					String xpath="//div[@data-aura-class='uiScroller']//a[text()='"+object.Institution.toString()+"']";
+					WebElement ele=FindElement(driver, xpath,object.Institution.toString()+" xpath", action.SCROLLANDBOOLEAN,60);
+					if(ele!=null) {
+						if(click(driver, ele, object.Institution.toString()+" xpath ", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on object Name "+object.Institution);
+							ThreadSleep(5000);
+							xpath="//div[@id='setupComponent']/div[@class='setupcontent']//ul/li/a[@data-list='Fields & Relationships']";
+							ele=FindElement(driver, xpath,"Fields & Relationships xpath", action.SCROLLANDBOOLEAN,20);
+							if(click(driver, ele,"Fields & Relationships xpath ", action.SCROLLANDBOOLEAN)) {
+								appLog.info("clicked on object side action : Fields & Relationships");
+								ThreadSleep(5000);
+								for (int i = 1; i < 7; i++) {
+									String accountDatatpe = ExcelUtils.readData(filterPath,"CustomLabels", i, 1);
+									String fieldLabel = ExcelUtils.readData(filterPath,"CustomLabels", i, 2);
+									String startingNumber = ExcelUtils.readData(filterPath,"CustomLabels", i, 4);
+									String decimalValues = ExcelUtils.readData(filterPath,"CustomLabels", i, 7);
+									System.err.println(accountDatatpe);
+									if (accountDatatpe != null && fieldLabel != null) {
+										if (ip.addCustomFieldInAccount(accountDatatpe, fieldLabel, startingNumber, decimalValues,30)) {
+											appLog.info(fieldLabel+ " Field added successfully");
+										} else {
+											appLog.error(fieldLabel+" Field not added");
+											saa.assertTrue(false, fieldLabel+" Field not added");
+										}
+									}
+								}
+								driver.close();
+								driver.switchTo().window(parentWindow);
+							}else {
+								log(LogStatus.FAIL, "Not able to click on object side action Fields & Relationships so cannot add custom object in "+object.Institution, YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on object side action Fields & Relationships so cannot add custom object in "+object.Institution);
+								driver.close();
+								driver.switchTo().window(parentWindow);
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to click on object Name "+object.Institution+" so cannot add custom object ", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on object Name "+object.Institution+" so cannot add custom object ");
+							driver.close();
+							driver.switchTo().window(parentWindow);
 						}
-					} else {
-						appLog.info("Not able to click on Accounts tab");
-						saa.assertTrue(false, "Not able to click on Accounts tab");
+					}else {
+						log(LogStatus.FAIL, "Not able to found object : "+object.Institution.toString()+" so cannot add custom object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to found object : "+object.Institution.toString()+" so cannot add custom object");
+						driver.close();
+						driver.switchTo().window(parentWindow);
 					}
-				} else {
-					appLog.info("Not able to click on Customize icon");
-					saa.assertTrue(false, "Not able to click on Customize icon");
+				}else {
+					log(LogStatus.FAIL, "Not able to search object "+object.Institution.toString()+" so cannot add custom object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to search object "+object.Institution.toString()+" so cannot add custom object");
+					driver.close();
+					driver.switchTo().window(parentWindow);
 				}
-			} else {
-				appLog.info("Not able to click on setup link");
-				saa.assertTrue(false, "Not able to click on setup link");
+				
+			}else {
+				appLog.error("no new window is open so cannot Create Custom Object in "+object.Institution);
+				sa.assertTrue(false, "no new window is open so cannot Create Custom Object in "+object.Institution);
 			}
-		} else {
-			appLog.info("Not able to click on User menu button");
-			saa.assertTrue(false, "Not able to click on User menu button");
-		}						
-		for (int i = 1; i < 7; i++) {
-			String accountDatatpe = ExcelUtils.readData(filterPath,"CustomLabels", i, 1);
-			String fieldLabel = ExcelUtils.readData(filterPath,"CustomLabels", i, 2);
-			String startingNumber = ExcelUtils.readData(filterPath,"CustomLabels", i, 4);
-			String decimalValues = ExcelUtils.readData(filterPath,"CustomLabels", i, 7);
-			System.err.println(accountDatatpe);
-			if (accountDatatpe != null && fieldLabel != null) {
-				if (ip.addCustomFieldInAccount(accountDatatpe, fieldLabel, startingNumber, decimalValues,50)) {
-					appLog.info("Field added successfully");
-				} else {
-					saa.assertTrue(false, "Field not added successfully");
-				}
-			}
-		}
-		if (click(driver, bp.getUserMenuTab(60), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			if (click(driver, bp.getUserMenuSetupLink(60), "Setup link", action.SCROLLANDBOOLEAN)) {
-				if (click(driver, bp.getCreateIcon(60), "Create Icon", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, bp.getObjectsLabel(60), "Objects Label", action.SCROLLANDBOOLEAN)) {
-						if (click(driver, bp.getFundraisingLabelInObject(60), "FundRaising Label",
-								action.SCROLLANDBOOLEAN)) {
-							
-						} else {
-							appLog.info("Not able to click on FundRaising LAbel");
-							saa.assertTrue(false, "Not able to click on FundRaising LAbel");
-						}
-					} else {
-						appLog.info("Not able to click on Objects LAbel");
-						saa.assertTrue(false, "Not able to click on Objects LAbel");
-					}
-				} else {
-					appLog.info("Not able to click on create icon");
-					saa.assertTrue(false,"Not able to click on create icon");
-				}
-			} else {
-				appLog.info("Not able to click on setup link");
-				saa.assertTrue(false,"Not able to click on setup link");
-			}
-		} else {
-			appLog.info("Not able to click on User menu button");
-			saa.assertTrue(false,"Not able to click on User menu button");
-		}
-		for (int i = 8; i < 20; i++) {
-			String accountDatatpe = ExcelUtils.readData(filterPath,"CustomLabels", i, 1);
-			String fieldLabel = ExcelUtils.readData(filterPath,"CustomLabels", i, 2);
-			String startingNumber = ExcelUtils.readData(filterPath,"CustomLabels", i, 4);
-			String decimalValues = ExcelUtils.readData(filterPath,"CustomLabels", i, 7);
-			String Value = ExcelUtils.readData(filterPath,"CustomLabels", i, 3);
-			String formulaReturnType = ExcelUtils.readData(filterPath,"CustomLabels", i, 8);
-			String SimpleFormulaValue = ExcelUtils.readData(filterPath,"CustomLabels", i, 9);
-			System.err.println(accountDatatpe);
-			if (accountDatatpe != null && fieldLabel != null) {
-				if (frp.addCustomFieldInFundRaising(accountDatatpe, fieldLabel, startingNumber, decimalValues, Value,
-						formulaReturnType, SimpleFormulaValue,60)) {
-					appLog.info("Field added successfully");
-				} else {
-					saa.assertTrue(false, "Field not added successfully");
-				}
-			} else {
-				appLog.info("Value is null");
-				saa.assertTrue(false, "Value is null");
-			}
-		}
-		if (click(driver, bp.getUserMenuTab(60), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			if (click(driver, bp.getUserMenuSetupLink(60), "Setup link", action.SCROLLANDBOOLEAN)) {
-				if (click(driver, bp.getCreateIcon(60), "Create Icon", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, bp.getObjectsLabel(60), "Objects Label", action.SCROLLANDBOOLEAN)) {
-						if (click(driver, bp.getCommitmentLabelInObject(60), "Commitment Label",
-								action.SCROLLANDBOOLEAN)) {							
-						} else {
-							appLog.info("Not able to click on Commitment LAbel");
-							saa.assertTrue(false, "Not able to click on Commitment LAbel");
-						}
-					} else {
-						appLog.info("Not able to click on Objects LAbel");
-						saa.assertTrue(false, "Not able to click on Objects LAbel");
-					}
-				} else {
-					appLog.info("Not able to click on create icon");
-					saa.assertTrue(false, "Not able to click on create icon");
-				}
-			} else {
-				appLog.info("Not able to click on setup link");
-				saa.assertTrue(false, "Not able to click on setup link");
-			}
-		} else {
-			appLog.info("Not able to click on User menu button");
-			saa.assertTrue(false, "Not able to click on User menu button");
+		}else {
+			appLog.error("Not able to click on Setup Link so cannot Create Custom Object in "+object.Institution);
+			sa.assertTrue(false, "Not able to click on Setup Link so cannot Create Custom Object in "+object.Institution);
 		}
 		
-		for (int i = 21; i < 30; i++) {
-			String accountDatatpe = ExcelUtils.readData(filterPath,"CustomLabels", i, 1);
-			String fieldLabel = ExcelUtils.readData(filterPath,"CustomLabels", i, 2);
-			String decimalValues = ExcelUtils.readData(filterPath,"CustomLabels", i, 7);
-			String Value = ExcelUtils.readData(filterPath,"CustomLabels", i, 3);
-			String Limit = ExcelUtils.readData(filterPath,"CustomLabels", i, 10);
-			if (accountDatatpe != null && fieldLabel != null) {
-				if (cmp.addCustomFieldInCommitment(accountDatatpe, fieldLabel, decimalValues, Value, Limit,60)) {
-					appLog.info("Field added successfully");
-				} else {
-					saa.assertTrue(false, "Field not added successfully");
-				}
-			} else {
-				appLog.info("Value is null");
-				saa.assertTrue(false, "Value is null");
-			}
-		}
-		for (int i = 1; i < 5; i++) {
-			if (bp.clickOnTab(TabName.InstituitonsTab)) {
-				String institutionName = ExcelUtils.readData(filterPath,"Institutions", i, 0);
-				String TestDateA = ExcelUtils.readData(filterPath,"Institutions", i, 2);
-				String TestDatetimeA = ExcelUtils.readData(filterPath,"Institutions", i, 3);
-				String TestEmailA = ExcelUtils.readData(filterPath,"Institutions", i, 4);
-				String CurrentAllocationPrivate = ExcelUtils.readData(filterPath,"Institutions", i, 5);
-				String TestGeolocationALatitude = ExcelUtils.readData(filterPath,"Institutions", i, 6);
-				String TestGeolocationALongitude = ExcelUtils.readData(filterPath,"Institutions", i, 7);
-				String EmployeesNumber = ExcelUtils.readData(filterPath,"Institutions", i, 8);
-				String AlternativePercent = ExcelUtils.readData(filterPath,"Institutions", i, 9);
-				String Phone = ExcelUtils.readData(filterPath,"Institutions", i, 10);
-				String OwnershipPicklist = ExcelUtils.readData(filterPath,"Institutions", i, 11);
-				String FundPreferencesPicklistMultiSelect = ExcelUtils.readData(filterPath,"Institutions", i, 12);
-				String KeywordsText = ExcelUtils.readData(filterPath,"Institutions", i, 13);
-				String ReferralSourceDistributon = ExcelUtils.readData(filterPath,"Institutions", i, 14);
-				String TestTimeBetaA = ExcelUtils.readData(filterPath,"Institutions", i, 15);
-				String Website = ExcelUtils.readData(filterPath,"Institutions", i, 16);
-				String InvestInFirstTimeFunds = ExcelUtils.readData(filterPath,"Institutions", i, 17);
-				if (institutionName != null) {
-					if (ip.createInstitutionForFilter(institutionName, TestDateA, TestDatetimeA, TestEmailA,
-							CurrentAllocationPrivate, TestGeolocationALatitude, TestGeolocationALongitude,
-							EmployeesNumber, AlternativePercent, Phone, OwnershipPicklist,
-							FundPreferencesPicklistMultiSelect, KeywordsText, ReferralSourceDistributon, TestTimeBetaA,
-							Website, InvestInFirstTimeFunds)) {
-						appLog.info("Institution created successfully" + institutionName);
-					} else {
-						appLog.info("Instituition not created successfully");
-						saa.assertTrue(false, "Instituition not created successfully");
+		
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			appLog.info("Clicked on StepUp Link");
+			parentWindow = switchOnWindow(driver);
+			if(parentWindow!=null) {
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Fundraising)) {
+					appLog.info("object searched : "+object.Fundraising.toString());
+					ThreadSleep(5000);
+					String xpath="//div[@data-aura-class='uiScroller']//a[text()='"+object.Fundraising.toString()+"']";
+					WebElement ele=FindElement(driver, xpath,object.Fundraising.toString()+" xpath", action.SCROLLANDBOOLEAN,30);
+					if(ele!=null) {
+						if(click(driver, ele, object.Fundraising.toString()+" xpath ", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on object Name "+object.Fundraising);
+							ThreadSleep(5000);
+							xpath="//div[@id='setupComponent']/div[@class='setupcontent']//ul/li/a[@data-list='Fields & Relationships']";
+							ele=FindElement(driver, xpath,"Fields & Relationships xpath", action.SCROLLANDBOOLEAN,20);
+							if(click(driver, ele,"Fields & Relationships xpath ", action.SCROLLANDBOOLEAN)) {
+								appLog.info("clicked on object side action : Fields & Relationships");
+								ThreadSleep(5000);
+								for (int i = 8; i < 20; i++) {
+									String accountDatatpe = ExcelUtils.readData(filterPath,"CustomLabels", i, 1);
+									String fieldLabel = ExcelUtils.readData(filterPath,"CustomLabels", i, 2);
+									String startingNumber = ExcelUtils.readData(filterPath,"CustomLabels", i, 4);
+									String decimalValues = ExcelUtils.readData(filterPath,"CustomLabels", i, 7);
+									String Value = ExcelUtils.readData(filterPath,"CustomLabels", i, 3);
+									String formulaReturnType = ExcelUtils.readData(filterPath,"CustomLabels", i, 8);
+									String SimpleFormulaValue = ExcelUtils.readData(filterPath,"CustomLabels", i, 9);
+									System.err.println(accountDatatpe);
+									if (accountDatatpe != null && fieldLabel != null) {
+										if (frp.addCustomFieldInFundRaising(accountDatatpe, fieldLabel, startingNumber, decimalValues, Value,
+												formulaReturnType, SimpleFormulaValue,60)) {
+											appLog.info(fieldLabel+" Field added successfully");
+										} else {
+											appLog.error(fieldLabel+" Field not added");
+											saa.assertTrue(false, "Field not added");
+										}
+									} else {
+										appLog.info("Value is null");
+										saa.assertTrue(false, "Value is null");
+									}
+								}
+								driver.close();
+								driver.switchTo().window(parentWindow);
+							}else {
+								log(LogStatus.FAIL, "Not able to click on object side action Fields & Relationships so cannot add custom object in "+object.Fundraising, YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on object side action Fields & Relationships so cannot add custom object in "+object.Fundraising);
+								driver.close();
+								driver.switchTo().window(parentWindow);
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to click on object Name "+object.Fundraising+" so cannot add custom object ", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on object Name "+object.Fundraising+" so cannot add custom object ");
+							driver.close();
+							driver.switchTo().window(parentWindow);
+						}
+					}else {
+						log(LogStatus.FAIL, "Not able to found object : "+object.Fundraising.toString()+" so cannot add custom object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to found object : "+object.Fundraising.toString()+" so cannot add custom object");
+						driver.close();
+						driver.switchTo().window(parentWindow);
 					}
-				} else {
-					appLog.info("Value is null so we cannot create institution");
-					saa.assertTrue(false, "Value is null so we cannot create institution");
+				}else {
+					log(LogStatus.FAIL, "Not able to search object "+object.Fundraising.toString()+" so cannot add custom object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to search object "+object.Fundraising.toString()+" so cannot add custom object");
+					driver.close();
+					driver.switchTo().window(parentWindow);
 				}
-			} else {
-				appLog.info("Not able to click on institution tab so we cannot create institution");
-				saa.assertTrue(false, "Not able to click on institution tab so we cannot create institution");
+			}else {
+				appLog.error("no new window is open so cannot Create Custom Object in "+object.Institution);
+				sa.assertTrue(false, "no new window is open so cannot Create Custom Object in "+object.Institution);
 			}
+		}else {
+			appLog.error("Not able to click on Setup Link so cannot Create Custom Object in "+object.Fundraising);
+			sa.assertTrue(false, "Not able to click on Setup Link so cannot Create Custom Object in "+object.Fundraising);
 		}
-		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.createFund(ExcelUtils.readData(filterPath,"Funds", 1, 0), ExcelUtils.readData(filterPath,"Funds", 1, 1),
-					ExcelUtils.readData(filterPath,"Funds", 1, 2))) {
-				appLog.info("Fund Cretaed successfully");
-			} else {
-				appLog.info("Not able to crete fund");
-				saa.assertTrue(false, "Not able to create fund");
-			}
-		} else {
-			appLog.info("Not able to click on funds tab");
-			saa.assertTrue(false, "Not able to click on funds tab");
-		}
-		for (int i = 1; i < 5; i++) {
-			if (bp.clickOnTab(TabName.FundraisingsTab)) {
-				String fundraisingName = ExcelUtils.readData(filterPath,"Fundraisings", i, 0);
-				String fundName = ExcelUtils.readData(filterPath,"Fundraisings", i, 1);
-				String legalName = ExcelUtils.readData(filterPath,"Fundraisings", i, 2);
-				String targetCloseDate = ExcelUtils.readData(filterPath,"Fundraisings", i, 4);
-				String TestDatetime = ExcelUtils.readData(filterPath,"Fundraisings", i, 5);
-				String testEmail = ExcelUtils.readData(filterPath,"Fundraisings", i, 6);
-				String InvestmentHighAmount = ExcelUtils.readData(filterPath,"Fundraisings", i, 7);
-				String testGeolocationLatiitude = ExcelUtils.readData(filterPath,"Fundraisings", i, 8);
-				String testGeoLocationLongitude = ExcelUtils.readData(filterPath,"Fundraisings", i, 9);
-				String testnumber = ExcelUtils.readData(filterPath,"Fundraisings", i, 10);
-				String potentialManageMentFee = ExcelUtils.readData(filterPath,"Fundraisings", i, 11);
-				String phone = ExcelUtils.readData(filterPath,"Fundraisings", i, 12);
-				String stageDropdownVlaue = ExcelUtils.readData(filterPath,"Fundraisings", i, 13);
-				String reasonForDeclinedValue = ExcelUtils.readData(filterPath,"Fundraisings", i, 14);
-				String multiselectValue = ExcelUtils.readData(filterPath,"Fundraisings", i, 15);
-				String nextStep = ExcelUtils.readData(filterPath,"Fundraisings", i, 16);
-				String testTextArea = ExcelUtils.readData(filterPath,"Fundraisings", i, 17);
-				String testTimeBeta = ExcelUtils.readData(filterPath,"Fundraisings", i, 18);
-				String testUrl = ExcelUtils.readData(filterPath,"Fundraisings", i, 19);
-				String TestCheckbox = ExcelUtils.readData(filterPath,"Fundraisings", i, 3);
-				if (fundraisingName != null) {
-					if (frp.createFundRaisingWithFilterData(fundraisingName, fundName, legalName, TestCheckbox,
-							targetCloseDate, TestDatetime, testEmail, InvestmentHighAmount, testGeolocationLatiitude,
-							testGeoLocationLongitude, testnumber, potentialManageMentFee, phone, stageDropdownVlaue,
-							reasonForDeclinedValue, multiselectValue, nextStep, testTextArea, testTimeBeta, testUrl)) {
-						appLog.info("fundraising created successfully" + fundraisingName);
-					} else {
-						appLog.info("fundraising not created successfully");
-						saa.assertTrue(false, "fundraising not created successfully");
+
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			appLog.info("Clicked on StepUp Link");
+			parentWindow = switchOnWindow(driver);
+			if(parentWindow!=null) {
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Commitment)) {
+					appLog.info("object searched : "+object.Commitment.toString());
+					ThreadSleep(5000);
+					String xpath="//div[@data-aura-class='uiScroller']//a[text()='"+object.Commitment.toString()+"']";
+					WebElement ele=FindElement(driver, xpath,object.Commitment.toString()+" xpath", action.SCROLLANDBOOLEAN,30);
+					if(ele!=null) {
+						if(click(driver, ele, object.Commitment.toString()+" xpath ", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on object Name "+object.Commitment);
+							ThreadSleep(5000);
+							xpath="//div[@id='setupComponent']/div[@class='setupcontent']//ul/li/a[@data-list='Fields & Relationships']";
+							ele=FindElement(driver, xpath,"Fields & Relationships xpath", action.SCROLLANDBOOLEAN,20);
+							if(click(driver, ele,"Fields & Relationships xpath ", action.SCROLLANDBOOLEAN)) {
+								appLog.info("clicked on object side action : Fields & Relationships");
+								ThreadSleep(5000);
+								for (int i = 21; i < 30; i++) {
+									String accountDatatpe = ExcelUtils.readData(filterPath,"CustomLabels", i, 1);
+									String fieldLabel = ExcelUtils.readData(filterPath,"CustomLabels", i, 2);
+									String decimalValues = ExcelUtils.readData(filterPath,"CustomLabels", i, 7);
+									String Value = ExcelUtils.readData(filterPath,"CustomLabels", i, 3);
+									String Limit = ExcelUtils.readData(filterPath,"CustomLabels", i, 10);
+									if (accountDatatpe != null && fieldLabel != null) {
+										if (cmp.addCustomFieldInCommitment(accountDatatpe, fieldLabel, decimalValues, Value, Limit,60)) {
+											appLog.info(fieldLabel+" Field added successfully");
+										} else {
+											appLog.error(fieldLabel+" Field not added");
+											saa.assertTrue(false, fieldLabel+" Field not added");
+										}
+									} else {
+										appLog.info("Value is null");
+										saa.assertTrue(false, "Value is null");
+									}
+								}
+								driver.close();
+								driver.switchTo().window(parentWindow);
+							}else {
+								log(LogStatus.FAIL, "Not able to click on object side action Fields & Relationships so cannot add custom object in "+object.Commitment, YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on object side action Fields & Relationships so cannot add custom object in "+object.Commitment);
+								driver.close();
+								driver.switchTo().window(parentWindow);
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to click on object Name "+object.Commitment+" so cannot add custom object ", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on object Name "+object.Commitment+" so cannot add custom object ");
+							driver.close();
+							driver.switchTo().window(parentWindow);
+						}
+					}else {
+						log(LogStatus.FAIL, "Not able to found object : "+object.Commitment.toString()+" so cannot add custom object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to found object : "+object.Commitment.toString()+" so cannot add custom object");
+						driver.close();
+						driver.switchTo().window(parentWindow);
 					}
-				} else {
-					appLog.info("Value is null so we cannot create fundraising");
-					saa.assertTrue(false, "Value is null so we cannot create fundraising");
+				}else {
+					log(LogStatus.FAIL, "Not able to search object "+object.Commitment.toString()+" so cannot add custom object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to search object "+object.Commitment.toString()+" so cannot add custom object");
+					driver.close();
+					driver.switchTo().window(parentWindow);
 				}
-			} else {
-				appLog.info("Not able to click on fundraising tab");
-				saa.assertTrue(false, "Not able to click on fundraising tab");
+			}else {
+				appLog.error("no new window is open so cannot Create Custom Object in "+object.Institution);
+				sa.assertTrue(false, "no new window is open so cannot Create Custom Object in "+object.Institution);
 			}
+		}else {
+			appLog.error("Not able to click on Setup Link so cannot Create Custom Object in "+object.Commitment);
+			sa.assertTrue(false, "Not able to click on Setup Link so cannot Create Custom Object in "+object.Commitment);
 		}
-		for (int i = 1; i < 5; i++) {
-			if (bp.clickOnTab(TabName.InstituitonsTab)) {
-				String lp_name = ExcelUtils.readData(filterPath,"Limited Partner", i, 0);
-				String inst_name = ExcelUtils.readData(filterPath,"Limited Partner", i, 1);
-				if (ip.createLimitedPartner(lp_name, inst_name)) {
-					appLog.info("Limited Partner Created successfully");
-				} else {
-					appLog.info("Limited Partner not craeted successfully");
-					saa.assertTrue(false, "Not able to create limited partner");
-				}
-			} else {
-				appLog.info("Not able to click on institution tab so cannot create limited Partner");
-				saa.assertTrue(false, "Not able to click on institution tab so cannot create limited Partner");
-			}
-		}
-		if (bp.clickOnTab(TabName.PartnershipsTab)) {
-			if (pp.createPartnership(ExcelUtils.readData(filterPath,"Partnerships", 1, 0),
-					ExcelUtils.readData(filterPath,"Partnerships", 1, 1))) {
-				appLog.info("Partnership Created successfully");
-			} else {
-				appLog.info("Partnership not craeted successfully");
-				saa.assertTrue(false, "Not able to create Partnership");
-			}
-		} else {
-			appLog.info("Not able to click on Partnership tab so cannot create Partnership");
-			saa.assertTrue(false, "Not able to click on Partnership tab so cannot create Partnership");
-		}
-		for (int i = 1; i < 5; i++) {
-			if (bp.clickOnTab(TabName.CommitmentsTab)) {
-				String LimitedPartner = ExcelUtils.readData(filterPath,"Commitments", i, 0);
-				String Partnership = ExcelUtils.readData(filterPath,"Commitments", i, 1);
-				String AntiMoneyCheckbox = ExcelUtils.readData(filterPath,"Commitments", i, 2);
-				String finalCommitmentDate = ExcelUtils.readData(filterPath,"Commitments", i, 3);
-				String testDatetime = ExcelUtils.readData(filterPath,"Commitments", i, 4);
-				String email = ExcelUtils.readData(filterPath,"Commitments", i, 5);
-				String commitmentAmount = ExcelUtils.readData(filterPath,"Commitments", i, 6);
-				String geolocationLatitude = ExcelUtils.readData(filterPath,"Commitments", i, 7);
-				String GeolocationLongitude = ExcelUtils.readData(filterPath,"Commitments", i, 8);
-				String number = ExcelUtils.readData(filterPath,"Commitments", i, 9);
-				String CarriedInterestPercent = ExcelUtils.readData(filterPath,"Commitments", i, 10);
-				String phone = ExcelUtils.readData(filterPath,"Commitments", i, 11);
-				String partnerType = ExcelUtils.readData(filterPath,"Commitments", i, 12);
-				String multiPickList = ExcelUtils.readData(filterPath,"Commitments", i, 13);
-				String testText = ExcelUtils.readData(filterPath,"Commitments", i, 14);
-				String subdocDesc = ExcelUtils.readData(filterPath,"Commitments", i, 15);
-				String testTimeBeta = ExcelUtils.readData(filterPath,"Commitments", i, 16);
-				String testUrl = ExcelUtils.readData(filterPath,"Commitments", i, 17);
-				String basedOnValue = ExcelUtils.readData(filterPath,"Commitments", i, 18);
-				if (LimitedPartner != null) {
-					if (cmp.createCommitmentInFilterData(LimitedPartner, Partnership, basedOnValue, AntiMoneyCheckbox,
-							finalCommitmentDate, testDatetime, email, commitmentAmount, geolocationLatitude,
-							GeolocationLongitude, number, CarriedInterestPercent, phone, partnerType, multiPickList,
-							testText, subdocDesc, testTimeBeta, testUrl)) {
-						appLog.info("Commitments created successfully");
-					} else {
-						appLog.info("Commitments not created successfully");
-						saa.assertTrue(false, "Commitments not created successfully");
-					}
-				} else {
-					appLog.info("Value is null so we cannot create Commitments");
-					saa.assertTrue(false, "Value is null so we cannot create Commitments");
-				}
-			} else {
-				appLog.info("Not able to click on Commitments tab");
-				saa.assertTrue(false, "Not able to click on Commitments tab");
-			}
-		}
-		for (int i = 1; i < 3; i++) {
-			if (bp.clickOnTab(TabName.ContactTab)) {
-				String contactFirstName = ExcelUtils.readData(filterPath,"Contacts", i, 0);
-				String contactLastName = ExcelUtils.readData(filterPath,"Contacts", i, 1);
-				String legalName = ExcelUtils.readData(filterPath,"Contacts", i, 2);
-				String emailID = ExcelUtils.readData(filterPath,"Contacts", i, 3);
-				if (cp.createContact(contactFirstName, contactLastName, legalName, emailID)) {
-					appLog.info("Contacts Created successfully");
-				} else {
-					appLog.info("Contacts not craeted successfully");
-					saa.assertTrue(false, "Not able to create Contacts");
-				}
-			} else {
-				appLog.info("Not able to click on Contacts tab so cannot create Contacts");
-				saa.assertTrue(false, "Not able to click on Contacts tab so cannot create Contacts");
-			}
-		}
-		for (int i = 1; i < 3; i++) {
-			if (bp.clickOnTab(TabName.InstituitonsTab)) {
-				if (ip.clickOnCreatedInstitution(ExcelUtils.readData(filterPath,"AdvisorInvolvement", 1, 0))) {
-					String DilgenceExpenseActual = ExcelUtils.readData(filterPath,"AdvisorInvolvement", i, 2);
-					String basedOnValue = ExcelUtils.readData(filterPath,"AdvisorInvolvement", i, 3);
-					if (ip.createadvisorInvolvements(ExcelUtils.readData(filterPath,"AdvisorInvolvement", 1, 1),
-							DilgenceExpenseActual, basedOnValue)) {
-						appLog.info("Advisor Involvement is created successfully");
-					} else {
-						appLog.info("Advisor Involvement is not created successfully");
-						saa.assertTrue(false, "Advisor Involvement is not created successfully");
-					}
-				} else {
-					appLog.info("Not able to click on created institution");
-					saa.assertTrue(false, "Not able to click on created institution");
-				}
-			} else {
-				appLog.info("Not able to click on Institutions tab so cannot create Advisor Involvement");
-				saa.assertTrue(false, "Not able to click on Institutions tab so cannot create Advisor Involvement");
-			}
-		}
-		for (int i = 1; i < 3; i++) {
-			if (bp.clickOnTab(TabName.FundraisingsTab)) {
-				if (frp.clickOnCreatedFundRaising(ExcelUtils.readData(filterPath,"FundraisingContact", 1, 0))) {
-					String contact = ExcelUtils.readData(filterPath,"FundraisingContact", i, 1);
-					if (frp.createFundRaisingContact(contact)) {
-						appLog.info("FundRaising Contact created successfully");
-					} else {
-						appLog.info("FundRaising Contact not created successfully");
-						saa.assertTrue(false, "FundRaising Contact not created successfully");
-					}
-				} else {
-					appLog.info("Not able to click on created fundraising");
-					saa.assertTrue(false, "Not able to click on created fundraising");
-				}
-			} else {
-				appLog.info("Not able to click on FundRaising tab so cannot create FundRaising Contacts");
-				saa.assertTrue(false, "Not able to click on FundRaising tab so cannot create FundRaising Contacts");
-			}
-		}
+//		
+//		if (bp.clickOnTab(TabName.FundsTab)) {
+//			if (fp.createFund(ExcelUtils.readData(filterPath,"Funds", 1, 0), ExcelUtils.readData(filterPath,"Funds", 1, 1),
+//					ExcelUtils.readData(filterPath,"Funds", 1, 2))) {
+//				appLog.info("Fund Cretaed successfully");
+//			} else {
+//				appLog.info("Not able to crete fund");
+//				saa.assertTrue(false, "Not able to create fund");
+//			}
+//		} else {
+//			appLog.info("Not able to click on funds tab");
+//			saa.assertTrue(false, "Not able to click on funds tab");
+//		}
+//		for (int i = 1; i < 5; i++) {
+//			if (bp.clickOnTab(TabName.FundraisingsTab)) {
+//				String fundraisingName = ExcelUtils.readData(filterPath,"Fundraisings", i, 0);
+//				String fundName = ExcelUtils.readData(filterPath,"Fundraisings", i, 1);
+//				String legalName = ExcelUtils.readData(filterPath,"Fundraisings", i, 2);
+//				String targetCloseDate = ExcelUtils.readData(filterPath,"Fundraisings", i, 4);
+//				String TestDatetime = ExcelUtils.readData(filterPath,"Fundraisings", i, 5);
+//				String testEmail = ExcelUtils.readData(filterPath,"Fundraisings", i, 6);
+//				String InvestmentHighAmount = ExcelUtils.readData(filterPath,"Fundraisings", i, 7);
+//				String testGeolocationLatiitude = ExcelUtils.readData(filterPath,"Fundraisings", i, 8);
+//				String testGeoLocationLongitude = ExcelUtils.readData(filterPath,"Fundraisings", i, 9);
+//				String testnumber = ExcelUtils.readData(filterPath,"Fundraisings", i, 10);
+//				String potentialManageMentFee = ExcelUtils.readData(filterPath,"Fundraisings", i, 11);
+//				String phone = ExcelUtils.readData(filterPath,"Fundraisings", i, 12);
+//				String stageDropdownVlaue = ExcelUtils.readData(filterPath,"Fundraisings", i, 13);
+//				String reasonForDeclinedValue = ExcelUtils.readData(filterPath,"Fundraisings", i, 14);
+//				String multiselectValue = ExcelUtils.readData(filterPath,"Fundraisings", i, 15);
+//				String nextStep = ExcelUtils.readData(filterPath,"Fundraisings", i, 16);
+//				String testTextArea = ExcelUtils.readData(filterPath,"Fundraisings", i, 17);
+//				String testTimeBeta = ExcelUtils.readData(filterPath,"Fundraisings", i, 18);
+//				String testUrl = ExcelUtils.readData(filterPath,"Fundraisings", i, 19);
+//				String TestCheckbox = ExcelUtils.readData(filterPath,"Fundraisings", i, 3);
+//				if (fundraisingName != null) {
+//					if (frp.createFundRaisingWithFilterData(fundraisingName, fundName, legalName, TestCheckbox,
+//							targetCloseDate, TestDatetime, testEmail, InvestmentHighAmount, testGeolocationLatiitude,
+//							testGeoLocationLongitude, testnumber, potentialManageMentFee, phone, stageDropdownVlaue,
+//							reasonForDeclinedValue, multiselectValue, nextStep, testTextArea, testTimeBeta, testUrl)) {
+//						appLog.info("fundraising created successfully" + fundraisingName);
+//					} else {
+//						appLog.info("fundraising not created successfully");
+//						saa.assertTrue(false, "fundraising not created successfully");
+//					}
+//				} else {
+//					appLog.info("Value is null so we cannot create fundraising");
+//					saa.assertTrue(false, "Value is null so we cannot create fundraising");
+//				}
+//			} else {
+//				appLog.info("Not able to click on fundraising tab");
+//				saa.assertTrue(false, "Not able to click on fundraising tab");
+//			}
+//		}
+//		for (int i = 1; i < 5; i++) {
+//			if (bp.clickOnTab(TabName.InstituitonsTab)) {
+//				String lp_name = ExcelUtils.readData(filterPath,"Limited Partner", i, 0);
+//				String inst_name = ExcelUtils.readData(filterPath,"Limited Partner", i, 1);
+//				if (ip.createLimitedPartner(lp_name, inst_name)) {
+//					appLog.info("Limited Partner Created successfully");
+//				} else {
+//					appLog.info("Limited Partner not craeted successfully");
+//					saa.assertTrue(false, "Not able to create limited partner");
+//				}
+//			} else {
+//				appLog.info("Not able to click on institution tab so cannot create limited Partner");
+//				saa.assertTrue(false, "Not able to click on institution tab so cannot create limited Partner");
+//			}
+//		}
+//		if (bp.clickOnTab(TabName.PartnershipsTab)) {
+//			if (pp.createPartnership(ExcelUtils.readData(filterPath,"Partnerships", 1, 0),
+//					ExcelUtils.readData(filterPath,"Partnerships", 1, 1))) {
+//				appLog.info("Partnership Created successfully");
+//			} else {
+//				appLog.info("Partnership not craeted successfully");
+//				saa.assertTrue(false, "Not able to create Partnership");
+//			}
+//		} else {
+//			appLog.info("Not able to click on Partnership tab so cannot create Partnership");
+//			saa.assertTrue(false, "Not able to click on Partnership tab so cannot create Partnership");
+//		}
+//		for (int i = 1; i < 5; i++) {
+//			if (bp.clickOnTab(TabName.CommitmentsTab)) {
+//				String LimitedPartner = ExcelUtils.readData(filterPath,"Commitments", i, 0);
+//				String Partnership = ExcelUtils.readData(filterPath,"Commitments", i, 1);
+//				String AntiMoneyCheckbox = ExcelUtils.readData(filterPath,"Commitments", i, 2);
+//				String finalCommitmentDate = ExcelUtils.readData(filterPath,"Commitments", i, 3);
+//				String testDatetime = ExcelUtils.readData(filterPath,"Commitments", i, 4);
+//				String email = ExcelUtils.readData(filterPath,"Commitments", i, 5);
+//				String commitmentAmount = ExcelUtils.readData(filterPath,"Commitments", i, 6);
+//				String geolocationLatitude = ExcelUtils.readData(filterPath,"Commitments", i, 7);
+//				String GeolocationLongitude = ExcelUtils.readData(filterPath,"Commitments", i, 8);
+//				String number = ExcelUtils.readData(filterPath,"Commitments", i, 9);
+//				String CarriedInterestPercent = ExcelUtils.readData(filterPath,"Commitments", i, 10);
+//				String phone = ExcelUtils.readData(filterPath,"Commitments", i, 11);
+//				String partnerType = ExcelUtils.readData(filterPath,"Commitments", i, 12);
+//				String multiPickList = ExcelUtils.readData(filterPath,"Commitments", i, 13);
+//				String testText = ExcelUtils.readData(filterPath,"Commitments", i, 14);
+//				String subdocDesc = ExcelUtils.readData(filterPath,"Commitments", i, 15);
+//				String testTimeBeta = ExcelUtils.readData(filterPath,"Commitments", i, 16);
+//				String testUrl = ExcelUtils.readData(filterPath,"Commitments", i, 17);
+//				String basedOnValue = ExcelUtils.readData(filterPath,"Commitments", i, 18);
+//				if (LimitedPartner != null) {
+//					if (cmp.createCommitmentInFilterData(LimitedPartner, Partnership, basedOnValue, AntiMoneyCheckbox,
+//							finalCommitmentDate, testDatetime, email, commitmentAmount, geolocationLatitude,
+//							GeolocationLongitude, number, CarriedInterestPercent, phone, partnerType, multiPickList,
+//							testText, subdocDesc, testTimeBeta, testUrl)) {
+//						appLog.info("Commitments created successfully");
+//					} else {
+//						appLog.info("Commitments not created successfully");
+//						saa.assertTrue(false, "Commitments not created successfully");
+//					}
+//				} else {
+//					appLog.info("Value is null so we cannot create Commitments");
+//					saa.assertTrue(false, "Value is null so we cannot create Commitments");
+//				}
+//			} else {
+//				appLog.info("Not able to click on Commitments tab");
+//				saa.assertTrue(false, "Not able to click on Commitments tab");
+//			}
+//		}
+//		for (int i = 1; i < 3; i++) {
+//			if (bp.clickOnTab(TabName.ContactTab)) {
+//				String contactFirstName = ExcelUtils.readData(filterPath,"Contacts", i, 0);
+//				String contactLastName = ExcelUtils.readData(filterPath,"Contacts", i, 1);
+//				String legalName = ExcelUtils.readData(filterPath,"Contacts", i, 2);
+//				String emailID = ExcelUtils.readData(filterPath,"Contacts", i, 3);
+//				if (cp.createContact(contactFirstName, contactLastName, legalName, emailID)) {
+//					appLog.info("Contacts Created successfully");
+//				} else {
+//					appLog.info("Contacts not craeted successfully");
+//					saa.assertTrue(false, "Not able to create Contacts");
+//				}
+//			} else {
+//				appLog.info("Not able to click on Contacts tab so cannot create Contacts");
+//				saa.assertTrue(false, "Not able to click on Contacts tab so cannot create Contacts");
+//			}
+//		}
+//		for (int i = 1; i < 3; i++) {
+//			if (bp.clickOnTab(TabName.InstituitonsTab)) {
+//				if (ip.clickOnCreatedInstitution(ExcelUtils.readData(filterPath,"AdvisorInvolvement", 1, 0))) {
+//					String DilgenceExpenseActual = ExcelUtils.readData(filterPath,"AdvisorInvolvement", i, 2);
+//					String basedOnValue = ExcelUtils.readData(filterPath,"AdvisorInvolvement", i, 3);
+//					if (ip.createadvisorInvolvements(ExcelUtils.readData(filterPath,"AdvisorInvolvement", 1, 1),
+//							DilgenceExpenseActual, basedOnValue)) {
+//						appLog.info("Advisor Involvement is created successfully");
+//					} else {
+//						appLog.info("Advisor Involvement is not created successfully");
+//						saa.assertTrue(false, "Advisor Involvement is not created successfully");
+//					}
+//				} else {
+//					appLog.info("Not able to click on created institution");
+//					saa.assertTrue(false, "Not able to click on created institution");
+//				}
+//			} else {
+//				appLog.info("Not able to click on Institutions tab so cannot create Advisor Involvement");
+//				saa.assertTrue(false, "Not able to click on Institutions tab so cannot create Advisor Involvement");
+//			}
+//		}
+//		for (int i = 1; i < 3; i++) {
+//			if (bp.clickOnTab(TabName.FundraisingsTab)) {
+//				if (frp.clickOnCreatedFundRaising(ExcelUtils.readData(filterPath,"FundraisingContact", 1, 0))) {
+//					String contact = ExcelUtils.readData(filterPath,"FundraisingContact", i, 1);
+//					if (frp.createFundRaisingContact(contact)) {
+//						appLog.info("FundRaising Contact created successfully");
+//					} else {
+//						appLog.info("FundRaising Contact not created successfully");
+//						saa.assertTrue(false, "FundRaising Contact not created successfully");
+//					}
+//				} else {
+//					appLog.info("Not able to click on created fundraising");
+//					saa.assertTrue(false, "Not able to click on created fundraising");
+//				}
+//			} else {
+//				appLog.info("Not able to click on FundRaising tab so cannot create FundRaising Contacts");
+//				saa.assertTrue(false, "Not able to click on FundRaising tab so cannot create FundRaising Contacts");
+//			}
+//		}
 		lp.CRMlogout(environment,mode);
 		sa.combineAssertions(saa);
 		sa.assertAll();
 	}
+	
+	
+	@Test
+	public void M6tc023_2_dataImportInInstitutionAndContactCreateLP() {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
+		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
+		SoftAssert saa = new SoftAssert();
+		mode=Mode.Classic.toString();
+		Boolean flag = false;
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if(dataload.dataImportWizard(ObjectName.InstitutionAndContacts, ObjectType.Standard, "\\UploadCSV\\InstitutionsAndContacts.csv", DataImportType.AddNewRecords, "4")) {
+			appLog.info("Data is imported Successfully in Institution and Contact fields.");
+			flag=true;
+			
+		}else {
+			appLog.error("Data is not imported in Institution and Contact fields.");
+			sa.assertTrue(false, "Data is not imported in Institution and Contact fields.");
+		}
+		if(flag) {
+			for (int i = 1; i < 5; i++) {
+				if (bp.clickOnTab(TabName.InstituitonsTab)) {
+					String lp_name = ExcelUtils.readData(filterPath,"Limited Partner", i, 0);
+					String inst_name = ExcelUtils.readData(filterPath,"Limited Partner", i, 1);
+					if (ip.createLimitedPartner(lp_name, inst_name)) {
+						appLog.info("Limited Partner Created successfully");
+					} else {
+						appLog.info("Limited Partner not craeted successfully");
+						saa.assertTrue(false, "Not able to create limited partner");
+					}
+				} else {
+					appLog.info("Not able to click on institution tab so cannot create limited Partner");
+					saa.assertTrue(false, "Not able to click on institution tab so cannot create limited Partner");
+				}
+			}
+		}else {
+			appLog.error("Not able to import institutions and contact so cannot create LP's");
+			sa.assertTrue(false, "Not able to import institutions and contact so cannot create LP's");
+		}
+		lp.switchToLighting();
+		mode=Mode.Lightning.toString();
+		lp.CRMlogout(environment,mode);
+		sa.combineAssertions(saa);
+		sa.assertAll();
+	}
+	
+	@Test
+	public void M6tc023_3_DataImportFundsFundRaisingsPartnershipAndCreateCommitments() {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		CommitmentPageBusinessLayer cmp = new CommitmentPageBusinessLayer(driver);
+		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
+		SoftAssert saa = new SoftAssert();
+		mode=Mode.Classic.toString();
+		Boolean flag = false;
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if(dataload.dataImportWizard(ObjectName.Funds, ObjectType.Custom, "\\UploadCSV\\Funds.csv", DataImportType.AddNewRecords, "1")) {
+			appLog.info("Data is imported Successfully in Funds fields.");
+			
+			if(dataload.dataImportWizard(ObjectName.Fundraisings, ObjectType.Custom, "\\UploadCSV\\FundRaisings.csv", DataImportType.AddNewRecords, "4")) {
+				appLog.info("Data is imported Successfully in FundRaisings fields.");
+				
+				if(dataload.dataImportWizard(ObjectName.Partnerships, ObjectType.Custom, "\\UploadCSV\\Partnership.csv", DataImportType.AddNewRecords, "1")) {
+					appLog.info("Data is imported Successfully in PartnerShip fields.");
+					flag=true;
+				}else {
+					appLog.error("Data is not imported in PartnerShip fields.");
+					sa.assertTrue(false, "Data is not imported in PartnerShip fields.");
+				}
+				
+				
+			}else {
+				appLog.error("Data is not imported in FundRaisings fields.");
+				sa.assertTrue(false, "Data is not imported in FundRaisings fields.");
+			}
+			
+		}else {
+			appLog.error("Data is not imported in Funds fields.");
+			sa.assertTrue(false, "Data is not imported in Funds fields.");
+		}
+		if(flag) {
+			for (int i = 1; i < 5; i++) {
+				if (bp.clickOnTab(TabName.CommitmentsTab)) {
+					String LimitedPartner = ExcelUtils.readData(filterPath,"Commitments", i, 0);
+					String Partnership = ExcelUtils.readData(filterPath,"Commitments", i, 1);
+					String AntiMoneyCheckbox = ExcelUtils.readData(filterPath,"Commitments", i, 2);
+					String finalCommitmentDate = ExcelUtils.readData(filterPath,"Commitments", i, 3);
+					String testDatetime = ExcelUtils.readData(filterPath,"Commitments", i, 4);
+					String email = ExcelUtils.readData(filterPath,"Commitments", i, 5);
+					String commitmentAmount = ExcelUtils.readData(filterPath,"Commitments", i, 6);
+					String geolocationLatitude = ExcelUtils.readData(filterPath,"Commitments", i, 7);
+					String GeolocationLongitude = ExcelUtils.readData(filterPath,"Commitments", i, 8);
+					String number = ExcelUtils.readData(filterPath,"Commitments", i, 9);
+					String CarriedInterestPercent = ExcelUtils.readData(filterPath,"Commitments", i, 10);
+					String phone = ExcelUtils.readData(filterPath,"Commitments", i, 11);
+					String partnerType = ExcelUtils.readData(filterPath,"Commitments", i, 12);
+					String multiPickList = ExcelUtils.readData(filterPath,"Commitments", i, 13);
+					String testText = ExcelUtils.readData(filterPath,"Commitments", i, 14);
+					String subdocDesc = ExcelUtils.readData(filterPath,"Commitments", i, 15);
+					String testTimeBeta = ExcelUtils.readData(filterPath,"Commitments", i, 16);
+					String testUrl = ExcelUtils.readData(filterPath,"Commitments", i, 17);
+					String basedOnValue = ExcelUtils.readData(filterPath,"Commitments", i, 18);
+					if (LimitedPartner != null) {
+						if (cmp.createCommitmentInFilterData(LimitedPartner, Partnership, basedOnValue, AntiMoneyCheckbox,
+								finalCommitmentDate, testDatetime, email, commitmentAmount, geolocationLatitude,
+								GeolocationLongitude, number, CarriedInterestPercent, phone, partnerType, multiPickList,
+								testText, subdocDesc, testTimeBeta, testUrl)) {
+							appLog.info("Commitments created successfully");
+						} else {
+							appLog.info("Commitments not created successfully");
+							saa.assertTrue(false, "Commitments not created successfully");
+						}
+					} else {
+						appLog.info("Value is null so we cannot create Commitments");
+						saa.assertTrue(false, "Value is null so we cannot create Commitments");
+					}
+				} else {
+					appLog.info("Not able to click on Commitments tab");
+					saa.assertTrue(false, "Not able to click on Commitments tab");
+				}
+			}
+			
+		}else {
+			appLog.error("Not able to import Partnership so cannot create commitments");
+			sa.assertTrue(false, "Not able to import Partnership so cannot create commitments");
+		}
+		lp.switchToLighting();
+		mode=Mode.Lightning.toString();
+		lp.CRMlogout(environment,mode);
+		sa.combineAssertions(saa);
+		sa.assertAll();
+	}
+	
+	
+	
 
 	@Test
 	public void M6tc024_BuildWorkspace() {
@@ -5370,11 +5560,11 @@ public class Module6 extends BaseLib {
 				if (click(driver, fp.getManageInvestorIcon(Workspace.FundraisingWorkspace, 60), "Manage Investor Icon",
 						action.SCROLLANDBOOLEAN)) {
 					if (i == 0) {
-						sa = fp.checkFilterSingle(filterPath,Workspace.FundraisingWorkspace, "Single row filter_Fundraising",60);
+						sa = fp.checkFilterSingle(filterPath,Workspace.FundraisingWorkspace, "Single row filter_Fundraising",10);
 						switchToDefaultContent(driver);
 						appLog.info("Single Filter is Done Successfully.");
 					} else if (i == 1) {
-						saa1 = fp.applyCriterionOnManageInvestor(filterPath,"Multiple row filter_Fundraising", Workspace.FundraisingWorkspace,60);
+						saa1 = fp.applyCriterionOnManageInvestor(filterPath,"Multiple row filter_Fundraising", Workspace.FundraisingWorkspace,10);
 						switchToDefaultContent(driver);
 						appLog.info("Done");
 					}

@@ -266,13 +266,13 @@ public class CommonLib implements Comparator<String> {
 	}
 	
 	public static enum object{
-		Account{
+		Institution{
 			@Override
 			public String toString() {
 //				if(ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Lighting.toString())) {
 //					return "Institution";
 //				} else {
-					return "Accounts";
+					return "Institution";
 			//	}
 			}
 		},Contact,Fund,Fundraising,Fundraising_Contact{
@@ -285,7 +285,7 @@ public class CommonLib implements Comparator<String> {
 			public String toString() {
 				return "Installed Packages";
 		}
-	},Users;
+	},Users,Global_Actions,Activity_Setting,Commitment;
 	};
 	
 	
@@ -452,6 +452,85 @@ public class CommonLib implements Comparator<String> {
 		Assigned_To, Status, Priority,Related_To,Name, Due_Date, Subject,Comments
 	};
 	
+	
+	public static enum objectFeatureName{
+
+		pageLayouts{
+			@Override
+			public String toString() {
+				return "Page Layouts";
+			}
+		},myTemplates{
+			@Override
+			public String toString() {
+				if(ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Classic.toString())){
+					return "My Templates";
+				}else {
+					return "My Templates";
+				}
+			}
+		},compactLayouts{
+			@Override
+			public String toString() {
+				return "Compact Layouts";
+			}
+
+
+		},FieldAndRelationShip{
+			@Override
+			public String toString() {
+				return "Fields & Relationships";
+			}
+
+
+		}
+	};
+	
+	public static enum PageLabel{
+		First_Name,Last_Name,Email, Fund_Name, Deal_Name,Status, Meeting_Type{
+			@Override
+			public String toString() {
+				return "Meeting Type";
+			}
+		}  ,Priority,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description
+	};
+	
+	public static enum SearchItemName{
+		Data_Import_Wizard;
+	}
+	
+	public static enum SearchItemcategory{
+		Import;
+	}
+	public static enum ObjectName{
+		InstitutionAndContacts {
+			@Override
+			public String toString() {
+				return "Institutions and Contacts";
+			}},Funds,Fundraisings,Partnerships;
+	}
+	public static enum ObjectType{
+		Standard,Custom;
+	}
+	
+	public static enum DataImportType{
+		AddNewRecords {
+			@Override
+			public String toString() {
+				return "Add new records";
+			}},
+		UpdateExistingRecords {
+				@Override
+				public String toString() {
+					return "Update existing records";
+				}},
+		AddNewAndUpdateExistingRecords {
+					@Override
+					public String toString() {
+						return "Add new and update existing records";
+					}}
+	}
+
 	/*****************************************Common Utilities***********************************************************/
 
 	/**
@@ -2789,17 +2868,30 @@ public class CommonLib implements Comparator<String> {
 	
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
-				@Override
-				public String toString() {
-					return "Log a Call with Multiple Associations";
-				}
-			},NewTaskWithMultiple{
-				@Override
-				public String toString() {
-					return "New Task with Multiple Associations";
-				}
-			}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments
-			};
+		New_Task,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
+			@Override
+			public String toString() {
+				return "Log a Call with Multiple Associations";
+			}
+		},NewTaskWithMultiple{
+			@Override
+			public String toString() {
+				return "New Task with Multiple Associations";
+			}
+		}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments
+	};
+	
+	public static boolean dragNDropField(WebDriver driver,WebElement source, WebElement target) {
+		Actions actions = new Actions(driver);
+		try {
+			actions.clickAndHold(source).moveToElement(target).build().perform();
+			ThreadSleep(500);
+			actions.click(target).release().build().perform();
+			//actions.dragAndDrop(source, target).build().perform();	
+		} catch (Exception e){
+			return false;
+		}
+		return true;
+	}
 }
 

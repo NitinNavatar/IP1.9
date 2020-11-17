@@ -1950,7 +1950,7 @@ public abstract class BasePage {
 	}
 	
 	public List<WebElement> getAllFundraisingscustomFields() {
-		return FindElements(driver, "//div[@class='noStandardTab']//th[@class=' dataCell  ']//a", "All FundRaisings Custom Fields");
+		return FindElements(driver, "//div[@id='setupComponent']//table[contains(@data-aura-class,'uiVirtualDataGrid')]/tbody/tr/td[1]//a/span", "All FundRaisings Custom Fields");
 	}
 	
 	
@@ -1975,7 +1975,7 @@ public abstract class BasePage {
 	}
 	
 	public List<WebElement> getAllCommitmentscustomFields() {
-		return FindElements(driver, "//div[@class='noStandardTab']//th[@class=' dataCell  ']//a", "All Commitments Custom Fields");
+		return FindElements(driver, "//div[@id='setupComponent']//table[contains(@data-aura-class,'uiVirtualDataGrid')]/tbody/tr/td[1]//a/span", "All Commitments Custom Fields");
 	}
 	
 	 
@@ -3566,5 +3566,13 @@ public abstract class BasePage {
 		}
 		@FindBy(xpath = "//button[@title='Save']")
 		private WebElement save_Lightning;
-	
+		
+		
+		@FindBy(xpath = "//input[@id='globalQuickfind']")
+		private WebElement customFieldAndRelationShipSearchTextBox;
+
+		public WebElement getCustomFieldAndRelationShipSearchTextBox(int timeOut) {
+			return isDisplayed(driver, customFieldAndRelationShipSearchTextBox, "Visibility", timeOut, "custom Field And RelationShip  Search TextBox");
+		}
+		
 	}

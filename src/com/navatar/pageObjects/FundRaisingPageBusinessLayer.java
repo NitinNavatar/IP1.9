@@ -8,8 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.CommonLib.YesNo;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
+import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.CommonLib.*;
@@ -17,6 +19,8 @@ import static com.navatar.generic.CommonLib.*;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.List;
+
+import javax.management.ObjectName;
 
 /**
  * @author Parul Singh
@@ -97,132 +101,148 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage implements Fun
 	public boolean addCustomFieldInFundRaising(String fieldName, String fieldLabel, String startingNumber,
 			String DecimalPlaces, String Value, String FormulaReturnType, String SimpleFormulaValue,int timeOut) {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		List<WebElement> fieldLabel1 = FindElements(driver, "//div[contains(@id,'CustomFieldRelatedList_body')]//tr[1]/following-sibling::tr//th//div/a", "Field label");
-		List<WebElement> fieldName1 = FindElements(driver, "//div[contains(@id,'CustomFieldRelatedList_body')]//tr[1]/following-sibling::tr/td[5]", "Fileld name 1");
-		for(int i =0; i < fieldLabel1.size();i++){
-		if(fieldLabel1.get(i).getText().contains(fieldLabel) && fieldName1.get(i).getText().contains(fieldName)){
-				appLog.info("Field already added");
-				return true;
-			}
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		sendKeys(driver, getCustomFieldAndRelationShipSearchTextBox(60), fieldLabel, "search box", action.SCROLLANDBOOLEAN);
+		ThreadSleep(3000);
+		String fieldLabelXpath="//div[@id='setupComponent']//table[contains(@data-aura-class,'uiVirtualDataGrid')]/tbody/tr/td[1]//a/span[text()='"+fieldLabel+"']";
+		WebElement fieldLabel1 = FindElement(driver, fieldLabelXpath, fieldLabel+" label xpath", action.BOOLEAN,5);
+		if(fieldLabel1!=null) {
+//			List<WebElement> fieldName1 = FindElements(driver, "//div[@id='setupComponent']//table[contains(@data-aura-class,'uiVirtualDataGrid')]/tbody/tr/td[1]//a/span[text()='"+fieldLabel+"']", "Fileld name 1");
+			String fieldNameXpath="/../../following-sibling::td[2]/span[contains(text(),'"+fieldName+"')]";
+			WebElement fieldName1 = FindElement(driver, fieldLabelXpath+fieldNameXpath, fieldName+" field Name xpath", action.BOOLEAN,5);
+				if(fieldName1!=null){
+					appLog.info("Field already added");
+					return true;
+				}
 		}
-							if (click(driver, bp.getNewButtonInAccountsField(60), "New Button",
-									action.SCROLLANDBOOLEAN)) {
-								WebElement ele = FindElement(driver, "//label[text()='" + fieldName + "']/..//input",
-										"", action.SCROLLANDBOOLEAN, timeOut);
-								if (click(driver, ele, "Radio checkbox", action.SCROLLANDBOOLEAN)) {
-									if (click(driver, bp.getNextButton(timeOut), "Next Button", action.SCROLLANDBOOLEAN)) {
-										if (sendKeys(driver, bp.getFieldLabelTextBox(timeOut), fieldLabel,
-												"FieldLabel Text Box", action.SCROLLANDBOOLEAN)) {
-											if (fieldName.equalsIgnoreCase("Auto Number")) {
-												if (sendKeys(driver, bp.getStartingNumberFieldTextBox(timeOut),
-														startingNumber, "Stating Number", action.SCROLLANDBOOLEAN)) {
-													appLog.info("Entered starting number successfully");
-												} else {
-													appLog.info("Not able to enter Starting Number");
-												}
-											}
-											if (fieldName.equalsIgnoreCase("Geolocation")) {
-												if (sendKeys(driver, bp.getDecimalPlacesTextbox(timeOut), DecimalPlaces,
-														"Decimal Places", action.SCROLLANDBOOLEAN)) {
-													appLog.info("Entered Decimal Places successfully");
-												} else {
-													appLog.info("Not able to enter Decimal Places");
-												}
-											}
-											if (fieldName.equalsIgnoreCase("Formula")) {
-												WebElement formulaReturnTypeRadioButton = FindElement(driver,
-														"//label[text()='" + FormulaReturnType + "']/..//input",
-														"Radio Button", action.SCROLLANDBOOLEAN, timeOut);
-												if (click(driver, formulaReturnTypeRadioButton, "Radio Button",
-														action.SCROLLANDBOOLEAN)) {
-													appLog.info("Selected Radio Button successfully");
-													if (click(driver, bp.getNextButton(timeOut), "Next Button",
-															action.SCROLLANDBOOLEAN)) {
-														if (sendKeys(driver, bp.getFormulaTextBox(timeOut),
-																SimpleFormulaValue, "Formula Text Box",
-																action.SCROLLANDBOOLEAN)) {
-															appLog.info("entered value in formula tetx box");
-														} else {
-															appLog.info("Not able to enter value in formula tetx box");
-														}
-													} else {
-														appLog.info("Not able to click on next button");
-													}
-												} else {
-													appLog.info("Not able to click on radio button");
-												}
-											}
-											if (fieldName.equalsIgnoreCase("Picklist (Multi-Select)")) {
-												if (click(driver, bp.getMultiPicklistValueRadioButton(timeOut),
-														"Value Radio Button", action.SCROLLANDBOOLEAN)) {
-													appLog.info("Selected Value Radio Button successfully");
-													String[] splitedTabs = Value.split(",");
-													for (int i = 0; i < splitedTabs.length; i++) {
-													if (sendKeysWithoutClearingTextBox(driver, bp.getValueTextBox(timeOut), splitedTabs[i],
-															"Value Text Box", action.SCROLLANDBOOLEAN)) {
-														ThreadSleep(3000);
-														try{
-														Robot rob = new Robot();
-														rob.keyPress(KeyEvent.VK_ENTER);
-														 ThreadSleep(500);
-														 rob.keyRelease(KeyEvent.VK_ENTER);
-														 ThreadSleep(500);
-														}catch(Exception e){
-															appLog.error("Inside catch");
-														}
-												} else {
-														appLog.error(splitedTabs[i]+"Not able to enter value");
-													}
-													}
-												} else {
-													appLog.info("Not able to select radio button ");
-												}
-											}
-											if (click(driver, bp.getNextButton(timeOut), "Next Button",
-													action.SCROLLANDBOOLEAN)) {
-												if (click(driver, bp.getNextButton(timeOut), "Next Button",
-														action.SCROLLANDBOOLEAN)) {
-													if (click(driver, bp.getSaveButtonInCustomFields(timeOut), "Save Button",
-															action.SCROLLANDBOOLEAN)) {
-														appLog.info("Clicked On SaveButton");
-														List<WebElement> FundRaisingList = bp
-																.getAllFundraisingscustomFields();
-														for (int i = 0; i < FundRaisingList.size(); i++) {
-															String FundRaisingListName = trim(getText(driver,
-																	FundRaisingList.get(i), "Commitment Lists",
-																	action.SCROLLANDBOOLEAN));
-															if (FundRaisingListName.contains(fieldLabel)) {
-																appLog.info(fieldName
-																		+ " Custom Field is added successfully");
-																return true;
-															} else {
-																if (i == FundRaisingList.size() - 1) {
-																	appLog.info(fieldName
-																			+ " Custom Field is not added successfully");
-																}
-															}
-														}
-													} else {
-														appLog.info("Not able to click on save button");
-													}
-												} else {
-													appLog.info("Not able to click on Next Button");
-												}
-											} else {
-												appLog.info("Not able to click on Next Button");
-											}
+		if(click(driver, setup.getCustomFieldNewButton(30),"new button", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Clicked on New Button");
+			ThreadSleep(5000);
+			if(switchToFrame(driver, 30, setup.getNewCustomFieldFrame(object.Fundraising,30))) {
+				WebElement ele = FindElement(driver, "//label[text()='" + fieldName + "']/..//input",
+						"", action.SCROLLANDBOOLEAN, timeOut);
+				if (click(driver, ele, "Radio checkbox", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getNextButton(timeOut), "Next Button", action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver, bp.getFieldLabelTextBox(timeOut), fieldLabel,
+								"FieldLabel Text Box", action.SCROLLANDBOOLEAN)) {
+							if (fieldName.equalsIgnoreCase("Auto Number")) {
+								if (sendKeys(driver, bp.getStartingNumberFieldTextBox(timeOut),
+										startingNumber, "Stating Number", action.SCROLLANDBOOLEAN)) {
+									appLog.info("Entered starting number successfully");
+								} else {
+									appLog.info("Not able to enter Starting Number");
+								}
+							}
+							if (fieldName.equalsIgnoreCase("Geolocation")) {
+								if (sendKeys(driver, bp.getDecimalPlacesTextbox(timeOut), DecimalPlaces,
+										"Decimal Places", action.SCROLLANDBOOLEAN)) {
+									appLog.info("Entered Decimal Places successfully");
+								} else {
+									appLog.info("Not able to enter Decimal Places");
+								}
+							}
+							if (fieldName.equalsIgnoreCase("Formula")) {
+								WebElement formulaReturnTypeRadioButton = FindElement(driver,
+										"//label[text()='" + FormulaReturnType + "']/..//input",
+										"Radio Button", action.SCROLLANDBOOLEAN, timeOut);
+								if (click(driver, formulaReturnTypeRadioButton, "Radio Button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.info("Selected Radio Button successfully");
+									if (click(driver, bp.getNextButton(timeOut), "Next Button",
+											action.SCROLLANDBOOLEAN)) {
+										if (sendKeys(driver, bp.getFormulaTextBox(timeOut),
+												SimpleFormulaValue, "Formula Text Box",
+												action.SCROLLANDBOOLEAN)) {
+											appLog.info("entered value in formula tetx box");
 										} else {
-											appLog.info("Not able to enter value in field label text box");
+											appLog.info("Not able to enter value in formula tetx box");
 										}
 									} else {
-										appLog.info("Not able to click on Next Button");
+										appLog.info("Not able to click on next button");
 									}
 								} else {
-									appLog.info("Not able to click on Radio checkbox");
+									appLog.info("Not able to click on radio button");
+								}
+							}
+							if (fieldName.equalsIgnoreCase("Picklist (Multi-Select)")) {
+								if (click(driver, bp.getMultiPicklistValueRadioButton(timeOut),
+										"Value Radio Button", action.SCROLLANDBOOLEAN)) {
+									appLog.info("Selected Value Radio Button successfully");
+									String[] splitedTabs = Value.split(",");
+									for (int i = 0; i < splitedTabs.length; i++) {
+										if (sendKeysWithoutClearingTextBox(driver, bp.getValueTextBox(timeOut), splitedTabs[i],
+												"Value Text Box", action.SCROLLANDBOOLEAN)) {
+											ThreadSleep(3000);
+											try{
+												Robot rob = new Robot();
+												rob.keyPress(KeyEvent.VK_ENTER);
+												ThreadSleep(500);
+												rob.keyRelease(KeyEvent.VK_ENTER);
+												ThreadSleep(500);
+											}catch(Exception e){
+												appLog.error("Inside catch");
+											}
+										} else {
+											appLog.error(splitedTabs[i]+"Not able to enter value");
+										}
+									}
+								} else {
+									appLog.info("Not able to select radio button ");
+								}
+							}
+							if (click(driver, bp.getNextButton(timeOut), "Next Button",
+									action.SCROLLANDBOOLEAN)) {
+								if (click(driver, bp.getNextButton(timeOut), "Next Button",
+										action.SCROLLANDBOOLEAN)) {
+									if (click(driver, bp.getSaveButtonInCustomFields(timeOut), "Save Button",
+											action.SCROLLANDBOOLEAN)) {
+										appLog.info("Clicked On SaveButton");
+										switchToDefaultContent(driver);
+										ThreadSleep(3000);
+										sendKeys(driver, getCustomFieldAndRelationShipSearchTextBox(60), fieldLabel, "search box", action.SCROLLANDBOOLEAN);
+										ThreadSleep(5000);
+										List<WebElement> FundRaisingList = bp
+												.getAllFundraisingscustomFields();
+										for (int i = 0; i < FundRaisingList.size(); i++) {
+											String FundRaisingListName = trim(getText(driver,
+													FundRaisingList.get(i), "Commitment Lists",
+													action.SCROLLANDBOOLEAN));
+											if (FundRaisingListName.contains(fieldLabel)) {
+												appLog.info(fieldName
+														+ " Custom Field is added successfully");
+												return true;
+											} else {
+												if (i == FundRaisingList.size() - 1) {
+													appLog.info(fieldName
+															+ " Custom Field is not added successfully");
+												}
+											}
+										}
+									} else {
+										appLog.info("Not able to click on save button");
+									}
+								} else {
+									appLog.info("Not able to click on Next Button");
 								}
 							} else {
-								appLog.info("Not able to click on New Button");
+								appLog.info("Not able to click on Next Button");
 							}
+						} else {
+							appLog.info("Not able to enter value in field label text box");
+						}
+					} else {
+						appLog.info("Not able to click on Next Button");
+					}
+				} else {
+					appLog.info("Not able to click on Radio checkbox");
+				}
+			}else {
+				appLog.error("Not able to switch in "+object.Fundraising+" new object frame so cannot add custom object");
+			}
+		} else {
+			appLog.info("Not able to click on New Button");
+		}
+		switchToDefaultContent(driver);
 		return false;
 	}
 

@@ -181,7 +181,7 @@ public class InstitutionPage extends BasePageBusinessLayer{
 	}
 	
 	public List<WebElement> getAllAccountscustomFields() {
-		return FindElements(driver, "//div[@id='CustomFieldRelatedList_body']//th[@class=' dataCell  ']//a", "All Accounts Custom Fields");
+		return FindElements(driver, "//div[@id='setupComponent']//table[contains(@data-aura-class,'uiVirtualDataGrid')]/tbody/tr/td[1]//a/span", "All Accounts Custom Fields");
 	}
 	
 	@FindBy(xpath="//span[@class='dateInput dateOnlyInput']//input")
