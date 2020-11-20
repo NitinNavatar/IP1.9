@@ -8027,7 +8027,7 @@ public class Module8 extends BaseLib{
 																
 																if(fp.clickOnTab(TabName.InstituitonsTab)){
 																	if(ins.clickOnCreatedInstitution(M8LP1)){
-																		switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+																		switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 																		scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor wokspace view.");
 																		if(fp.VerifyFolderStructure("FolderTemp", null, null, M8F5, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 																			appLog.info("Folder Structure is verified on LP page.");
