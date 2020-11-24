@@ -2288,9 +2288,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @return true/false
 	 */
 	public boolean verifyLPStructureInManageInvestor(String institutionNAme,String LimitedPartnerName){
-		WebElement xpath=FindElement(driver, "//label[@title='"+institutionNAme+"']", "Institution Name", action.SCROLLANDBOOLEAN, 60);
+		WebElement xpath=FindElement(driver, "//label[@title='"+institutionNAme+"']", "Institution Name", action.SCROLLANDBOOLEAN, 10);
 		if(click(driver, xpath, "InstitutionName", action.SCROLLANDBOOLEAN)){
-		WebElement ele=FindElement(driver, "//label[@title='"+institutionNAme+"']/../../../following-sibling::ul/li/div/a//label[@title='"+LimitedPartnerName+"']", "Limited Partner NAme", action.SCROLLANDBOOLEAN, 60);
+		WebElement ele=FindElement(driver, "//label[@title='"+institutionNAme+"']/../../../following-sibling::ul/li/div/a//label[@title='"+LimitedPartnerName+"']", "Limited Partner NAme", action.SCROLLANDBOOLEAN, 10);
 		if(ele!=null){
 			appLog.info("LP:"+LimitedPartnerName+"Is Displaying under institution:"+institutionNAme);
 		}else{
@@ -2321,9 +2321,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @return true/false
 	 */
 	public boolean clickOnRenameManageTargetLimitedPartner(String InstitutionName,String LimitedPartner) {
-		WebElement xpath=FindElement(driver, "//label[@title='"+InstitutionName+"']", "Institution Name", action.SCROLLANDBOOLEAN, 60);
-		if(click(driver, xpath, "InstitutionName", action.SCROLLANDBOOLEAN)){
-			WebElement targetRename=FindElement(driver, "//label[@title='"+LimitedPartner+"']//div", "Limited PArtner", action.SCROLLANDBOOLEAN, 60);
+		WebElement xpath=FindElement(driver, "//label[@title='"+InstitutionName+"']", "Institution Name", action.BOOLEAN, 5);
+		if(click(driver, xpath, "InstitutionName", action.BOOLEAN)){
+			WebElement targetRename=FindElement(driver, "//label[@title='"+LimitedPartner+"']//div", "Limited PArtner", action.BOOLEAN, 5);
 			try{
 				for(int i=0;i<2;i++){
 					((JavascriptExecutor) driver).executeScript(
@@ -3775,7 +3775,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					sa.assertTrue(false, list.get(j) + " :Investor not found.");
 					str.append(list.get(j) + ", ");
 				}
-				ExcelUtils.writeDataInExcel(path,"Not found Investors: " + str, "Filter Logic for multiple rows", l - itr, 6);
+				ExcelUtils.writeDataInExcel(path,"Not found Investors: " + str, sheetName, l - itr, 6);
 			}
 			click(driver, getManageInvestorFilterClearButton(workspace, timeOut), "clear Button", action.THROWEXCEPTION);
 			List<WebElement> lst=getManageInvestorFilterRemoveRowIcon(workspace);

@@ -4,10 +4,8 @@
 package com.navatar.scripts;
 
 
-import org.apache.poi.hwpf.model.types.HRESIAbstractType;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.ErrorMessageType;
@@ -33,10 +31,6 @@ import com.navatar.pageObjects.InstitutionPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageBusinessLayer;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
-
-import freemarker.cache.TemplateNameFormat;
-
-import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 
@@ -50,6 +44,8 @@ import java.util.List;
  *
  */
 public class Module8 extends BaseLib{
+	
+	static String filterPath = System.getProperty("user.dir") + "/TestCases_Filter.xlsx";
 
 	@Test
 	public void M8tc001_PreCondition(){
@@ -298,7 +294,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Commitments tab cannot be clicked, So cannot continue with the TC.");
 		}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -336,7 +332,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"NIM tab cannot be clicked, So cannot continue delete.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
@@ -385,7 +381,7 @@ public class Module8 extends BaseLib{
 			appLog.error("Funds Tab cannot be clicked, so cannot verify build workspace button.");
 			sa.assertTrue(false,"Funds Tab cannot be clicked, so cannot verify build workspace button.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -694,7 +690,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds Tab cannot be clicked, So cannot verify step 1 of 3 of workspace building process.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1003,7 +999,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds Tab cannot be clicked, So cannot verify step 1 of 3 of workspace building process.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1422,7 +1418,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1828,7 +1824,7 @@ public class Module8 extends BaseLib{
 		}
 		
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2046,7 +2042,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2265,7 +2261,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2720,7 +2716,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -3164,7 +3160,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -3537,7 +3533,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
@@ -3912,7 +3908,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
@@ -4055,7 +4051,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -4089,7 +4085,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"NIM tab cannot be clicked, So cannot create folder template.");
 		}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4547,7 +4543,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5005,7 +5001,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5364,7 +5360,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5723,7 +5719,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6525,7 +6521,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6766,7 +6762,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7008,7 +7004,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7229,7 +7225,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7449,7 +7445,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7766,7 +7762,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8031,7 +8027,7 @@ public class Module8 extends BaseLib{
 																
 																if(fp.clickOnTab(TabName.InstituitonsTab)){
 																	if(ins.clickOnCreatedInstitution(M8LP1)){
-																		switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+																		switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 																		scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Investor wokspace view.");
 																		if(fp.VerifyFolderStructure("FolderTemp", null, null, M8F5, Workspace.InvestorWorkspace, PageName.InstitutionsPage, 30)){
 																			appLog.info("Folder Structure is verified on LP page.");
@@ -8136,7 +8132,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8177,7 +8173,7 @@ public class Module8 extends BaseLib{
 			appLog.error("Funds tab cannot be clicked, SO cannot continue with the tc.");
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8218,7 +8214,7 @@ public class Module8 extends BaseLib{
 			appLog.error("Funds tab cannot be clicked, SO cannot continue with the tc.");
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8309,7 +8305,7 @@ public class Module8 extends BaseLib{
 			appLog.error("Funds tab cannot be clicked, SO cannot continue with the tc.");
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8834,7 +8830,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	
 	}
@@ -9109,13 +9105,11 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false,"Funds tab cannot be clicked, SO cannot continue with the tc.");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	
 	
 	}
-	
-	static String filterPath = System.getProperty("user.dir") + "/TestCases_Filter.xlsx";
 	
 	@Test
 	public void M8tc031_CheckErrorMessgeInStep3PopUpAndFunctionalityOfAddRowLink(){
@@ -9143,7 +9137,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		 lp = new LoginPageBusinessLayer(driver);
@@ -9634,7 +9628,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9789,7 +9783,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();		
 	}
 	
@@ -9869,7 +9863,7 @@ public class Module8 extends BaseLib{
 	}
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	try{	
 		sa.assertAll();
 	} catch(Throwable th){
@@ -9907,7 +9901,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		 lp = new LoginPageBusinessLayer(driver);
@@ -10398,7 +10392,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();	
 	}
 	
@@ -10562,7 +10556,7 @@ public class Module8 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();		
 		}	
 		
@@ -10641,7 +10635,7 @@ public class Module8 extends BaseLib{
 	}
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	try{	
 		sa.assertAll();
 	} catch(Throwable th){
@@ -10658,6 +10652,6 @@ public class Module8 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.postCondition().assertAll();
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 	}
 }

@@ -8,8 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.sikuli.script.App;
 
 import com.navatar.generic.CommonLib.Mode;
+import com.navatar.generic.CommonLib.YesNo;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
+import com.relevantcodes.extentreports.LogStatus;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.ExcelUtils;
 
@@ -754,11 +756,10 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 	 * @return true/false
 	 */
 	public boolean createLimitedPartner(String lp_name, String inst_name) {
-		if (clickOnTab(TabName.InstituitonsTab)) {
 			if (click(driver, getNewButton(60), "New button", action.SCROLLANDBOOLEAN)) {
 				if (selectVisibleTextFromDropDown(driver, getRecordType(), "Record Type dropdown", "Limited Partner")) {
 					if (click(driver, getContinueBtn(60), "Continue button", action.BOOLEAN)) {
-						if (sendKeys(driver, getLegalNameTextBox(60), lp_name, "LP name", action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver, getLegalNameTextBox(environment, mode, 30), lp_name, "LP name", action.SCROLLANDBOOLEAN)) {
 							if (sendKeys(driver, getParentInstitutionTextBox(60), inst_name, "institution name",
 									action.SCROLLANDBOOLEAN)) {
 								if (click(driver, getSaveButton(60), "Save Button", action.SCROLLANDBOOLEAN)) {
@@ -791,10 +792,6 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 			} else {
 				appLog.error("New button on institutions page not found");
 			}
-
-		} else {
-			appLog.error("Institutions tab not found");
-		}
 		return false;
 	}
 
@@ -881,80 +878,95 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 	 */
 	public boolean addCustomFieldInAccount(String fieldName, String fieldLabel, String startingNumber,
 			String DecimalPlaces,int timeOut) {
+
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		List<WebElement> fieldLabel1 = FindElements(driver, "//div[@id='CustomFieldRelatedList']//table[@class='list']//th/div[@class='CfLabelCol']/a", "Field label");
-		List<WebElement> fieldName1 = FindElements(driver, "//div[@id='CustomFieldRelatedList_body']//tr[1]/following-sibling::tr/td[5]", "Fileld name 1");
-							for(int i =0; i < fieldLabel1.size();i++){
-							if(fieldLabel1.get(i).getText().equalsIgnoreCase(fieldLabel) && fieldName1.get(i).getText().equalsIgnoreCase(fieldName)){
-									appLog.info("Field already added");
-									return true;
+		sendKeys(driver, getCustomFieldAndRelationShipSearchTextBox(60), fieldLabel, "search box", action.SCROLLANDBOOLEAN);
+		ThreadSleep(3000);
+		String fieldLabelXpath="//div[@id='setupComponent']//table[contains(@data-aura-class,'uiVirtualDataGrid')]/tbody/tr/td[1]//a/span[text()='"+fieldLabel+"']";
+		WebElement fieldLabel1 = FindElement(driver, fieldLabelXpath, fieldLabel+" label xpath", action.BOOLEAN,5);
+		if(fieldLabel1!=null) {
+//			List<WebElement> fieldName1 = FindElements(driver, "//div[@id='setupComponent']//table[contains(@data-aura-class,'uiVirtualDataGrid')]/tbody/tr/td[1]//a/span[text()='"+fieldLabel+"']", "Fileld name 1");
+			String fieldNameXpath="/../../following-sibling::td[2]/span[contains(text(),'"+fieldName+"')]";
+			WebElement fieldName1 = FindElement(driver, fieldLabelXpath+fieldNameXpath, fieldName+" field Name xpath", action.BOOLEAN,5);
+				if(fieldName1!=null){
+					appLog.info("Field already added");
+					return true;
+				}
+		}
+		if(click(driver, setup.getCustomFieldNewButton(30),"new button", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Clicked on New Button");
+			ThreadSleep(5000);
+			if(switchToFrame(driver, 30, setup.getNewCustomFieldFrame(object.Institution,30))) {
+				WebElement ele = FindElement(driver, "//label[text()='" + fieldName + "']/..//input",
+						"", action.SCROLLANDBOOLEAN, timeOut);
+				if (click(driver, ele, "Radio checkbox", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getNextButton(timeOut), "Next Button", action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver, bp.getFieldLabelTextBox(timeOut), fieldLabel,
+								"FieldLabel Text Box", action.SCROLLANDBOOLEAN)) {
+							if (fieldName.equalsIgnoreCase("Auto Number")) {
+								if (sendKeys(driver, bp.getStartingNumberFieldTextBox(timeOut),
+										startingNumber, "Stating Number", action.SCROLLANDBOOLEAN)) {
+									appLog.info("Entered starting number successfully");
 								}
-							}							
-							if (click(driver, bp.getNewButtonInAccountsField(timeOut), "New Button",
+							}
+							if (fieldName.equalsIgnoreCase("Geolocation")) {
+								if (sendKeys(driver, bp.getDecimalPlacesTextbox(timeOut), DecimalPlaces,
+										"Decimal Places", action.SCROLLANDBOOLEAN)) {
+									appLog.info("Entered Decimal Places successfully");
+								}
+							}
+							if (click(driver, bp.getNextButton(timeOut), "Next Button",
 									action.SCROLLANDBOOLEAN)) {
-								WebElement ele = FindElement(driver, "//label[text()='" + fieldName + "']/..//input",
-										"", action.SCROLLANDBOOLEAN, timeOut);
-								if (click(driver, ele, "Radio checkbox", action.SCROLLANDBOOLEAN)) {
-									if (click(driver, bp.getNextButton(timeOut), "Next Button", action.SCROLLANDBOOLEAN)) {
-										if (sendKeys(driver, bp.getFieldLabelTextBox(timeOut), fieldLabel,
-												"FieldLabel Text Box", action.SCROLLANDBOOLEAN)) {
-											if (fieldName.equalsIgnoreCase("Auto Number")) {
-												if (sendKeys(driver, bp.getStartingNumberFieldTextBox(timeOut),
-														startingNumber, "Stating Number", action.SCROLLANDBOOLEAN)) {
-													appLog.info("Entered starting number successfully");
-												}
-											}
-											if (fieldName.equalsIgnoreCase("Geolocation")) {
-												if (sendKeys(driver, bp.getDecimalPlacesTextbox(timeOut), DecimalPlaces,
-														"Decimal Places", action.SCROLLANDBOOLEAN)) {
-													appLog.info("Entered Decimal Places successfully");
-												}
-											}
-											if (click(driver, bp.getNextButton(timeOut), "Next Button",
-													action.SCROLLANDBOOLEAN)) {
-												if (click(driver, bp.getNextButton(timeOut), "Next Button",
-														action.SCROLLANDBOOLEAN)) {
-													if (click(driver, bp.getSaveButtonInCustomFields(timeOut), "Save Button",
-															action.SCROLLANDBOOLEAN)) {
-														appLog.info("Clicked On SaveButton");
-														List<WebElement> AccountsList = getAllAccountscustomFields();
-														for (int i = 0; i < AccountsList.size(); i++) {
-															String AccountListName = trim(
-																	getText(driver, AccountsList.get(i),
-																			"Account Lists", action.SCROLLANDBOOLEAN));
-															if (AccountListName.contains(fieldLabel)) {
-																appLog.info(fieldName
-																		+ " Custom Field is added successfully");
-																return true;
-															} else {
-																if (i == AccountsList.size() - 1) {
-																	appLog.info(fieldName
-																			+ " Custom Field is not added successfully");
-																}
-															}
-														}
-													} else {
-														appLog.info("Not able to click on save button");
-													}
-												} else {
-													appLog.info("Not able to click on Next Button");
-												}
+								if (click(driver, bp.getNextButton(timeOut), "Next Button",
+										action.SCROLLANDBOOLEAN)) {
+									if (click(driver, bp.getSaveButtonInCustomFields(timeOut), "Save Button",
+											action.SCROLLANDBOOLEAN)) {
+										appLog.info("Clicked On SaveButton");
+										switchToDefaultContent(driver);
+										ThreadSleep(5000);
+										sendKeys(driver, getCustomFieldAndRelationShipSearchTextBox(60), fieldLabel, "search box", action.SCROLLANDBOOLEAN);
+										ThreadSleep(5000);
+										List<WebElement> AccountsList = getAllAccountscustomFields();
+										for (int i = 0; i < AccountsList.size(); i++) {
+											String AccountListName = trim(
+													getText(driver, AccountsList.get(i),
+															"Account Lists", action.SCROLLANDBOOLEAN));
+											if (AccountListName.contains(fieldLabel)) {
+												appLog.info(fieldName+ " Custom Field is added successfully");
+												return true;
 											} else {
-												appLog.info("Not able to click on Next Button");
+												if (i == AccountsList.size() - 1) {
+													appLog.info(fieldName
+															+ " Custom Field is not added successfully");
+												}
 											}
-										} else {
-											appLog.info("Not able to enter value in field label text box");
 										}
 									} else {
-										appLog.info("Not able to click on Next Button");
+										appLog.info("Not able to click on save button");
 									}
 								} else {
-									appLog.info("Not able to click on Radio checkbox");
+									appLog.info("Not able to click on Next Button");
 								}
 							} else {
-								appLog.info("Not able to click on new button");
+								appLog.info("Not able to click on Next Button");
 							}
-					
+						} else {
+							appLog.info("Not able to enter value in field label text box");
+						}
+					} else {
+						appLog.info("Not able to click on Next Button");
+					}
+				} else {
+					appLog.info("Not able to click on Radio checkbox");
+				}
+			}else {
+				log(LogStatus.FAIL, "Not able to switch in "+object.Institution+" new object frame so cannot add custom object", YesNo.Yes);
+			}
+		} else {
+			appLog.info("Not able to click on new button");
+		}
+		switchToDefaultContent(driver);
 		return false;
 	}
 	

@@ -1,0 +1,5 @@
+Fundraising name,Fund name,Legal Name,TestCheckboxF,Target Close Date,TestDatetimeF,TestEmailF,Investment High Amount (mn),TestGeolocF,TestNumberF,Potential Management Fee %,TestPhoneF,Stage,Reason for decline,TestmultipicklistF,Next Step,TestTextAreaF,TestTimeBetaF,TestURLF
+M5FR1,M5F1,M5I1,TRUE,01/01/1980,"01/01/1980, 02:17 AM",navataripautomation+10jul@gmail.com,30,17.23;28.23,3,80,3333333333,Declined,No Reason Given,A;B,next step 1,textarea1,16:00:00.000Z,www.google.com
+M5FR2,M5F1,M5I2,FALSE,01/01/1981,"01/01/1981, 02:17 AM",navataripautomation+11jul@gmail.com,40,17.34;28.34,4,82,4444444444,Declined,Does not fit into LP strategy,C;P;S,next step 2,textarea2,17:15:00.000Z,www.myspace.com
+M5FR3,M5F1,M5I3,TRUE,01/01/1982,"01/01/1982, 02:17 AM",navataripautomation+12jul@gmail.com,50,17.45;28.45,5,84,5555555555,,,D;G;L;R,next step 3,textarea3,01:02:00.000Z,www.linkedin.com
+M5FR4,M5F1,M5I4,FALSE,01/01/1983,"01/01/1983, 02:17 AM",navataripautomation+13jul@gmail.com,60,17.56;28.56,6,88,6666666666,,,E,next step 4,textarea4,03:04:00.000Z,www.microsoft.com
