@@ -410,7 +410,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		} else if (workspace!=null && workspace.toString().equalsIgnoreCase("InvestorWorkspace")) {
 			workspaceSelector = "//div[@id='invworkspace']";
 		}
-		if(click(driver, FindElement(driver, workspaceSelector+"//span[contains(text(),'All Folders')]/../../../ul/li/div//span[text()='"+institutionName+"']", institutionName+" :Institution Folder", action.BOOLEAN, timeOut), institutionName+" :Institution Folder", action.BOOLEAN)){
+		if(clickUsingJavaScript(driver, FindElement(driver, workspaceSelector+"//span[contains(text(),'All Folders')]/../../../ul/li/div//span[text()='"+institutionName+"']", institutionName+" :Institution Folder", action.BOOLEAN, timeOut), institutionName+" :Institution Folder", action.BOOLEAN)){
 			return true;
 		}
 		return false;

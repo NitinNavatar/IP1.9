@@ -12699,7 +12699,7 @@ public class Module12 extends BaseLib {
 		String InternalFromFolder = "UploadFiles\\Module12\\INV\\Internal";
 		String SharedFromFolder = "UploadFiles\\Module12\\INV\\Shared";
 		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.clickOnCreatedFund(M12FundName1)) {
+			if (fp.clickOnCreatedFund(M12FundName1+"NUP")) {
 				if (fp.buildWorkspace(step1of3, WorkSpaceAction.IMPORTFOLDERTEMPLATE, folderTemplateName, null,
 						M12Institution1+"NUP"+"/"+M12LimitedPartner1 + "<break>" + M12Institution2+"/"+M12LimitedPartner2, Workspace.InvestorWorkspace, 60)) {
 					appLog.info("Investor Workspace is created successfully");
@@ -16474,7 +16474,7 @@ public class Module12 extends BaseLib {
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-		if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+		if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 			if(sendKeys(driver, cp.getEmailId(60), "test@gmail.com", "Contact1 email id", action.SCROLLANDBOOLEAN)){
 				if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
 					appLog.info("click on save button");
@@ -16524,20 +16524,25 @@ public class Module12 extends BaseLib {
 	switchToDefaultContent(driver);
 	if(bp.clickOnTab(TabName.ContactTab)){
 		if(cp.clickOnCreatedContact(M12Contact2FirstName, M12Contact2LastName, null)){
-		if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
-			//if(click(driver,cp.getDeleteButtonContactsPage(60), "Delete button", action.SCROLLANDBOOLEAN)){
-			switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
-			ThreadSleep(3000);
-			if(cp.verifyDeletedContact(M12Contact2FirstName+" "+M12Contact2LastName)){
-				appLog.info("Contact get deleted successfully ");
+			//if (fp.clickUsingCssSelectorPath("input[value=Delete]", "delete button")) {
+			if(click(driver,cp.getDeleteButton2(60), "Delete button", action.SCROLLANDBOOLEAN)){
+				if (click(driver, cp.getdeleteButtonpopup(10), "delete button on popup", action.BOOLEAN)) {
+					ThreadSleep(3000);
+					if(!cp.clickOnCreatedContact(M12Contact2FirstName,M12Contact2LastName,null)){
+						appLog.info("Contact get deleted successfully ");
+					}else{
+						appLog.error("Contact does not get deleted successfully ");
+						saa.assertTrue(false, "Contact does not get deleted successfully ");
+					}
+				}
+				else {
+					appLog.error("could not click on delete button on popup");
+					sa.assertTrue(false, "could not click on delete button on popup");
+				}
 			}else{
-				appLog.error("Contact does not get deleted successfully ");
-				saa.assertTrue(false, "Contact does not get deleted successfully ");
-			}			
-		}else{
-			appLog.error("Not able to click on delete button");
-			saa.assertTrue(false, "Not able to click on delete button");
-		}		
+				appLog.error("Not able to click on delete button");
+				saa.assertTrue(false, "Not able to click on delete button");
+			}		
 		}else{
 			appLog.error("Not able to click on created contact");
 			saa.assertTrue(false, "Not able to click on created contact");
@@ -16683,7 +16688,7 @@ public class Module12 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(bp.clickOnTab(TabName.ContactTab)){
 			if(cp.clickOnCreatedContact(M12Contact1FirstName+"FNNP", M12Contact1LastName+"LNNP", null)){
-				if(click(driver, bp.getEditButton(60), "Edit button", action.SCROLLANDBOOLEAN)){
+				if(click(driver, bp.getEditButton1(60), "Edit button", action.SCROLLANDBOOLEAN)){
 					if(sendKeys(driver, cp.getEmailId(60),M12Contact1EmailId, "Contact1 email id", action.SCROLLANDBOOLEAN)){
 						if(click(driver, bp.getSaveButton(60), "Save button", action.SCROLLANDBOOLEAN)){
 							appLog.info("click on save button");
@@ -18994,15 +18999,14 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
-			//	ele=FindElement(driver,"//label[text()='"+M12FundName1+"UPINV"+"']/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
-			//	if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+				ele=FindElement(driver,"//label[contains(text(),'"+M12FundName1+"')]/../..//a[@title='Remove']", "Fund 1 Remove link", action.SCROLLANDBOOLEAN, 60);
+				if(clickUsingJavaScript(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
 				String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
 					ThreadSleep(5000);
 					switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
 					driver.switchTo().window(ParentID);
-					switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
+					/*switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 30));
 					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising Workspace Section view");
 					if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access close button", action.SCROLLANDBOOLEAN)){
 						List<WebElement> listOfWorkspace=FindElements(driver, "//span[contains(@id,'ContactDetail_grid1-cell-1-')]//label", "WorkspacesName");
@@ -19021,7 +19025,7 @@ public class Module12 extends BaseLib {
 					}else{
 						appLog.info("Not able to clcik on remove contact access close button");
 						sa.assertTrue(false, "Not able to click on remove contact access close button");
-					}	
+					}	*/
 			}else{
 					appLog.info("No new window to switch");
 					sa.assertTrue(false, "No new window to switch");
@@ -19030,6 +19034,20 @@ public class Module12 extends BaseLib {
 					appLog.info("Not bale ot click on remove link");
 					sa.assertTrue(false, "Not able to click on remove link");
 				}
+			
+			refresh(driver);
+			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
+			
+			ele=cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 20);
+			if (isDisplayed(driver, ele, "visibility", 10, "remove access button")==null) {
+				appLog.info("successfully verified contact access removal");
+				
+			}
+			else {
+				appLog.info("Contact access does not remove for fund "+M12FundName1+"UPINV");
+				sa.assertTrue(false, "Contact access does not remove for fund "+M12FundName1+"UPINV");					
+			
+			}
 		}else{
 			appLog.error("Not able to clcik on remove contact access button");
 			sa.assertTrue(false, "Not able to clcik on remove contact access button");
@@ -19052,7 +19070,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Contact profile related alert for contact2 is displaying");
 				sa.assertTrue(false, "Contact profile related alert for contact2 is displaying");
 			}else{
-				appLog.error("Contact profile related alert for contact2 is not displaying");					
+				appLog.info("Contact profile related alert for contact2 is not displaying");					
 			}		
 		}else{
 			appLog.error("Not able to select contact profile updtaed option");
@@ -19064,7 +19082,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Firm profile related alert for contact2 is displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact2 is  displaying");
 			}else{
-				appLog.error("Firm profile related alert for contact2 is not displaying");
+				appLog.info("Firm profile related alert for contact2 is not displaying");
 			}		
 		}else{
 			appLog.error("Not able to select Firm profile updtaed option");
@@ -19073,7 +19091,7 @@ public class Module12 extends BaseLib {
 		ThreadSleep(2000);
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Document Viewed")){
 			if(bp.verifyDocumentAlerts(PageName.HomePage, "Document Viewed", M12FundName1+"UPINV", "Investor", Document[2], M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, M12Contact2UpdatedFirmName, hp.getHomeAlertScrollBox(60), "date")){
-				appLog.error("Document Viewed related alert for contact2 is displaying");
+				appLog.info("Document Viewed related alert for contact2 is displaying");
 			}else{
 				appLog.error("Document Viewed related alert for contact2 is not displaying");
 				sa.assertTrue(false, "Document Viewed related alert for contact2 is not displaying");		
@@ -19085,7 +19103,7 @@ public class Module12 extends BaseLib {
 		ThreadSleep(2000);
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Document Downloaded")){
 			if(bp.verifyDocumentAlerts(PageName.HomePage, "Document Downloaded", M12FundName1+"UPINV", "Investor", Document[2], M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, M12Contact2UpdatedFirmName, hp.getHomeAlertScrollBox(60), "date")){
-				appLog.error("Document Downloaded related alert for contact2 is displaying");
+				appLog.info("Document Downloaded related alert for contact2 is displaying");
 			}else{
 				appLog.error("Document Downloaded related alert for contact2 is not displaying");
 				sa.assertTrue(false, "Document Downloaded related alert for contact2 is not displaying");		
@@ -19112,7 +19130,7 @@ public class Module12 extends BaseLib {
 					appLog.error("Contact profile related alert for contact2 is displaying");
 					sa.assertTrue(false, "Contact profile related alert for contact2 is displaying");
 				}else{
-					appLog.error("Contact profile related alert for contact2 is not displaying");
+					appLog.info("Contact profile related alert for contact2 is not displaying");
 				}				
 			}else{
 				appLog.error("Not able to select contact profile updtaed option");
@@ -19124,7 +19142,7 @@ public class Module12 extends BaseLib {
 							appLog.error("Firm profile related alert for contact 2 is displaying");
 							sa.assertTrue(false, "Firm profile related alert for contact 2 is  displaying");	
 						}else{
-							appLog.error("Firm profile related alert for contact 2 is not displaying");
+							appLog.info("Firm profile related alert for contact 2 is not displaying");
 						}				
 					}else{
 						appLog.error("Not able to select firm profile updtaed option");
@@ -19133,7 +19151,7 @@ public class Module12 extends BaseLib {
 					ThreadSleep(2000);
 					if(selectVisibleTextFromDropDown(driver,fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Document Viewed")){
 						if(bp.verifyDocumentAlerts(PageName.FundsPage, "Document Viewed", null, null, Document[2], M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, M12Contact2UpdatedFirmName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), "date")){
-							appLog.error("Document Viewed related alert for contact2 is displaying");
+							appLog.info("Document Viewed related alert for contact2 is displaying");
 						}else{
 							appLog.error("Document Viewed related alert for contact2 is not displaying");
 							sa.assertTrue(false, "Document Viewed related alert for contact2 is not displaying");		
@@ -19145,7 +19163,7 @@ public class Module12 extends BaseLib {
 					ThreadSleep(3000);
 					if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Document Downloaded")){
 						if(bp.verifyDocumentAlerts(PageName.FundsPage, "Document Downloaded", null, null, Document[2], M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, M12Contact2UpdatedFirmName, fp.getAlertHistoryScrollbox(Workspace.InvestorWorkspace, 60), "date")){
-							appLog.error("Document Downloaded related alert for contact2 is displaying");
+							appLog.info("Document Downloaded related alert for contact2 is displaying");
 						}else{
 							appLog.error("Document Downloaded related alert for contact2 is not displaying");
 							sa.assertTrue(false, "Document Downloaded related alert for contact2 is not displaying");		
@@ -19209,9 +19227,9 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getFrame( PageName.ContactsPage, 60), "Contacts Page alert Frame");
 			switchToFrame(driver, 30, bp.getFrame( PageName.ContactsPage, 60));
 		if(click(driver, cp.getRemoveContactAccessButton(Workspace.InvestorWorkspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-			if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
-			//ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
-			//	if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+			//if (fp.clickUsingCssSelectorPath("a[title=Remove]", "remove button")) {	
+			ele=FindElement(driver,"//label[text()='"+M12FundName2+"']/../..//a[@title='Remove']", "Fund 2 Remove link", action.SCROLLANDBOOLEAN, 60);
+				if(clickUsingJavaScript(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
 				String ParentID=switchOnWindow(driver);
 				if(ParentID!=null){
 					ThreadSleep(5000);
@@ -19695,7 +19713,7 @@ public class Module12 extends BaseLib {
 					appLog.error("Contact profile related alert for contact 1 is displaying");
 					sa.assertTrue(false, "Contact profile related alert for contact 1 is  displaying");
 				}else{
-					appLog.error("Contact profile related alert for contact 1 is not displaying");		
+					appLog.info("Contact profile related alert for contact 1 is not displaying");		
 				}	
 			}else{
 				appLog.error("Not able to select contact profile updtaed option");
@@ -19707,7 +19725,7 @@ public class Module12 extends BaseLib {
 					appLog.error("Firm profile related alert for contact 1 is displaying");
 					sa.assertTrue(false, "Firm profile related alert for contact 1 is displaying");
 				}else{
-					appLog.error("Firm profile related alert for contact 1 is not displaying");		
+					appLog.info("Firm profile related alert for contact 1 is not displaying");		
 				}
 			}else{
 				appLog.error("Not able to select Firm profile updtaed option");
@@ -19774,7 +19792,7 @@ public class Module12 extends BaseLib {
 					appLog.error("Contact profile related alert for contact 1 is displaying");
 					sa.assertTrue(false, "Contact profile related alert for contact 1 is  not displaying");
 				}else{
-					appLog.error("Contact profile related alert for contact 1 is not displaying");	
+					appLog.info("Contact profile related alert for contact 1 is not displaying");	
 				}	
 			}else{
 				appLog.error("Not able to select contact profile updtaed option");
@@ -19786,7 +19804,7 @@ public class Module12 extends BaseLib {
 					appLog.error("Firm profile related alert for contact 1 is displaying");
 					sa.assertTrue(false, "Firm profile related alert for contact 1 is displaying");
 				}else{
-					appLog.error("Firm profile related alert for contact 1 is not displaying");	
+					appLog.info("Firm profile related alert for contact 1 is not displaying");	
 				}	
 			}else{
 				appLog.error("Not able to select Firm profile updtaed option");
@@ -19924,13 +19942,13 @@ public class Module12 extends BaseLib {
 			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 1 is displaying");			
+				appLog.info("Contact profile related alert for contact 1 is displaying");			
 			}else{
 				appLog.error("Contact profile related alert for contact 1 is not displaying");	
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is not  displaying");
 			}	
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 2 is displaying");			
+				appLog.info("Contact profile related alert for contact 2 is displaying");			
 			}else{
 				appLog.error("Contact profile related alert for contact 2 is not displaying");	
 				sa.assertTrue(false, "Contact profile related alert for contact 2 is not  displaying");
@@ -19941,13 +19959,13 @@ public class Module12 extends BaseLib {
 		}
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Firm Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Firm Profile Updated",null, null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Firm profile related alert for contact 1 is displaying");
+				appLog.info("Firm profile related alert for contact 1 is displaying");
 			}else{
 				appLog.error("Firm profile related alert for contact 1 is not displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 1 is not displaying");
 			}
 			if(hp.verifyAlertOnHomePage("Firm Profile Updated",null, null, null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Firm profile related alert for contact 2 is displaying");
+				appLog.info("Firm profile related alert for contact 2 is displaying");
 			}else{
 				appLog.error("Firm profile related alert for contact 2 is not displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 2 is not displaying");
@@ -20014,13 +20032,13 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-					appLog.error("Contact profile related alert for contact 1 is displaying");
+					appLog.info("Contact profile related alert for contact 1 is displaying");
 				}else{
 					appLog.error("Contact profile related alert for contact 1 is not displaying");	
 					sa.assertTrue(false, "Contact profile related alert for contact 1 is not displaying");
 				}				
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-					appLog.error("Contact profile related alert for contact 2 is displaying");
+					appLog.info("Contact profile related alert for contact 2 is displaying");
 				}else{
 					appLog.error("Contact profile related alert for contact 2 is not displaying");	
 					sa.assertTrue(false, "Contact profile related alert for contact 2 is not displaying");
@@ -20031,13 +20049,13 @@ public class Module12 extends BaseLib {
 			}
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-						appLog.error("Firm profile related alert for contact 1 is displaying");
+						appLog.info("Firm profile related alert for contact 1 is displaying");
 					}else{
 						appLog.error("Firm profile related alert for contact 1 is not displaying");	
 						sa.assertTrue(false, "Firm profile related alert for contact 1 is not displaying");
 					}
 					if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-						appLog.error("Firm profile related alert for contact 2 is displaying");
+						appLog.info("Firm profile related alert for contact 2 is displaying");
 					}else{
 						appLog.error("Firm profile related alert for contact 2 is not displaying");	
 						sa.assertTrue(false, "Firm profile related alert for contact 2 is not displaying");
@@ -20098,7 +20116,7 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-						appLog.error("Contact profile related alert for contact 1 is displaying");
+						appLog.info("Contact profile related alert for contact 1 is displaying");
 					}else{
 						appLog.error("Contact profile related alert for contact 1 is not displaying");	
 						sa.assertTrue(false, "Contact profile related alert for contact 1 is not displaying");
@@ -20109,7 +20127,7 @@ public class Module12 extends BaseLib {
 			}
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-						appLog.error("Firm profile related alert for contact 1 is displaying");
+						appLog.info("Firm profile related alert for contact 1 is displaying");
 					}else{
 						appLog.error("Firm profile related alert for contact 1 is not displaying");	
 						sa.assertTrue(false, "Firm profile related alert for contact 1 is not displaying");
@@ -20192,7 +20210,7 @@ public class Module12 extends BaseLib {
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
 					} else {
-						appLog.info("Not able to click on workspace expand icon");
+						appLog.error("Not able to click on workspace expand icon");
 						sa.assertTrue(false, "Not able to click on workspace expand icon");
 					}
 				} else {
@@ -20202,7 +20220,7 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			ThreadSleep(5000);
 		if(fp.closeWorkSpace(Workspace.InvestorWorkspace, 60)){
-			appLog.error("Workspace get closed successfully");
+			appLog.info("Workspace get closed successfully");
 		}else{
 			appLog.error("Not able to close the workspace");
 			sa.assertTrue(false, "Not able to close the workspace");
@@ -20233,7 +20251,7 @@ public class Module12 extends BaseLib {
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			ThreadSleep(3000);
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 1 is displaying");
+				appLog.info("Contact profile related alert for contact 1 is displaying");
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is displaying");
 			}else{
 				appLog.error("Contact profile related alert for contact 1 is not displaying");
@@ -20260,7 +20278,7 @@ public class Module12 extends BaseLib {
 				appLog.error("Firm profile related alert for contact 2 is displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 2 is  displaying");
 			}else{
-				appLog.error("Firm profile related alert for contact 2 is not displaying");	
+				appLog.info("Firm profile related alert for contact 2 is not displaying");	
 			}
 		}else{
 			appLog.error("Not able to select Firm profile updtaed option");
@@ -20324,13 +20342,13 @@ public class Module12 extends BaseLib {
 				appLog.error("Contact profile related alert for contact 1 is displaying");
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is displaying");
 			}else{
-				appLog.error("Contact profile related alert for contact 1 is not displaying");		
+				appLog.info("Contact profile related alert for contact 1 is not displaying");		
 			}
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
 					appLog.error("Contact profile related alert for contact 2 is displaying");
 					sa.assertTrue(false, "Contact profile related alert for contact 2 is  displaying");
 				}else{
-					appLog.error("Contact profile related alert for contact 2 is not displaying");		
+					appLog.info("Contact profile related alert for contact 2 is not displaying");		
 				}
 		}else{
 			appLog.error("Not able to select contact profile updtaed option");
@@ -20342,13 +20360,13 @@ public class Module12 extends BaseLib {
 				appLog.error("Firm profile related alert for contact 1 is displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 1 is displaying");
 			}else{
-				appLog.error("Firm profile related alert for contact 1 is not displaying");		
+				appLog.info("Firm profile related alert for contact 1 is not displaying");		
 			}
 			if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
 				appLog.error("Firm profile related alert for contact 2 is displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 2 is displaying");
 			}else{
-				appLog.error("Firm profile related alert for contact 2 is not displaying");	
+				appLog.info("Firm profile related alert for contact 2 is not displaying");	
 			}
 		}else{
 			appLog.error("Not able to select Firm profile updtaed option");
@@ -20460,13 +20478,13 @@ public class Module12 extends BaseLib {
 			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 1 is displaying");			
+				appLog.info("Contact profile related alert for contact 1 is displaying");			
 			}else{
 				appLog.error("Contact profile related alert for contact 1 is not displaying");	
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is not  displaying");
 			}	
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 2 is displaying");			
+				appLog.info("Contact profile related alert for contact 2 is displaying");			
 			}else{
 				appLog.error("Contact profile related alert for contact 2 is not displaying");	
 				sa.assertTrue(false, "Contact profile related alert for contact 2 is not  displaying");
@@ -20477,13 +20495,13 @@ public class Module12 extends BaseLib {
 		}
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Firm Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Firm Profile Updated",null, null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Firm profile related alert for contact 1 is displaying");
+				appLog.info("Firm profile related alert for contact 1 is displaying");
 			}else{
 				appLog.error("Firm profile related alert for contact 1 is not displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 1 is not displaying");
 			}
 			if(hp.verifyAlertOnHomePage("Firm Profile Updated",null, null, null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Firm profile related alert for contact 2 is displaying");
+				appLog.info("Firm profile related alert for contact 2 is displaying");
 			}else{
 				appLog.error("Firm profile related alert for contact 2 is not displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 2 is not displaying");
@@ -20550,13 +20568,13 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-					appLog.error("Contact profile related alert for contact 1 is displaying ");
+					appLog.info("Contact profile related alert for contact 1 is displaying ");
 				}else{
 					appLog.error("Contact profile related alert for contact 1 is not displaying");	
 					sa.assertTrue(false, "Contact profile related alert for contact 1 is not displaying");
 				}
 				if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-					appLog.error("Contact profile related alert for contact 2 is displaying ");
+					appLog.info("Contact profile related alert for contact 2 is displaying ");
 				}else{
 					appLog.error("Contact profile related alert for contact 2 is not displaying");	
 					sa.assertTrue(false, "Contact profile related alert for contact 2 is not displaying");
@@ -20567,13 +20585,13 @@ public class Module12 extends BaseLib {
 			}
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-						appLog.error("Firm profile related alert for contact 1 is displaying ");
+						appLog.info("Firm profile related alert for contact 1 is displaying ");
 					}else{
 						appLog.error("Firm profile related alert for contact 1 is not displaying");	
 						sa.assertTrue(false, "Firm profile related alert for contact 1 is not displaying");
 					}
 					if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-						appLog.error("Firm profile related alert for contact 2 is displaying ");
+						appLog.info("Firm profile related alert for contact 2 is displaying ");
 					}else{
 						appLog.error("Firm profile related alert for contact 2 is not displaying");	
 						sa.assertTrue(false, "Firm profile related alert for contact 2 is not displaying");
@@ -20634,7 +20652,7 @@ public class Module12 extends BaseLib {
 			scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60), "Investor workspace section view");
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-						appLog.error("Contact profile related alert for contact 1 is displaying ");
+						appLog.info("Contact profile related alert for contact 1 is displaying ");
 					}else{
 						appLog.error("Contact profile related alert for contact 1 is not displaying");	
 						sa.assertTrue(false, "Contact profile related alert for contact 1 is not displaying");
@@ -20645,7 +20663,7 @@ public class Module12 extends BaseLib {
 			}
 			if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Firm Profile Updated")){
 					if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-						appLog.error("Firm profile related alert for contact 1 is displaying ");
+						appLog.info("Firm profile related alert for contact 1 is displaying ");
 					}else{
 						appLog.error("Firm profile related alert for contact 1 is not displaying");	
 						sa.assertTrue(false, "Firm profile related alert for contact 1 is not displaying");
@@ -20746,11 +20764,11 @@ public class Module12 extends BaseLib {
 							sa.assertTrue(false, "Not able to click on done button");
 						}
 					} else {
-						appLog.info("Not able to click on Cross icon");
+						appLog.error("Not able to click on Cross icon");
 						sa.assertTrue(false, "Not able to click on Cross icon");
 					}
 				} else {
-					appLog.info("Not able to click on LP1 checkbox");
+					appLog.error("Not able to click on LP1 checkbox");
 					sa.assertTrue(false, "Not able to click on LP1 checkbox");
 				}
 			}else{
@@ -20778,10 +20796,10 @@ public class Module12 extends BaseLib {
 				appLog.error("Contact profile related alert for contact 1 is displaying");
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is displaying");
 			}else{
-				appLog.error("Contact profile related alert for contact 1 is not displaying");		
+				appLog.info("Contact profile related alert for contact 1 is not displaying");		
 			}	
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 2 is displaying");
+				appLog.info("Contact profile related alert for contact 2 is displaying");
 			}else{
 				appLog.error("Contact profile related alert for contact 2 is not displaying");	
 				sa.assertTrue(false, "Contact profile related alert for contact 2 is not displaying");
@@ -20795,10 +20813,10 @@ public class Module12 extends BaseLib {
 				appLog.error("Firm profile related alert for contact 1 is displaying");
 				sa.assertTrue(false, "Firm profile related alert for contact 1 is displaying");
 			}else{
-				appLog.error("Firm profile related alert for contact 1 is not displaying");		
+				appLog.info("Firm profile related alert for contact 1 is not displaying");		
 			}
 			if(hp.verifyAlertOnHomePage("Firm Profile Updated",null, null, null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Firm profile related alert for contact 2 is displaying");
+				appLog.info("Firm profile related alert for contact 2 is displaying");
 			}else{
 				appLog.error("Firm profile related alert for contact 2 is not displaying");		
 				sa.assertTrue(false, "Firm profile related alert for contact 2 is displaying");
@@ -20872,10 +20890,10 @@ public class Module12 extends BaseLib {
 				appLog.error("Contact profile related alert for contact 1 is displaying");
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is displaying");
 			}else{
-				appLog.error("Contact profile related alert for contact 1 is not displaying");
+				appLog.info("Contact profile related alert for contact 1 is not displaying");
 			}	
 			if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 2 is displaying");
+				appLog.info("Contact profile related alert for contact 2 is displaying");
 			}else{
 				appLog.error("Contact profile related alert for contact 2 is not displaying");	
 				sa.assertTrue(false, "Contact profile related alert for contact 2 is  not displaying");
@@ -20890,10 +20908,10 @@ public class Module12 extends BaseLib {
 					appLog.error("Firm profile related alert for contact 1 is displaying");
 					sa.assertTrue(false, "Firm profile related alert for contact 1 is  displaying");
 				}else{
-					appLog.error("Firm profile related alert for contact 1 is not displaying");	
+					appLog.info("Firm profile related alert for contact 1 is not displaying");	
 				}	
 				if(fp.verifyAlertHistoryGrid("Firm Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-					appLog.error("Firm profile related alert for contact 2 is displaying");
+					appLog.info("Firm profile related alert for contact 2 is displaying");
 				}else{
 					appLog.error("Firm profile related alert for contact 2 is not displaying");	
 					sa.assertTrue(false, "Firm profile related alert for contact 2 is not displaying");
@@ -20992,11 +21010,11 @@ public class Module12 extends BaseLib {
 							sa.assertTrue(false, "Not able to click on done button");
 						}
 					} else {
-						appLog.info("Not able to click on Cross icon");
+						appLog.error("Not able to click on Cross icon");
 						sa.assertTrue(false, "Not able to click on Cross icon");
 					}
 				} else {
-					appLog.info("Not able to click on LP1 checkbox");
+					appLog.error("Not able to click on LP1 checkbox");
 					sa.assertTrue(false, "Not able to click on LP1 checkbox");
 				}
 			}else{
@@ -21021,7 +21039,7 @@ public class Module12 extends BaseLib {
 			switchToFrame(driver, 30, bp.getFrame( PageName.HomePage, 60));
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Contact Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Contact Profile Updated",null,null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 1 is displaying");
+				appLog.info("Contact profile related alert for contact 1 is displaying");
 			}else{
 				appLog.error("Contact profile related alert for contact 1 is not displaying");		
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is not displaying");
@@ -21039,13 +21057,13 @@ public class Module12 extends BaseLib {
 		ThreadSleep(2000);
 		if(selectVisibleTextFromDropDown(driver, hp.getShowDropdownOnHomeAlert(60), "Show dropodwn", "Firm Profile Updated")){
 			if(hp.verifyAlertOnHomePage("Firm Profile Updated",null, null, null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Firm profile related alert for contact 1 is displaying");
+				appLog.info("Firm profile related alert for contact 1 is displaying");
 			}else{
 				appLog.error("Firm profile related alert for contact 1 is not displaying");		
 				sa.assertTrue(false, "Firm profile related alert for contact 1 is not displaying");
 			}
 			if(hp.verifyAlertOnHomePage("Firm Profile Updated",null, null, null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Firm profile related alert for contact 2 is displaying");
+				appLog.info("Firm profile related alert for contact 2 is displaying");
 			}else{
 				appLog.error("Firm profile related alert for contact 2 is not displaying");		
 				sa.assertTrue(false, "Firm profile related alert for contact 2 is displaying");
@@ -21116,13 +21134,13 @@ public class Module12 extends BaseLib {
 		ThreadSleep(2000);
 		if(selectVisibleTextFromDropDown(driver, fp.getAlertHistoryPopupShowDropdown(Workspace.InvestorWorkspace, 60), "Show dropodwn", "Contact Profile Updated")){
 			if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact1UpdatedFirmName, M12Contact1UpdatedFirstName+" "+M12Contact1UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 1 is displaying");
+				appLog.info("Contact profile related alert for contact 1 is displaying");
 			}else{
 				appLog.error("Contact profile related alert for contact 1 is not displaying");
 				sa.assertTrue(false, "Contact profile related alert for contact 1 is not displaying");
 			}	
 			if(fp.verifyAlertHistoryGrid("Contact Profile Updated", null, M12Contact2UpdatedFirmName, M12Contact2UpdatedFirstName+" "+M12Contact2UpdatedLastName, "date")){
-				appLog.error("Contact profile related alert for contact 2 is displaying");
+				appLog.info("Contact profile related alert for contact 2 is displaying");
 			}else{
 				appLog.error("Contact profile related alert for contact 2 is not displaying");	
 				sa.assertTrue(false, "Contact profile related alert for contact 2 is  not displaying");
