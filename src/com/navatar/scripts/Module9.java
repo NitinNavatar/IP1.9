@@ -10,9 +10,12 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.EditViewMode;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.ManageApprovalTabs;
+import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.TabName;
@@ -46,6 +49,9 @@ import com.navatar.pageObjects.PartnershipPageBusinessLayer;
 
 import static com.navatar.generic.CommonVariables.*;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -79,7 +85,7 @@ public class Module9 extends BaseLib{
 
 	// Institution
 	if (bp.clickOnTab(TabName.InstituitonsTab)) {
-		if (ip.createInstitution(M9Institution1)) {
+		if (ip.createInstitution(environment,mode,M9Institution1,"Institution",null,null)) {
 			appLog.info("Institution Created Successfully : " + M9Institution1);
 		} else {
 			appLog.error("Not Able to Create Institution : " + M9Institution1);
@@ -87,7 +93,7 @@ public class Module9 extends BaseLib{
 		}
 	}
 	if (bp.clickOnTab(TabName.InstituitonsTab)) {
-		if (ip.createInstitution(M9Institution2)) {
+		if (ip.createInstitution(environment,mode,M9Institution2,"Institution",null,null)) {
 			appLog.info("Institution Created Successfully : " + M9Institution2);
 		} else {
 			appLog.error("Not Able to Create Institution : " + M9Institution2);
@@ -102,7 +108,7 @@ public class Module9 extends BaseLib{
 
 	// Contact
 	if (bp.clickOnTab(TabName.ContactTab)) {
-		if (cp.createContact(M9Contact1FirstName, M9Contact1LastName, M9Institution1, M9Contact1EmailID)) {
+		if (cp.createContact(environment,mode,M9Contact1FirstName, M9Contact1LastName, M9Institution1, M9Contact1EmailID,null,null,CreationPage.ContactPage)) {
 			ExcelUtils.writeData(M9Contact1EmailID, "Contacts", excelLabel.Variable_Name, "M9C1",
 					excelLabel.Contact_EmailId);
 			appLog.info("Contact " + M9Contact1FirstName + " " + M9Contact1LastName + " was successfully created");
@@ -121,7 +127,7 @@ public class Module9 extends BaseLib{
 	// Fund
 
 	if (bp.clickOnTab(TabName.FundsTab)) {
-		if (fp.createFund(M9FundName1, M9Fund1Type, M9Fund1InvestmentCategory)) {
+		if (fp.createFund(environment,mode,M9FundName1, M9Fund1Type, M9Fund1InvestmentCategory,null,null)) {
 			appLog.info("New fund " + M9FundName1 + " was successfully created");
 		} else {
 			appLog.error("New fund " + M9FundName1 + " could not be created");
@@ -132,7 +138,7 @@ public class Module9 extends BaseLib{
 		sa.assertTrue(false, "Not Able to Click Funds tab ");
 	}
 	if (bp.clickOnTab(TabName.FundsTab)) {
-		if (fp.createFund(M9FundName2, M9Fund2Type, M9Fund2InvestmentCategory)) {
+		if (fp.createFund(environment,mode,M9FundName2, M9Fund2Type, M9Fund2InvestmentCategory,null,null)) {
 			appLog.info("New fund " + M9FundName2 + " was successfully created");
 		} else {
 			appLog.error("New fund " + M9FundName2 + " could not be created");
@@ -143,7 +149,7 @@ public class Module9 extends BaseLib{
 		sa.assertTrue(false, "Not Able to Click Funds tab ");
 	}
 	if (bp.clickOnTab(TabName.FundsTab)) {
-		if (fp.createFund(M9FundName3, M9Fund3Type, M9Fund3InvestmentCategory)) {
+		if (fp.createFund(environment,mode,M9FundName3, M9Fund3Type, M9Fund3InvestmentCategory,null,null)) {
 			appLog.info("New fund " + M9FundName3 + " was successfully created");
 		} else {
 			appLog.error("New fund " + M9FundName3 + " could not be created");
@@ -156,7 +162,7 @@ public class Module9 extends BaseLib{
 
 	// Fund Raising
 	if (bp.clickOnTab(TabName.FundraisingsTab)) {
-		if (frp.createFundRaising(M9FundRaisingName1, M9FundName1, M9Institution1)) {
+		if (frp.createFundRaising(environment,mode,M9FundRaisingName1, M9FundName1, M9Institution1)) {
 			appLog.info("Fundraising " + M9FundRaisingName1 + " was successfully created");
 		} else {
 			appLog.error("Fundraising " + M9FundRaisingName1 + " could not be created");
@@ -169,7 +175,7 @@ public class Module9 extends BaseLib{
 	
 	
 	if (bp.clickOnTab(TabName.FundraisingsTab)) {
-		if (frp.createFundRaising(M9FundRaisingName2, M9FundName1, M9Institution2)) {
+		if (frp.createFundRaising(environment,mode,M9FundRaisingName2, M9FundName1, M9Institution2)) {
 			appLog.info("Fundraising " + M9FundRaisingName1 + " was successfully created");
 		} else {
 			appLog.error("Fundraising " + M9FundRaisingName1 + " could not be created");
@@ -181,7 +187,7 @@ public class Module9 extends BaseLib{
 	}
 	// Limited Partner
 	if (bp.clickOnTab(TabName.InstituitonsTab)) {
-		if (ip.createLimitedPartner(M9LimitedPartner1, M9Institution1)) {
+		if (ip.createInstitution(environment,mode,M9LimitedPartner1,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M9Institution1)) {
 			appLog.info(M9LimitedPartner1 + " limited partner was successfully created");
 		} else {
 			appLog.error(M9LimitedPartner1 + " LP could not be created");
@@ -194,7 +200,7 @@ public class Module9 extends BaseLib{
 
 	// Limited Partner
 	if (bp.clickOnTab(TabName.InstituitonsTab)) {
-		if (ip.createLimitedPartner(M9LimitedPartner2, M9Institution2)) {
+		if (ip.createInstitution(environment,mode,M9LimitedPartner2,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M9Institution2)) {
 			appLog.info(M9LimitedPartner1 + " limited partner was successfully created");
 		} else {
 			appLog.error(M9LimitedPartner1 + " LP could not be created");
@@ -206,7 +212,7 @@ public class Module9 extends BaseLib{
 	}
 	// PartnerShip
 	if (bp.clickOnTab(TabName.PartnershipsTab)) {
-		if (pp.createPartnership(M9Partnership1, M9FundName1)) {
+		if (pp.createPartnership(environment,mode,M9Partnership1, M9FundName1)) {
 			appLog.info(M9Partnership1 + " was successfully created");
 		} else {
 			appLog.error(M9Partnership1 + " could not be created");
@@ -218,7 +224,7 @@ public class Module9 extends BaseLib{
 	}
 	// PartnerShip
 		if (bp.clickOnTab(TabName.PartnershipsTab)) {
-			if (pp.createPartnership(M9Partnership2, M9FundName2)) {
+			if (pp.createPartnership(environment,mode,M9Partnership2, M9FundName2)) {
 				appLog.info(M9Partnership2 + " was successfully created");
 			} else {
 				appLog.error(M9Partnership2 + " could not be created");
@@ -230,7 +236,7 @@ public class Module9 extends BaseLib{
 		}
 	// Commitment
 	if (bp.clickOnTab(TabName.CommitmentsTab)) {
-		if (cmp.createCommitment(M9LimitedPartner1, M9Partnership1, M9Commitment1, null)) {
+		if (cmp.createCommitment(environment,mode,M9LimitedPartner1, M9Partnership1, M9Commitment1, null)) {
 			appLog.info(M9Commitment1 + " was successfully created");
 		} else {
 			appLog.error(M9Commitment1 + " could not be created");
@@ -242,7 +248,7 @@ public class Module9 extends BaseLib{
 	}
 	// Commitment
 	if (bp.clickOnTab(TabName.CommitmentsTab)) {
-		if (cmp.createCommitment(M9LimitedPartner2, M9Partnership1, M9Commitment2, null)) {
+		if (cmp.createCommitment(environment,mode,M9LimitedPartner2, M9Partnership1, M9Commitment2, null)) {
 			appLog.info(M9Commitment1 + " was successfully created");
 		} else {
 			appLog.error(M9Commitment1 + " could not be created");
@@ -254,7 +260,7 @@ public class Module9 extends BaseLib{
 	}
 
 
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 }
 
@@ -459,7 +465,7 @@ public class Module9 extends BaseLib{
 		sa.assertTrue(false, "nim tab is not clickable on base page");
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 }
 
@@ -478,7 +484,7 @@ public class Module9 extends BaseLib{
 		switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 		if (np.clickOnSideMenusTab(sideMenu.InternalUsers)) {
 				switchToDefaultContent(driver);
-				if (np.giveAccessToUserInNIMTabFromAdmin(userName1, accessType.InternalUserAccess)) {
+				if (np.giveAccessToUserInNIMTabFromAdmin(environment,mode,userName1, accessType.InternalUserAccess)) {
 					appLog.info("access has been successfully given to user "+userName1);
 					switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 					switchToDefaultContent(driver);
@@ -487,10 +493,9 @@ public class Module9 extends BaseLib{
 					appLog.error("internal user access could not be given to "+userName1);
 					sa.assertTrue(false, "internal user access could not be given to "+userName1);
 				}
-				if (np.giveAccessToUserInNIMTabFromAdmin(userName2, accessType.InternalUserAccess)) {
+				if (np.giveAccessToUserInNIMTabFromAdmin(environment,mode,userName2, accessType.InternalUserAccess)) {
 					appLog.info("access has been successfully given to user "+userName2);
-					switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
-					switchToDefaultContent(driver);
+					
 				}
 				else {
 					appLog.error("internal user access could not be given to "+userName2);
@@ -507,16 +512,13 @@ public class Module9 extends BaseLib{
 		appLog.error("nim tab is not clickable");
 		sa.assertTrue(false, "nim tab is not clickable");
 	}
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	driver.close();
 	//logging as user 2
 	config(ExcelUtils.readDataFromPropertyFile("Browser"));
 	lp = new LoginPageBusinessLayer(driver);
 	bp = new BasePageBusinessLayer(driver);
 	np = new NIMPageBusinessLayer(driver);
-	
-
-
 	lp.CRMLogin(CRMUser2EmailID, adminPassword);
 	if (bp.clickOnTab(TabName.NIMTab)) {
 		if (np.findRegistrationSuccessfulPopup()){
@@ -529,18 +531,16 @@ public class Module9 extends BaseLib{
 			}
 		}
 	}
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	driver.close();
 	//logging as crmadmin
 	config(ExcelUtils.readDataFromPropertyFile("Browser"));
 	lp = new LoginPageBusinessLayer(driver);
 	bp = new BasePageBusinessLayer(driver);
 	np = new NIMPageBusinessLayer(driver);
-	
-
 	lp.CRMLogin(superAdminUserName, adminPassword);
 	if (bp.clickOnTab(TabName.NIMTab)) {
-		if (np.giveAccessToUserInNIMTabFromAdmin(userName2, accessType.AdminUserAccess)) {
+		if (np.giveAccessToUserInNIMTabFromAdmin(environment,mode,userName2, accessType.AdminUserAccess)) {
 			appLog.info("admin access has been successfully given to user "+userName2);
 			
 		}
@@ -551,7 +551,8 @@ public class Module9 extends BaseLib{
 	
 	}
 	boolean user1flag=false, user2flag = false;
-	switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
+	switchToFrame(driver, 10, np.getNIMTabParentFrame_Lightning());
+	switchToFrame(driver, 10, np.getFrame( PageName.NavatarInvestorManager, 30));
 	if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 		int size = np.getUserNamesManageApproval(60,EditViewMode.View).size();
 		for (int i=0;i<size;i++) {
@@ -649,7 +650,7 @@ public class Module9 extends BaseLib{
 		sa.assertTrue(false, "manage approvals side menu is not clickable");
 	}
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 	
 
@@ -821,7 +822,7 @@ public class Module9 extends BaseLib{
 		appLog.error("nim tab is not clickable");
 		sa.assertTrue(false, "nim tab is not clickable");
 	}
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 }
 	
@@ -845,7 +846,7 @@ public class Module9 extends BaseLib{
 				appLog.info("registration for user1 "+CRMUser1FirstName+" "+CRMUser1LastName+" is done successfully");
 			}
 			else {
-				if (np.NIMRegistration(userType.CRMUser, CRMUser1FirstName, CRMUser1LastName)) {
+				if (np.NIMRegistration(environment,mode,userType.CRMUser, CRMUser1FirstName, CRMUser1LastName)) {
 					appLog.info("nim registration for user1 is successful");
 				}
 				else {
@@ -853,7 +854,7 @@ public class Module9 extends BaseLib{
 					sa.assertAll();
 				}
 			}
-			
+			switchToFrame(driver, 10, np.getNIMTabParentFrame_Lightning());
 			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				if(isSelected(driver, np.getManageApprovalsActivateCheckbox(EditViewMode.View),"manage approvals checkbox view mode")) {
@@ -953,11 +954,6 @@ public class Module9 extends BaseLib{
 						sa.assertTrue(false, "Insufficient Permission popup is not displaying");
 					}
 				}
-				
-				
-				
-				
-				
 			}
 			switchToDefaultContent(driver);
 			if (np.clickOnTab(TabName.FundsTab)) {
@@ -982,7 +978,7 @@ public class Module9 extends BaseLib{
 		}
 	
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 }
 
@@ -1267,7 +1263,7 @@ public class Module9 extends BaseLib{
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -1360,7 +1356,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -1461,7 +1457,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -1752,7 +1748,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2037,7 +2033,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "could not find funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		ThreadSleep(5000);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -2068,7 +2064,7 @@ public class Module9 extends BaseLib{
 			appLog.error("could not find funds tab");
 			sa.assertTrue(false, "could not find funds tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2154,8 +2150,8 @@ public class Module9 extends BaseLib{
 		}
 		if (np.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -2192,7 +2188,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -2202,8 +2198,8 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -2240,7 +2236,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2253,15 +2249,37 @@ public class Module9 extends BaseLib{
 		String userName1 = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User1", excelLabel.User_First_Name)+" "+ExcelUtils.readData("Users",excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
 		String userName2 = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.User_First_Name)+" "+ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 		
+		String parentWindow=null;
 		
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		if (bp.deactivateAndActivateCreatedUser("Active Users", CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
-			appLog.info("successfully deactivated user "+CRMUser1FirstName+" "+CRMUser1LastName);
-		}
-		else {
-			appLog.error("could not deactivate user");
-			sa.assertTrue(false, "could not deactivate user");
-		}
+		
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+				}
+			}
+			if (bp.deactivateAndActivateCreatedUser(environment,mode,"Active Users", CRMUser1FirstName, CRMUser1LastName, "Deactivate")) {
+				appLog.info("successfully deactivated user "+CRMUser1FirstName+" "+CRMUser1LastName);
+			}
+			else {
+				appLog.error("could not deactivate user");
+				sa.assertTrue(false, "could not deactivate user");
+			}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+	}else {
+		appLog.error("Not able to click on setup link so cannot deactivate CRM user 1 and check deactivate funcationality on NIM page");
+		sa.assertTrue(false, "Not able to click on setup link so cannot deactivate CRM user 1 and check deactivate funcationality on NIM page");
+	}
+		
+		
+		
+		
+		
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
@@ -2384,14 +2402,28 @@ public class Module9 extends BaseLib{
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		
-		
-		if (bp.deactivateAndActivateCreatedUser("All Users", CRMUser1FirstName, CRMUser1LastName, "Activate")) {
-			appLog.info("successfully activated "+CRMUser1FirstName+" "+CRMUser1LastName);
-		}
-		else {
-			appLog.error("could not reactivate first user");
-			sa.assertTrue(false, "could not reactivate first user");
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot Deactivate CRM User1");
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+				}
+			}
+
+			if (bp.deactivateAndActivateCreatedUser(environment,mode,"All Users", CRMUser1FirstName, CRMUser1LastName, "Activate")) {
+				appLog.info("successfully activated "+CRMUser1FirstName+" "+CRMUser1LastName);
+			}
+			else {
+				appLog.error("could not reactivate first user");
+				sa.assertTrue(false, "could not reactivate first user");
+			}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			appLog.error("Not able to click on setup link so cannot deactivate CRM user 1 and check deactivate funcationality on NIM page");
+			sa.assertTrue(false, "Not able to click on setup link so cannot deactivate CRM user 1 and check deactivate funcationality on NIM page");
 		}
 		if (np.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
@@ -2554,8 +2586,8 @@ public class Module9 extends BaseLib{
 		}
 		if (np.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -2588,7 +2620,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, M9FundName1+" fund is not found");
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2604,91 +2636,96 @@ public class Module9 extends BaseLib{
 		String user2LastName = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 		String superAdminFirstName = ExcelUtils.readData("Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
 		String superAdminLastName = ExcelUtils.readData("Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
-		
+		String parentWindow=null;
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
-		if (click(driver, bp.getUserMenuTab(120), "User Menu Button", action.SCROLLANDBOOLEAN)) {
-			if (click(driver, bp.getUserMenuSetupLink(120), "Setup Link", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(1000);
-				if (click(driver, bp.getExpandManageUserIcon(120), "Manage User Icon", action.SCROLLANDBOOLEAN)) {
-					if (click(driver, bp.getUsersLink(120), "User Link", action.SCROLLANDBOOLEAN)) {
-						if (selectVisibleTextFromDropDown(driver, bp.getViewAllDropdownList(120), "View dropdown list",
-								"All Users")) {
-							ThreadSleep(2000);
+		
+		if (bp.clickOnSetUpLink(environment, mode)) {
+			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,"No new window is open after click on setup link in lighting mode so cannot update CRM User2 Name");
+					appLog.error("No new window is open after click on setup link in lighting mode so cannot update CRM User2 Name");
+					exit("No new window is open after click on setup link in lighting mode so cannot update CRM User2 Name");
+				}
+			}
+			if(bp.quickSearchOnSetupHomePage(environment, mode, object.Users)) {
+				if (click(driver, bp.getUsersLink(environment, mode, 30), "User Link", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(3000);
+					switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+					if (selectVisibleTextFromDropDown(driver, bp.getViewAllDropdownList(120), "View dropdown list","All Users")) {
+						ThreadSleep(2000);
+						if (click(driver, bp.getLastLogin(120), "Last Login", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(3000);
+							switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
 							if (click(driver, bp.getLastLogin(120), "Last Login", action.SCROLLANDBOOLEAN)) {
-								if (click(driver, bp.getLastLogin(120), "Last Login", action.SCROLLANDBOOLEAN)) {
-									WebElement ele = FindElement(driver,
-											"//a[text()='" + CRMUser2LastName + "," + " " + CRMUser2FirstName
-													+ "']/..//preceding-sibling::td//a",
-											"Edit icon", action.SCROLLANDBOOLEAN, 120);
-									if (ele != null) {
-										if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
-											if (sendKeys(driver, bp.getUserFirstName(60), user2FirstName+"MD", "User First Name",
+								ThreadSleep(3000);
+								switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+								WebElement ele = FindElement(driver,
+										"//a[text()='" + CRMUser2LastName + "," + " " + CRMUser2FirstName
+										+ "']/..//preceding-sibling::td//a",
+										"Edit icon", action.SCROLLANDBOOLEAN, 120);
+								if (ele != null) {
+									if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
+										ThreadSleep(3000);
+										switchToFrame(driver, 20, bp.getSetUpPageIframe(20));
+										if (sendKeys(driver, bp.getUserFirstName(60), user2FirstName+"MD", "User First Name",
+												action.SCROLLANDBOOLEAN)) {
+											if (sendKeys(driver, bp.getUserLastName(60), user2LastName+"MD", "User Last Name",
 													action.SCROLLANDBOOLEAN)) {
-												if (sendKeys(driver, bp.getUserLastName(60), user2LastName+"MD", "User Last Name",
-														action.SCROLLANDBOOLEAN)) {
-													if (click(driver, bp.getSaveButton(60), "Save Button",
-															action.SCROLLANDBOOLEAN)) {
-														
-														
-														appLog.info("successfully save user 2's new name");
-														ExcelUtils.writeData(user2FirstName+"MD", "Users", excelLabel.Variable_Name, "User2",
-																excelLabel.User_First_Name);
-														ExcelUtils.writeData(user2LastName+"MD", "Users", excelLabel.Variable_Name, "User2",
-																excelLabel.User_Last_Name);
-														appLog.info("written new user 2 full name to excel");
-													}
-													else {
-														appLog.error("save button on user's edit page is not clickable");
-														sa.assertTrue(false, "save button on user's edit page is not clickable");
-													}
+												if (click(driver, bp.getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
+													appLog.info("successfully save user 2's new name");
+													switchToDefaultContent(driver);
+													ExcelUtils.writeData(user2FirstName+"MD", "Users", excelLabel.Variable_Name, "User2",
+															excelLabel.User_First_Name);
+													ExcelUtils.writeData(user2LastName+"MD", "Users", excelLabel.Variable_Name, "User2",
+															excelLabel.User_Last_Name);
+													appLog.info("written new user 2 full name to excel");
 												}
 												else {
-													appLog.error("users last name textbox is not visible");
-													sa.assertTrue(false, "users last name textbox is not visible");
+													appLog.error("save button on user's edit page is not clickable");
+													sa.assertTrue(false, "save button on user's edit page is not clickable");
 												}
 											}
 											else {
-												appLog.error("users first name textbox is not visible");
-												sa.assertTrue(false, "users first name textbox is not visible");
+												appLog.error("users last name textbox is not visible");
+												sa.assertTrue(false, "users last name textbox is not visible");
 											}
 										}
 										else {
-											appLog.error("edit icon is not clickable");
-											sa.assertTrue(false, "edit icon is not clickable");
+											appLog.error("users first name textbox is not visible");
+											sa.assertTrue(false, "users first name textbox is not visible");
 										}
 									}
 									else {
-										appLog.error("edit icon is not found");
-										sa.assertTrue(false, "edit icon is not found");
+										appLog.error("edit icon is not clickable");
+										sa.assertTrue(false, "edit icon is not clickable");
 									}
 								}
-								
+								else {
+									appLog.error("edit icon is not found");
+									sa.assertTrue(false, "edit icon is not found");
+								}
 							}
 						}
-						else {
-							appLog.error("dropdown for user type is not visible");
-							sa.assertTrue(false, "dropdown for user type is not visible");
-						}
+					}else {
+						appLog.error("dropdown for user type is not visible");
+						sa.assertTrue(false, "dropdown for user type is not visible");
 					}
-					else {
-						appLog.error("users link on base page is not clickable");
-						sa.assertTrue(false, "users link on base page is not clickable");
-					}
+				}else {
+					appLog.error("user menu setup link is not clickable");
+					sa.assertTrue(false, "user menu setup link is not clickable");
 				}
-				else {
-					appLog.error("expanding manage users icon is not clickable on home page");
-					sa.assertTrue(false, "expanding manage users icon is not clickable on home page");
-				}
+			}else {
+				appLog.error("user menu tab is not clickable on home page");
+				sa.assertTrue(false, "user menu tab is not clickable on home page");
 			}
-			else {
-				appLog.error("user menu setup link is not clickable");
-				sa.assertTrue(false, "user menu setup link is not clickable");
-			}
-		}
-		else {
-			appLog.error("user menu tab is not clickable on home page");
-			sa.assertTrue(false, "user menu tab is not clickable on home page");
-		}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+	}else {
+		appLog.error("Not able to click on setup link so cannot update CRM User2 Name");
+		sa.assertTrue(false, "Not able to click on setup link so cannot update CRM User2 Name");
+	}
 		if (bp.clickOnTab(TabName.NIMTab)) {
 			switchToFrame(driver, 30, np.getFrame( PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.Profiles)) {
@@ -2732,7 +2769,7 @@ public class Module9 extends BaseLib{
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
@@ -2790,7 +2827,7 @@ public class Module9 extends BaseLib{
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 											
 	}
@@ -2876,7 +2913,7 @@ public class Module9 extends BaseLib{
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2903,8 +2940,8 @@ public class Module9 extends BaseLib{
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -3016,17 +3053,10 @@ public class Module9 extends BaseLib{
 						appLog.error("cancel button not present on manage approvals window");
 						sa.assertTrue(false, "cancel button not present on manage approvals window");
 					}
-					WebElement ele= BaseLib.edriver.findElement(By.cssSelector(".SearchBasedOnAccountAndContacts .icon_btn_search"));
-					try{
-						scrollDownThroughWebelement(driver, ele, "search icon");
-						ele.click();
-						appLog.info("clicked on search icon");
-					}catch(Exception e){
-						appLog.error("Not able to click on search icon");
-						BaseLib.sa.assertTrue(false, "Not able to click on search icon");
-					}
+					if(clickUsingJavaScript(driver, fp.getSearchIconManageApprovalsPopup(ManageApprovalTabs.PendingDocuments, 10), "Manage approvals pending search icon", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on manage approvals pending search icon");
 						ThreadSleep(3000);
-						if (isAlertPresent(driver)) {
+						
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 							if (msg.trim().equals(FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails)) {
@@ -3036,14 +3066,17 @@ public class Module9 extends BaseLib{
 								appLog.error("error alert message is wrong when search icon is clicked");
 								sa.assertTrue(false, "error alert message is wrong when search icon is clicked");
 							}
-						}
-						else {
-							appLog.error("no alert is present when search icon is clicked");
-							sa.assertTrue(false, "no alert is present when search icon is clicked");
-						}
+						
+					}else {
+						appLog.error("Not able to click on manage approvals search icon so cannot check error message "+FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails);
+						sa.assertTrue(false, "Not able to click on manage approvals search icon so cannot check error message "+FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails);
+					}
+					
+					
+						
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "checkbox to select all documents in manage approvals", action.SCROLLANDBOOLEAN)) {
 						//added after bug found
-						ele= BaseLib.edriver.findElement(By.cssSelector("#ApproveId"));
+						WebElement ele= BaseLib.edriver.findElement(By.cssSelector("#ApproveId"));
 						try{
 							scrollDownThroughWebelement(driver, ele, "Approve icon");
 							ele.click();
@@ -3079,7 +3112,7 @@ public class Module9 extends BaseLib{
 					}
 					boolean flag;
 					flag=true;
-					ele= BaseLib.edriver.findElement(By.cssSelector("#DeleteId"));
+					WebElement ele= BaseLib.edriver.findElement(By.cssSelector("#DeleteId"));
 					try{
 						scrollDownThroughWebelement(driver, ele, "Delete icon");
 						ele.click();
@@ -3252,7 +3285,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3266,8 +3299,8 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
-				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "title");
-				if (expandIcon.equalsIgnoreCase("Show Section - Workspace")) {
+				String expandIcon = getAttribute(driver, bp.getWorkspaceExpandIcon(60), "WorkspaceIcon", "aria-expanded");
+				if (expandIcon.equalsIgnoreCase("false")) {
 					if (click(driver, bp.getWorkspaceExpandIcon(60), "Workspace Expand Icon",
 							action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on workspace expand icon");
@@ -3312,7 +3345,7 @@ public class Module9 extends BaseLib{
 				switchToDefaultContent(driver);
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		bp = new BasePageBusinessLayer(driver);
@@ -3653,7 +3686,7 @@ public class Module9 extends BaseLib{
 			}
 		}	
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3868,7 +3901,7 @@ public class Module9 extends BaseLib{
 			appLog.error("inst tab is not clickable");
 			sa.assertTrue(false, "inst tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4346,7 +4379,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4845,7 +4878,7 @@ public class Module9 extends BaseLib{
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5068,7 +5101,7 @@ public class Module9 extends BaseLib{
 					
 			}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5466,7 +5499,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5708,7 +5741,7 @@ public class Module9 extends BaseLib{
 			}
 		}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6168,7 +6201,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6362,7 +6395,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6675,7 +6708,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -6871,7 +6904,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7002,7 +7035,7 @@ public class Module9 extends BaseLib{
 				appLog.error("contacts tab is not clickable");
 				sa.assertTrue(false, "contacts tab is not clickable");
 			}
-			lp.CRMlogout();
+			lp.CRMlogout(environment,mode);
 			sa.assertAll();
 		}
 		
@@ -7437,7 +7470,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7546,7 +7579,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7774,7 +7807,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 
 	}
@@ -7955,7 +7988,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8172,7 +8205,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8494,7 +8527,7 @@ public class Module9 extends BaseLib{
 				}
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8630,7 +8663,7 @@ public class Module9 extends BaseLib{
 				switchToDefaultContent(driver);
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8827,7 +8860,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8957,7 +8990,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
@@ -9025,7 +9058,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -9396,7 +9429,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -9445,7 +9478,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -9762,7 +9795,7 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, "fund "+M9FundName1+" could not be found");
 			}
 				}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10182,7 +10215,7 @@ public class Module9 extends BaseLib{
 			appLog.error("inst tab is not clickable");
 			sa.assertTrue(false, "inst tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -10523,7 +10556,7 @@ public class Module9 extends BaseLib{
 		}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -10794,7 +10827,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 	}
 
@@ -11283,7 +11316,7 @@ public class Module9 extends BaseLib{
 			}
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -11603,7 +11636,7 @@ public class Module9 extends BaseLib{
 				
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -11988,7 +12021,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -12230,7 +12263,7 @@ public class Module9 extends BaseLib{
 			}
 		}
 		
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -12689,7 +12722,7 @@ public class Module9 extends BaseLib{
 		appLog.error("funds tab is not clickable");
 		sa.assertTrue(false, "funds tab is not clickable");
 	}
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 	}
 
@@ -12883,7 +12916,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -13196,7 +13229,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -13392,7 +13425,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -13523,7 +13556,7 @@ public class Module9 extends BaseLib{
 				appLog.error("contacts tab is not clickable");
 				sa.assertTrue(false, "contacts tab is not clickable");
 			}
-			lp.CRMlogout();
+			lp.CRMlogout(environment,mode);
 			sa.assertAll();
 		}
 	}
@@ -13956,7 +13989,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -14063,7 +14096,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -14297,7 +14330,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -14481,7 +14514,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -14697,7 +14730,7 @@ public class Module9 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -15019,7 +15052,7 @@ public class Module9 extends BaseLib{
 				}
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -15163,7 +15196,7 @@ public class Module9 extends BaseLib{
 				}
 				switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -15364,7 +15397,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -15496,7 +15529,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 		
 	}
@@ -15564,7 +15597,7 @@ public class Module9 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -15576,7 +15609,7 @@ public class Module9 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		saa1=bp.postCondition();
 		sa.combineAssertions(saa1);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();		
 		}
 
