@@ -77,7 +77,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//div[@id='Name_ileinner']")
 	private WebElement fundNameInViewMode;
 	
-	@FindBy(xpath="//span[@class='custom-truncate uiOutputText']")
+	@FindBy(xpath="//*[contains(text(),'Fund')]/..//*[@slot='primaryField']/*")
 	private WebElement fundNameInViewModeLightning;
 
 	/**
@@ -2940,7 +2940,7 @@ public class FundsPage extends BasePageBusinessLayer {
 			gridSel = "pendingGrid";
 		}
 		else {
-			gridSel="aw";
+			gridSel="AprovedGrid";
 		}
 		return FindElements(driver, "//span[contains(@id,'"+gridSel+"') and contains(@id,'cell-"+num+"-')]", "uploaded by list manage approvals");
 	}
@@ -2955,7 +2955,7 @@ public class FundsPage extends BasePageBusinessLayer {
 			gridSel = "pendingGrid";
 		}
 		else {
-			gridSel="aw";
+			gridSel="AprovedGrid";
 		}
 		return FindElements(driver, "//span[contains(@id,'"+gridSel+"') and contains(@id,'cell-"+num+"-')]", "document name list manage approvals");
 	}
@@ -2966,7 +2966,7 @@ public class FundsPage extends BasePageBusinessLayer {
 			gridSel = "pendingGrid";
 		}
 		else {
-			gridSel="aw";
+			gridSel="AprovedGrid";
 		}
 		return FindElements(driver, "//span[contains(@id,'"+gridSel+"') and contains(@id,'cell-"+num+"-')]", "firm name list manage approvals");
 	}
@@ -2977,7 +2977,7 @@ public class FundsPage extends BasePageBusinessLayer {
 			num="6";
 		}
 		else {
-			gridSel="aw";
+			gridSel="AprovedGrid";
 			num="6";
 		}
 		return FindElements(driver, "//span[contains(@id,'"+gridSel+"') and contains(@id,'cell-"+num+"-')]", "uploaded on list manage approvals");

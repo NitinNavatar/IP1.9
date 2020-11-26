@@ -6,7 +6,9 @@ package com.navatar.scripts;
 import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
@@ -33,6 +35,7 @@ import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EmailLib;
 import com.navatar.pageObjects.AllFirmsPageBusinesslayer;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.CommitmentPageBusinessLayer;
 import com.navatar.pageObjects.ContactPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
@@ -4038,7 +4041,7 @@ public class Module9 extends BaseLib{
 		String shdFolderName = shdPath.split(" ")[0];
 		String stdFolderName = stdPath.split(" ")[0];
 		String[] filesToDel = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.KeyWord_For_Search).split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		String docpath = "UploadFiles\\Module9\\";
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -4397,7 +4400,7 @@ public class Module9 extends BaseLib{
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc015_UploadManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc015_UploadManageApprovalOn_Action", excelLabel.UploadedFileStandard);
 		String filesToDel[] = filesCommon.split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M9FundName1)) {
@@ -4896,7 +4899,7 @@ public class Module9 extends BaseLib{
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc015_UploadManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc015_UploadManageApprovalOn_Action", excelLabel.UploadedFileStandard);
 		String filesToDel[] = filesCommon.split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		//Institution
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
@@ -5120,7 +5123,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc015_UploadManageApprovalOn_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc015_UploadManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc015_UploadManageApprovalOn_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		SoftAssert saa = new SoftAssert();
 		lp.investorLogin(M9Contact1EmailId, adminPassword);
 		List<String> fail_list = null;
@@ -5256,7 +5259,7 @@ public class Module9 extends BaseLib{
 		String fileShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
 		String fileStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String filesToImport[] = fileCommon.split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
@@ -5758,7 +5761,7 @@ public class Module9 extends BaseLib{
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileStandard);
 		String filesToSearch[] = filesCommon.split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		int size;
 		String grid[][]=new String[12][12];
 		//filling data in grid
@@ -5834,6 +5837,16 @@ public class Module9 extends BaseLib{
 										int j = 0;
 										flag = false;
 										while(j<2) {
+											ThreadSleep(3000);
+//											Actions actions = new Actions(edriver);
+//											actions.moveToElement(fp.getDocumentNameManageApproval(ManageApprovalTabs.PendingDocuments,60)).click(fp.getDocumentNameManageApproval(ManageApprovalTabs.PendingDocuments,60)).perform();
+											switchToDefaultContent(driver);
+											
+											windowScrollYAxis(edriver, 0, 700);
+											
+											switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
+											
+											
 											click(driver, fp.getDocumentNameManageApproval(ManageApprovalTabs.PendingDocuments,60), "document name manage approvals", action.BOOLEAN);
 											if (fp.verifyFilesPresentInManageApprovals(Workspace.FundraisingWorkspace, ManageApprovalTabs.PendingDocuments,grid[i][0], grid[i][2], grid[i][1],CRMUser1FirstName+" "+CRMUser1LastName, Org1FirmName, date)) {
 												flag = true;
@@ -6417,6 +6430,9 @@ public class Module9 extends BaseLib{
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 700);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "check all documents checkbox", action.SCROLLANDBOOLEAN)) {
 						if (click(driver, fp.getApproveBtnManageApprovals(60), "approve button on manage approvals window", action.SCROLLANDBOOLEAN)) {
 							if (click(driver, fp.getManageApprovalApproveYesOrNo(YesNo.Yes, 30), "approve yes button", action.SCROLLANDBOOLEAN)) {
@@ -6723,7 +6739,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		
 		
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
@@ -6731,6 +6747,9 @@ public class Module9 extends BaseLib{
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 700);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver,fp.getCheckAllDocsManageApprovals(60), "checkbox to select all boxes", action.BOOLEAN)) {
 						//uncheck checkbox in front of 2 common files
 						fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[0], M9FundName1, CRMUser1FirstName+" "+CRMUser1LastName, M9FirmName, date);
@@ -6921,7 +6940,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
@@ -7054,7 +7073,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		SoftAssert saa = new SoftAssert();
 		lp.investorLogin(M9Contact1EmailId, adminPassword);
 		List<String> fail_list = null;
@@ -7149,13 +7168,16 @@ public class Module9 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileCommon);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageFolderIcon(Workspace.FundraisingWorkspace, 30),"manage folder icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 700);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if(!cmnPath.isEmpty() && !cmnPath.equalsIgnoreCase("Commonpath")) {
 						String id=null;
 						id=fp.getCreatedFolderId(cmnPath, PageName.ManageFolderPopUp, 20);
@@ -7183,6 +7205,9 @@ public class Module9 extends BaseLib{
 							}
 						}
 						if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
+							switchToDefaultContent(driver);
+							windowScrollYAxis(edriver, 0, 700);
+							switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 							if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[0], M9FundName1+" > "+cmnPath,  CRMUser1FirstName+" "+CRMUser1LastName, Org1FirmName, date)) {
 								appLog.info(filesCommon.split("<break>")[0]+" common folder documents are successfully found in manage approvals popup pending status");
 							}
@@ -7482,7 +7507,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc018_VerifyOnlineImportManageApprovalOn_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M9FundName1)){
@@ -7530,6 +7555,9 @@ public class Module9 extends BaseLib{
 					sa.assertTrue(false, "manage folder icon is not clickable");
 				}
 				if (click(driver,fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 700);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (fp.verifyFilesPresentInManageApprovals(Workspace.FundraisingWorkspace, ManageApprovalTabs.PendingDocuments, filesCommon.split("<break>")[0]+"<break>"+filesCommon.split("<break>")[1], M9FundName1+" > "+cmnPath, "pending", CRMUser1FirstName+" "+CRMUser1LastName, Org1FirmName, date)) {
 						appLog.info("files are successfully verified on manage approvals ui");
 					}
@@ -7591,7 +7619,7 @@ public class Module9 extends BaseLib{
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String shdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		String cmnUpload="UploadFiles\\Module9\\CommonUser2";
 		String shdUpload="UploadFiles\\Module9\\SharedUser2";
 		String stdUpload="UploadFiles\\Module9\\StandardUser2";
@@ -7629,6 +7657,9 @@ public class Module9 extends BaseLib{
 				String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.UploadedFileStandard);
 
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 700);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "pending documents dropdown", "All Pending Documents")) {
 						for (int i = 0;i<4;i++) {
 						if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30),filesCommon.split("<break>")[i] , M9FundName1+" > "+cmnPath, User2first+" "+User2last, Org1FirmName, date)) {
@@ -7828,7 +7859,7 @@ public class Module9 extends BaseLib{
 		String User2first = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_FName);
 		String User2last= ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_LName);
 		
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		String cmnUpload="UploadFiles\\Module9\\CommonUser2";
 		String shdUpload="UploadFiles\\Module9\\SharedUser2";
 		String stdUpload="UploadFiles\\Module9\\StandardUser2";
@@ -8007,12 +8038,15 @@ public class Module9 extends BaseLib{
 		String User2first = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_FName);
 		String User2last= ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_LName);
 		
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 700);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					for (int i = 2;i<4;i++) {
 						if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[i], M9FundName1+" > "+cmnPath, User2first+" "+User2last, Org1FirmName, date)) {
 							if (click(driver, fp.checkboxForFileInManageApprovals(filesCommon.split("<break>")[i],User2first+" "+User2last), "checkbox for common 1 file", action.SCROLLANDBOOLEAN)) {
@@ -8223,7 +8257,7 @@ public class Module9 extends BaseLib{
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M9tc025_UploadFilesUser2AndVerify", excelLabel.UploadedFileStandard);
 		String updatedcmnPath = cmnPath.split("\\(")[0].trim()+ "UP ("+cmnPath.split("\\(")[1].trim();
 		String updatedshdPath = shdPath.split("\\(")[0].trim()+ "UP ("+shdPath.split("\\(")[1].trim();
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
@@ -8363,6 +8397,7 @@ public class Module9 extends BaseLib{
 				if (click(driver, fp.getEditButton(30), "base page edit button", action.SCROLLANDBOOLEAN)) {
 					if(sendKeys(driver, fp.getFundName(60), M9FundName1+"NUP", "Fund Name", action.BOOLEAN)){
 						if (click(driver, fp.getSaveButton(60), "Save Button funds page", action.BOOLEAN)) {
+							ThreadSleep(3000);
 							String fundNameViewMode =getText(driver, fp.getFundNameInViewMode(60), "Fund Name", action.BOOLEAN);
 							if (fundNameViewMode.equalsIgnoreCase(M9FundName1+"NUP")) {
 								appLog.info("Fund is edit successfully.:" + M9FundName1+"NUP");
@@ -8402,11 +8437,12 @@ public class Module9 extends BaseLib{
 			if (bp.clickOnTab(TabName.InstituitonsTab)) {
 				if (ip.clickOnCreatedInstitution(M9Institution1)) {
 					if (click(driver, bp.getEditButton(30), "edit button base page", action.SCROLLANDBOOLEAN)) {
-						if (sendKeys(driver, ip.getLegalNameTextBox(60), M9Institution1+"NUP", "leagl name text box",
+						if (sendKeys(driver, ip.getLegalNameTextBox(environment,mode,60), M9Institution1+"NUP", "leagl name text box",
 								action.SCROLLANDBOOLEAN)) {
 							appLog.info("passed data in text box: " + M9Institution1+"NUP");
 							if (click(driver, ip.getSaveButton(60), "save button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
+								ThreadSleep(3000);
 								String str = getText(driver, ip.getLegalNameLabelTextbox(60), "legal Name Label Text",
 										action.SCROLLANDBOOLEAN);
 								if (str != null) {
@@ -8444,9 +8480,12 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, "inst tab is not clickable");
 			}
 			if (bp.clickOnTab(TabName.FundsTab)) {
-				if (fp.clickOnCreatedFund(M9FundName1)) {
+				if (fp.clickOnCreatedFund(M9FundName1+"NUP")) {
 					switchToFrame(driver,30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+						switchToDefaultContent(driver);
+						windowScrollYAxis(edriver, 0, 700);
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						if (click(driver, fp.getPendingDocsTab(30), "pending documents manage approvals", action.SCROLLANDBOOLEAN)) {
 							//file is not present
 							if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[1], M9FundName1+"UP > "+cmnPath, null, Org1FirmName, date)) {
@@ -8550,6 +8589,7 @@ public class Module9 extends BaseLib{
 						appLog.info("passed data in text box: " + M9Institution1);
 						if (click(driver, ip.getSaveButton(60), "save button", action.SCROLLANDBOOLEAN)) {
 							appLog.info("clicked on save button");
+							ThreadSleep(3000);
 							String str = getText(driver, ip.getLegalNameLabelTextbox(60), "legal Name Label Text",
 									action.SCROLLANDBOOLEAN);
 							if (str != null) {
@@ -8597,7 +8637,7 @@ public class Module9 extends BaseLib{
 					sa.assertTrue(false, "could not update institution name to "+M9Institution1+"NUP");
 				}
 				switchToDefaultContent(driver);
-				
+				refresh(driver);
 				scrollDownThroughWebelement(driver, fp.getEditButton(30), "base page edit button");
 				if (click(driver, fp.getEditButton(30), "base page edit button", action.SCROLLANDBOOLEAN)) {
 					if(sendKeys(driver, fp.getFundName(60), M9FundName1, "Fund Name", action.BOOLEAN)){
@@ -8678,9 +8718,12 @@ public class Module9 extends BaseLib{
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.FundraisingWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				windowScrollYAxis(edriver, 0, 700);
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getApprovedDocsTab(30), "approved docs tab", action.BOOLEAN)) {
 					//uploaded on ascending
-					if (click(driver, fp.getColumnListManageApproval(ManageApprovalTabs.ApprovedDocuments, 30).get(5), "uploaded on column name", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, fp.getColumnListManageApproval(ManageApprovalTabs.ApprovedDocuments, 30).get(5), "uploaded on column name", action.BOOLEAN)) {
 						if (checkSorting(driver, SortOrder.Assecending, fp.getManageApprovalUploadedOnList(ManageApprovalTabs.ApprovedDocuments))) {
 							appLog.info("correct sorting is successfully verified for ascending order on uploaded on list");
 						}
@@ -8690,7 +8733,7 @@ public class Module9 extends BaseLib{
 						}
 					}
 					//uploaded by ascending
-					if (click(driver, fp.getColumnListManageApproval(ManageApprovalTabs.ApprovedDocuments, 30).get(3), "uploaded by column name", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, fp.getColumnListManageApproval(ManageApprovalTabs.ApprovedDocuments, 30).get(3), "uploaded by column name", action.BOOLEAN)) {
 						if (checkSorting(driver, SortOrder.Assecending, fp.getManageApprovalUploadedByList(ManageApprovalTabs.ApprovedDocuments))) {
 							appLog.info("correct sorting is successfully verified for ascending order on uploaded by list");
 						}
@@ -8872,7 +8915,7 @@ public class Module9 extends BaseLib{
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String docpath = "UploadFiles\\Module9\\investorSide";
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		SoftAssert saa = new SoftAssert();
 		lp.investorLogin(M9Contact1EmailId, adminPassword);
 		if (ifp.clickOnInvestmentsTab(investorSideWorkSpace.PotentialInvestment)) {
@@ -8911,7 +8954,7 @@ public class Module9 extends BaseLib{
 		String shdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M9tc030_UploadDocumentInvestorSide_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -9002,7 +9045,7 @@ public class Module9 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M9tc025_UploadFilesUser2AndVerify", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -9175,18 +9218,10 @@ public class Module9 extends BaseLib{
 						appLog.error("cancel button not present on manage approvals window");
 						sa.assertTrue(false, "cancel button not present on manage approvals window");
 					}
-					WebElement ele= BaseLib.edriver.findElement(By.cssSelector(".SearchBasedOnAccountAndContacts .icon_btn_search"));
-					try{
-						scrollDownThroughWebelement(driver, ele, "search icon");
-						ele.click();
-						appLog.info("clicked on search icon");
-					}catch(Exception e){
-						appLog.error("Not able to click on search icon");
-						BaseLib.sa.assertTrue(false, "Not able to click on search icon");
-					}
-
+					if(clickUsingJavaScript(driver, fp.getSearchIconManageApprovalsPopup(ManageApprovalTabs.PendingDocuments, 10), "Manage approvals pending search icon", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on manage approvals pending search icon");
 						ThreadSleep(3000);
-						if (isAlertPresent(driver)) {
+						
 							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
 							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 							if (msg.trim().equals(FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails)) {
@@ -9196,13 +9231,13 @@ public class Module9 extends BaseLib{
 								appLog.error("error alert message is wrong when search icon is clicked");
 								sa.assertTrue(false, "error alert message is wrong when search icon is clicked");
 							}
-						}
-						else {
-							appLog.error("no alert is present when search icon is clicked");
-							sa.assertTrue(false, "no alert is present when search icon is clicked");
-						}
+						
+					}else {
+						appLog.error("Not able to click on manage approvals search icon so cannot check error message "+FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails);
+						sa.assertTrue(false, "Not able to click on manage approvals search icon so cannot check error message "+FundsPageErrorMessage.pleaseEnterAValueErrorMessageInManageEmails);
+					}
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "checkbox to select all documents in manage approvals", action.SCROLLANDBOOLEAN)) {
-						ele= BaseLib.edriver.findElement(By.cssSelector("#ApproveId"));
+						WebElement ele= BaseLib.edriver.findElement(By.cssSelector("#ApproveId"));
 						try{
 							scrollDownThroughWebelement(driver, ele, "Approve icon");
 							ele.click();
@@ -9236,35 +9271,13 @@ public class Module9 extends BaseLib{
 						appLog.error("checkbox for selecting all documents is not clickable");
 						sa.assertTrue(false, "checkbox for selecting all documents is not clickable");
 					}
-					ele= BaseLib.edriver.findElement(By.cssSelector("#DeleteId"));
-					try{
-						scrollDownThroughWebelement(driver, ele, "Delete icon");
-						ele.click();
-						appLog.info("clicked on Delete icon");
-					}catch(Exception e){
-						appLog.error("Not able to click on Delete icon");
-						BaseLib.sa.assertTrue(false, "Not able to click on Delete icon");
+					if (isSelected(driver, fp.getCheckAllDocsManageApprovals(60), "checkbox for all documents manage approval")) {
+						appLog.info("checkbox for selecting all documents is selected");
 					}
-					
-					//if (click(driver, fp.getdeleteBtnManageApprovals(60), "delete button manage approvals", action.SCROLLANDBOOLEAN)) {
-						if (isAlertPresent(driver)) {
-							String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-							switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-							if (msg.trim().equals(FundsPageErrorMessage.manageApprovalDelError)) {
-								appLog.info("correct error mesage is verified when delete button is clicked with no document");
-							}
-						}
-						else {
-							appLog.error("delete error message could not be verified");
-							sa.assertTrue(false,"delete error message could not be verified");
-						}
-						if (isSelected(driver, fp.getCheckAllDocsManageApprovals(60), "checkbox for all documents manage approval")) {
-							appLog.info("checkbox for selecting all documents is selected");
-						}
-						else {
-							appLog.error("checkbox for selecting all documents is not selected");
-							sa.assertTrue(false, "checkbox for selecting all documents is not selected");
-						}
+					else {
+						appLog.error("checkbox for selecting all documents is not selected");
+						sa.assertTrue(false, "checkbox for selecting all documents is not selected");
+					}
 					//}
 					//else {
 					//	appLog.error("delete button is not clickable on manage approvals window");
@@ -9499,7 +9512,7 @@ public class Module9 extends BaseLib{
 		String[] filesShared = {};
 		String[] filesStand = {};
 		
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
@@ -9816,7 +9829,7 @@ public class Module9 extends BaseLib{
 		String[] filesStand = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileStandard).split("<break>");
 		
 		String[] filesInternal = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileInternal).split("<break>");
-	String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+	String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		//Institution
 		if (fp.clickOnTab(TabName.InstituitonsTab)) {
@@ -10007,7 +10020,7 @@ public class Module9 extends BaseLib{
 			
 			//Commitment
 			if (ip.clickOnTab(TabName.CommitmentsTab)) {
-				if (cmp.clickOnCreatedCommitmentId(M9Commitment1ID)) {
+				if (cmp.clickOnCreatedCommitmentId(environment,mode,M9Commitment1ID)) {
 					
 					switchToFrame(driver, 30, cp.getFrame( PageName.CommitmentsPage, 30));
 					scrollDownThroughWebelement(driver, ip.getWorkspaceSectionView(Workspace.InvestorWorkspace,30),"fundraising workspace view");
@@ -10101,19 +10114,19 @@ public class Module9 extends BaseLib{
 						}
 					}
 					switchToDefaultContent(driver);
-			}
-				else {
+			}else {
 					appLog.error("could not find contact "+M9Contact1FirstName+" "+M9Contact1LastName);
 					sa.assertTrue(false, "could not find contact "+M9Contact1FirstName+" "+M9Contact1LastName);
 				}
+			}else {
+				appLog.error("Not able to click on commitment tab so cannot verify folder structure");
+				sa.assertTrue(false, "Not able to click on commitment tab so cannot verify folder structure");
 			}
-			
-			
 			//LP
 			if (ip.clickOnTab(TabName.InstituitonsTab)) {
-				if (ip.clickOnCreatedLP(M9LimitedPartner1)) {
+				if (ip.clickOnCreatedLP(environment,mode,M9LimitedPartner1)) {
 					
-					switchToFrame(driver, 30, cp.getFrame( PageName.InstitutionsPage, 30));
+					switchToFrame(driver, 30, cp.getFrame( PageName.LimitedPartnerPage, 30));
 					scrollDownThroughWebelement(driver, ip.getWorkspaceSectionView(Workspace.InvestorWorkspace,30),"fundraising workspace view");
 					if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 						if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesCommon[0], false)) {
@@ -10345,7 +10358,7 @@ public class Module9 extends BaseLib{
 	String shdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 	String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 	String[] filesToDel = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.KeyWord_For_Search).split("<break>");
-	String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+	String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 	lp.CRMLogin(CRMUser1EmailID, adminPassword);
 	if (bp.clickOnTab(TabName.FundsTab)) {
 		if (fp.clickOnCreatedFund(M9FundName1)) {
@@ -10353,6 +10366,9 @@ public class Module9 extends BaseLib{
 			if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "fundraising manage approval icon", action.SCROLLANDBOOLEAN)) {
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon for "+Workspace.InvestorWorkspace.toString(), action.SCROLLANDBOOLEAN)) {
+						switchToDefaultContent(driver);
+						windowScrollYAxis(edriver, 0, 1300);
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						if (click(driver, fp.getPendingDocsTab(30), "pending documents tab", action.BOOLEAN)) {
 							if (selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments,30), "manage approvals pending dropdown", "All Pending Documents")) {
 								for (int i = 0;i<filesToDel.length;i++) {
@@ -10638,7 +10654,7 @@ public class Module9 extends BaseLib{
 		
 		//Commitment
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M9Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M9Commitment1ID)) {
 				switchToFrame(driver, 30, ip.getFrame(environment,mode, PageName.CommitmentsPage, 30));
 				//common folder
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
@@ -10685,18 +10701,18 @@ public class Module9 extends BaseLib{
 				switchToDefaultContent(driver);
 			}
 			else {
-				appLog.error(M9Institution1+" is not present in instittuions page");
-				sa.assertTrue(false, M9Institution1+" is not present in instittuions page");
+				appLog.error(M9Commitment1ID+" is not present in Commitment page");
+				sa.assertTrue(false, M9Commitment1ID+" is not present in Commitment page");
 			}
 		}
 		else {
-			appLog.error("institutions tab is not clickable");
-			sa.assertTrue(false, "institutions tab is not clickable");
+			appLog.error("commitment tab is not clickable");
+			sa.assertTrue(false, "commitment tab is not clickable");
 		}
 		//LP
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M9LimitedPartner1)) {
-				switchToFrame(driver, 30, ip.getFrame(environment,mode, PageName.InstitutionsPage, 30));
+			if (ip.clickOnCreatedLP(environment,mode,M9LimitedPartner1)) {
+				switchToFrame(driver, 30, ip.getFrame(environment,mode, PageName.LimitedPartnerPage, 30));
 				//common folder
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (!bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesToDel[0])) {
@@ -10845,7 +10861,7 @@ public class Module9 extends BaseLib{
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileStandard);
 		String filesToDel[] = filesCommon.split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M9FundName1)) {
@@ -10853,6 +10869,9 @@ public class Module9 extends BaseLib{
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "workspace section view");
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
+						switchToDefaultContent(driver);
+						windowScrollYAxis(edriver, 0, 1300);
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						if (click(driver, fp.getCheckAllDocsManageApprovals(60), "all checkbox", action.SCROLLANDBOOLEAN)) {
 							if (click(driver, fp.getApproveBtnManageApprovals(60),"approve button on pending docs tab", action.SCROLLANDBOOLEAN)) {
 								if (fp.getManageApprovalApproveYesOrNo(YesNo.Yes, 30)!=null) {
@@ -11014,6 +11033,9 @@ public class Module9 extends BaseLib{
 				filesToDel = filesShared.split("<break>");
 				if (fp.verifyFolderPathdummy(shdPath, null, null, null, PageName.FundsPage, Workspace.InvestorWorkspace, 30)) {
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
+						switchToDefaultContent(driver);
+						windowScrollYAxis(edriver, 0, 1300);
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						if (click(driver, fp.getCheckAllDocsManageApprovals(60), "all checkbox", action.SCROLLANDBOOLEAN)) {
 							if (click(driver, fp.getApproveBtnManageApprovals(60),"approve button on pending docs tab", action.SCROLLANDBOOLEAN)) {
 								if (click(driver, fp.getManageApprovalApproveYesOrNo(YesNo.Yes, 30), "approve popup yes button", action.SCROLLANDBOOLEAN)) {
@@ -11335,7 +11357,7 @@ public class Module9 extends BaseLib{
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileStandard);
 		String filesToDel[] = filesCommon.split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		//Institution
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
@@ -11518,7 +11540,7 @@ public class Module9 extends BaseLib{
 		}
 		filesToDel = filesCommon.split("<break>");
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M9Commitment1ID)) {
+			if (cmp.clickOnCreatedCommitmentId(environment,mode,M9Commitment1ID)) {
 				
 				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
@@ -11577,9 +11599,9 @@ public class Module9 extends BaseLib{
 		}
 		//LP
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M9LimitedPartner1)) {
+			if (ip.clickOnCreatedLP(environment,mode,M9LimitedPartner1)) {
 				filesToDel = filesCommon.split("<break>");
-				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.InstitutionsPage, 30));
+				switchToFrame(driver, 30, fp.getFrame(environment,mode, PageName.LimitedPartnerPage, 30));
 				if (fp.verifyFolderPathdummy(cmnPath, null, null, M9FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					for (int i = 0;i<filesToDel.length;i++) {
 						if (bp.verifyFileinContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace, filesToDel[i], true)) {
@@ -11655,7 +11677,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc034_VerifyDocUploadManageInvestorForInvestorWorkspace_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		SoftAssert saa = new SoftAssert();
 		List<String> fail_list = null;
 		lp.investorLogin(M9Contact1EmailId, adminPassword);
@@ -11779,7 +11801,7 @@ public class Module9 extends BaseLib{
 		String fileShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileShared);
 		String fileStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String filesToImport[] = fileCommon.split("<break>");
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
@@ -12280,7 +12302,7 @@ public class Module9 extends BaseLib{
 	String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileShared);
 	String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileStandard);
 	String filesToSearch[] = filesCommon.split("<break>");
-	String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+	String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 	int size;
 	String grid[][]=new String[12][12];
 	//filling data in grid
@@ -12316,6 +12338,9 @@ public class Module9 extends BaseLib{
 		if (fp.clickOnCreatedFund(M9FundName1)) {
 			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				windowScrollYAxis(edriver, 0, 1300);
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (sendKeys(driver, fp.getSearchTextboxManageApp(ManageApprovalTabs.PendingDocuments, 30), filesToSearch[0], "search box pending tabs", action.BOOLEAN)) {
 					if (click(driver, fp.getSearchIconManageApprovalsPopup(ManageApprovalTabs.PendingDocuments, 30), "pending docs manage approvals", action.SCROLLANDBOOLEAN)) {
 						
@@ -12938,6 +12963,9 @@ public class Module9 extends BaseLib{
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon on fundraising workspace", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 1300);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getCheckAllDocsManageApprovals(60), "check all documents checkbox", action.SCROLLANDBOOLEAN)) {
 						if (click(driver, fp.getApproveBtnManageApprovals(60), "approve button on manage approvals window", action.SCROLLANDBOOLEAN)) {
 							if (click(driver, fp.getManageApprovalApproveYesOrNo(YesNo.Yes, 30), "approve yes button", action.SCROLLANDBOOLEAN)) {
@@ -13146,37 +13174,21 @@ public class Module9 extends BaseLib{
 										//find not more than 10 error
 										if (click(driver, fp.getApproveBtnManageApprovals(60), "approve button manage approvals", action.SCROLLANDBOOLEAN)) {
 											if (click(driver, fp.getManageApprovalApproveYesOrNo(YesNo.Yes, 30), "yes button approve popup", action.BOOLEAN)) {
-												WebElement ele= BaseLib.edriver.findElement(By.cssSelector("a[title=\"Update All\"]"));
-												boolean flag=true;
-												try{
-													scrollDownThroughWebelement(driver, ele, "Update All Button");
-													ele.click();
+												ThreadSleep(1000);
+												if(clickUsingJavaScript(driver, fp.getManageApprovalsUpdateAllDocument(10), "update button", action.BOOLEAN)) {
 													appLog.info("clicked on Update All Button");
-												}catch(Exception e){
-													flag=false;
-													appLog.error("Not able to click on Update All buttone");
-													BaseLib.sa.assertTrue(false, "Not able to click on Update All");
-												}
-												if (flag) {
-													if (isAlertPresent(driver)) {
-														String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-														switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
-														if (msg.trim().equals(FundsPageErrorMessage.manageApprovalApproveMoreThan10)) {
-															appLog.info("correct alert that cannot approve more than 10 docs is successfully verified");
-														}
-														else {
-															appLog.error("alert message is not as expected");
-															sa.assertTrue(false, "alert message is not as expected");
-														}
+													String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
+													switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+													if (msg.trim().equals(FundsPageErrorMessage.manageApprovalApproveMoreThan10)) {
+														appLog.info("correct alert that cannot approve more than 10 docs is successfully verified");
 													}
 													else {
-														appLog.error("no alert is present when more than 10 docs is selected for approvals");
-														sa.assertTrue(false, "no alert is present when more than 10 docs is selected for approvals");
+														appLog.error("alert message is not as expected");
+														sa.assertTrue(false, "alert message is not as expected");
 													}
-												}
-												else {
-													appLog.error("update all button is not clickable");
-													sa.assertTrue(false, "update all button is not clickable");
+												}else {
+													appLog.error("Not able to click on Update All buttone");
+													sa.assertTrue(false, "Not able to click on Update All");
 												}
 											}
 											else {
@@ -13244,9 +13256,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
-		
-		
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
@@ -13442,7 +13452,7 @@ public class Module9 extends BaseLib{
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileCommon);
 		String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileShared);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
@@ -13573,7 +13583,7 @@ public class Module9 extends BaseLib{
 	String filesShared = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileShared);
 	String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileStandard);
 	AllFirmsPageBusinesslayer af = new AllFirmsPageBusinesslayer(driver);
-	String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+	String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 	SoftAssert saa = new SoftAssert();
 	lp.investorLogin(M9Contact1EmailId, adminPassword);
 	List<String> fail_list = null;
@@ -13669,7 +13679,7 @@ public class Module9 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileCommon);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -13999,14 +14009,14 @@ public class Module9 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String filesCommon = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, "M9tc037_VerifyOnlineImportInvestors_Action", excelLabel.UploadedFileCommon);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)){
 			if(fp.clickOnCreatedFund(M9FundName1)){
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				scrollDownThroughWebelement(driver, fp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 30), "Fundraising workspace view.");
 				if(click(driver, fp.getManageFolderIcon(Workspace.InvestorWorkspace, 30), "Manage folder icon", action.BOOLEAN)){
-
+					
 					if(click(driver, fp.getAllFolderAddIcon(Workspace.InvestorWorkspace, 30), "Add folder button", action.BOOLEAN)){
 
 						if(click(driver, fp.getFolderTypeRadioButton(FolderType.Common, Workspace.InvestorWorkspace, PageName.ManageFolderPopUp, 30),"common radio button",action.BOOLEAN)) {
@@ -14047,6 +14057,9 @@ public class Module9 extends BaseLib{
 					sa.assertTrue(false, "manage folder icon is not clickable");
 				}
 				if (click(driver,fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 1300);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (fp.verifyFilesPresentInManageApprovals(Workspace.InvestorWorkspace, ManageApprovalTabs.PendingDocuments, filesCommon.split("<break>")[0]+"<break>"+filesCommon.split("<break>")[1], M9FundName1+" > "+cmnPath, "pending", CRMUser1FirstName+" "+CRMUser1LastName, Org1FirmName, date)) {
 						appLog.info("files are successfully verified on manage approvals ui");
 					}
@@ -14110,7 +14123,7 @@ public class Module9 extends BaseLib{
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String shdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		String cmnUpload="UploadFiles\\Module9\\CommonUser2";
 		String shdUpload="UploadFiles\\Module9\\SharedUser2";
 		String stdUpload="UploadFiles\\Module9\\StandardUser2";
@@ -14150,6 +14163,9 @@ public class Module9 extends BaseLib{
 				String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.UploadedFileStandard);
 
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 1300);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (selectVisibleTextFromDropDown(driver, fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "pending documents dropdown", "All Pending Documents")) {
 						for (int i = 0;i<4;i++) {
 							if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[i], M9FundName1+" > "+cmnPath, User2first+" "+User2last, Org1FirmName, date)) {
@@ -14351,7 +14367,7 @@ public class Module9 extends BaseLib{
 		String User2first = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_FName);
 		String User2last= ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_LName);
 		
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		String cmnUpload="UploadFiles\\Module9\\CommonUser2";
 		String shdUpload="UploadFiles\\Module9\\SharedUser2";
 		String stdUpload="UploadFiles\\Module9\\StandardUser2";
@@ -14442,6 +14458,9 @@ public class Module9 extends BaseLib{
 			switchToDefaultContent(driver);
 			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				windowScrollYAxis(edriver, 0, 1300);
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (selectVisibleTextFromDropDown(driver,fp.getManageApprovalsDropdown(ManageApprovalTabs.PendingDocuments, 30), "pending docs dropdown", "All Pending Documents")) {
 						for (int i = 0;i<4;i++) {
 						
@@ -14532,12 +14551,15 @@ public class Module9 extends BaseLib{
 		String User2first = ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_FName);
 		String User2last= ExcelUtils.readData("Users",excelLabel.Variable_Name, "User2", excelLabel.MyProfile_LName);
 		
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approvals icon", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				windowScrollYAxis(edriver, 0, 1300);
+				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				for (int i = 2;i<4;i++) {
 					if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[i], M9FundName1+" > "+cmnPath, User2first+" "+User2last, Org1FirmName, date)) {
 						if (click(driver, fp.checkboxForFileInManageApprovals(filesCommon.split("<break>")[i],User2first+" "+User2last), "checkbox for common 1 file", action.SCROLLANDBOOLEAN) ) {
@@ -14748,7 +14770,7 @@ public class Module9 extends BaseLib{
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M9tc044_UploadFilesCRMUser2", excelLabel.UploadedFileStandard);
 		String updatedcmnPath = cmnPath.split("\\(")[0].trim()+ "UP ("+cmnPath.split("\\(")[1].trim();
 		String updatedshdPath = shdPath.split("\\(")[0].trim()+ "UP ("+shdPath.split("\\(")[1].trim();
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
@@ -14888,6 +14910,7 @@ public class Module9 extends BaseLib{
 				if (click(driver, fp.getEditButton(30), "base page edit button", action.SCROLLANDBOOLEAN)) {
 					if(sendKeys(driver, fp.getFundName(60), M9FundName1+"NUP", "Fund Name", action.BOOLEAN)){
 						if (click(driver, fp.getSaveButton(60), "Save Button funds page", action.BOOLEAN)) {
+							ThreadSleep(3000);
 							String fundNameViewMode =getText(driver, fp.getFundNameInViewMode(60), "Fund Name", action.BOOLEAN);
 							if (fundNameViewMode.equalsIgnoreCase(M9FundName1+"NUP")) {
 								appLog.info("Fund is edit successfully.:" + M9FundName1+"NUP");
@@ -14932,6 +14955,7 @@ public class Module9 extends BaseLib{
 							appLog.info("passed data in text box: " + M9Institution1+"NUP");
 							if (click(driver, ip.getSaveButton(60), "save button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
+								ThreadSleep(3000);
 								String str = getText(driver, ip.getLegalNameLabelTextbox(60), "legal Name Label Text",
 										action.SCROLLANDBOOLEAN);
 								if (str != null) {
@@ -14969,9 +14993,12 @@ public class Module9 extends BaseLib{
 				sa.assertTrue(false, "institutions tab is not clickable");
 			}
 			if (bp.clickOnTab(TabName.FundsTab)) {
-				if (fp.clickOnCreatedFund(M9FundName1)) {
+				if (fp.clickOnCreatedFund(M9FundName1+"NUP")) {
 					switchToFrame(driver,30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+						switchToDefaultContent(driver);
+						windowScrollYAxis(edriver, 0, 1300);
+						switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 						if (click(driver, fp.getPendingDocsTab(30), "pending documents manage approvals", action.SCROLLANDBOOLEAN)) {
 						
 							if (fp.findRowByScrollingManageApprovals(ManageApprovalTabs.PendingDocuments, fp.manageApprovalsScrollBox(ManageApprovalTabs.PendingDocuments, 30), filesCommon.split("<break>")[1], M9FundName1+"UP > "+cmnPath, null, Org1FirmName, date)) {
@@ -15070,7 +15097,7 @@ public class Module9 extends BaseLib{
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M9tc044_UploadFilesCRMUser2", excelLabel.UploadedFileStandard);
 		String updatedcmnPath = cmnPath.split("\\(")[0].trim()+ "UP ("+cmnPath.split("\\(")[1].trim();
 		String updatedshdPath = shdPath.split("\\(")[0].trim()+ "UP ("+shdPath.split("\\(")[1].trim();
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
@@ -15081,6 +15108,7 @@ public class Module9 extends BaseLib{
 						appLog.info("passed data in text box: " + M9Institution1);
 						if (click(driver, ip.getSaveButton(60), "save button", action.SCROLLANDBOOLEAN)) {
 							appLog.info("clicked on save button");
+							ThreadSleep(3000);
 							String str = getText(driver, ip.getLegalNameLabelTextbox(60), "legal Name Label Text",
 									action.SCROLLANDBOOLEAN);
 							if (str != null) {
@@ -15129,6 +15157,7 @@ public class Module9 extends BaseLib{
 				}
 				switchToDefaultContent(driver);
 			}
+			refresh(driver);
 			scrollDownThroughWebelement(driver, fp.getEditButton(30), "base page edit button");
 			if (click(driver, fp.getEditButton(30), "base page edit button", action.SCROLLANDBOOLEAN)) {
 				if(sendKeys(driver, fp.getFundName(60), M9FundName1, "Fund Name", action.BOOLEAN)){
@@ -15159,9 +15188,6 @@ public class Module9 extends BaseLib{
 				appLog.error("edit button is not clickable on funds page");
 				sa.assertTrue(false, "edit button is not clickable on funds page");
 			}
-			
-			
-			
 			switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 			if (click(driver, fp.getInvestmentInfo(Workspace.InvestorWorkspace), "investment info link", action.SCROLLANDBOOLEAN)) {
 				if (click(driver, fp.getInvestmentInfoEdit(30), "investment info edit", action.BOOLEAN)) {
@@ -15207,12 +15233,15 @@ public class Module9 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionPageBusinessLayer ip = new InstitutionPageBusinessLayer(driver);
 
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(M9FundName1)) {
 				switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 1300);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getApprovedDocsTab(30), "approved docs tab", action.BOOLEAN)) {
 						//uploaded on ascending
 						if (click(driver, fp.getColumnListManageApproval(ManageApprovalTabs.ApprovedDocuments, 30).get(5), "uploaded on column name", action.SCROLLANDBOOLEAN)) {
@@ -15411,7 +15440,7 @@ public class Module9 extends BaseLib{
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.UploadedFileStandard);
 		String docpath = "UploadFiles\\Module9\\investorSide";
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		lp.investorLogin(M9Contact1EmailId, adminPassword);
 		SoftAssert saa = new SoftAssert();
 		if (ifp.clickOnInvestmentsTab(investorSideWorkSpace.CurrentInvestment)) {
@@ -15450,7 +15479,7 @@ public class Module9 extends BaseLib{
 		String shdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.SharedPath);
 		String cmnPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.CommonPath);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M9tc049_UploadDocumentInvestorSide_Action", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -15465,6 +15494,9 @@ public class Module9 extends BaseLib{
 					sa.assertTrue(false, "investor side uploaded file could not be found on content grid");
 				}
 				if (click(driver, fp.getManageApprovalIcon(Workspace.InvestorWorkspace, 30), "manage approval icon", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					windowScrollYAxis(edriver, 0, 1300);
+					switchToFrame(driver, 30, fp.getFrame( PageName.FundsPage, 30));
 					if (click(driver, fp.getApprovedDocsTab(30), "approved docs tab", action.SCROLLANDBOOLEAN)) {
 						/*if (!fp.verifyFilesPresentInManageApprovals(Workspace.FundraisingWorkspace, ManageApprovalTabs.ApprovedDocuments, filesStandard, M9Institution1+"UP > "+M9LimitedPartner1, "approved", M9Contact1FirstName+" "+M9Contact1LastName, Org1FirmName, date)) {
 							appLog.info("investor uploaded file is not present as expected manage approvals window");
@@ -15541,7 +15573,7 @@ public class Module9 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		String stdPath = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.StandardPath);
 		String filesStandard = ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,"M9tc044_UploadFilesCRMUser2", excelLabel.UploadedFileStandard);
-		String date=getDateAccToTimeZone("America/New_York", "MM/dd/YYYY");
+		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		
 		lp.CRMLogin(CRMUser2EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {

@@ -3173,7 +3173,7 @@ public abstract class BasePage {
 	@FindBy(xpath="//input[@name='save']")
 	private WebElement saveButtonClassic;
 	
-	@FindBy(xpath="//button[@title='Save']/span[text()='Save']")
+	@FindBy(xpath="//*[@title='Save']")
 	private WebElement saveButtonLighting;
 
 	/**
