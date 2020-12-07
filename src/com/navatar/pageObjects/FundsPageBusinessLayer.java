@@ -1053,18 +1053,19 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 			if (CommonLib.traverseImport(driver, documentPath, fileName)) {
 				ThreadSleep(3000);
-				 ele= BaseLib.edriver.findElement(By.cssSelector("#lbtOnlinImportSave"));
+				// ele= BaseLib.edriver.findElement(By.cssSelector("#lbtOnlinImportSave"));
 				try{
-					scrollDownThroughWebelement(driver, ele, "import button");
-					ele.click();
+					scrollDownThroughWebelement(driver,  getImportButton(60), "import button");
+				//	ele.click();
+					clickUsingJavaScript(driver, getImportButton(60), "Online Import Button", action.BOOLEAN);
+					
 					appLog.info("Clicked on Import Button successfully");
-//				if (click(driver, getImportButton(60), "Online Import Button", action.BOOLEAN)) {
 					if (WorkSpaceAction.toString().equalsIgnoreCase(WorkSpaceAction.UPDATE.toString())) {
 						ThreadSleep(5000);
-						 ele= BaseLib.edriver.findElement(By.cssSelector("#lnkReplaceAll"));
+						 ele= getUpdateAllButton(20);
 						 try{
 							 scrollDownThroughWebelement(driver, ele, "Update All Button");
-							 ele.click();
+							clickUsingJavaScript(driver, ele, "update all");
 							 appLog.info("clicked on Update All Button");
 						 }catch(Exception e){
 							 appLog.error("Not able to click on Update all button so cannot update files ");
@@ -1089,7 +1090,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					} else {
 						driver.close();
 						driver.switchTo().window(parentID);
-						BaseLib.sa.assertFalse(false, "Online Import success alert message didn't displayed");
+						BaseLib.sa.assertFalse(false, "Online Import alert message didn't displayed");
 					}
 					driver.switchTo().window(parentID);
 					return true;

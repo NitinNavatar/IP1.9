@@ -8,7 +8,10 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.Header;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.OnlineImportFileAddTo;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
@@ -33,9 +36,11 @@ import com.navatar.pageObjects.PartnershipPageBusinessLayer;
 
 import sun.misc.FpUtils;
 
+import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @Module Name: WaterMarking
@@ -59,6 +64,13 @@ public class Module13 extends BaseLib {
 				appLog.error("Not able to provide internal user access to the user : "+CRMUser1FirstName+" "+CRMUser1LastName);
 				sa.assertTrue(false, "Not able to provide internal user access to the user : "+CRMUser1FirstName+" "+CRMUser1LastName);
 			}
+		}
+		else {
+			appLog.error("not able to click on nim tab");
+			sa.assertTrue(false, "not able to click on nim tab");
+		}
+		lp.clickOnTab(TabName.FundsTab);
+		if(lp.clickOnTab(TabName.NIMTab)){
 			if(nim.giveAccessToUserInNIMTabFromAdmin(CRMUser2FirstName+" "+CRMUser2LastName, accessType.InternalUserAccess)) {
 				appLog.info("internal user access has been provided to the user : "+CRMUser2FirstName+" "+CRMUser2LastName);
 				flag=true;
@@ -66,7 +78,7 @@ public class Module13 extends BaseLib {
 				appLog.error("Not able to provide internal user access to the user : "+CRMUser2FirstName+" "+CRMUser2LastName);
 				sa.assertTrue(false, "Not able to provide internal user access to the user : "+CRMUser2FirstName+" "+CRMUser2LastName);
 			}
-			lp.CRMlogout();
+			lp.CRMlogout(environment, mode);
 			if(flag) {
 				driver.close();
 				config(browserToLaunch);
@@ -81,7 +93,7 @@ public class Module13 extends BaseLib {
 						appLog.info("Registration PopUp close Button is not displayed");
 					}
 					switchToDefaultContent(driver);
-					lp.CRMlogout();
+					lp.CRMlogout(environment, mode);
 					lp.CRMLogin(superAdminUserName, adminPassword);
 					if(nim.clickOnTab(TabName.NIMTab)) {
 						if(nim.giveAccessToUserInNIMTabFromAdmin(CRMUser2FirstName+" "+CRMUser2LastName, accessType.AdminUserAccess)) {
@@ -90,7 +102,6 @@ public class Module13 extends BaseLib {
 							appLog.error("Not able to provide admin user access to the user : "+CRMUser2FirstName+" "+CRMUser2LastName);
 							sa.assertTrue(false, "Not able to provide admin user access to the user : "+CRMUser2FirstName+" "+CRMUser2LastName);
 						}
-						lp.CRMlogout();
 					}else {
 						appLog.error("Not able to click on NIM Tab so cannot give admin user access to user :"+CRMUser2FirstName+" "+CRMUser2LastName);
 						sa.assertTrue(false, "Not able to click on NIM Tab so cannot give admin user access to user :"+CRMUser2FirstName+" "+CRMUser2LastName);
@@ -108,6 +119,8 @@ public class Module13 extends BaseLib {
 			appLog.error("Not able to click on NIM Tab so cannot give access to the user : "+CRMUser1FirstName+" "+CRMUser1LastName+","+CRMUser2FirstName+" "+CRMUser2LastName);
 			sa.assertTrue(false, "Not able to click on NIM Tab so cannot give access to the user : "+CRMUser1FirstName+" "+CRMUser1LastName+","+CRMUser2FirstName+" "+CRMUser2LastName);
 		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -126,7 +139,7 @@ public class Module13 extends BaseLib {
 		for(int i=0; i<2; i++) {
 			String instutionName=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M13Instituition"+(i+1), excelLabel.Institutions_Name);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ip.createInstitution(instutionName)) {
+			if (ip.createInstitution(environment,mode,instutionName,"Institution",null,null)) {
 				appLog.info("Institution is created successfully: "+instutionName);
 			}else {
 				appLog.error("Not able to create institution: "+instutionName);
@@ -139,7 +152,7 @@ public class Module13 extends BaseLib {
 		}	
 		String emailId = cp.generateRandomEmailId();
 			if(bp.clickOnTab(TabName.ContactTab)){
-				if(cp.createContact(M13Contact1FirstName,M13Contact1LastName,M13Institution1, emailId)) {
+				if (cp.createContact(environment,mode,M13Contact1FirstName, M13Contact1LastName, M13Institution1, emailId,null,null,CreationPage.ContactPage)) {
 					appLog.info("contact is created: "+M13Contact1FirstName+" "+M13Contact1LastName);
 					ExcelUtils.writeData(emailId,"Contacts", excelLabel.Variable_Name, "M13Contact1",excelLabel.Contact_EmailId);
 				}else {
@@ -148,7 +161,7 @@ public class Module13 extends BaseLib {
 				}
 			}
 			if(bp.clickOnTab(TabName.FundsTab)) {
-				if(fp.createFund(M13FundName1,M13FundType,M13FundInvestmentCategory)) {
+				if (fp.createFund(environment,mode,M13FundName1, M13FundType, M13FundInvestmentCategory,null,null)) {
 					appLog.info("fund is created: "+M13FundName1);
 				}else {
 					appLog.error("Not able to create fund: "+M13FundName1);
@@ -163,7 +176,7 @@ public class Module13 extends BaseLib {
 			if(bp.clickOnTab(TabName.FundraisingsTab)) {
 				String fundName=ExcelUtils.readData("Fundraisings",excelLabel.Variable_Name, "M13FundRaising"+(i+1), excelLabel.Fund_Name);
 				String instutionName=ExcelUtils.readData("Fundraisings",excelLabel.Variable_Name, "M13FundRaising"+(i+1), excelLabel.Institutions_Name);
-				if(frp.createFundRaising(fundraisingName, fundName, instutionName)) {
+				if (frp.createFundRaising(environment,mode,fundraisingName, fundName, instutionName)) {
 					appLog.info("fundraising is created : "+fundraisingName);
 				}else {
 					appLog.error("Not able to create fundraising: "+fundraisingName);
@@ -178,7 +191,7 @@ public class Module13 extends BaseLib {
 			String lpName=ExcelUtils.readData("Limited Partner",excelLabel.Variable_Name, "M13LimitedPartner"+(i+1), excelLabel.LimitedPartner_Name);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
 				String instutionName=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M13Instituition"+(i+1), excelLabel.Institutions_Name);
-				if(ip.createLimitedPartner(lpName, instutionName)) {
+				if(ip.createInstitution(environment, mode, lpName, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), instutionName)) {
 					appLog.info("limited partner is created: "+lpName);
 				}else {
 					appLog.error("Not able to create limited partner: "+lpName);
@@ -190,7 +203,7 @@ public class Module13 extends BaseLib {
 			}
 		}
 			if(bp.clickOnTab(TabName.PartnershipsTab)) {
-				if(pp.createPartnership(M13Partnership1,M13FundName1)) {
+				if (pp.createPartnership(environment, mode,M13Partnership1, M13FundName1)) {
 					appLog.info("partnership is created: "+M13Partnership1);
 				}else {
 					appLog.error("Not able to create partnership: "+M13Partnership1);
@@ -206,7 +219,7 @@ public class Module13 extends BaseLib {
 			lpName=ExcelUtils.readData("Limited Partner",excelLabel.Variable_Name, "M13LimitedPartner"+(i+1)+"", excelLabel.LimitedPartner_Name);
 			partnershipName=ExcelUtils.readData("Partnerships",excelLabel.Variable_Name, "M13Partnership1", excelLabel.PartnerShip_Name);
 			if(bp.clickOnTab(TabName.CommitmentsTab)) {
-				if(cmp.createCommitment(lpName,partnershipName,"M13Commitment"+(i+1), null)) {
+				if (cmp.createCommitment(environment, mode,lpName, partnershipName, "M13Commitment" + (i + 1), null)) {
 					appLog.info("commitment is created successfully");
 				}else {
 					appLog.error("Not able to create commitment for limited partner: "+lpName+" and partnership Name: "+partnershipName);
@@ -223,7 +236,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Not able to write CRM User1 first,last name and firm profile in excel");
 			sa.assertTrue(false, "Not able to write CRM User1 first,last name and firm profile in excel");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -381,7 +394,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Nim tab so cannot verify watermarking tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -468,7 +481,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Nim tab so cannot verify watermarking tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -708,7 +721,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Nim tab so cannot verify watermarking tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1154,7 +1167,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Nim tab so cannot verify watermarking tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1200,7 +1213,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot build fundraising workspace: "+M13FundName1);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace: "+M13FundName1);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1329,7 +1342,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1369,7 +1382,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on nim tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1488,7 +1501,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1678,7 +1691,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund tab so cannot verify watermarking on fundpage");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -1868,7 +1881,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify watermarking on Institution page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2021,7 +2034,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot verify watermarking on Contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2102,7 +2115,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot verify watermarking on manage Approvals PopUp");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2201,7 +2214,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund tab so cannot approve pending document and verify watermarking");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2877,7 +2890,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot check watermarking in investor side uploaded file: "+UploadedFileInStd);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2951,7 +2964,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab so cannot check watermarking on contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3075,7 +3088,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInShared+" in home alert grid");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3217,7 +3230,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3360,7 +3373,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3401,6 +3414,8 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on nim tab so cannot update my firm profile");
 		}
 		switchToDefaultContent(driver);
+		lp.CRMlogout(environment, mode);
+		sa.assertAll();
 		
 	}
 	
@@ -3480,11 +3495,38 @@ public class Module13 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				if(fp.updateCreatedFund(M13FundName1, M13FundName1+"NUP", "M13Fund1")) {
-					appLog.info("Fund Name is updated successfully : "+M13FundName1+" to "+M13FundName1+"NUP");
+				if(click(driver, fp.getEditButton1(10), "edit button", action.SCROLLANDBOOLEAN)) {
+					if(sendKeys(driver, fp.getFundName(60), M13FundName1+"NUP", "Fund Name", action.BOOLEAN)){
+						if (click(driver, fp.getCustomTabSaveBtn(environment, mode, 20), "Save Button", action.BOOLEAN)) {
+							ThreadSleep(3000);
+							refresh(driver);
+							ThreadSleep(3000);	
+							WebElement ele = fp.verifyCreatedItemOnPage(Header.Fund, M13FundName1+"NUP");
+									
+								if (ele!=null) {
+									appLog.info("Fund is updated successfully. :" + M13FundName1+"NUP");
+									ExcelUtils.writeData(M13FundName1+"NUP", "Funds",excelLabel.Variable_Name,"M13Fund1", excelLabel.Fund_Name);
+									appLog.info("Fund Name is updated successfully : "+M13FundName1+" to "+M13FundName1+"NUP");
+									
+								} else {
+									appLog.error("Fund is not updated successfully. :" + M13FundName1+"NUP");
+									sa.assertTrue(false, "Fund is not updated successfully. :" + M13FundName1+"NUP");
+									
+								}
+						}else {
+							appLog.error("Not able to click on save button so cannot update fundName: "+M13FundName1);
+							sa.assertTrue(false,"Not able to click on save button so cannot update fundName: "+M13FundName1);
+							
+						}
+					}else {
+						appLog.error("Not able to pass value in fundName text box so cannot update fund Name: "+M13FundName1+"NUP");
+						sa.assertTrue(false, "Not able to pass value in fundName text box so cannot update fund Name: "+M13FundName1+"NUP");
+						
+					}
 				}else {
-					appLog.error("Fund Name is not updated: "+M13FundName1);
-					sa.assertTrue(false, "Fund Name is not updated "+M13FundName1);
+					appLog.error("Not able to click on edit icon so cannot update fundName: "+M13FundName1);
+					sa.assertTrue(false, "Fund is not updated successfully. :" + M13FundName1+"NUP");
+					
 				}
 			}else {
 				appLog.error("Not able to click on created fund :"+M13FundName1+" so cannot update fund Name");
@@ -3510,7 +3552,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Not able to click Institution tab so cannot update Institution Name");
 			sa.assertTrue(false, "Not able to click Institution tab so cannot update Institution Name");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3620,7 +3662,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot update watermarking");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3757,7 +3799,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInShared+" in home alert grid");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -3925,7 +3967,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund tab so cannot verify updated watermarking on fundpage");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4081,7 +4123,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4249,7 +4291,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify watermarking on Institution page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -4417,7 +4459,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot verify watermarking on Contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4573,7 +4615,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4694,7 +4736,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4712,7 +4754,6 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOntc, excelLabel.UploadedFileShared);
 		String UpdatedM13FundName1=ExcelUtils.readData("Funds",excelLabel.Variable_Name, "M13Fund1", excelLabel.UpdateFund_NameFromUpdateInfoFR);
 		String UpdatedM13Institution1=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M13Instituition1", excelLabel.UpdateInstitution_NameFormManageInvestor);
-		M13FundName1=ExcelUtils.readData("Fundraisings",excelLabel.Variable_Name, "M13FundRaising1", excelLabel.Fund_Name);
 		lp.CRMLogin(CRMUser1EmailID,adminPassword);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
@@ -4812,7 +4853,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -4906,7 +4947,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5076,7 +5117,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot verify watermarking on Contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5181,7 +5222,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify watermarking on Institution page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5378,7 +5419,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot deactivate watermarking and manage approvals settings");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5424,7 +5465,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot build investor workspace: "+M13FundName1);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build investor workspace: "+M13FundName1);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -5551,7 +5592,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5591,7 +5632,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on nim tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5711,7 +5752,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5903,7 +5944,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund tab so cannot verify watermarking on investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -6097,7 +6138,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify watermarking on Institution page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -6254,7 +6295,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot verify watermarking on Contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -6282,8 +6323,8 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileInternal);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M13LimitedPartner1)) {
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+			if(ins.clickOnCreatedLP(environment, mode,M13LimitedPartner1)) {
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6303,7 +6344,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+importfileInstd+" in folder "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						for(int i=0; i<aa.size(); i++) {
@@ -6317,7 +6358,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on LP page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check watermarking on LP page");
 				}
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6337,7 +6378,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInCommon+" in folder "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6361,7 +6402,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check watermarking on LP Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check watermarking on LP Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6381,7 +6422,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInShared+" in folder "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("Investor Name", aa)) {
@@ -6406,7 +6447,7 @@ public class Module13 extends BaseLib {
 					sa.assertTrue(false, "Not able to click on shared folder ::"+Sharedfolderpath+" so cannot check watermarking on LP Page");
 				}
 				
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if(fp.verifyFolderPathdummy(Internalfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -6420,7 +6461,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Watermarking is not verified on funds page in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 						sa.assertTrue(false, "Watermarking is not verified on funds page on fund in upload file: "+UploadedFileInInternal+" in folder "+Internalfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInInternal,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 						if(!aa.isEmpty()) {
 							if(compareMultipleListWithoutAssertion("My Firm's Name<break>Investor Name<break>Fund Name<break>Email Address<break>IP Address<break>Download Date<break>Label 1<break>Label 2<break>Label 3", aa)) {
@@ -6446,7 +6487,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify watermarking on LP page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -6474,7 +6515,7 @@ public class Module13 extends BaseLib {
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		String importfileInInternal=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileInternal);
 		if(com.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.clickOnCreatedCommitmentId(M13Commitment1ID)) {
+			if(com.clickOnCreatedCommitmentId(environment, mode,M13Commitment1ID)) {
 				switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, M13LimitedPartner1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
@@ -6638,7 +6679,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Commitments tab so cannot verify watermarking on Commitments page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -6738,7 +6779,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund tab so cannot approve pending document and verify watermarking");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -7378,7 +7419,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot check watermarking in investor side uploaded file: "+UploadedFileInStd);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -7456,7 +7497,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab so cannot check watermarking on contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -7474,8 +7515,8 @@ public class Module13 extends BaseLib {
 		String UploadedFileInStd=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,dependOnTc, excelLabel.UploadedFileStandard);
 		String stdfolderpath=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name,dependOnTc, excelLabel.StandardPath);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M13LimitedPartner1)) {
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+			if(ins.clickOnCreatedLP(environment, mode,M13LimitedPartner1)) {
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedM13FundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.LimitedPartnerPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -7509,7 +7550,7 @@ public class Module13 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(com.clickOnTab(TabName.CommitmentsTab)) {
-			if(com.clickOnCreatedCommitmentId(M13Commitment1ID)) {
+			if(com.clickOnCreatedCommitmentId(environment, mode,M13Commitment1ID)) {
 				switchToFrame(driver, 30,fp.getFrame( PageName.CommitmentsPage, 20));
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, M13LimitedPartner1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInStd,FolderType.Standard,WatermarkingLabels,Org1UpdatedFirmName,M13LimitedPartner1,UpdatedM13FundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.CommitmentsPage, Workspace.InvestorWorkspace);
@@ -7543,7 +7584,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Commitments tab so cannot verify watermarking on Commitments page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -7670,7 +7711,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Investor Name Watermarking labels are present in import file : "+importfileInShared+" in home alert grid");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -7815,7 +7856,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -7961,7 +8002,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -8082,11 +8123,44 @@ public class Module13 extends BaseLib {
 		switchToDefaultContent(driver);
 		if(fp.clickOnTab(TabName.FundsTab)) {
 			if(fp.clickOnCreatedFund(M13FundName1)) {
-				if(fp.updateCreatedFund(M13FundName1, M13FundName1+"NUPIWR", "M13Fund1")) {
+				if(click(driver, fp.getEditButton1(10), "edit button", action.SCROLLANDBOOLEAN)) {
+					if(sendKeys(driver, fp.getFundName(60), M13FundName1+"NUPIWR", "Fund Name", action.BOOLEAN)){
+						if (click(driver, fp.getCustomTabSaveBtn(environment, mode, 20), "Save Button", action.BOOLEAN)) {
+							ThreadSleep(3000);
+							refresh(driver);
+							ThreadSleep(3000);	
+							WebElement ele = fp.verifyCreatedItemOnPage(Header.Fund, M13FundName1+"NUPIWR");
+
+							if (ele!=null) {
+								appLog.info("Fund is updated successfully. :" + M13FundName1+"NUP");
+								ExcelUtils.writeData(M13FundName1+"NUPIWR", "Funds",excelLabel.Variable_Name,"M13Fund1", excelLabel.Fund_Name);
+								appLog.info("Fund Name is updated successfully : "+M13FundName1+" to "+M13FundName1+"NUPIWR");
+
+							} else {
+								appLog.error("Fund is not updated successfully. :" + M13FundName1+"NUPIWR");
+								sa.assertTrue(false, "Fund is not updated successfully. :" + M13FundName1+"NUPIWR");
+
+							}
+						}else {
+							appLog.error("Not able to click on save button so cannot update fundName: "+M13FundName1);
+							sa.assertTrue(false,"Not able to click on save button so cannot update fundName: "+M13FundName1);
+
+						}
+					}else {
+						appLog.error("Not able to pass value in fundName text box so cannot update fund Name: "+M13FundName1+"NUP");
+						sa.assertTrue(false, "Not able to pass value in fundName text box so cannot update fund Name: "+M13FundName1+"NUP");
+					}
+					/*if(fp.updateCreatedFund(M13FundName1, M13FundName1+"NUPIWR", "M13Fund1")) {
 					appLog.info("Fund Name is updated successfully : "+M13FundName1+" to "+M13FundName1+"NUPIWR");
 				}else {
 					appLog.error("Fund Name is not updated: "+M13FundName1);
 					sa.assertTrue(false, "Fund Name is not updated "+M13FundName1);
+				}*/
+
+				}
+				else {
+					appLog.error("Not able to click on edit button");
+					sa.assertTrue(false, "Not able to click on edit button");
 				}
 			}else {
 				appLog.error("Not able to click on created fund :"+M13FundName1+" so cannot update fund Name");
@@ -8097,7 +8171,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click fund tab so cannot update fund Name");
 		}
 		if(ins.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M13LimitedPartner1)) {
+			if(ins.clickOnCreatedLP(environment, mode,M13LimitedPartner1)) {
 				if(ins.updateCreateLimitedPartner(M13LimitedPartner1, M13LimitedPartner1+"NUPIWR", "M13LimitedPartner1")) {
 					appLog.info("LP Name is updated successfully : "+M13LimitedPartner1+" to "+M13LimitedPartner1+"NUPIWR");
 				}else {
@@ -8112,7 +8186,7 @@ public class Module13 extends BaseLib {
 			appLog.error("Not able to click Institution tab so cannot update LP Name");
 			sa.assertTrue(false, "Not able to click Institution tab so cannot update LP Name");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -8222,7 +8296,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM tab so cannot update watermarking");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -8362,7 +8436,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Investor Name and IP Address Watermarking labels are present in import file : "+importfileInShared+" in home alert grid");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -8534,7 +8608,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Fund tab so cannot verify old watermarking on fundpage");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -8692,7 +8766,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -8864,7 +8938,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify old watermarking on Institution page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -9035,7 +9109,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot verify old watermarking on Contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -9193,7 +9267,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -9220,8 +9294,9 @@ public class Module13 extends BaseLib {
 		String importfileInCommon=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileCommon);
 		String importfileInShared=ExcelUtils.readData("FilePath",excelLabel.TestCases_Name, dependOnTc1, excelLabel.UploadedFileShared);
 		if(fp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedLP(M13LimitedPartner1)) {
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+			if(ins.clickOnCreatedLP(environment, mode,M13LimitedPartner1)) {
+				
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				String NOtAvailableWaterMarkingLabels= "My Firm's Name<break>Investor Name<break>Fund Name<break>Label 1<break>Label 2<break>Label 3<break>IP Address";
 				String NOtAvailableLablesInCommon="Investor Name<break>IP Address";
 				if(fp.verifyFolderPathdummy(stdfolderpath, null, null, UpdatedFundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
@@ -9243,7 +9318,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInStd+" in folder: "+stdfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInstd,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion("IP Address", aa)) {
@@ -9266,7 +9341,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on folder ::"+stdfolderpath+" so cannot check old watermarking on LP page");
 					sa.assertTrue(false, "Not able to click on folder ::"+stdfolderpath+" so cannot check old watermarking on LP page");
 				}
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if(fp.verifyFolderPathdummy(Commonfolderpath, null, null, UpdatedFundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9286,7 +9361,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInCommon+" in folder: "+Commonfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInCommon,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage, Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9309,7 +9384,7 @@ public class Module13 extends BaseLib {
 					appLog.error("Not able to click on Common Folder ::"+Commonfolderpath+" so cannot check old watermarking on LP Page");
 					sa.assertTrue(false, "Not able to click on Common folder ::"+Commonfolderpath+" so cannot check old watermarking on LP Page");
 				}
-				switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+				switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 				if(fp.verifyFolderPathdummy(Sharedfolderpath, null, null, UpdatedFundName, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					List<String> aa=fp.verifyWatermarkingWithoutAssertion(UploadedFileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
@@ -9329,7 +9404,7 @@ public class Module13 extends BaseLib {
 						appLog.error("Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 						sa.assertTrue(false, "Updated Watermarking is not verified in file: "+UploadedFileInShared+" in folder: "+Sharedfolderpath);
 					}
-					switchToFrame(driver, 30,fp.getFrame( PageName.InstitutionsPage, 20));
+					switchToFrame(driver, 30,fp.getFrame( PageName.LimitedPartnerPage, 20));
 					aa=fp.verifyWatermarkingWithoutAssertion(importfileInShared,FolderType.Standard,WatermarkingLabels,Org1FirmName,oldLPName,oldFundName,CRMUser1EmailID,getSystemDate("MM-dd-YYYY"), PageName.FundsPage,Workspace.InvestorWorkspace);
 					if(!aa.isEmpty()) {
 						if(compareMultipleListWithoutAssertion(NOtAvailableLablesInCommon, aa)) {
@@ -9361,7 +9436,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify old watermarking on LP page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -9600,7 +9675,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot update files in investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -9717,7 +9792,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot verify updated watermarking");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -9811,7 +9886,7 @@ public class Module13 extends BaseLib {
 			
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -9980,7 +10055,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Contact tab so cannot verify watermarking on Contact page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -10084,7 +10159,7 @@ public class Module13 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on Institution tab so cannot verify updated watermarking on Institution page");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -10171,7 +10246,7 @@ public class Module13 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.postCondition().assertAll();
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 
 	}
 }
