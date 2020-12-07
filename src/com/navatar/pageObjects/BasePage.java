@@ -3137,7 +3137,7 @@ public abstract class BasePage {
 	@FindBy(xpath = "//a[@id='ManageUsers_font']")
 	private WebElement userLink_Classic;
 	
-	@FindBy(xpath="//a[text()='Users'][contains(@href,'ManageUsers/home')]")
+	@FindBy(xpath="//a[contains(@href,'ManageUsers/home')]")
 	private WebElement userLink_Lighting;
 	/**
 	 * @return the usersLink
@@ -3173,7 +3173,7 @@ public abstract class BasePage {
 	@FindBy(xpath="//input[@name='save']")
 	private WebElement saveButtonClassic;
 	
-	@FindBy(xpath="//button[@title='Save']/span[text()='Save']")
+	@FindBy(xpath="//*[@title='Save']")
 	private WebElement saveButtonLighting;
 
 	/**

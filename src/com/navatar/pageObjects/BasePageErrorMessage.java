@@ -31,4 +31,8 @@ public interface BasePageErrorMessage {
     public static String resetPasswordConfirmPasswordNotSameErrorMessage="Password and confirm password should be same.";
     public static String resetPasswordPasswordChangeMessage="Your password has been changed. Please log in.";
     public static String resetPasswordPasswordDoNotMatchErrorMessage="The Username or Password you provided do not match. Please check your credentials.";
+   
+    //America/New_York America/Los_Angeles
+    
+    public String AmericaLosAngelesTimeZone="America/New_York";
 }

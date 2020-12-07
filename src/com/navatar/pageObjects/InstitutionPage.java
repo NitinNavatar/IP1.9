@@ -129,7 +129,7 @@ public class InstitutionPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//div[@id='acc2_ileinner']")
 	private WebElement legalNameLabelTextbox;
 
-	@FindBy(xpath="//span[@class='custom-truncate uiOutputText']")
+	@FindBy(xpath="//*[contains(text(),'Institution')]/..//*[@slot='primaryField']/*")
 	private WebElement accountNameInViewMode_Lighting;
 
 	/**
