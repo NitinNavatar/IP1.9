@@ -11,6 +11,7 @@ import com.navatar.generic.EmailLib;
 import com.navatar.generic.CommonLib.EditViewMode;
 import com.navatar.generic.CommonLib.EnableDisable;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.WorkSpaceAction;
@@ -115,7 +116,7 @@ public class Module16 extends BaseLib{
 		appLog.error("nim tab is not clickable");
 		sa.assertTrue(false, "nim tab is not clickable");
 	}
-	lp.CRMlogout();
+	lp.CRMlogout(environment, mode);
 	sa.assertAll();
 }
 
@@ -134,7 +135,7 @@ public class Module16 extends BaseLib{
 	
 	// Institution
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createInstitution(M16Institution1)) {
+			if (ip.createInstitution(environment,mode,M16Institution1,"Institution",null,null)) {
 				appLog.info("Institution Created Successfully : " + M16Institution1);
 			} else {
 				appLog.error("Not Able to Create Institution : " + M16Institution1);
@@ -143,7 +144,7 @@ public class Module16 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createInstitution(M16Institution2)) {
+			if (ip.createInstitution(environment,mode,M16Institution2,"Institution",null,null)) {
 				appLog.info("Institution Created Successfully : " + M16Institution2);
 			} else {
 				appLog.error("Not Able to Create Institution : " + M16Institution2);
@@ -152,7 +153,7 @@ public class Module16 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createInstitution(M16Institution3)) {
+			if (ip.createInstitution(environment,mode,M16Institution3,"Institution",null,null)) {
 				appLog.info("Institution Created Successfully : " + M16Institution3);
 			} else {
 				appLog.error("Not Able to Create Institution : " + M16Institution3);
@@ -160,7 +161,7 @@ public class Module16 extends BaseLib{
 			}
 		}
 		if (bp.clickOnTab(TabName.FundsTab)) {
-			if (fp.createFund(M16FundName1, M16Fund1Type, M16Fund1InvestmentCategory)) {
+			if (fp.createFund(environment,mode,M16FundName1, M16Fund1Type, M16Fund1InvestmentCategory,null,null)) {
 				appLog.info("New fund " + M16FundName1 + " was successfully created");
 			} else {
 				appLog.error("New fund " + M16FundName1 + " could not be created");
@@ -174,7 +175,7 @@ public class Module16 extends BaseLib{
 
 		// Contact
 		if (bp.clickOnTab(TabName.ContactTab)) {
-			if (cp.createContact(M16Contact1FirstName, M16Contact1LastName, M16Institution1, M16Contact1EmailID)) {
+			if (cp.createContact(environment,mode,M16Contact1FirstName, M16Contact1LastName, M16Institution1, M16Contact1EmailID,null,null,CreationPage.ContactPage)) {
 				ExcelUtils.writeData(M16Contact1EmailID, "Contacts", excelLabel.Variable_Name, "M16Contact1",
 						excelLabel.Contact_EmailId);
 				appLog.info("Contact " + M16Contact1FirstName + " " + M16Contact1LastName + " was successfully created");
@@ -189,7 +190,7 @@ public class Module16 extends BaseLib{
 		}
 		// Fund Raising
 		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-			if (frp.createFundRaising(M16FundRaisingName1, M16FundName1, M16Institution1)) {
+			if (frp.createFundRaising(environment,mode,M16FundRaisingName1, M16FundName1, M16Institution1)) {
 				appLog.info("Fundraising " + M16FundRaisingName1 + " was successfully created");
 			} else {
 				appLog.error("Fundraising " + M16FundRaisingName1 + " could not be created");
@@ -201,7 +202,7 @@ public class Module16 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-			if (frp.createFundRaising(M16FundRaisingName2, M16FundName1, M16Institution2)) {
+			if (frp.createFundRaising(environment,mode,M16FundRaisingName2, M16FundName1, M16Institution2)) {
 				appLog.info("Fundraising " + M16FundRaisingName1 + " was successfully created");
 			} else {
 				appLog.error("Fundraising " + M16FundRaisingName1 + " could not be created");
@@ -213,7 +214,7 @@ public class Module16 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.FundraisingsTab)) {
-			if (frp.createFundRaising(M16FundRaisingName3, M16FundName1, M16Institution3)) {
+			if (frp.createFundRaising(environment,mode,M16FundRaisingName3, M16FundName1, M16Institution3)) {
 				appLog.info("Fundraising " + M16FundRaisingName1 + " was successfully created");
 			} else {
 				appLog.error("Fundraising " + M16FundRaisingName1 + " could not be created");
@@ -225,7 +226,7 @@ public class Module16 extends BaseLib{
 		}
 		// Limited Partner
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createLimitedPartner(M16LimitedPartner1, M16Institution1)) {
+			if (ip.createInstitution(environment, mode,M16LimitedPartner1,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M16Institution1)) {
 				appLog.info(M16LimitedPartner1 + " limited partner was successfully created");
 			} else {
 				appLog.error(M16LimitedPartner1 + " LP could not be created");
@@ -237,7 +238,7 @@ public class Module16 extends BaseLib{
 		}
 
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createLimitedPartner(M16LimitedPartner2, M16Institution2)) {
+			if (ip.createInstitution(environment, mode,M16LimitedPartner2,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M16Institution2)) {
 				appLog.info(M16LimitedPartner2 + " limited partner was successfully created");
 			} else {
 				appLog.error(M16LimitedPartner2 + " LP could not be created");
@@ -249,7 +250,7 @@ public class Module16 extends BaseLib{
 		}
 
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.createLimitedPartner(M16LimitedPartner3, M16Institution3)) {
+			if (ip.createInstitution(environment, mode,M16LimitedPartner3,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), M16Institution3)) {
 				appLog.info(M16LimitedPartner3 + " limited partner was successfully created");
 			} else {
 				appLog.error(M16LimitedPartner3 + " LP could not be created");
@@ -261,7 +262,7 @@ public class Module16 extends BaseLib{
 		}
 		// PartnerShip
 		if (bp.clickOnTab(TabName.PartnershipsTab)) {
-			if (pp.createPartnership(M16Partnership1, M16FundName1)) {
+			if (pp.createPartnership(environment, mode,M16Partnership1, M16FundName1)) {
 				appLog.info(M16Partnership1 + " was successfully created");
 			} else {
 				appLog.error(M16Partnership1 + " could not be created");
@@ -274,7 +275,7 @@ public class Module16 extends BaseLib{
 
 		// Commitment
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M16LimitedPartner1, M16Partnership1, M16Commitment1, null)) {
+			if (cmp.createCommitment(environment, mode,M16LimitedPartner1, M16Partnership1, M16Commitment1, null)) {
 				appLog.info(M16Commitment1 + " was successfully created");
 			} else {
 				appLog.error(M16Commitment1 + " could not be created");
@@ -287,7 +288,7 @@ public class Module16 extends BaseLib{
 
 		// Commitment
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M16LimitedPartner2, M16Partnership1, M16Commitment2, null)) {
+			if (cmp.createCommitment(environment, mode,M16LimitedPartner2, M16Partnership1, M16Commitment2, null)) {
 				appLog.info(M16Commitment1 + " was successfully created");
 			} else {
 				appLog.error(M16Commitment1 + " could not be created");
@@ -300,7 +301,7 @@ public class Module16 extends BaseLib{
 
 		// Commitment
 		if (bp.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.createCommitment(M16LimitedPartner3, M16Partnership1, M16Commitment3, null)) {
+			if (cmp.createCommitment(environment, mode,M16LimitedPartner3, M16Partnership1, M16Commitment3, null)) {
 				appLog.info(M16Commitment1 + " was successfully created");
 			} else {
 				appLog.error(M16Commitment1 + " could not be created");
@@ -310,7 +311,7 @@ public class Module16 extends BaseLib{
 			appLog.error("Not Able to Click Commitments tab");
 			sa.assertTrue(false, "Not Able to Click Commitments tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -319,7 +320,7 @@ public class Module16 extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NIMPageBusinessLayer nim = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName,adminPassword);
-		if(nim.clickOnTab(TabName.NIMTab)) {
+		if(nim.clickOnTab(environment, mode,TabName.NIMTab)) {
 			switchToFrame(driver, 20, nim.getFrame( PageName.NavatarInvestorManager, 20));
 			if(nim.clickOnSideMenusTab(sideMenu.Watermarking)) {
 				String WatermarkingLabels=ExcelUtils.readData("FilePath",0,30,currentlyExecutingTC);
@@ -334,6 +335,7 @@ public class Module16 extends BaseLib{
 				sa.assertTrue(false, "Not able to click on watermarking side menu so cannot activate watermarking settings");
 			}
 			switchToDefaultContent(driver);
+			switchToFrame(driver, 10, nim.getNIMTabParentFrame_Lightning());
 			switchToFrame(driver, 30, nim.getFrame( PageName.NavatarInvestorManager, 10));
 			if(nim.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
 				ThreadSleep(3000);
@@ -352,7 +354,7 @@ public class Module16 extends BaseLib{
 			sa.assertTrue(false, "Not able to click on nim tab so cannot continue with tc");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -401,7 +403,7 @@ public class Module16 extends BaseLib{
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -454,7 +456,7 @@ public class Module16 extends BaseLib{
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -517,7 +519,7 @@ public class Module16 extends BaseLib{
 			sa.assertTrue(false, "cannot click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -836,7 +838,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1037,7 +1039,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1319,7 +1321,7 @@ public class Module16 extends BaseLib{
 				sa.assertTrue(false, "could not find fund of "+M16FundName1);
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 									
 	}
@@ -1446,7 +1448,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -1488,6 +1490,7 @@ public class Module16 extends BaseLib{
 				saa=ifp.verifyContentGridInvestorSide(driver, PageName.FundsPage, M16Institution1+"_"+files[1], CRMUser1FirstName+" "+CRMUser1LastName,date);
 				sa.combineAssertions(saa);
 				
+				
 			}
 			else {
 				appLog.error("cannot find "+stdPath+" on folder structure");
@@ -1497,6 +1500,7 @@ public class Module16 extends BaseLib{
 			if (fp.verifyFolderPathdummy(stdPath, M16Institution2, null, null, PageName.PotentialInvestmentPage, Workspace.FundraisingWorkspace, 30)) {
 				saa=ifp.verifyContentGridInvestorSide(driver, PageName.FundsPage, M16Institution2+"_"+files[0], CRMUser1FirstName+" "+CRMUser1LastName, date);
 				sa.combineAssertions(saa);
+				
 				saa=ifp.verifyContentGridInvestorSide(driver, PageName.FundsPage, M16Institution2+"_"+files[1], CRMUser1FirstName+" "+CRMUser1LastName, date);
 				sa.combineAssertions(saa);
 				
@@ -1573,7 +1577,7 @@ public class Module16 extends BaseLib{
 			switchToDefaultContent(driver);
 			
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 				
 	}
@@ -1794,7 +1798,7 @@ public class Module16 extends BaseLib{
 				appLog.error("upload window is not clickable");
 				sa.assertTrue(false, "upload window is not clickable");
 			}
-			lp.CRMlogout();
+			lp.CRMlogout(environment, mode);
 			sa.assertAll();
 		}
 	}
@@ -1886,7 +1890,7 @@ public class Module16 extends BaseLib{
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		ThreadSleep(10000);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -2132,7 +2136,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2298,7 +2302,7 @@ public class Module16 extends BaseLib{
 			appLog.error("could not click on contact tab");
 			sa.assertTrue(false, "could not click on contact tab");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -2614,7 +2618,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2761,7 +2765,7 @@ public class Module16 extends BaseLib{
 				switchToDefaultContent(driver);
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -2969,7 +2973,7 @@ public class Module16 extends BaseLib{
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		ThreadSleep(6000);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -3168,7 +3172,7 @@ public class Module16 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 
 	}
@@ -3400,7 +3404,7 @@ public class Module16 extends BaseLib{
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -3463,7 +3467,7 @@ public class Module16 extends BaseLib{
 			sa.assertTrue(false, "cannot click on funds tab");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -3747,7 +3751,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -3948,7 +3952,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -4120,8 +4124,8 @@ public class Module16 extends BaseLib{
 													//clicking on remove link and accept
 													saa = fp.verifyFileDist2Of2SuccessfullyAppliedUI(M16LimitedPartner1, files[0], false, true, null, null, action.ACCEPT);
 													sa.combineAssertions(saa);
-													if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
-														//if (click(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button", action.BOOLEAN)) {
+													//if (fp.clickUsingCssSelectorPath("#lnlbuttonApply", "apply")) {
+														if (clickUsingJavaScript(driver, fp.getFileDist2Of2ApplyBtn(30), "apply button", action.BOOLEAN)) {
 														if (isAlertPresent(driver)) {
 															String msg = switchToAlertAndGetMessage(driver, 10, action.GETTEXT);
 															switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
@@ -4226,7 +4230,7 @@ public class Module16 extends BaseLib{
 				sa.assertTrue(false, "could not find fund of "+M16FundName1);
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 									
 	}
@@ -4352,7 +4356,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -4484,7 +4488,7 @@ public class Module16 extends BaseLib{
 			switchToDefaultContent(driver);
 			
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 				
 	}
@@ -4705,7 +4709,7 @@ public class Module16 extends BaseLib{
 				appLog.error("upload window is not clickable");
 				sa.assertTrue(false, "upload window is not clickable");
 			}
-			lp.CRMlogout();
+			lp.CRMlogout(environment, mode);
 			sa.assertAll();
 		}
 	}
@@ -4797,7 +4801,7 @@ public class Module16 extends BaseLib{
 			}
 			switchToDefaultContent(driver);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		ThreadSleep(10000);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -5043,7 +5047,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -5214,8 +5218,8 @@ public class Module16 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M16LimitedPartner1)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if (ip.clickOnCreatedLP(environment,mode,M16LimitedPartner1)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner1);
@@ -5244,8 +5248,8 @@ public class Module16 extends BaseLib{
 				sa.assertTrue(false, "inst tab is not clickable");
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M16LimitedPartner2)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if (ip.clickOnCreatedLP(environment,mode,M16LimitedPartner2)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files[0])) {
 						appLog.info("successfully verified "+files[0]+" on "+M16LimitedPartner2);
@@ -5274,8 +5278,8 @@ public class Module16 extends BaseLib{
 				sa.assertTrue(false, "inst tab is not clickable");
 			}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M16LimitedPartner3)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if (ip.clickOnCreatedLP(environment,mode,M16LimitedPartner3)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, fp.reverseFileNameForFileDistributor(files[0], M16LimitedPartner3))) {
 						appLog.info("successfully verified "+files[0]+" on "+M16Institution3);
@@ -5372,7 +5376,7 @@ public class Module16 extends BaseLib{
 				switchToDefaultContent(driver);
 			}
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -5598,7 +5602,8 @@ public class Module16 extends BaseLib{
 										parentID = switchOnWindow(driver);
 										ThreadSleep(5000);
 										if (parentID!=null) {
-											
+											refresh(driver);
+											ThreadSleep(3000);
 											if (fp.verifyDataOnFileDistDocument(M16LimitedPartner4, "File 4")) {
 												appLog.info("successfully verified data on file splitter doc for inst 3");
 											}
@@ -5616,7 +5621,6 @@ public class Module16 extends BaseLib{
 									appLog.error(stdPath+" is not found in folder structure");
 									sa.assertTrue(false, stdPath+" is not found in folder structure");
 								}
-									
 					}
 					else {
 						appLog.error("upload icon is not clickable");
@@ -5639,7 +5643,7 @@ public class Module16 extends BaseLib{
 			appLog.error("funds tab is not clickable");
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 
@@ -5724,7 +5728,7 @@ public class Module16 extends BaseLib{
 						appLog.error("could not verify "+files+" on "+M16Institution3);
 						sa.assertTrue(false, "could not verify "+files+" on "+M16Institution3);
 					}
-					}
+				}
 				else {
 					appLog.error("could not find "+stdPath+" in folder structure");
 					sa.assertTrue(false, "could not find "+stdPath+" in folder structure");
@@ -5742,8 +5746,8 @@ public class Module16 extends BaseLib{
 		}
 		
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M16LimitedPartner1)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if (ip.clickOnCreatedLP(environment,mode,M16LimitedPartner1)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner1);
@@ -5752,7 +5756,7 @@ public class Module16 extends BaseLib{
 						appLog.error("could not verify "+files+" on "+M16LimitedPartner1);
 						sa.assertTrue(false, "could not verify "+files+" on "+M16LimitedPartner1);
 					}
-					}
+				}
 				else {
 					appLog.error("could not find "+stdPath+" in folder structure");
 					sa.assertTrue(false, "could not find "+stdPath+" in folder structure");
@@ -5769,8 +5773,8 @@ public class Module16 extends BaseLib{
 			sa.assertTrue(false, "inst tab is not clickable");
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M16LimitedPartner2)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if (ip.clickOnCreatedLP(environment,mode,M16LimitedPartner2)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner2);
@@ -5779,7 +5783,7 @@ public class Module16 extends BaseLib{
 						appLog.error("could not verify "+files+" on "+M16LimitedPartner2);
 						sa.assertTrue(false, "could not verify "+files+" on "+M16LimitedPartner2);
 					}
-					}
+				}
 				else {
 					appLog.error("could not find "+stdPath+" in folder structure");
 					sa.assertTrue(false, "could not find "+stdPath+" in folder structure");
@@ -5796,8 +5800,8 @@ public class Module16 extends BaseLib{
 			sa.assertTrue(false, "inst tab is not clickable");
 		}
 		if (bp.clickOnTab(TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedLP(M16LimitedPartner3)) {
-				switchToFrame(driver, 30, fp.getFrame( PageName.InstitutionsPage, 30));
+			if (ip.clickOnCreatedLP(environment,mode,M16LimitedPartner3)) {
+				switchToFrame(driver, 30, fp.getFrame( PageName.LimitedPartnerPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, null, M16FundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.InstitutionsPage, Workspace.InvestorWorkspace, M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files)) {
 						appLog.info("successfully verified "+files+" on "+M16LimitedPartner3);
@@ -5806,7 +5810,7 @@ public class Module16 extends BaseLib{
 						appLog.error("could not verify "+files+" on "+M16LimitedPartner3);
 						sa.assertTrue(false, "could not verify "+files+" on "+M16LimitedPartner3);
 					}
-					}
+				}
 				else {
 					appLog.error("could not find "+stdPath+" in folder structure");
 					sa.assertTrue(false, "could not find "+stdPath+" in folder structure");
@@ -5867,10 +5871,16 @@ public class Module16 extends BaseLib{
 					sa.assertTrue(false, "could not find "+stdPath+" in folder structure");
 				}
 				switchToDefaultContent(driver);
+			}else {
+				appLog.error("could not find contact "+M16Contact1FirstName+" "+M16Contact1LastName);
+				sa.assertTrue(false, "could not find contact "+M16Contact1FirstName+" "+M16Contact1LastName);
 			}
+		}else {
+			appLog.error("contact tab is not clickable");
+			sa.assertTrue(false, "contact tab is not clickable");
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId1)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M16CommitmentId1)) {
 				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner1, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner1+"_"+files)) {
@@ -5882,10 +5892,16 @@ public class Module16 extends BaseLib{
 					}
 				}
 				switchToDefaultContent(driver);
+			}else {
+				appLog.error("could not find Commitment "+M16CommitmentId1);
+				sa.assertTrue(false, "could not find Commitment "+M16CommitmentId1);
 			}
+		}else {
+			appLog.error("Commitment tab is not clickable");
+			sa.assertTrue(false, "Commitment tab is not clickable");
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId2)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M16CommitmentId2)) {
 				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner2, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner2+"_"+files)) {
@@ -5897,10 +5913,16 @@ public class Module16 extends BaseLib{
 					}
 				}
 				switchToDefaultContent(driver);
+			}else {
+				appLog.error("could not find Commitment "+M16CommitmentId2);
+				sa.assertTrue(false, "could not find Commitment "+M16CommitmentId2);
 			}
+		}else {
+			appLog.error("Commitment tab is not clickable");
+			sa.assertTrue(false, "Commitment tab is not clickable");
 		}
 		if (ip.clickOnTab(TabName.CommitmentsTab)) {
-			if (cmp.clickOnCreatedCommitmentId(M16CommitmentId3)) {
+			if (cmp.clickOnCreatedCommitmentId(environment, mode,M16CommitmentId3)) {
 				switchToFrame(driver, 30, cmp.getFrame( PageName.CommitmentsPage, 30));
 				if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner3, null, PageName.CommitmentsPage, Workspace.InvestorWorkspace, 30)) {
 					if (fp.verifyFileInContentGridWithBigDocNames(PageName.CommitmentsPage, Workspace.InvestorWorkspace, M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files)) {
@@ -5912,9 +5934,15 @@ public class Module16 extends BaseLib{
 					}
 				}
 				switchToDefaultContent(driver);
+			}else {
+				appLog.error("could not find Commitment "+M16CommitmentId3);
+				sa.assertTrue(false, "could not find Commitment "+M16CommitmentId3);
 			}
+		}else {
+			appLog.error("Commitment tab is not clickable");
+			sa.assertTrue(false, "Commitment tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 	}
 	
@@ -5991,6 +6019,10 @@ public class Module16 extends BaseLib{
 					sa.assertTrue(false, M16LimitedPartner1+"_"+files + " document is not clickable");
 				}
 			}
+			else {
+				appLog.error("could not find "+stdPath+" so cannot verify file dist on file 1");
+				sa.assertTrue(false, "could not find "+stdPath+" so cannot verify file dist on file 1");
+			}
 			if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner2, M16FundName1, PageName.CurrentInvestmentPgae, Workspace.InvestorWorkspace, 30)) {
 				saa=ifp.verifyContentGridInvestorSide(driver, PageName.CurrentInvestmentPgae, M16LimitedPartner2+"_"+files, CRMUser1FirstName+" "+CRMUser1LastName, date);
 				sa.combineAssertions(saa);
@@ -6015,6 +6047,10 @@ public class Module16 extends BaseLib{
 					sa.assertTrue(false, M16LimitedPartner2+"_"+files + " document is not clickable");
 				}
 			}
+			else {
+				appLog.error("could not find "+stdPath+" so cannot verify file dist on file 1");
+				sa.assertTrue(false, "could not find "+stdPath+" so cannot verify file dist on file 1");
+			}
 			if (fp.verifyFolderPathdummy(stdPath, null, M16LimitedPartner3, M16FundName1, PageName.CurrentInvestmentPgae, Workspace.InvestorWorkspace, 30)) {
 				saa=ifp.verifyContentGridInvestorSide(driver, PageName.CurrentInvestmentPgae, M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files, CRMUser1FirstName+" "+CRMUser1LastName, date);
 				sa.combineAssertions(saa);
@@ -6023,7 +6059,7 @@ public class Module16 extends BaseLib{
 					ThreadSleep(5000);
 					if (parentID!=null) {
 						
-						if (fp.verifyDataOnFileDistDocument(M16LimitedPartner4, "File 4")) {
+						if (fp.verifyDataOnFileDistDocument(M16LimitedPartner4, "File 1")) {
 							appLog.info("successfully verified data on file splitter doc for lp 3");
 						}
 						else {
@@ -6032,14 +6068,23 @@ public class Module16 extends BaseLib{
 						}
 						driver.close();
 						driver.switchTo().window(parentID);
+					}else {
+						appLog.error("could not find new window to switch");
+						sa.assertTrue(false, "could not find new window to switch");
 					}
 				}
 				else {
 					appLog.error(M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files + " document is not clickable");
 					sa.assertTrue(false, M16LimitedPartner3+"_"+M16LimitedPartner4+"_"+files + " document is not clickable");
 				}
+			}else {
+				appLog.error("could not find "+stdPath+" so cannot verify file dist on file 1");
+				sa.assertTrue(false, "could not find "+stdPath+" so cannot verify file dist on file 1");
 			}
 				
+		}else {
+			appLog.error("current investment tab is not clickable, so cannot verify file dist on file 1");
+			sa.assertTrue(false, "current investment tab is not clickable, so cannot verify file dist on file 1");
 		}
 		lp.investorLogout();
 		sa.assertAll();
@@ -6105,7 +6150,7 @@ public class Module16 extends BaseLib{
 			appLog.error("nim tab is not clickable");
 			sa.assertTrue(false, "nim tab is not clickable");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		ThreadSleep(6000);
 		lp.CRMLogin(CRMUser1EmailID, adminPassword);
 		if (bp.clickOnTab(TabName.FundsTab)) {
@@ -6303,7 +6348,7 @@ public class Module16 extends BaseLib{
 			sa.assertTrue(false, "funds tab is not clickable");
 		}
 
-		lp.CRMlogout();
+		lp.CRMlogout(environment, mode);
 		sa.assertAll();
 
 	}

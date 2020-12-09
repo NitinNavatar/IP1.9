@@ -3344,7 +3344,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		NIMPageBusinessLayer np = new NIMPageBusinessLayer(driver);
 		lp.CRMLogin(adminEmail, adminPassword);
 		boolean flag1 = false,flag2=false;
-		if (clickOnTab(TabName.NIMTab)) {
+		if (clickOnTab(environment, mode,TabName.NIMTab)) {
 			if (manageApproval == EnableDisable.Enable) {
 				appLog.info("enabling manage approval");
 				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
@@ -3391,6 +3391,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (manageApproval == EnableDisable.Disable){
 				appLog.info("disabling manage approval");
+				switchToFrame(driver, 10, np.getNIMTabParentFrame_Lightning());
 				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 				flag1 = np.deactivateManageApprovalsSetting();
 				switchToDefaultContent(driver);
@@ -3398,6 +3399,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			if (watermarking == EnableDisable.Enable) {
 				appLog.info("enabling watermarking");
+				switchToFrame(driver, 10, np.getNIMTabParentFrame_Lightning());
 				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 				if (np.clickOnSideMenusTab(sideMenu.Watermarking)) {
 					if (!isSelected(driver, np.getWatermarkingActivateCheckbox(60), "Watermarking Activate checkbox")) {
@@ -3434,6 +3436,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 			else if (watermarking == EnableDisable.Disable){
 				appLog.info("deactivating watermarking setting");
+				switchToFrame(driver, 10, np.getNIMTabParentFrame_Lightning());
 				switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 				flag2 = np.deactivateWatermarkingSetting();
 				switchToDefaultContent(driver);
@@ -3442,6 +3445,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		appLog.info("providing access to user "+userName);
 		String[] users = userName.split("<break>");
 		for (int i = 0; i < users.length; i++) {
+			switchToFrame(driver, 10, np.getNIMTabParentFrame_Lightning());
 			switchToFrame(driver, 30, getFrame(PageName.NavatarInvestorManager, 10));
 			if (np.clickOnSideMenusTab(sideMenu.InternalUsers)) {
 				switchToDefaultContent(driver);

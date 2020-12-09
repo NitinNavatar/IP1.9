@@ -470,7 +470,7 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 	 * @return List of String
 	 */
 	public SoftAssert verifyContentGridInvestorSide(WebDriver driver, PageName pName, String filesName,
-			String uploadedBy, String uploadedOn) {
+			String uploadedBy, String uploadedOn){
 
 		SoftAssert saa = new SoftAssert();
 		String workSpaceXpath = "";
@@ -490,31 +490,42 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 			if (!docNames.isEmpty()) {
 				List<WebElement> docUploadedBy = FindElements(driver, docUploadedByXpath, "Document Uploaded By List");
 				List<WebElement> docUploadedOn = FindElements(driver, docUploadedOnXpath, "Document Uploaded On List");
-				String[] files = filesName.split("<break>");
-				for (int i = 0; i < files.length; i++) {
-					for (int j = 0; j < docNames.size(); j++) {
-						dcName = docNames.get(j).getText().trim();
-						dcUploadedBy = docUploadedBy.get(j).getText().trim();
-						dcUploadedOn = docUploadedOn.get(j).getText().trim();
-						
-						System.err.println(">>>>>>> from WebPage " + dcName + "  " + dcUploadedBy + " " + dcUploadedOn+ " <<<<<<<<");
-						System.out.println("<<<<<<<<< pASSING " + files[i] + "  " + uploadedBy + " "+ uploadedOn + " <<<<<<<<<");
-					appLog.info(">>>>>>> from WebPage " + dcName + "  " + dcUploadedBy + " " + dcUploadedOn+ " <<<<<<<<");
-					appLog.info("<<<<<<<<< pASSING " + files[i] + "  " + uploadedBy + " "+ uploadedOn + " <<<<<<<<<");
-						if (dcName.equalsIgnoreCase(files[i]) && dcUploadedBy.equalsIgnoreCase(uploadedBy)
-								&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn) )) {
+				if (docUploadedBy.isEmpty()) {
+				if (docNames.size() == docUploadedBy.size() && docNames.size() == docUploadedOn.size()) {
+					String[] files = filesName.split("<break>");
+					for (int i = 0; i < files.length; i++) {
+						for (int j = 0; j < docNames.size(); j++) {
+							dcName = docNames.get(j).getText().trim();
+							dcUploadedBy = docUploadedBy.get(j).getText().trim();
+							dcUploadedOn = docUploadedOn.get(j).getText().trim();
 
-							appLog.info(files[i] + " File  Present  Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn +" "+ pName.toString());
-							break;
-						}
+							System.err.println(">>>>>>> from WebPage " + dcName + "  " + dcUploadedBy + " " + dcUploadedOn+ " <<<<<<<<");
+							System.out.println("<<<<<<<<< pASSING " + files[i] + "  " + uploadedBy + " "+ uploadedOn + " <<<<<<<<<");
+							appLog.info(">>>>>>> from WebPage " + dcName + "  " + dcUploadedBy + " " + dcUploadedOn+ " <<<<<<<<");
+							appLog.info("<<<<<<<<< pASSING " + files[i] + "  " + uploadedBy + " "+ uploadedOn + " <<<<<<<<<");
+							if (dcName.equalsIgnoreCase(files[i]) && dcUploadedBy.equalsIgnoreCase(uploadedBy)
+									&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn) )) {
 
-						if (j == docNames.size() - 1) {
-							appLog.error(files[i] + " File not Present Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn +" "+ pName.toString());
-							saa.assertTrue(false, files[i] + " File not Present Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn +" "+ pName.toString());
+								appLog.info(files[i] + " File  Present  Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn +" "+ pName.toString());
+								break;
+							}
+
+							if (j == docNames.size() - 1) {
+								appLog.error(files[i] + " File not Present Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn +" "+ pName.toString());
+								saa.assertTrue(false, files[i] + " File not Present Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn +" "+ pName.toString());
+							}
 						}
 					}
 				}
-
+				else {
+					appLog.error(docNames.size()+" documents are present, but "+docUploadedBy.size()+" user names, "+docUploadedOn.size()+" dates");
+					sa.assertTrue(false, docNames.size()+" documents are present, but "+docUploadedBy.size()+" user names, "+docUploadedOn.size()+" dates");
+				}
+				}
+				else {
+					appLog.error("user List is Empty " + pName.toString());
+					saa.assertTrue(false, "user List is Empty " + pName.toString());
+				}
 			} else {
 				appLog.info("Document List is Empty " + pName.toString());
 				saa.assertTrue(false, "Document List is Empty " + pName.toString());
