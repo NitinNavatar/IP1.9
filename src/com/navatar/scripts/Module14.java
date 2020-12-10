@@ -20,7 +20,9 @@ import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.ContentGridArrowKeyFunctions;
+import com.navatar.generic.CommonLib.CreationPage;
 import com.navatar.generic.CommonLib.FolderType;
+import com.navatar.generic.CommonLib.InstitutionPageFieldLabelText;
 import com.navatar.generic.CommonLib.OnlineImportFileAddTo;
 import com.navatar.generic.CommonLib.PageName;
 import com.navatar.generic.CommonLib.SortOrder;
@@ -73,7 +75,7 @@ public class Module14 extends BaseLib {
 		for(int i=0; i<2; i++) {
 			String instutionName=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M14Instituition"+(i+1), excelLabel.Institutions_Name);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
-			if(ip.createInstitution(instutionName)) {
+			if(ip.createInstitution(environment,mode,instutionName,"Institution",null,null)) {
 				appLog.info("Institution is created successfully: "+instutionName);
 			}else {
 				appLog.error("Not able to create institution: "+instutionName);
@@ -88,7 +90,7 @@ public class Module14 extends BaseLib {
 			String emailId = cp.generateRandomEmailId();
 			if(bp.clickOnTab(TabName.ContactTab)){
 				if(i==0) {
-					if(cp.createContact(M14Contact1FirstName,M14Contact1LastName,M14Institution1, emailId)) {
+					if(cp.createContact(environment,mode,M14Contact1FirstName,M14Contact1LastName,M14Institution1, emailId,null,null,CreationPage.ContactPage)) {
 						appLog.info("contact is created: "+M14Contact1FirstName+" "+M14Contact1LastName);
 						ExcelUtils.writeData(emailId,"Contacts", excelLabel.Variable_Name, "M14Contact1",excelLabel.Contact_EmailId);
 					}else {
@@ -97,7 +99,7 @@ public class Module14 extends BaseLib {
 					}
 				}
 				if(i==1) {
-					if(cp.createContact(M14Contact2FirstName,M14Contact2LastName,M14Institution1, emailId)) {
+					if(cp.createContact(environment,mode,M14Contact2FirstName,M14Contact2LastName,M14Institution1, emailId,null,null,CreationPage.ContactPage)) {
 						appLog.info("contact is created: "+M14Contact1FirstName+" "+M14Contact1LastName);
 						ExcelUtils.writeData(emailId,"Contacts", excelLabel.Variable_Name, "M14Contact2",excelLabel.Contact_EmailId);
 					}else {
@@ -106,7 +108,7 @@ public class Module14 extends BaseLib {
 					}
 				}
 				if(i==2) {
-					if(cp.createContact(M14Contact3FirstName,M14Contact3LastName,M14Institution2, emailId)) {
+					if(cp.createContact(environment,mode,M14Contact3FirstName,M14Contact3LastName,M14Institution2, emailId,null,null,CreationPage.ContactPage)) {
 						appLog.info("contact is created: "+M14Contact3FirstName+" "+M14Contact3LastName);
 						ExcelUtils.writeData(emailId,"Contacts", excelLabel.Variable_Name, "M14Contact3",excelLabel.Contact_EmailId);
 					}else {
@@ -117,7 +119,7 @@ public class Module14 extends BaseLib {
 			}
 		}
 		if(bp.clickOnTab(TabName.FundsTab)) {
-			if(fp.createFund(M14FundName1,M14FundType,M14FundInvestmentCategory)) {
+			if(fp.createFund(environment,mode,M14FundName1,M14FundType,M14FundInvestmentCategory,null,null)) {
 				appLog.info("fund is created: "+M14FundName1);
 			}else {
 				appLog.error("Not able to create fund: "+M14FundName1);
@@ -132,7 +134,7 @@ public class Module14 extends BaseLib {
 			if(bp.clickOnTab(TabName.FundraisingsTab)) {
 				String fundName=ExcelUtils.readData("Fundraisings",excelLabel.Variable_Name, "M14FundRaising"+(i+1), excelLabel.Fund_Name);
 				String instutionName=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M14Instituition"+(i+1), excelLabel.Institutions_Name);
-				if(frp.createFundRaising(fundraisingName, fundName, instutionName)) {
+				if(frp.createFundRaising(environment,mode,fundraisingName, fundName, instutionName)) {
 					appLog.info("fundraising is created : "+fundraisingName);
 				}else {
 					appLog.error("Not able to create fundraising: "+fundraisingName);
@@ -147,7 +149,7 @@ public class Module14 extends BaseLib {
 			String lpName=ExcelUtils.readData("Limited Partner",excelLabel.Variable_Name, "M14LimitedPartner"+(i+1), excelLabel.LimitedPartner_Name);
 			if(bp.clickOnTab(TabName.InstituitonsTab)) {
 				String instutionName=ExcelUtils.readData("Institutions",excelLabel.Variable_Name, "M14Instituition"+(i+1), excelLabel.Institutions_Name);
-				if(ip.createLimitedPartner(lpName, instutionName)) {
+				if(ip.createInstitution(environment, mode,lpName,"Limited Partner",InstitutionPageFieldLabelText.Parent_Institution.toString(), instutionName)) {
 					appLog.info("limited partner is created: "+lpName);
 				}else {
 					appLog.error("Not able to create limited partner: "+lpName);
@@ -159,7 +161,7 @@ public class Module14 extends BaseLib {
 			}
 		}
 		if(bp.clickOnTab(TabName.PartnershipsTab)) {
-			if(pp.createPartnership(M14Partnership1,M14FundName1)) {
+			if(pp.createPartnership(environment, mode,M14Partnership1,M14FundName1)) {
 				appLog.info("partnership is created: "+M14Partnership1);
 			}else {
 				appLog.error("Not able to create partnership: "+M14Partnership1);
@@ -175,7 +177,7 @@ public class Module14 extends BaseLib {
 			lpName=ExcelUtils.readData("Limited Partner",excelLabel.Variable_Name, "M14LimitedPartner"+(i+1)+"", excelLabel.LimitedPartner_Name);
 			partnershipName=ExcelUtils.readData("Partnerships",excelLabel.Variable_Name, "M14Partnership1", excelLabel.PartnerShip_Name);
 			if(bp.clickOnTab(TabName.CommitmentsTab)) {
-				if(cmp.createCommitment(lpName,partnershipName,"M14Commitment"+(i+1), null)) {
+				if(cmp.createCommitment(environment, mode,lpName,partnershipName,"M14Commitment"+(i+1), null)) {
 					appLog.info("commitment is created successfully");
 				}else {
 					appLog.error("Not able to create commitment for limited partner: "+lpName+" and partnership Name: "+partnershipName);
@@ -192,7 +194,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to write CRM User1 first,last name and firm profile in excel");
 			sa.assertTrue(false, "Not able to write CRM User1 first,last name and firm profile in excel");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -225,7 +227,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot build fundraising workspace: "+M14FundName1);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace: "+M14FundName1);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -440,7 +442,7 @@ public class Module14 extends BaseLib {
 	sa.assertTrue(false, "Not able to click on fund tab so cannot check IP Analytics UI in fundraising workspace");
 }
 		
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 	}
 	
@@ -744,7 +746,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot check Most Active Contact and Most Viewed Document Link");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot check Most Active Contact and Most Viewed Document Link");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -826,7 +828,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace and investor: "+M14FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1008,7 +1010,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1041,7 +1043,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		 bp = new BasePageBusinessLayer(driver);
@@ -1331,7 +1333,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1367,7 +1369,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -1481,7 +1483,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1715,7 +1717,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot access document from crm side");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -1754,7 +1756,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -1933,7 +1935,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot upload files in fundraising workspace");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2086,7 +2088,7 @@ public class Module14 extends BaseLib {
 			appLog.error(M14Contact1FirstName+" "+M14Contact1LastName+" contact email id is not updated as old email");
 			sa.assertTrue(false, M14Contact1FirstName+" "+M14Contact1LastName+" contact email id is not updated as old email");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2123,7 +2125,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -2225,7 +2227,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2261,7 +2263,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -2451,7 +2453,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2485,7 +2487,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -2573,7 +2575,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -2760,7 +2762,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace and investor: "+M14FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2794,7 +2796,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -2890,7 +2892,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -2918,7 +2920,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM Tab so cannot activate manage approvals settings");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3063,7 +3065,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3185,7 +3187,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3225,7 +3227,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -3370,7 +3372,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -3602,7 +3604,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -3721,7 +3723,7 @@ public class Module14 extends BaseLib {
 				}
 				switchToDefaultContent(driver);
 				if(fp.clickOnTab(TabName.ContactTab)) {
-					if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
+					if(con.clickOnCreatedContact(environment,mode,M14Contact1FirstName, M14Contact1LastName, null)) {
 						switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 						String[] InsName= {M14Institution1,M14Institution2};
 						for(int i=0; i<2; i++) {
@@ -3828,7 +3830,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4019,7 +4021,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4127,7 +4129,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4234,7 +4236,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot so cannot add institution : "+M14Institution2+" add provide access to contact: "+M14Contact2FirstName+" "+M14Contact2LastName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4333,7 +4335,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot remove contact access in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4422,7 +4424,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot remove contact access in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4464,8 +4466,9 @@ public class Module14 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(con.clickOnTab(TabName.ContactTab)) {
-			if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
+			if(con.clickOnCreatedContact(environment,mode,M14Contact1FirstName, M14Contact1LastName, null)) {
 				switchToFrame(driver, 30,con.getFrame( PageName.ContactsPage, 30));
+				
 				if(con.removeContactAccessFromContactPage(M14FundName1, Workspace.FundraisingWorkspace)) {
 					appLog.info(M14Contact1FirstName+" "+M14Contact1LastName+" Contact Access is removed");
 					FRW_UniqueDocument=FRW_UniqueDocument+2;
@@ -4540,7 +4543,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot check ip analytics");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot check ip analytics");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4629,7 +4632,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot remove contact access in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -4665,7 +4668,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot read and write ip analytics count");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot read and write ip analytics count");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -4698,7 +4701,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot close fundraising workspace");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot close fundraising workspace");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -4747,7 +4750,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot check ip analytics count after close FRW");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot check ip analytics count after close FRW");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -4836,7 +4839,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact access in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5043,7 +5046,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot download Workspace Documents and Contact Permission Report");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot download Workspace Documents and Contact Permission Report");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5080,7 +5083,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot read and write ip analytics count");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot read and write ip analytics count");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -5124,7 +5127,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot clear fundraising workspace");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot clear fundraising workspace");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -5179,7 +5182,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot check ip analytics count after clear FRW");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot check ip analytics count after clear FRW");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5236,7 +5239,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace and investor: "+M14FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5263,7 +5266,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM Tab so cannot deactivate manage approvals settings");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -5298,7 +5301,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot build Investor workspace: "+M14FundName1);
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build Investor workspace: "+M14FundName1);
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5513,7 +5516,7 @@ public class Module14 extends BaseLib {
 	sa.assertTrue(false, "Not able to click on fund tab so cannot check IP Analytics UI in InvestorWorkspace");
 }
 		
-	lp.CRMlogout();
+	lp.CRMlogout(environment,mode);
 	sa.assertAll();
 	}
 	
@@ -5811,7 +5814,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot check Most Active Contact and Most Viewed Document Link");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot check Most Active Contact and Most Viewed Document Link");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -5893,7 +5896,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot cannot invite contact from investor workspace: "+M14FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6078,7 +6081,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6204,7 +6207,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6240,7 +6243,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -6356,7 +6359,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in Investor workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6591,7 +6594,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot build fundraising workspace and investor: "+M14FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6630,7 +6633,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -6810,7 +6813,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6960,7 +6963,7 @@ public class Module14 extends BaseLib {
 			appLog.error(M14Contact1FirstName+" "+M14Contact1LastName+" contact email id is not updated as old email");
 			sa.assertTrue(false, M14Contact1FirstName+" "+M14Contact1LastName+" contact email id is not updated as old email");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -6997,7 +7000,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -7099,7 +7102,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7135,7 +7138,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -7325,7 +7328,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7359,7 +7362,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -7448,7 +7451,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -7635,7 +7638,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot updated document in investor workspace: "+M14FundName1);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7672,7 +7675,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -7781,7 +7784,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7809,7 +7812,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on NIM Tab so cannot activate manage approvals settings");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -7954,7 +7957,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8076,7 +8079,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot import files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8116,7 +8119,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp=new LoginPageBusinessLayer(driver);
@@ -8261,7 +8264,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot verify ip analytics in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8457,7 +8460,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot upload files in fundraising workspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8572,7 +8575,7 @@ public class Module14 extends BaseLib {
 				}
 				switchToDefaultContent(driver);
 				if(fp.clickOnTab(TabName.ContactTab)) {
-					if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
+					if(con.clickOnCreatedContact(environment,mode,M14Contact1FirstName, M14Contact1LastName, null)) {
 						switchToFrame(driver, 30,fp.getFrame( PageName.ContactsPage, 20));
 						String[] LPName= {M14LimitedPartner1,M14LimitedPartner2};
 						for(int i=0; i<2; i++) {
@@ -8681,7 +8684,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot delete document from InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 
@@ -8873,7 +8876,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot delete shared folder in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -8980,7 +8983,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot remove LP: "+M14LimitedPartner2);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9086,7 +9089,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot add LP: "+M14LimitedPartner2);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9128,7 +9131,7 @@ public class Module14 extends BaseLib {
 		}
 		switchToDefaultContent(driver);
 		if(con.clickOnTab(TabName.ContactTab)) {
-			if(con.clickOnCreatedContact(M14Contact1FirstName, M14Contact1LastName, null)) {
+			if(con.clickOnCreatedContact(environment,mode,M14Contact1FirstName, M14Contact1LastName, null)) {
 				switchToFrame(driver, 30,con.getFrame( PageName.ContactsPage, 30));
 				if(con.removeContactAccessFromContactPage(M14FundName1, Workspace.InvestorWorkspace)) {
 					appLog.info(M14Contact1FirstName+" "+M14Contact1LastName+" Contact Access is removed");
@@ -9204,7 +9207,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot remove contact acess from contact page");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot remove contact acess from contact page");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9293,7 +9296,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot provide contact access in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9391,7 +9394,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot remove contact access in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9479,7 +9482,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot provide contact access in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9515,7 +9518,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot read and write ip analytics count");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot read and write ip analytics count");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -9548,7 +9551,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot close InvestorWorkspace");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot close InvestorWorkspace");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -9597,7 +9600,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot close INV");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot close INV");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9686,7 +9689,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot invite contact access in InvestorWorkspace");
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9894,7 +9897,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot download Workspace Documents and Contact Permission Report");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot download Workspace Documents and Contact Permission Report");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -9931,7 +9934,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot read and write ip analytics count");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot read and write ip analytics count");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -9974,7 +9977,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot clear InvestorWorkspace");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot clear InvestorWorkspace");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		driver.close();
 		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
@@ -10029,7 +10032,7 @@ public class Module14 extends BaseLib {
 			appLog.error("Not able to click on fund tab so cannot clear INV");
 			sa.assertTrue(false, "Not able to click on fund tab so cannot clear INV");
 		}	
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 	
@@ -10086,7 +10089,7 @@ public class Module14 extends BaseLib {
 			sa.assertTrue(false, "Not able to click on fund tab so cannot provide access to contact: "+M14Contact1FirstName+" "+M14Contact1LastName);
 		}
 		switchToDefaultContent(driver);
-		lp.CRMlogout();
+		lp.CRMlogout(environment,mode);
 		sa.assertAll();
 	}
 

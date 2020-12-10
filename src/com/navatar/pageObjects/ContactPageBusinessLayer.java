@@ -679,9 +679,9 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 	public boolean updateEmailAddressOfCreatedContact(String contactFirstName, String contactLastName,String updatedEmailId) {
 		if(clickOnTab(TabName.ContactTab)) {
 			if(clickOnCreatedContact(contactFirstName, contactLastName, null)) {
-				if(click(driver, getEditButtonContactsPage(30), "Contact Edit Button", action.SCROLLANDBOOLEAN)) {
+				if(click(driver, getEditButton1(60), "Contact Edit Button", action.SCROLLANDBOOLEAN)) {
 					if(sendKeys(driver, getEmailId(30), updatedEmailId,"Contact Email Id Text box", action.SCROLLANDBOOLEAN)) {
-						if(click(driver, getSaveButton(30), "Contact Save Button", action.SCROLLANDBOOLEAN)) {
+						if(click(driver, getSaveButton(environment, mode, 60), "Contact Save Button", action.SCROLLANDBOOLEAN)) {
 							appLog.info("Created Contact Email Id is updated Successfully. ");
 						}else {
 							appLog.error("Not able to save Created Contact.");
@@ -719,16 +719,7 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 				appLog.info("Clicked on Created Contact: "+contactFirstName+" "+contactLastName);
 				if(clickUsingJavaScript(driver, getDeleteButton(60), "Delete Button")) {
 					ThreadSleep(3000);
-					if (isAlertPresent(driver)) {
-						String msg = switchToAlertAndGetMessage(driver, 30, action.GETTEXT);
-						appLog.info(msg);
-						switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-						appLog.info("Contact deleted Successfully: "+contactFirstName+" "+contactLastName);
-						
-					}else {
-						appLog.error("Alert pop up  is not present so we cannot delete contact: "+contactFirstName+" "+contactLastName);
-						return false;
-					}
+					appLog.info("Contact deleted Successfully: "+contactFirstName+" "+contactLastName);
 				}else {
 					appLog.error("Not able to click on Contact Delete Button");
 					return false;
@@ -755,10 +746,11 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 	 */
 	public boolean removeContactAccessFromContactPage(String fundName, Workspace workspace) {
 		WebElement ele=null;
-		if(click(driver,getRemoveContactAccessButton(workspace, 60), "Remove contact access button", action.SCROLLANDBOOLEAN)){
-			ele=FindElement(driver,"//label[text()='"+fundName+"']/../..//a[@title='Remove']", fundName+" Remove link", action.SCROLLANDBOOLEAN, 60);
+		scrollDownThroughWebelement(driver,getWorkspaceSectionView(workspace, 10),Workspace.FundraisingWorkspace.toString() + " View.");
+		if(clickUsingJavaScript(driver,getRemoveContactAccessButton(workspace, 60), "Remove contact access button", action.BOOLEAN)){
+			ele=FindElement(driver,"//a[@title='Remove']", fundName+" Remove link", action.BOOLEAN, 20);
 			if(ele!=null) {
-				if(click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)){
+				if(clickUsingJavaScript(driver, ele, "Remove Link", action.BOOLEAN)){
 					String ParentID=switchOnWindow(driver);
 					if(ParentID!=null){
 						for(int i=0 ;i<=600; i++) {
