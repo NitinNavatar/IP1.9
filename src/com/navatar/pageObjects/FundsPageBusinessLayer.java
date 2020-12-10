@@ -1053,18 +1053,19 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			}
 			if (CommonLib.traverseImport(driver, documentPath, fileName)) {
 				ThreadSleep(3000);
-				 ele= BaseLib.edriver.findElement(By.cssSelector("#lbtOnlinImportSave"));
+				// ele= BaseLib.edriver.findElement(By.cssSelector("#lbtOnlinImportSave"));
 				try{
-					scrollDownThroughWebelement(driver, ele, "import button");
-					ele.click();
+					scrollDownThroughWebelement(driver,  getImportButton(60), "import button");
+				//	ele.click();
+					clickUsingJavaScript(driver, getImportButton(60), "Online Import Button", action.BOOLEAN);
+					
 					appLog.info("Clicked on Import Button successfully");
-//				if (click(driver, getImportButton(60), "Online Import Button", action.BOOLEAN)) {
 					if (WorkSpaceAction.toString().equalsIgnoreCase(WorkSpaceAction.UPDATE.toString())) {
 						ThreadSleep(5000);
-						 ele= BaseLib.edriver.findElement(By.cssSelector("#lnkReplaceAll"));
+						 ele= getUpdateAllButton(20);
 						 try{
 							 scrollDownThroughWebelement(driver, ele, "Update All Button");
-							 ele.click();
+							clickUsingJavaScript(driver, ele, "update all");
 							 appLog.info("clicked on Update All Button");
 						 }catch(Exception e){
 							 appLog.error("Not able to click on Update all button so cannot update files ");
@@ -1089,7 +1090,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					} else {
 						driver.close();
 						driver.switchTo().window(parentID);
-						BaseLib.sa.assertFalse(false, "Online Import success alert message didn't displayed");
+						BaseLib.sa.assertFalse(false, "Online Import alert message didn't displayed");
 					}
 					driver.switchTo().window(parentID);
 					return true;
@@ -7627,40 +7628,42 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			flag = false;
 			appLog.error("could not find inst/lp name delimiter");
 			}
-			if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"+instarr[1]+"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
+			if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"+instarr[1]+"')]/following-sibling::*[contains(text(),'"+instarr[2]+"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
 				appLog.info("successfully found "+instarr[1]+" on document");
 			}
 			else {
 			flag = false;
 			appLog.error("could not find inst/lp name delimiter");
 			}
-			if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"+instarr[2]+"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
+			/*if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"+instarr[2]+"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
 				appLog.info("successfully found "+instarr[2]+" on document");
 			}
 			else {
 			flag = false;
 			appLog.error("could not find inst/lp name delimiter");
-			}
+			}*/
 		}
+		String filePart1=fileName.substring(0,fileName.length()-2);
+		char filePart2=fileName.charAt(fileName.length()-1);
 		if (isDisplayed(driver, FindElement(driver, "//*[text()='"+fileName+"']", "file name delimiter", action.BOOLEAN, 10), "visibility", 30, "file name delimiter")!=null) {
 			appLog.info("successfully found file name delimiter");
 		}
 		else {
 			appLog.info("file full name is not displayed, now finding parts of full name on document");
-			if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"+fileName.substring(0,fileName.length()-2)+"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
-				appLog.info("successfully found "+fileName.substring(0,fileName.length()-2)+" on document");
+			if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"+filePart1+" ')]/following-sibling::*[contains(text(),'"+filePart2+"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
+				appLog.info("successfully found "+filePart1+" on document");
 			}
 			else {
 			flag = false;
 			appLog.error("could not find inst/lp name delimiter");
 			}
-			if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"+fileName.charAt(fileName.length()-1)+"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
+			/*if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'"++"')]", "inst name delimiter", action.BOOLEAN, 10), "visibility", 30, "inst name delimiter")!=null) {
 				appLog.info("successfully found "+fileName.charAt(fileName.length()-1)+" on document");
 			}
 			else {
 			flag = false;
 			appLog.error("could not find inst/lp name delimiter");
-			}
+			}*/
 		}
 		if (isDisplayed(driver, FindElement(driver, "//*[contains(text(),'<e|nv>')]", "file end delimiter", action.BOOLEAN, 10), "visibility", 30, "file end delimiter")!=null) {
 			appLog.info("successfully found file end delimiter");
