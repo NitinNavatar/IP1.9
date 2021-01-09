@@ -33,9 +33,6 @@ import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageBusinessLayer;
 import com.navatar.pageObjects.NIMPageErrorMessage;
 import com.navatar.pageObjects.PartnershipPageBusinessLayer;
-
-import sun.misc.FpUtils;
-
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
