@@ -5,6 +5,7 @@ package com.navatar.scripts;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.seleniumhq.jetty9.util.ReadLineInputStream;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.BaseLib;
@@ -9256,7 +9257,7 @@ public class Module17 extends BaseLib {
 			if(fp.clickOnCreatedFund(M17FundName1)) {
 				switchToDefaultContent(driver);
 				switchToFrame(driver, 60,fp.getFrame(PageName.FundsPage,30));
-				if (fp.verifyFolderPathdummy("", M17Institution1, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
+				if (fp.verifyFolderPathdummy("", M17Institution2, "", null, PageName.FundsPage, Workspace.FundraisingWorkspace, 30)) {
 					if(click(driver, fp.getContactAccessIcon(Workspace.FundraisingWorkspace, 30), "FundraisingWorkspace contact access icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("Clicked on Contact Access Icon");
 						if(fp.verifyContactAccessExpandCollapse(Workspace.FundraisingWorkspace)) {
@@ -9295,6 +9296,8 @@ public class Module17 extends BaseLib {
 								sa.assertTrue(false, "CheckBox is not visible for check");
 							}
 
+							Scanner scn = new Scanner(System.in);
+						//	scn.nextLine();
 							ThreadSleep(2000);
 							// Uncheck Header
 							appLog.info("Going to Click Header CheckBox for UnCheck");
@@ -9327,7 +9330,7 @@ public class Module17 extends BaseLib {
 							}
 
 							ThreadSleep(2000);
-
+						//	scn.nextLine();
 
 							// Check Header Again
 							appLog.info("Going to Click Header CheckBox for Check Again");
@@ -9353,164 +9356,6 @@ public class Module17 extends BaseLib {
 
 									}
 
-									// Uncheck Contact CheckBox
-									appLog.info("Going to Uncheck Contact CheckBox");
-									eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-									ThreadSleep(1000);
-									if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck", action.BOOLEAN)) {
-										appLog.info(" able to click on Contact CheckBox for Uncheck");	
-
-										ThreadSleep(1000);
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-										ThreadSleep(1000);
-
-										for (int i = 0; i < eles.size(); i++) {
-
-											if (i==0 || i==eles.size()-1) {
-
-												if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox")) {
-													appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox for iteration : "+i);	
-												} else {
-													appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
-													sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
-												}	
-
-											} else {
-
-												if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox")) {
-													appLog.info("checkbox is checked after Unchecking Contact CheckBox for iteration : "+i);	
-												} else {
-													appLog.error("checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
-													sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
-												}
-											}
-
-
-
-										}
-
-										// check  UnCheckBox
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-										ThreadSleep(2000);
-										appLog.info("Going to check UnCheckBox");	
-										for (int i = 0; i < eles.size(); i++) {
-
-											if (i==0 || i==eles.size()-1) {
-
-												if (click(driver, eles.get(i), "UnCheck box for Check", action.BOOLEAN)) {
-													appLog.info(" able to click on UnCheckBox for check");	
-												}else{
-													appLog.error("Not able to click on UnCheckBox for check");
-													sa.assertTrue(false, "Not able to click on UnCheckBox for check");
-												}
-												
-												ThreadSleep(1000);
-
-											}
-
-										}
-
-										// Going to verify CheckBox after checking UncheckBoxes
-										appLog.info("Going to verify CheckBox after checking UncheckBoxes");
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-										ThreadSleep(1000);
-
-										for (int i = 0; i < eles.size(); i++) {
-
-											if (isSelected(driver, eles.get(i), "CheckBoxes Checked")) {
-												appLog.info("checkbox is checked after checking Unchecked Box for iteration : "+i);	
-											} else {
-												appLog.error("checkbox is not checked after checking Unchecked Box for iteration : "+i);
-												sa.assertTrue(false, "checkbox is not checked after checking Unchecked Box for iteration : "+i);
-											}
-
-										}
-
-										//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-										// Uncheck Contact CheckBox
-										appLog.info("Going to Uncheck Contact CheckBox Again");
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-										ThreadSleep(1000);
-										if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck Again", action.BOOLEAN)) {
-											appLog.info(" able to click on Contact CheckBox for Uncheck Again");	
-
-											ThreadSleep(1000);
-											eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-											ThreadSleep(1000);
-
-											for (int i = 0; i < eles.size(); i++) {
-
-												if (i==0 || i==eles.size()-1) {
-
-													if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox Again")) {
-														appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);	
-													} else {
-														appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
-														sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
-													}	
-
-												} else {
-
-													if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox Again")) {
-														appLog.info("checkbox is checked after Unchecking Contact CheckBox Again for iteration : "+i);	
-													} else {
-														appLog.error("checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
-														sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
-													}
-												}
-
-
-
-											}
-
-											// check  Header CheckBox
-											appLog.info("Going to check Header CheckBox");	
-											eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-											ThreadSleep(1000);
-
-											if (click(driver, eles.get(0), "check Header CheckBox", action.BOOLEAN)) {
-												appLog.error(" able to click on Header CheckBox");	
-											}else{
-												appLog.error("Not able to click on Header CheckBox");
-												sa.assertTrue(false, "Not able to click on Header CheckBox");
-											}
-
-
-
-											// Going to verify CheckBox after checking UncheckBoxes
-											appLog.info("Going to verify CheckBox after checking Header CheckBox");
-											eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
-											ThreadSleep(1000);
-
-											for (int i = 0; i < eles.size(); i++) {
-
-												if (isSelected(driver, eles.get(i), "checking Header CheckBox")) {
-													appLog.info("checkbox is checked after checking Header CheckBox for iteration : "+i);	
-												} else {
-													appLog.error("checkbox is not checked after checking Header CheckBox for iteration : "+i);
-													sa.assertTrue(false, "checkbox is not checked after checking Header CheckBox for iteration : "+i);
-												}
-
-											}
-
-
-
-
-										} else {
-											appLog.error("Not able to click on Contact CheckBox for Uncheck");
-											sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
-										}				
-
-										//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-									} else {
-										appLog.error("Not able to click on Contact CheckBox for Uncheck");
-										sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
-									}
-
-
 								}else {
 									appLog.error("Not able to click on Header CheckBox for check Again");
 									sa.assertTrue(false, "Not able to click on Header CheckBox for check Again");
@@ -9520,6 +9365,165 @@ public class Module17 extends BaseLib {
 								sa.assertTrue(false, "CheckBox is not visible for check Again");
 							}
 
+
+							// Uncheck Contact CheckBox
+							appLog.info("Going to Uncheck Contact CheckBox");
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+							ThreadSleep(1000);
+							if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck", action.BOOLEAN)) {
+								appLog.info(" able to click on Contact CheckBox for Uncheck");	
+
+								ThreadSleep(1000);
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+								ThreadSleep(1000);
+
+								for (int i = 0; i < eles.size(); i++) {
+
+									if (i==0 || i==eles.size()-1) {
+
+										if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox")) {
+											appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
+										}	
+
+									} else {
+
+										if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox")) {
+											appLog.info("checkbox is checked after Unchecking Contact CheckBox for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
+										}
+									}
+
+
+
+								}
+
+							} else {
+								appLog.error("Not able to click on Contact CheckBox for Uncheck");
+								sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
+							}
+
+						//	scn.nextLine();
+							// check  UnCheckBox
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+							ThreadSleep(2000);
+							appLog.info("Going to check UnCheckBox");	
+							for (int i = 0; i < eles.size(); i++) {
+
+								if (i==eles.size()-1) {
+
+									if (click(driver, eles.get(i), "Contact UnCheck box for Check", action.BOOLEAN)) {
+										appLog.info(" able to click on Contact UnCheckBox for check");	
+									}else{
+										appLog.error("Not able to click on Contact UnCheckBox for check");
+										sa.assertTrue(false, "Not able to click on Contact UnCheckBox for check");
+									}
+
+									ThreadSleep(1000);
+
+								}
+
+							}
+						//	scn.nextLine();
+							// Going to verify CheckBox after checking UncheckBoxes
+							appLog.info("Going to verify CheckBox after checking UncheckBoxes");
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+							ThreadSleep(1000);
+
+							for (int i = 0; i < eles.size(); i++) {
+
+								if (isSelected(driver, eles.get(i), "CheckBoxes Checked")) {
+									appLog.info("checkbox is checked after checking Unchecked Box for iteration : "+i);	
+								} else {
+									appLog.error("checkbox is not checked after checking Unchecked Box for iteration : "+i);
+									sa.assertTrue(false, "checkbox is not checked after checking Unchecked Box for iteration : "+i);
+								}
+
+							}
+
+						//	scn.nextLine();
+							//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+							// Uncheck Contact CheckBox
+							appLog.info("Going to Uncheck Contact CheckBox Again");
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+							ThreadSleep(1000);
+							if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck Again", action.BOOLEAN)) {
+								appLog.info(" able to click on Contact CheckBox for Uncheck Again");	
+
+								ThreadSleep(1000);
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+								ThreadSleep(1000);
+
+								for (int i = 0; i < eles.size(); i++) {
+
+									if (i==0 || i==eles.size()-1) {
+
+										if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox Again")) {
+											appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
+										}	
+
+									} else {
+
+										if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox Again")) {
+											appLog.info("checkbox is checked after Unchecking Contact CheckBox Again for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
+										}
+									}
+
+
+
+								}
+							//	scn.nextLine();
+								// check  Header CheckBox
+								appLog.info("Going to check Header CheckBox");	
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+								ThreadSleep(1000);
+
+								if (click(driver, eles.get(0), "check Header CheckBox", action.BOOLEAN)) {
+									appLog.error(" able to click on Header CheckBox");	
+								}else{
+									appLog.error("Not able to click on Header CheckBox");
+									sa.assertTrue(false, "Not able to click on Header CheckBox");
+								}
+
+							//	scn.nextLine();
+
+								// Going to verify CheckBox after checking UncheckBoxes
+								appLog.info("Going to verify CheckBox after checking Header CheckBox");
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.FundraisingWorkspace);
+								ThreadSleep(1000);
+
+								for (int i = 0; i < eles.size(); i++) {
+
+									if (isSelected(driver, eles.get(i), "checking Header CheckBox")) {
+										appLog.info("checkbox is checked after checking Header CheckBox for iteration : "+i);	
+									} else {
+										appLog.error("checkbox is not checked after checking Header CheckBox for iteration : "+i);
+										sa.assertTrue(false, "checkbox is not checked after checking Header CheckBox for iteration : "+i);
+									}
+
+								}
+
+
+
+
+							} else {
+								appLog.error("Not able to click on Contact CheckBox for Uncheck");
+								sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
+							}				
+
+							//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						//	scn.nextLine();
 							ThreadSleep(2000);
 
 						}else {
@@ -9542,6 +9546,70 @@ public class Module17 extends BaseLib {
 		}else {
 			appLog.error("Not able to click on fund tab ");
 			sa.assertTrue(false, "Not able to click on fund tab ");
+		}
+		switchToDefaultContent(driver);
+		
+		String	msg;
+		String errorMsg=ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace;
+		ContactPageBusinessLayer cp =new ContactPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		WebElement ele = null;
+		if (bp.clickOnTab(TabName.ContactTab)) {
+			if (cp.clickOnCreatedContact(M17Contact1FirstName, M17Contact1LastName, null)) {
+				switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),
+						"Fundraising Workspace Section view");
+				if (click(driver, cp.getRemoveContactAccessButton(Workspace.FundraisingWorkspace, 60),
+						"Remove contact access close button", action.SCROLLANDBOOLEAN)) {
+					ele = FindElement(driver, "//label[text()='" + M17FundName1 + "']/../..//a[@title='Remove']",M17FundName1+" Remove link", action.SCROLLANDBOOLEAN, 60);
+					if (click(driver, ele, "Remove Link", action.SCROLLANDBOOLEAN)) {
+						String ParentID = switchOnWindow(driver);
+						if (ParentID != null) {
+							ThreadSleep(5000);
+							switchToAlertAndAcceptOrDecline(driver, 60, action.ACCEPT);
+							driver.switchTo().window(ParentID);
+							ThreadSleep(2000);
+							refresh(driver);
+							ThreadSleep(2000);
+							switchToFrame(driver, 30, bp.getFrame(PageName.ContactsPage, 30));
+							scrollDownThroughWebelement(driver,bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 30),Workspace.FundraisingWorkspace+" Workspace Section view");
+							ele=cp.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60);
+							msg=ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace;
+							
+							if (ele!=null) {
+								msg = ele.getText().trim();
+								
+								if (errorMsg.equals(msg)) {
+								appLog.info(msg+" on contatct Page Verified ");	
+								} else {
+									appLog.error("Error Msg on contatct Page Not Verified Actual : "+msg+"\t Expected : "+errorMsg);	
+									sa.assertTrue(false, "Error Msg on contatct Page Not Verified Actual : "+msg+"\t Expected : "+errorMsg);
+								}
+								
+							} else {
+								appLog.error("Contact Page Error Msg Ele is null");
+								sa.assertTrue(false, "Contact Page Error Msg Ele is null");
+							}
+							
+						} else {
+							appLog.info("No new window to switch");
+							sa.assertTrue(false, "No new window to switch");
+						}
+					} else {
+						appLog.info("Not bale ot click on remove link");
+						sa.assertTrue(false, "Not able to click on remove link");
+					}
+				} else {
+					appLog.info("Not able to clcik on remove contact access close button");
+					sa.assertTrue(false, "Not able to click on remove contact access close button");
+				}
+			} else {
+				appLog.info("Not able to click on created contact : "+M17Contact1FirstName+" "+M17Contact1LastName);
+				sa.assertTrue(false, "Not able to click on created contact : "+M17Contact1FirstName+" "+M17Contact1LastName);
+			}
+		} else {
+			appLog.info("Not able to click on contacts tab");
+			sa.assertTrue(false, "Not able to click on contacts tab");
 		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
@@ -18473,6 +18541,8 @@ public class Module17 extends BaseLib {
 								sa.assertTrue(false, "CheckBox is not visible for check");
 							}
 
+							Scanner scn = new Scanner(System.in);
+						//	scn.nextLine();
 							ThreadSleep(2000);
 							// Uncheck Header
 							appLog.info("Going to Click Header CheckBox for UnCheck");
@@ -18505,7 +18575,7 @@ public class Module17 extends BaseLib {
 							}
 
 							ThreadSleep(2000);
-
+						//	scn.nextLine();
 
 							// Check Header Again
 							appLog.info("Going to Click Header CheckBox for Check Again");
@@ -18531,164 +18601,6 @@ public class Module17 extends BaseLib {
 
 									}
 
-									// Uncheck Contact CheckBox
-									appLog.info("Going to Uncheck Contact CheckBox");
-									eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-									ThreadSleep(1000);
-									if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck", action.BOOLEAN)) {
-										appLog.info(" able to click on Contact CheckBox for Uncheck");	
-
-										ThreadSleep(1000);
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-										ThreadSleep(1000);
-
-										for (int i = 0; i < eles.size(); i++) {
-
-											if (i==0 || i==eles.size()-1) {
-
-												if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox")) {
-													appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox for iteration : "+i);	
-												} else {
-													appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
-													sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
-												}	
-
-											} else {
-
-												if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox")) {
-													appLog.info("checkbox is checked after Unchecking Contact CheckBox for iteration : "+i);	
-												} else {
-													appLog.error("checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
-													sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
-												}
-											}
-
-
-
-										}
-
-										// check  UnCheckBox
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-										ThreadSleep(2000);
-										appLog.info("Going to check UnCheckBox");	
-										for (int i = 0; i < eles.size(); i++) {
-
-											if (i==0 || i==eles.size()-1) {
-
-												if (click(driver, eles.get(i), "UnCheck box for Check", action.BOOLEAN)) {
-													appLog.info(" able to click on UnCheckBox for check");	
-												}else{
-													appLog.error("Not able to click on UnCheckBox for check");
-													sa.assertTrue(false, "Not able to click on UnCheckBox for check");
-												}
-												
-												ThreadSleep(1000);
-
-											}
-
-										}
-
-										// Going to verify CheckBox after checking UncheckBoxes
-										appLog.info("Going to verify CheckBox after checking UncheckBoxes");
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-										ThreadSleep(1000);
-
-										for (int i = 0; i < eles.size(); i++) {
-
-											if (isSelected(driver, eles.get(i), "CheckBoxes Checked")) {
-												appLog.info("checkbox is checked after checking Unchecked Box for iteration : "+i);	
-											} else {
-												appLog.error("checkbox is not checked after checking Unchecked Box for iteration : "+i);
-												sa.assertTrue(false, "checkbox is not checked after checking Unchecked Box for iteration : "+i);
-											}
-
-										}
-
-										//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-										// Uncheck Contact CheckBox
-										appLog.info("Going to Uncheck Contact CheckBox Again");
-										eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-										ThreadSleep(1000);
-										if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck Again", action.BOOLEAN)) {
-											appLog.info(" able to click on Contact CheckBox for Uncheck Again");	
-
-											ThreadSleep(1000);
-											eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-											ThreadSleep(1000);
-
-											for (int i = 0; i < eles.size(); i++) {
-
-												if (i==0 || i==eles.size()-1) {
-
-													if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox Again")) {
-														appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);	
-													} else {
-														appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
-														sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
-													}	
-
-												} else {
-
-													if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox Again")) {
-														appLog.info("checkbox is checked after Unchecking Contact CheckBox Again for iteration : "+i);	
-													} else {
-														appLog.error("checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
-														sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
-													}
-												}
-
-
-
-											}
-
-											// check  Header CheckBox
-											appLog.info("Going to check Header CheckBox");	
-											eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-											ThreadSleep(1000);
-
-											if (click(driver, eles.get(0), "check Header CheckBox", action.BOOLEAN)) {
-												appLog.error(" able to click on Header CheckBox");	
-											}else{
-												appLog.error("Not able to click on Header CheckBox");
-												sa.assertTrue(false, "Not able to click on Header CheckBox");
-											}
-
-
-
-											// Going to verify CheckBox after checking UncheckBoxes
-											appLog.info("Going to verify CheckBox after checking Header CheckBox");
-											eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
-											ThreadSleep(1000);
-
-											for (int i = 0; i < eles.size(); i++) {
-
-												if (isSelected(driver, eles.get(i), "checking Header CheckBox")) {
-													appLog.info("checkbox is checked after checking Header CheckBox for iteration : "+i);	
-												} else {
-													appLog.error("checkbox is not checked after checking Header CheckBox for iteration : "+i);
-													sa.assertTrue(false, "checkbox is not checked after checking Header CheckBox for iteration : "+i);
-												}
-
-											}
-
-
-
-
-										} else {
-											appLog.error("Not able to click on Contact CheckBox for Uncheck");
-											sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
-										}				
-
-										//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-									} else {
-										appLog.error("Not able to click on Contact CheckBox for Uncheck");
-										sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
-									}
-
-
 								}else {
 									appLog.error("Not able to click on Header CheckBox for check Again");
 									sa.assertTrue(false, "Not able to click on Header CheckBox for check Again");
@@ -18698,6 +18610,165 @@ public class Module17 extends BaseLib {
 								sa.assertTrue(false, "CheckBox is not visible for check Again");
 							}
 
+
+							// Uncheck Contact CheckBox
+							appLog.info("Going to Uncheck Contact CheckBox");
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+							ThreadSleep(1000);
+							if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck", action.BOOLEAN)) {
+								appLog.info(" able to click on Contact CheckBox for Uncheck");	
+
+								ThreadSleep(1000);
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+								ThreadSleep(1000);
+
+								for (int i = 0; i < eles.size(); i++) {
+
+									if (i==0 || i==eles.size()-1) {
+
+										if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox")) {
+											appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox for iteration : "+i);
+										}	
+
+									} else {
+
+										if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox")) {
+											appLog.info("checkbox is checked after Unchecking Contact CheckBox for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox for iteration : "+i);
+										}
+									}
+
+
+
+								}
+
+							} else {
+								appLog.error("Not able to click on Contact CheckBox for Uncheck");
+								sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
+							}
+
+						//	scn.nextLine();
+							// check  UnCheckBox
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+							ThreadSleep(2000);
+							appLog.info("Going to check UnCheckBox");	
+							for (int i = 0; i < eles.size(); i++) {
+
+								if (i==eles.size()-1) {
+
+									if (click(driver, eles.get(i), "Contact UnCheck box for Check", action.BOOLEAN)) {
+										appLog.info(" able to click on Contact UnCheckBox for check");	
+									}else{
+										appLog.error("Not able to click on Contact UnCheckBox for check");
+										sa.assertTrue(false, "Not able to click on Contact UnCheckBox for check");
+									}
+
+									ThreadSleep(1000);
+
+								}
+
+							}
+						//	scn.nextLine();
+							// Going to verify CheckBox after checking UncheckBoxes
+							appLog.info("Going to verify CheckBox after checking UncheckBoxes");
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+							ThreadSleep(1000);
+
+							for (int i = 0; i < eles.size(); i++) {
+
+								if (isSelected(driver, eles.get(i), "CheckBoxes Checked")) {
+									appLog.info("checkbox is checked after checking Unchecked Box for iteration : "+i);	
+								} else {
+									appLog.error("checkbox is not checked after checking Unchecked Box for iteration : "+i);
+									sa.assertTrue(false, "checkbox is not checked after checking Unchecked Box for iteration : "+i);
+								}
+
+							}
+
+						//	scn.nextLine();
+							//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+							// Uncheck Contact CheckBox
+							appLog.info("Going to Uncheck Contact CheckBox Again");
+							eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+							ThreadSleep(1000);
+							if (click(driver, eles.get(eles.size()-1), "Contact check box for UnCheck Again", action.BOOLEAN)) {
+								appLog.info(" able to click on Contact CheckBox for Uncheck Again");	
+
+								ThreadSleep(1000);
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+								ThreadSleep(1000);
+
+								for (int i = 0; i < eles.size(); i++) {
+
+									if (i==0 || i==eles.size()-1) {
+
+										if (!isSelected(driver, eles.get(i), "CheckBoxes UnChecked after Unchecking Contact CheckBox Again")) {
+											appLog.info("checkbox is Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not Unchecked after Unchecking Contact CheckBox Again for iteration : "+i);
+										}	
+
+									} else {
+
+										if (isSelected(driver, eles.get(i), "CheckBoxes Checked after Unchecking Contact CheckBox Again")) {
+											appLog.info("checkbox is checked after Unchecking Contact CheckBox Again for iteration : "+i);	
+										} else {
+											appLog.error("checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
+											sa.assertTrue(false, "checkbox is not checked after Unchecking Contact CheckBox Again for iteration : "+i);
+										}
+									}
+
+
+
+								}
+							//	scn.nextLine();
+								// check  Header CheckBox
+								appLog.info("Going to check Header CheckBox");	
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+								ThreadSleep(1000);
+
+								if (click(driver, eles.get(0), "check Header CheckBox", action.BOOLEAN)) {
+									appLog.error(" able to click on Header CheckBox");	
+								}else{
+									appLog.error("Not able to click on Header CheckBox");
+									sa.assertTrue(false, "Not able to click on Header CheckBox");
+								}
+
+							//	scn.nextLine();
+
+								// Going to verify CheckBox after checking UncheckBoxes
+								appLog.info("Going to verify CheckBox after checking Header CheckBox");
+								eles = fp.getHeaderAndContactCheckBoxesofSelectGridonContactAccessPopUp(Workspace.InvestorWorkspace);
+								ThreadSleep(1000);
+
+								for (int i = 0; i < eles.size(); i++) {
+
+									if (isSelected(driver, eles.get(i), "checking Header CheckBox")) {
+										appLog.info("checkbox is checked after checking Header CheckBox for iteration : "+i);	
+									} else {
+										appLog.error("checkbox is not checked after checking Header CheckBox for iteration : "+i);
+										sa.assertTrue(false, "checkbox is not checked after checking Header CheckBox for iteration : "+i);
+									}
+
+								}
+
+
+
+
+							} else {
+								appLog.error("Not able to click on Contact CheckBox for Uncheck");
+								sa.assertTrue(false, "Not able to click on Contact CheckBox for Uncheck");
+							}				
+
+							//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						//	scn.nextLine();
 							ThreadSleep(2000);
 
 						}else {

@@ -25,6 +25,7 @@ import org.testng.Assert;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.BasePageErrorMessage;
 
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
@@ -672,9 +673,10 @@ public class CommonLib implements Comparator<String> {
 	 * @description get the current system date according the format passed.
 	 */
 	public static String getSystemDate(String format) {
-		Date myDate = new Date();
-		String date = new SimpleDateFormat(format).format(myDate);
-		return date;
+//		Date myDate = new Date();
+//		String date = new SimpleDateFormat(format).format(myDate);
+//		return date;
+		return getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, format);
 
 	}
 
@@ -2454,6 +2456,7 @@ public class CommonLib implements Comparator<String> {
 		}
 		return flag;
 	}
+
 	
 }
 
