@@ -3696,7 +3696,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					sa.assertTrue(false, list.get(j) + " :Investor not found.");
 					str.append(list.get(j) + ", ");
 				}
-				ExcelUtils.writeDataInExcel(path,"Not found Investors: " + str, "Filter Logic for multiple rows", l - itr, 6);
+				ExcelUtils.writeDataInExcel(path,"Not found Investors: " + str, sheetName, l - itr, 6);
 			}
 			click(driver, getManageInvestorFilterClearButton(workspace, timeOut), "clear Button", action.THROWEXCEPTION);
 			List<WebElement> lst=getManageInvestorFilterRemoveRowIcon(workspace);
