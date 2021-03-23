@@ -2573,7 +2573,7 @@ public class SmokeTestCase extends BaseLib {
 			if(fp.clickOnCreatedFund(SmokeFundName1)) {
 				switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace.toString() + " View.");
-				/*if(fp.verifyFolderPathdummy(standrdFolder, UpdateSmokeInstitution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 60)){
+				if(fp.verifyFolderPathdummy(standrdFolder, UpdateSmokeInstitution1, null, null, PageName.FundsPage, Workspace.FundraisingWorkspace, 60)){
 					if (bp.verifyDownloadFunctionality(PageName.PotentialInvestmentPage, Workspace.FundraisingWorkspace, standrdfile[0], true, false,false)) {
 						appLog.info("download button is successfully verified");
 						switchToFrame(driver, 30, bp.getFrame(PageName.FundsPage, 60));
@@ -3218,7 +3218,7 @@ public class SmokeTestCase extends BaseLib {
 					appLog.error("Folder path not visible "+standrdFolder+" so cannot click on file link");
 					sa.assertTrue(false, "Folder path not visible "+standrdFolder+" so cannot click on file link");
 				}
-				*/String docPath=System.getProperty("user.dir") + "\\UploadFiles\\SmokeUploadFile\\Shared\\";
+				String docPath=System.getProperty("user.dir") + "\\UploadFiles\\SmokeUploadFile\\Shared\\";
 				if(fp.updateFile(shrdFolder, shrdfile, UpdateSmokeInstitution1, null, FolderType.Shared,docPath+shrdfile,null, null, ContentGridArrowKeyFunctions.Update,20, PageName.FundsPage,"Yes",null, Workspace.FundraisingWorkspace)) {
 					appLog.info("file is updated successfully: "+shrdfile+" in :"+shrdFolder);
 						
