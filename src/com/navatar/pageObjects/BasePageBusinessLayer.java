@@ -541,8 +541,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										if (selectVisibleTextFromDropDown(driver, getUserProfileDropDownList(60),
 												"User profile drop down list", userProfile)) {
 											appLog.info("select user profile from drop downlist: " + userProfile);
-											if(click(driver, getSalesforceCRMContentUserCheckBox(60), "Salesforce CRM Content User check Box",
-													action.SCROLLANDBOOLEAN)){
+											if(isSelected(driver, getSalesforceCRMContentUserCheckBox(5), "content user check box ")) {
+												if(click(driver, getSalesforceCRMContentUserCheckBox(5), "Salesforce CRM Content User check Box",
+														action.SCROLLANDBOOLEAN)){
+													
+												}else{
+													appLog.info("Not able to click on content user checkbox");
+												}
+											}
 												if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 													if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
 															action.SCROLLANDBOOLEAN)) {
@@ -568,9 +574,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 																		+ userfirstname + " " + userlastname);
 													}
 												}
-											}else{
-												appLog.info("Not able to click on content user checkbox");
-											}
+											
 										} else {
 											appLog.error("Not able to select profile from drop downlist: "
 													+ userProfile + " so cannot create user: " + userfirstname + " "

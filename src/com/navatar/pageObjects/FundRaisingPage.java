@@ -274,7 +274,7 @@ public class FundRaisingPage extends BasePage {
 	@FindBy(xpath="//input[@name='Name']")
 	private WebElement fundraisingName_Classic;
 	
-	@FindBy(xpath="//*[text()='Fundraising Name']/following-sibling::div/input")
+	@FindBy(xpath="//*[text()='Fundraising Name']/following-sibling::*//input")
 	private WebElement fundraisingName_Lighting;
 
 	/**
@@ -292,7 +292,7 @@ public class FundRaisingPage extends BasePage {
 	@FindBy(xpath="(//div[@class='requiredInput']//span[@class='lookupInput']//input)[1]")
 	private WebElement fundName_Classic;
 	
-	@FindBy(xpath="//*[text()='Fund Name']/following-sibling::div//input[@title='Search Funds' or contains(@placeholder,'Search Funds')]")
+	@FindBy(xpath="//*[text()='Fund Name']/following-sibling::*//input[@title='Search Funds' or contains(@placeholder,'Search Funds')]")
 	private WebElement fundName_Lighting;
 
 	/**
@@ -310,7 +310,7 @@ public class FundRaisingPage extends BasePage {
 	@FindBy(xpath="(//div[@class='requiredInput']//span[@class='lookupInput']//input)[2]")
 	private WebElement legalName_Classic;
 	
-	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input[@title='Search Institutions' or contains(@placeholder,'Search Institutions')]")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input[@title='Search Institutions' or contains(@placeholder,'Search Institutions')]")
 	private WebElement legalName_Lighting;
 
 	/**

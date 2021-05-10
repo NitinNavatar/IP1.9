@@ -3564,7 +3564,7 @@ public abstract class BasePage {
 				return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
 			
 		}
-		@FindBy(xpath = "//button[@title='Save']")
+		@FindBy(xpath = "//button[@title='Save' or @name ='SaveEdit' or text()='Save']")
 		private WebElement save_Lightning;
 		
 		
@@ -3573,6 +3573,24 @@ public abstract class BasePage {
 
 		public WebElement getCustomFieldAndRelationShipSearchTextBox(int timeOut) {
 			return isDisplayed(driver, customFieldAndRelationShipSearchTextBox, "Visibility", timeOut, "custom Field And RelationShip  Search TextBox");
+		}
+		
+		@FindBy(xpath="//input[@title='Continue']")
+		private WebElement continueBtnClassic;
+
+		@FindBy(xpath="//span[text()='Next']")
+		private WebElement nextBtnLighting;
+		
+		/**
+		 * @return the continueBtn
+		 */
+		public WebElement getContinueOrNextBtn(String environment,String mode,int timeOut) {
+			if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+				return isDisplayed(driver, continueBtnClassic, "Visibility", timeOut, "Continue Button Classic");	
+			}else{
+				return isDisplayed(driver, nextBtnLighting, "Visibility", timeOut, "Next Button Lighting");
+			}
+			
 		}
 		
 	}

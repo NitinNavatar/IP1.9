@@ -456,28 +456,12 @@ public class InstitutionPage extends BasePageBusinessLayer{
 		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
 	}
 	
-	@FindBy(xpath="//input[@title='Continue']")
-	private WebElement continueBtnClassic;
-
-	@FindBy(xpath="//span[text()='Next']")
-	private WebElement nextBtnLighting;
 	
-	/**
-	 * @return the continueBtn
-	 */
-	public WebElement getContinueOrNextBtn(String environment,String mode,int timeOut) {
-		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
-			return isDisplayed(driver, continueBtnClassic, "Visibility", timeOut, "Continue Button Classic");	
-		}else{
-			return isDisplayed(driver, nextBtnLighting, "Visibility", timeOut, "Next Button Lighting");
-		}
-		
-	}
 	
 	@FindBy(xpath="//input[@name='acc2']")
 	private WebElement legalNameTextBoxClassic;
 	
-	@FindBy(xpath="//label[@data-aura-class='uiLabel']//span[text()='Legal Name']/..//following-sibling::input")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input")
 	private WebElement legalNameTextBoxLighting;
 	
 	/**
@@ -515,11 +499,11 @@ public class InstitutionPage extends BasePageBusinessLayer{
 			
 		}else {
 			//span[text()='Description']/..//following-sibling::textarea
-			xpath="//span[text()='"+finalLabelName+"']";
-			inputXpath="/..//following-sibling::input";
-			textAreaXpath="/..//following-sibling::textarea";
+			xpath="//*[text()='"+finalLabelName+"']";
+			inputXpath="/following-sibling::*//input";
+			textAreaXpath="/following-sibling::*//textarea";
 			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
-				inputXpath="/..//following-sibling::div//input[@title='Search Institutions']";
+				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search Institutions')]";
 			}
 			
 		}

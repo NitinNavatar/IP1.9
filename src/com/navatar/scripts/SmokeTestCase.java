@@ -393,13 +393,15 @@ public class SmokeTestCase extends BaseLib {
 			}
 		}
 		if (flag) {
-			if (bp.installedPackages(environment, mode,SmokeCRMUser1FirstName,SmokeCRMUser1LastName)) {
-				appLog.info("PE Package is installed Successfully in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
-			} else {
-				appLog.error(
-						"Not able to install PE package in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
-				sa.assertTrue(false,
-						"Not able to install PE package in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (bp.installedPackages(environment, mode,SmokeCRMUser1FirstName,SmokeCRMUser1LastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User1: " + SmokeCRMUser1FirstName + " "+ SmokeCRMUser1LastName);
+				}
 			}
 			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 				driver.close();
@@ -631,11 +633,13 @@ public class SmokeTestCase extends BaseLib {
 		
 		
 		if (flag) {
-			if (bp.installedPackages(environment,mode,SmokeCRMUser2FirstName,SmokeCRMUser2LastName)) {
-				appLog.info("Install package is done for PE User 2 succesfully");
-			} else {
-				appLog.info("Install package is not done for PE User 2 succesfully");
-				saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (bp.installedPackages(environment,mode,SmokeCRMUser2FirstName,SmokeCRMUser2LastName)) {
+					appLog.info("Install package is done for PE User 2 succesfully");
+				} else {
+					appLog.info("Install package is not done for PE User 2 succesfully");
+					saa.assertTrue(false, "Install package is not done for PE User 2 succesfully");
+				}
 			}
 			if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 				driver.close();
@@ -987,6 +991,9 @@ public class SmokeTestCase extends BaseLib {
 				String email=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Email);
 				String description=ExcelUtils.readData(smokeExcelPath,"Funds",excelLabel.Variable_Name, "SmokeFund1", excelLabel.Fund_Description);
 				String[] data= {Size,vintageyear,con,phone,email,description};
+				
+				
+				
 				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
 						

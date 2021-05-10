@@ -132,6 +132,16 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 			}
 			if(click(driver, getNewContactBtn(environment, mode, 30), "new contact button in "+mode, action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on new contact button in institution page");
+				
+				ThreadSleep(3000);
+				if (click(driver, getContinueOrNextBtn(environment,mode,2), "Continue Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on Next  button");
+				} else {
+					appLog.error("Next button is not present");
+					
+				}	
+				
+				
 			}else {
 				appLog.error("Not able to click on new button on institution page so cannot create contact: "+contactFirstName+" "+contactLastName);
 				return false;
@@ -143,6 +153,13 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 				ThreadSleep(5000);
 				if(clickUsingJavaScript(driver, getNewButton(environment, mode, 60), "new button")) {
 					appLog.info("clicked on new button");
+					ThreadSleep(3000);
+					if (click(driver, getContinueOrNextBtn(environment,mode,5), "Continue Button", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on Next  button");
+					} else {
+						appLog.error("Next button is not present");
+						
+					}	
 				}else {
 					appLog.error("Not able to click on New Button so cannot create Contact: " + contactFirstName+" "+contactLastName);
 					return false;
@@ -172,8 +189,7 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 								ThreadSleep(1000);
 								if (click(driver,
 										FindElement(driver,
-												"//div[contains(@class,'uiAutocomplete')]//a//div[contains(@class,'primary') and @title='" + legalName
-												+ "']",
+												"//*[contains(@class,'listbox')]//*[@title='"+legalName+"']",
 												"Legal Name List", action.THROWEXCEPTION, 30),
 										legalName + "   :   Legal Name", action.BOOLEAN)) {
 									appLog.info(legalName + "  is present in list.");
@@ -203,7 +219,7 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 								}
 								
 							}
-							if (click(driver, getSaveButton(environment, mode, 60), "Save Button",
+							if (click(driver, getCustomTabSaveBtn(environment,mode,30), "Save Button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on save button");
 								if(creationPage.toString().equalsIgnoreCase(CreationPage.InstitutionPage.toString())) {
