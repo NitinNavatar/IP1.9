@@ -530,6 +530,10 @@ public class CommonLib implements Comparator<String> {
 						return "Add new and update existing records";
 					}}
 	}
+	
+	public static enum RelatedTab{
+		Investor_Portal;
+	}
 
 	/*****************************************Common Utilities***********************************************************/
 

@@ -29,6 +29,7 @@ import com.navatar.generic.CommonLib.FolderType;
 import com.navatar.generic.CommonLib.ManageApprovalTabs;
 import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
+import com.navatar.generic.CommonLib.RelatedTab;
 import com.navatar.generic.CommonLib.SortOrder;
 import com.navatar.generic.CommonLib.UpdateIgnore;
 import com.navatar.generic.CommonLib.Workspace;
@@ -8726,6 +8727,9 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 	}else{
 		if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab, fundName, 30)){
 			appLog.info("Clicked on fund name : " + fundName);
+			ThreadSleep(5000);
+			click(driver, getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+			
 			return true;
 		}else{
 			appLog.error("Fund Not Available : " + fundName);	

@@ -6084,4 +6084,32 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 	
+	
+	public WebElement getRelatedTab(String relatedTab,int timeOut){
+		String xpath="";
+		WebElement ele=null;
+		String related = relatedTab.toString().replace("_", " ");
+		xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
+		ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+				, "visiblity", 30, relatedTab.toString());
+		if (ele!=null) {
+		appLog.info("Element Found : "+related);	
+		}else {
+			appLog.error("Element Not Found : "+related);	
+			appLog.error("Going to check on more "+related);	
+			xpath = "//li//button[@title='More Tabs']";
+			ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+			click(driver, ele, "More Tab", action.BOOLEAN);
+			ThreadSleep(3000);
+			
+			xpath = "//a/span[text()='"+related+"']";
+			ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+					, "visiblity", 30, relatedTab.toString());
+			
+			
+		}
+		return ele;
+	}
+	
+	
 }
