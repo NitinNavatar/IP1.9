@@ -1032,12 +1032,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @return true/false
 	 */
 	public boolean verifyErrorMessageOnPage(String errorMessage, WebElement errorMessageElement, String elementName) {
+		try {
 		System.err.println(errorMessageElement.getText());
 		String actualResult = errorMessageElement.getText().trim();
 		System.out.println(">>>>>>>>>>>>>>" + actualResult);
-		if (actualResult.contains(errorMessage)) {
-			appLog.info(elementName);
-			return true;
+		
+			if (actualResult.contains(errorMessage)) {
+				appLog.info(elementName);
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
 		}
 		return false;
 	}
@@ -5500,6 +5507,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 //			log(LogStatus.FAIL, "Not Able to click on personalize Pencil Icon", YesNo.Yes);
 			flag = false;
 		}
+//		click(driver, getAddTabCloseTheWindowCrossIcon(), "cross icon", action.BOOLEAN);
+		ThreadSleep(5000);
 		return flag;
 	}
 	
@@ -6096,21 +6105,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
 		ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
 				, "visiblity", 30, relatedTab.toString());
-		if (ele!=null) {
-		appLog.info("Element Found : "+related);	
-		}else {
-			appLog.error("Element Not Found : "+related);	
-			appLog.error("Going to check on more "+related);	
-			xpath = "//li//button[@title='More Tabs']";
-			ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
-			click(driver, ele, "More Tab", action.BOOLEAN);
-			ThreadSleep(3000);
-			
-			xpath = "//a/span[text()='"+related+"']";
-			ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
-					, "visiblity", 30, relatedTab.toString());
-			
-			
+		try {
+			if (ele!=null) {
+			appLog.info("Element Found : "+related);	
+			}else {
+				appLog.error("Element Not Found : "+related);	
+				appLog.error("Going to check on more "+related);	
+				xpath = "//li//button[@title='More Tabs']";
+				ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+				click(driver, ele, "More Tab", action.BOOLEAN);
+				ThreadSleep(3000);
+				
+				xpath = "//a/span[text()='"+related+"']";
+				ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+						, "visiblity", 30, relatedTab.toString());
+				
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return ele;
 	}

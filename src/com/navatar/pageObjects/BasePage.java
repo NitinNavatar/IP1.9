@@ -2287,11 +2287,31 @@ public abstract class BasePage {
 	
 	@FindBy(xpath="//a[@onclick='refreshAllData(); return false;']")
 	private WebElement searchPopCrossIcon;
+	
+	@FindBy(xpath="//a[@onclick='refreshAllData(); return false;'][2]")
+	private WebElement searchPopCrossIco2;
 
 	/**
 	 * @return the searchPopCrossIcon
 	 */
 	public WebElement getSearchPopCrossIcon(int timeOut) {
+		//return isDisplayed(driver, searchPopCrossIcon, "Visibility", timeOut, "Search Pop Up Cross Icon");
+		scrollDownThroughWebelement(driver, searchPopCrossIcon, "Search Pop Up Cross Icon");
+		WebElement ele =isDisplayed(driver, searchPopCrossIcon, "Visibility", timeOut, "Search Pop Up Cross Icon");
+		if (ele!=null) {
+			return isDisplayed(driver, searchPopCrossIcon, "Visibility", timeOut, "Search Pop Up Cross Icon");
+		} else {
+			List<WebElement> eleList = FindElements(driver, "//a[@onclick='refreshAllData(); return false;']", "Search Pop Up Cross Icon");
+			for (WebElement webElement : eleList) {
+				webElement=isDisplayed(driver, webElement, "Visibility", 5, "Search Pop Up Cross Icon");
+				if (webElement!=null) {
+					scrollDownThroughWebelement(driver, webElement, "Search Pop Up Cross Icon");
+					return webElement;
+				} else {
+
+				}
+			}
+		}
 		return isDisplayed(driver, searchPopCrossIcon, "Visibility", timeOut, "Search Pop Up Cross Icon");
 	}
 	
@@ -3304,7 +3324,7 @@ public abstract class BasePage {
 	}
 	
 	public WebElement getAddTabCloseTheWindowCrossIcon() {
-		String xpath="//button[@title='Close this window']";
+		String xpath="//h2[text()='Add Items']/following-sibling::button[@title='Close this window']";
 		List<WebElement> lst = FindElements(driver, xpath, "add tab cross icon");
 		if(!lst.isEmpty()) {
 			for (int i = 0; i < lst.size(); i++) {
@@ -3431,7 +3451,7 @@ public abstract class BasePage {
 		return null;
 	}
 	
-	@FindBy(xpath="//a[@title='Select List View']")
+	@FindBy(xpath="//*[@title='Select List View']")
 	private WebElement selectListIcon_Lighting;
 
 	/**

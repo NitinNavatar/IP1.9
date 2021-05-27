@@ -32,6 +32,7 @@ import com.navatar.generic.CommonLib.ManageApprovalTabs;
 import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.OnlineImportFileAddTo;
 import com.navatar.generic.CommonLib.PageName;
+import com.navatar.generic.CommonLib.RelatedTab;
 import com.navatar.generic.CommonLib.TabName;
 import com.navatar.generic.CommonLib.UploadFileActions;
 import com.navatar.generic.CommonLib.WorkSpaceAction;
@@ -1044,7 +1045,7 @@ public class SmokeTestCase extends BaseLib {
 						if(!sendKeys(driver, fp.getDescriptionTextBox(Workspace.FundraisingWorkspace, 10),data[5], "Description text Box", action.BOOLEAN)){
 						}
 					}
-					if(click(driver, fp.getNext1Of3Button(Workspace.FundraisingWorkspace, 10), "Next Button", action.BOOLEAN)){
+					if(click(driver, fp.getNext1Of3Button(Workspace.FundraisingWorkspace, 10), "Next Button", action.SCROLLANDBOOLEAN)){
 						if(!fp.importFolderTemplate(smokeExcelPath,"FolderTemp", SmokefolderTemplateName, WorkSpaceAction.IMPORTFOLDERTEMPLATE, Workspace.FundraisingWorkspace, 20)){
 							appLog.error("Folder sructure is not created properly");
 							sa.assertTrue(false,"Folder sructure is not created properly");
@@ -1532,8 +1533,8 @@ public class SmokeTestCase extends BaseLib {
 							SmokeContact1EmailId, SmokeInstitution1, "Last Invite Date")) {
 						appLog.info("Last invitation date for the contact: " + SmokeContact1FirstName+ " " + SmokeContact1LastName+" is verified ");
 					} else {
-						appLog.info("Last invitation date for the contact: " + SmokeContact1FirstName+ " " + SmokeContact1LastName+" is verified ");
-						sa.assertTrue(false, "Last invitation date for the contact: " + SmokeContact1FirstName+ " " + SmokeContact1LastName+" is verified ");
+						appLog.info("Last invitation date for the contact: " + SmokeContact1FirstName+ " " + SmokeContact1LastName+" is not verified ");
+						sa.assertTrue(false, "Last invitation date for the contact: " + SmokeContact1FirstName+ " " + SmokeContact1LastName+" is not verified ");
 					}
 					if (click(driver, fp.getManageEmailCancelBtn(30), "manage email cancel button", action.SCROLLANDBOOLEAN)) {
 						appLog.error("click on cancel button");
@@ -1571,12 +1572,12 @@ public class SmokeTestCase extends BaseLib {
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
 		if (bp.clickOnTab(environment,mode,TabName.NIMTab)) {
 			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-				if(switchToFrame(driver, 30, np.getNIMTabParentFrame_Lightning())) {
-					
-				}else {
-					appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
-					exit("Not able to switch in parent frame so cannot build FR Workspace");
-				}
+//				if(switchToFrame(driver, 30, np.getNIMTabParentFrame_Lightning())) {
+//					
+//				}else {
+//					appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
+//					exit("Not able to switch in parent frame so cannot build FR Workspace");
+//				}
 			}
 			switchToFrame(driver, 30, np.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
@@ -1689,7 +1690,7 @@ public class SmokeTestCase extends BaseLib {
 						
 					}else {
 						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
-						exit("Not able to switch in parent frame so cannot build FR Workspace");
+					//	exit("Not able to switch in parent frame so cannot build FR Workspace");
 					}
 				}else {
 					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
@@ -1787,7 +1788,7 @@ public class SmokeTestCase extends BaseLib {
 						
 					}else {
 						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
-						exit("Not able to switch in parent frame so cannot build FR Workspace");
+					//	exit("Not able to switch in parent frame so cannot build FR Workspace");
 					}
 				}else {
 					switchToFrame(driver, 30, fp.getFrame(environment,mode,PageName.FundsPage, 30));
@@ -4051,6 +4052,7 @@ public class SmokeTestCase extends BaseLib {
 			appLog.error("Not able to click on contact tab");
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
+		refresh(driver);
 		switchToDefaultContent(driver);
 		if(contact.clickOnTab(environment,mode,TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(environment,mode,SmokeContact3FirstName, SmokeContact3LastName, null)) {
@@ -4087,6 +4089,9 @@ public class SmokeTestCase extends BaseLib {
 					appLog.error("Not able to clcik on remove contact access button");
 					sa.assertTrue(false, "Not able to clcik on remove contact access button");
 				}
+				ThreadSleep(5000);
+				click(driver, bp.getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+				
 				if (bp.verifyErrorMessageOnPage(ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationFundraisingWorkspace,contact.getErrorMessageAfterAdminAndCRMUserRegistrationFundRaisingWorkspace(60),
 						"Error Message after admin Registration on Contact page for investor workspace")) {
 					appLog.info("Error Message is verified  on Contact page for Fundraising workspace");
@@ -4124,15 +4129,16 @@ public class SmokeTestCase extends BaseLib {
 				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 				scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.FundraisingWorkspace, 60),Workspace.FundraisingWorkspace.toString() + " View.");
 				if(fp.verifyFolderPathdummy(standrdFolder, null, null, SmokeFundName1, PageName.InstitutionsPage, Workspace.FundraisingWorkspace, 60)){
-//					if (bp.verifyDownloadFunctionality(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, standrdfile[0], true, false,false)) {
-//						appLog.info("download button is successfully verified");
-//						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
-//					}
-//					else {
-//						appLog.error("download button is not successfully verified");
-//						sa.assertTrue(false, "download button is not successfully verified");
-//						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
-//					}
+					if (bp.verifyDownloadFunctionality(PageName.InstitutionsPage, Workspace.FundraisingWorkspace, standrdfile[0], true, false,false)) {
+						appLog.info("download button is successfully verified");
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+					}
+					else {
+						appLog.error("download button is not successfully verified");
+						sa.assertTrue(false, "download button is not successfully verified");
+						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+					}
+					switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
 					if (bp.enterValueAndClickonSearchBoxContentGrid(PageName.ContactsPage, Workspace.FundraisingWorkspace,standrdfile[0], 30)) {
 						ThreadSleep(2000);
@@ -4351,7 +4357,7 @@ public class SmokeTestCase extends BaseLib {
 				ThreadSleep(5000);
 			}else {
 				appLog.error("Not able to switch to NIM Tab Parent Frame so cannot check link on NIM page");
-				exit("Not able to switch to NIM Tab Parent Frame so cannot check link on NIM page");
+			//	exit("Not able to switch to NIM Tab Parent Frame so cannot check link on NIM page");
 			}
 			switchToFrame(driver, 30, nim.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 			if(nim.clickOnEditIcon()) {
@@ -4508,65 +4514,87 @@ public class SmokeTestCase extends BaseLib {
 		if(allfp.selectFirmName("All Firms")) {
 			ThreadSleep(5000);
 			appLog.info("All firms is selected ");
-			if(click(driver, allfp.getDocumentNameList().get(0), "document name link", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(5000);
-				String parentID = switchOnWindow(driver);
-				if (parentID != null) {
-					if(allfp.getDownloadLink(30)!=null) {
-						appLog.info("download button is displayed ");
-					}else {
-						appLog.error("Download button is not displayed ");
-						sa.assertTrue(false, "Download button is not displayed ");
+			try {
+				if(click(driver, allfp.getDocumentNameList().get(0), "document name link", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(5000);
+					String parentID = switchOnWindow(driver);
+					if (parentID != null) {
+						if(allfp.getDownloadLink(30)!=null) {
+							appLog.info("download button is displayed ");
+						}else {
+							appLog.error("Download button is not displayed ");
+							sa.assertTrue(false, "Download button is not displayed ");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					} else {
+						appLog.info("No new window is open");
+						sa.assertTrue(false, "No new window is open");
 					}
-					driver.close();
-					driver.switchTo().window(parentID);
-				} else {
-					appLog.info("No new window is open");
-					sa.assertTrue(false, "No new window is open");
+				}else {
+					appLog.error("Not able to click on document link so cannot verify document open fuctionality");
+					sa.assertTrue(false,"Not able to click on document link so cannot verify document open fuctionality");
 				}
-			}else {
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				appLog.error("Not able to click on document link so cannot verify document open fuctionality");
 				sa.assertTrue(false,"Not able to click on document link so cannot verify document open fuctionality");
+			
 			}
 			
-			if(click(driver, allfp.getInvesmentNameList().get(0), "investment name link", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(2000);
-				String parentID = switchOnWindow(driver);
-				if (parentID != null) {
-					if(inv.getInvestmentDownArrow(20)!=null) {
-						appLog.info("potential investment page is open ");
-					}else {
-						appLog.error("potential investment page is not opened ");
-						sa.assertTrue(false, "potential investment page is not opened ");
+			try {
+				if(click(driver, allfp.getInvesmentNameList().get(0), "investment name link", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					String parentID = switchOnWindow(driver);
+					if (parentID != null) {
+						if(inv.getInvestmentDownArrow(20)!=null) {
+							appLog.info("potential investment page is open ");
+						}else {
+							appLog.error("potential investment page is not opened ");
+							sa.assertTrue(false, "potential investment page is not opened ");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					} else {
+						appLog.info("No new window is open");
+						sa.assertTrue(false, "No new window is open");
 					}
-					driver.close();
-					driver.switchTo().window(parentID);
-				} else {
-					appLog.info("No new window is open");
-					sa.assertTrue(false, "No new window is open");
+				}else {
+					appLog.error("Not able to click on investment name link");
+					sa.assertTrue(false,"Not able to click on investment name link");
 				}
-			}else {
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				appLog.error("Not able to click on investment name link");
 				sa.assertTrue(false,"Not able to click on investment name link");
 			}
 			
-			if(click(driver, allfp.getFirmNameList().get(0), "firm name link", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(2000);
-				String parentID = switchOnWindow(driver);
-				if (parentID != null) {
-					if(inv.getInvestmentDownArrow(20)!=null) {
-						appLog.info("potential investment page is open ");
-					}else {
-						appLog.error("potential investment page is not opened ");
-						sa.assertTrue(false, "potential investment page is not opened ");
+			try {
+				if(click(driver, allfp.getFirmNameList().get(0), "firm name link", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					String parentID = switchOnWindow(driver);
+					if (parentID != null) {
+						if(inv.getInvestmentDownArrow(20)!=null) {
+							appLog.info("potential investment page is open ");
+						}else {
+							appLog.error("potential investment page is not opened ");
+							sa.assertTrue(false, "potential investment page is not opened ");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					} else {
+						appLog.info("No new window is open");
+						sa.assertTrue(false, "No new window is open");
 					}
-					driver.close();
-					driver.switchTo().window(parentID);
-				} else {
-					appLog.info("No new window is open");
-					sa.assertTrue(false, "No new window is open");
+				}else {
+					appLog.error("Not able to click on firm name link");
+					sa.assertTrue(false,"Not able to click on firm name link");
 				}
-			}else {
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 				appLog.error("Not able to click on firm name link");
 				sa.assertTrue(false,"Not able to click on firm name link");
 			}
@@ -4644,27 +4672,35 @@ public class SmokeTestCase extends BaseLib {
 		if(allfp.selectFirmName(SmokeFirmName)) {
 			ThreadSleep(7000);
 			if(click(driver,ivp.getAllDocumentsTab(30),"all document tab", action.BOOLEAN)) {
-				ThreadSleep(2000);
-				if(click(driver, ivp.getAllDocumentFileNameList().get(0), "all document name link", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(5000);
-					String parentID = switchOnWindow(driver);
-					if (parentID != null) {
-						if(allfp.getDownloadLink(30)!=null) {
-							appLog.info("download button is displayed ");
-							
-						}else {
-							appLog.error("Download button is not displayed ");
-							sa.assertTrue(false, "Download button is not displayed ");
+				ThreadSleep(10000);
+				try {
+					if(click(driver, ivp.getAllDocumentFileNameList().get(0), "all document name link", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+						String parentID = switchOnWindow(driver);
+						if (parentID != null) {
+							if(allfp.getDownloadLink(30)!=null) {
+								appLog.info("download button is displayed ");
+								
+							}else {
+								appLog.error("Download button is not displayed ");
+								sa.assertTrue(false, "Download button is not displayed ");
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						} else {
+							appLog.info("No new window is open");
+							sa.assertTrue(false, "No new window is open");
 						}
-						driver.close();
-						driver.switchTo().window(parentID);
-					} else {
-						appLog.info("No new window is open");
-						sa.assertTrue(false, "No new window is open");
+					}else {
+						appLog.error("Not able to click on document link so cannot verify document open fuctionality on all doucment grid");
+						sa.assertTrue(false,"Not able to click on document link so cannot verify document open fuctionality on all doucment grid");
 					}
-				}else {
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 					appLog.error("Not able to click on document link so cannot verify document open fuctionality on all doucment grid");
 					sa.assertTrue(false,"Not able to click on document link so cannot verify document open fuctionality on all doucment grid");
+			
 				}
 				refresh(driver);
 				List<String> aa=fp.verifyWatermarkingWithoutAssertion(standrdFile,FolderType.Standard,WatermarkingLabels,SmokeFirmName,UpdateSmokeInstitution1,SmokeFundName1,SmokeContact1EmailId,getSystemDate("MM-dd-YYYY"), PageName.AllDocumentTab, null);
@@ -4675,23 +4711,30 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "Watermarking is not verified ");
 				}
 				
-				if(click(driver, ivp.getAllDocumentInvestmentNameList().get(0), "investment name link", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(2000);
-					String parentID = switchOnWindow(driver);
-					if (parentID != null) {
-						if(ivp.getInvestmentDownArrow(20)!=null) {
-							appLog.info("potential investment page is open ");
-						}else {
-							appLog.error("potential investment page is not opened ");
-							sa.assertTrue(false, "potential investment page is not opened ");
+				try {
+					if(click(driver, ivp.getAllDocumentInvestmentNameList().get(0), "investment name link", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(2000);
+						String parentID = switchOnWindow(driver);
+						if (parentID != null) {
+							if(ivp.getInvestmentDownArrow(20)!=null) {
+								appLog.info("potential investment page is open ");
+							}else {
+								appLog.error("potential investment page is not opened ");
+								sa.assertTrue(false, "potential investment page is not opened ");
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						} else {
+							appLog.info("No new window is open");
+							sa.assertTrue(false, "No new window is open");
 						}
-						driver.close();
-						driver.switchTo().window(parentID);
-					} else {
-						appLog.info("No new window is open");
-						sa.assertTrue(false, "No new window is open");
+					}else {
+						appLog.error("Not able to click on investment name link");
+						sa.assertTrue(false,"Not able to click on investment name link");
 					}
-				}else {
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 					appLog.error("Not able to click on investment name link");
 					sa.assertTrue(false,"Not able to click on investment name link");
 				}
@@ -4763,44 +4806,59 @@ public class SmokeTestCase extends BaseLib {
 			 }
 			if(click(driver,ivp.getRecentActivitiesTab(30),"recent activities tab", action.BOOLEAN)) {
 				ThreadSleep(2000);
-				if(click(driver, ivp.getRecentActivitiesFileNameList().get(0), "all document name link", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(5000);
-					String parentID = switchOnWindow(driver);
-					if (parentID != null) {
-						if(allfp.getDownloadLink(30)!=null) {
-							appLog.info("download button is displayed ");
-						}else {
-							appLog.error("Download button is not displayed ");
-							sa.assertTrue(false, "Download button is not displayed ");
+				try {
+					if(click(driver, ivp.getRecentActivitiesFileNameList().get(0), "all document name link", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+						String parentID = switchOnWindow(driver);
+						if (parentID != null) {
+							if(allfp.getDownloadLink(30)!=null) {
+								appLog.info("download button is displayed ");
+							}else {
+								appLog.error("Download button is not displayed ");
+								sa.assertTrue(false, "Download button is not displayed ");
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						} else {
+							appLog.info("No new window is open");
+							sa.assertTrue(false, "No new window is open");
 						}
-						driver.close();
-						driver.switchTo().window(parentID);
-					} else {
-						appLog.info("No new window is open");
-						sa.assertTrue(false, "No new window is open");
+					}else {
+						appLog.error("Not able to click on document link so cannot verify document open fuctionality on recent activities grid");
+						sa.assertTrue(false,"Not able to click on document link so cannot verify document open fuctionality on recent activities grid");
 					}
-				}else {
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 					appLog.error("Not able to click on document link so cannot verify document open fuctionality on recent activities grid");
 					sa.assertTrue(false,"Not able to click on document link so cannot verify document open fuctionality on recent activities grid");
+			
 				}
 				
-				if(click(driver, ivp.getRecentActivitiestInvestmentNameList().get(0), "investment name link", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(2000);
-					String parentID = switchOnWindow(driver);
-					if (parentID != null) {
-						if(ivp.getInvestmentDownArrow(20)!=null) {
-							appLog.info("potential investment page is open ");
-						}else {
-							appLog.error("potential investment page is not opened ");
-							sa.assertTrue(false, "potential investment page is not opened ");
+				try {
+					if(click(driver, ivp.getRecentActivitiestInvestmentNameList().get(0), "investment name link", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(2000);
+						String parentID = switchOnWindow(driver);
+						if (parentID != null) {
+							if(ivp.getInvestmentDownArrow(20)!=null) {
+								appLog.info("potential investment page is open ");
+							}else {
+								appLog.error("potential investment page is not opened ");
+								sa.assertTrue(false, "potential investment page is not opened ");
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						} else {
+							appLog.info("No new window is open");
+							sa.assertTrue(false, "No new window is open");
 						}
-						driver.close();
-						driver.switchTo().window(parentID);
-					} else {
-						appLog.info("No new window is open");
-						sa.assertTrue(false, "No new window is open");
+					}else {
+						appLog.error("Not able to click on investment name link");
+						sa.assertTrue(false,"Not able to click on investment name link");
 					}
-				}else {
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 					appLog.error("Not able to click on investment name link");
 					sa.assertTrue(false,"Not able to click on investment name link");
 				}
@@ -7887,6 +7945,7 @@ public class SmokeTestCase extends BaseLib {
 			sa.assertTrue(false, "Not able to click on contact tab");
 		}
 		switchToDefaultContent(driver);
+		refresh(driver);
 		if(contact.clickOnTab(environment,mode,TabName.ContactTab)) {
 			if(contact.clickOnCreatedContact(environment,mode,SmokeContact3FirstName, SmokeContact3LastName, null)) {
 				switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.ContactsPage, 60));
@@ -7923,6 +7982,9 @@ public class SmokeTestCase extends BaseLib {
 					appLog.error("Not able to clcik on remove contact access button");
 					sa.assertTrue(false, "Not able to clcik on remove contact access button");
 				}
+				ThreadSleep(5000);
+				click(driver,bp.getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+				
 				if (bp.verifyErrorMessageOnPage(ContactPageErrorMessage.errorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace,contact.getErrorMessageAfterAdminAndCRMUserRegistrationInvestorWorkspace(60),
 						"Error Message after admin Registration on Contact page for investor workspace")) {
 					appLog.info("Error Message is verified  on Contact page for investor workspace");
@@ -7969,6 +8031,15 @@ public class SmokeTestCase extends BaseLib {
 						sa.assertTrue(false, "download button is not successfully verified");
 						switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
 					}
+				//	switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+					refresh(driver);
+					ThreadSleep(5000);
+					click(driver, ins.getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+					switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
+					fp.verifyFolderPathdummy(standrdFolder,UpdatedSmokeLP1,null, SmokeFundName1, PageName.InstitutionsPage, Workspace.InvestorWorkspace, 60);
+					ThreadSleep(5000);
+					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 					
 					String 	date = getSystemDate("MM/dd/yyyy")+previousOrForwardDate(-1, "MM/dd/yyyy");
 					if (bp.enterValueAndClickonSearchBoxContentGrid(PageName.InstitutionsPage, Workspace.InvestorWorkspace,standrdfile[0], 30)) {
@@ -7979,6 +8050,9 @@ public class SmokeTestCase extends BaseLib {
 						appLog.error("Not able to search file : "+standrdfile[0]+" in FR workspace");
 						sa.assertTrue(false, "Not able to search file : "+standrdfile[0]+" in FR workspace");
 					}
+				//	switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
+					
 					if (click(driver, bp.getSearchPopCrossIcon(30), "Search Cross Icon", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on search pop up cross icon");
 					}else {
@@ -8024,6 +8098,8 @@ public class SmokeTestCase extends BaseLib {
 								sa.assertTrue(false, "Not able to select dropdown value");
 							}
 							
+						//	switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+							scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
 							
 							if(click(driver, fp.getDocumentStatisticsPopUpCloseBtn(10), "close button", action.BOOLEAN)) {
 								appLog.info("clicked on document statistics close button");
@@ -8107,6 +8183,9 @@ public class SmokeTestCase extends BaseLib {
 						appLog.error("institution name is not visible so cannot click on it ");
 						sa.assertTrue(false, "institution name is not visible so cannot click on it ");
 					}
+				//	switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+					scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
+					
 					if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.Open, standrdfile[1], Workspace.InvestorWorkspace, 10, null)) {
 						appLog.info("clicked on file "+standrdfile[1]);
 						ThreadSleep(2000);
@@ -8130,6 +8209,9 @@ public class SmokeTestCase extends BaseLib {
 						sa.assertTrue(false, "Not able to click on "+standrdfile[1]+" file down arrow open so cannot open file ");
 					}
 					for(int i=0; i<2; i++) {
+					//	switchToFrame(driver, 30, bp.getFrame(environment,mode,PageName.InstitutionsPage, 60));
+						scrollDownThroughWebelement(driver, bp.getWorkspaceSectionView(Workspace.InvestorWorkspace, 60),Workspace.InvestorWorkspace.toString() + " View.");
+						
 						if (fp.clickOnOptionsOfArrowKeyInContentGrid(ContentGridArrowKeyFunctions.Delete, standrdfile[1], Workspace.InvestorWorkspace, 10, null)) {
 							appLog.info("clicked on file "+standrdfile[1]+" delete option ");
 							ThreadSleep(2000);
@@ -8990,6 +9072,9 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "No new window is open so cannot clear workspace");
 				}
 				refresh(driver);
+				ThreadSleep(5000);
+				click(driver, fp.getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+				
 				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.getBuildWorkspaceButton(Workspace.FundraisingWorkspace, 30)!=null) {
 					appLog.info("build workspace fundraising button is displaying ");
@@ -9083,6 +9168,9 @@ public class SmokeTestCase extends BaseLib {
 					sa.assertTrue(false, "No new window is open so cannot clear workspace");
 				}
 				refresh(driver);
+				ThreadSleep(5000);
+				click(driver, fp.getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+				
 				switchToFrame(driver, 30,fp.getFrame(environment,mode,PageName.FundsPage, 20));
 				if(fp.getBuildWorkspaceButton(Workspace.InvestorWorkspace, 30)!=null) {
 					appLog.info("build investor workspace  button is displaying ");

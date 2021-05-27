@@ -64,10 +64,10 @@ public class BaseLib extends AppListeners {
 					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
 			ChromeOptions options = new ChromeOptions();
 			String OsName= System.getProperty("os.name");
-			if(!OsName.equalsIgnoreCase("Windows 10") || !OsName.equalsIgnoreCase("Windows 7")) {
-				options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
-			}else {
+			if(OsName.equalsIgnoreCase("Windows 10") || OsName.equalsIgnoreCase("Windows 7")) {
 				options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+			}else {
+				options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
 			}
 			options.addArguments("disable-infobars");
 			options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));

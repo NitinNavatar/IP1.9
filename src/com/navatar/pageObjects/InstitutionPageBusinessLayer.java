@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.sikuli.script.App;
 
 import com.navatar.generic.CommonLib.Mode;
+import com.navatar.generic.CommonLib.RelatedTab;
 import com.navatar.generic.CommonLib.YesNo;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
@@ -603,6 +604,9 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 		}else{
 			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, inst_name, 30)){
 				appLog.info("Clicked on Institutions name : " + inst_name);
+				ThreadSleep(5000);
+				click(driver, getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+				
 				return true;
 			}else{
 				appLog.error("Institutions Not Available : " + inst_name);
@@ -739,6 +743,9 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 		}else{
 			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.LimitedPartner, lp_name, 30)){
 				appLog.info("Clicked on limited partner name : " + lp_name);
+				ThreadSleep(5000);
+				click(driver, getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+				
 				return true;
 			}else{
 				appLog.error("limited partner Not Available : " + lp_name);

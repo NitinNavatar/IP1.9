@@ -13,6 +13,7 @@ import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.Mode;
 import com.navatar.generic.CommonLib.PageName;
+import com.navatar.generic.CommonLib.RelatedTab;
 import com.navatar.generic.CommonLib.Workspace;
 import com.navatar.generic.CommonLib.action;
 import com.navatar.generic.CommonLib.excelLabel;
@@ -617,6 +618,9 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 			}
 			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, concatFullName, 30)){
 				appLog.info("Clicked on Contact name : " + concatFullName);
+				ThreadSleep(5000);
+				click(driver, getRelatedTab(RelatedTab.Investor_Portal.toString(), 5), RelatedTab.Investor_Portal.toString(), action.BOOLEAN);
+				
 				return true;
 			}else{
 				appLog.error("Contact Not Available : " + concatFullName);	
