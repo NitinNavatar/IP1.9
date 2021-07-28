@@ -690,7 +690,7 @@ public class CommonLib implements Comparator<String> {
 		try {
 			xpath = locator.toString().split("->")[1].split(": ")[1].substring(0, locator.toString().split("->")[1].split(": ")[1].length()-1).trim();
 		} catch (Exception e){
-			System.out.println("exception aa gya");
+			System.out.println("exception occurs");
 			xpath = "ABC";
 		}
 		for(int i = 0 ; i < 2 ; i++)
