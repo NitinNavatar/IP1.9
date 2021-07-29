@@ -477,7 +477,7 @@ public class InstitutionPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//input[@name='acc2']")
 	private WebElement legalNameTextBoxClassic;
 	
-	@FindBy(xpath="//label[@data-aura-class='uiLabel']//span[text()='Legal Name']/..//following-sibling::input")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input")
 	private WebElement legalNameTextBoxLighting;
 	
 	/**
@@ -515,11 +515,11 @@ public class InstitutionPage extends BasePageBusinessLayer{
 			
 		}else {
 			//span[text()='Description']/..//following-sibling::textarea
-			xpath="//span[text()='"+finalLabelName+"']";
-			inputXpath="/..//following-sibling::input";
-			textAreaXpath="/..//following-sibling::textarea";
+			xpath="//*[text()='"+finalLabelName+"']";
+			inputXpath="/following-sibling::*//input";
+			textAreaXpath="/following-sibling::*//textarea";
 			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
-				inputXpath="/..//following-sibling::div//input[@title='Search Institutions']";
+				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search Institutions')]";
 			}
 			
 		}

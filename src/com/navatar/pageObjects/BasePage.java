@@ -1124,7 +1124,32 @@ public abstract class BasePage {
 	  * @return the navatarInvestorAddOnFrame
 	  */
 	 public WebElement getNavatarInvestorAddOnParentFrame(int timeOut) {
-	 	return isDisplayed(driver, navatarInvestorAddOnParentFrame, "Visibility", timeOut, "Navatar Investor Add On Parent Frame");
+
+
+         List<WebElement> elelist = FindElements(driver, "//iframe", "Parent Frame");
+         // elelist.get(1);
+         WebElement ele=null;
+         ele = isDisplayed(driver, elelist.get(0), "Visibility", timeOut, "Navatar Investor Add On Parent Frame");
+
+ 
+
+         try {
+             if (ele!=null) {
+                 return ele;
+             } else {
+                 ele = isDisplayed(driver, elelist.get(1), "Visibility", timeOut, "Navatar Investor Add On Parent Frame");
+                 return ele;
+             }
+         } catch (Exception e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+             return null;
+         }
+     
+
+
+
+	 	//return isDisplayed(driver, navatarInvestorAddOnParentFrame, "Visibility", timeOut, "Navatar Investor Add On Parent Frame");
 	 }
 	 
 	 /**
@@ -3564,7 +3589,7 @@ public abstract class BasePage {
 				return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
 			
 		}
-		@FindBy(xpath = "//button[@title='Save']")
+		@FindBy(xpath = "//button[text()='Save']")
 		private WebElement save_Lightning;
 		
 		

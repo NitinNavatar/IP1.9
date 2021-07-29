@@ -172,8 +172,7 @@ public class ContactPageBusinessLayer extends ContactPage implements ContactPage
 								ThreadSleep(1000);
 								if (click(driver,
 										FindElement(driver,
-												"//div[contains(@class,'uiAutocomplete')]//a//div[contains(@class,'primary') and @title='" + legalName
-												+ "']",
+												"//*[contains(@class,'listbox')]//*[@title='"+legalName+"']",
 												"Legal Name List", action.THROWEXCEPTION, 30),
 										legalName + "   :   Legal Name", action.BOOLEAN)) {
 									appLog.info(legalName + "  is present in list.");
