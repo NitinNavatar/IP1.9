@@ -5890,9 +5890,9 @@ public class FundsPage extends BasePageBusinessLayer {
 		WebElement ele = null;
 		String xpath="";
 		if(workspace.toString().equalsIgnoreCase(workspace.FundraisingWorkspace.toString())) {
-			xpath="//*[text()='Bulk Download (Fundraising)']/..//following-sibling::input";
+			xpath="//*[@name=\"Bulk_Download_Fundraising__c\"]/../span";
 		}else if(workspace.toString().equalsIgnoreCase(workspace.InvestorWorkspace.toString())) {
-			xpath="//td/label[text()='Bulk Download (Investor)']/../following-sibling::td/input";
+			xpath="//*[@name=\"Bulk_Download_Investor__c\"]/../span";
 		}	
 		ele= FindElement(driver, xpath, "Bulk DownLoad CheckBox"+workspace, action.SCROLLANDBOOLEAN, timeOut);
 		ele=isDisplayed(driver, ele, "Visibility", timeOut, "Bulk DownLoad CheckBox"+workspace);
