@@ -74,19 +74,21 @@ public class NIMPage extends BasePageBusinessLayer {
 	}
 	
 	public WebElement getNIMTabParentFrame_Lightning(){
-		List<WebElement> lst = FindElements(driver, "//div[@data-aura-class='lafPageHost']//div[contains(@class,'iframe-paren')]/iframe", "NIM Page iFrame List");
-		if(!lst.isEmpty()) {
-			for (int i = 0; i < lst.size(); i++) {
-				if(isDisplayed(driver, lst.get(i), "visibility",2, "NIM Page iFrame")!=null) {
-					return lst.get(i);
-				}else {
-					if(i==lst.size()-1) {
-						return null;
-					}
+		List<WebElement> lst = FindElements(driver, "//div[contains(@class,'windowViewMode-normal')]//iframe[@title='accessibility title']", "NIM Page iFrame List");
+		WebElement ele =null;
+		
+			for (WebElement element:lst) {
+				if(isDisplayed(driver, element, "visibility",2, "NIM Page iFrame")!=null) {
+					ele=element;
+					break;
+//				}else {
+//					if(i==lst.size()-1) {
+//						return null;
+//					}
 				}
 			}
-		}
-		return null;
+		
+		return ele;
 	}
 	
 	

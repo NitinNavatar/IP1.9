@@ -155,7 +155,7 @@ public class InstitutionPageBusinessLayer extends InstitutionPage implements Ins
 										ThreadSleep(1000);
 										if (click(driver,
 												FindElement(driver,
-														"//div[contains(@class,'uiAutocomplete')]//a//div//div[contains(@class,'primary') and @title='"+labelValue[i]+"']",
+														"//*[@class='slds-truncate' and @title='"+labelValue[i]+"']",
 														"Legal Name List", action.SCROLLANDBOOLEAN, 30),
 												labelValue[i] + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
 											appLog.info(labelValue[i] + "  is present in list.");

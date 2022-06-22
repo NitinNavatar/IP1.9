@@ -32,6 +32,8 @@ import org.testng.annotations.Parameters;
 
 import com.navatar.generic.CommonLib.excelLabel;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 /**
  * 
  * @author Ankur Rana
@@ -60,10 +62,11 @@ public class BaseLib extends AppListeners {
 	@BeforeMethod
 	public void config(String browserName) {
 		if (browserName.equalsIgnoreCase("Chrome")) {
-			System.setProperty("webdriver.chrome.driver",
-					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
+//			System.setProperty("webdriver.chrome.driver",
+//					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
+			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
-			options.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+			options.setBinary("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
 			options.addArguments("disable-infobars");
 			options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 			options.setExperimentalOption("useAutomationExtension", false);

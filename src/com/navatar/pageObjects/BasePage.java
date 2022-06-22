@@ -3456,7 +3456,7 @@ public abstract class BasePage {
 		return null;
 	}
 	
-	@FindBy(xpath="//a[@title='Select List View']")
+	@FindBy(xpath="//button[@title='Select a List View']")
 	private WebElement selectListIcon_Lighting;
 
 	/**

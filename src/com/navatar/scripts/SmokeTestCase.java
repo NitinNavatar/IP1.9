@@ -1564,12 +1564,12 @@ public class SmokeTestCase extends BaseLib {
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
 		if (bp.clickOnTab(environment,mode,TabName.NIMTab)) {
 			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-				if(switchToFrame(driver, 30, np.getNIMTabParentFrame_Lightning())) {
-					
-				}else {
-					appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
-					exit("Not able to switch in parent frame so cannot build FR Workspace");
-				}
+	//			if(switchToFrame(driver, 30, np.getNIMTabParentFrame_Lightning())) {
+//					ThreadSleep(5000);
+//				}else {
+//					appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
+//					exit("Not able to switch in parent frame so cannot build FR Workspace");
+//				}
 			}
 			switchToFrame(driver, 30, np.getFrame(environment,mode,PageName.NavatarInvestorManager, 30));
 			if (np.clickOnSideMenusTab(sideMenu.ManageApprovals)) {
@@ -1677,9 +1677,10 @@ public class SmokeTestCase extends BaseLib {
 		lp.CRMLogin(SmokeCRMUser1Email, SmokePassword);
 		if (lp.clickOnTab(environment,mode,TabName.FundsTab)) {
 			if (fp.clickOnCreatedFund(environment,mode,SmokeFundName1)) {
+				ThreadSleep(5000);
 				if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 					if(switchToFrame(driver, 30, fp.getNIMTabParentFrame_Lightning(PageName.FundsPage))) {
-						
+						ThreadSleep(5000);
 					}else {
 						appLog.error("Not able to switch in parent frame so cannot build FR Workspace");
 						exit("Not able to switch in parent frame so cannot build FR Workspace");
