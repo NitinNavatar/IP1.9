@@ -3461,6 +3461,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		
 		lp.CRMlogout();
+		refresh(driver);
+		ThreadSleep(5000);
 		String[] mailId = userEmailID.split("<break>");
 		for(int k =0;k<mailId.length;k++){
 		lp.CRMLogin(mailId[k], adminPassword);
@@ -3478,6 +3480,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			 
 		 }
 		 lp.CRMlogout();
+		 refresh(driver);
+			ThreadSleep(5000);
 		}
 		 return flag1&&flag2;
 
@@ -5413,7 +5417,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				return flag;
 			}
 		}else {
-			if(click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
+			if(clickUsingJavaScript(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on setting icon");
 				ThreadSleep(3000);
 			}else {
