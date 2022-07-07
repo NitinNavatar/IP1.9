@@ -125,7 +125,7 @@ public abstract class BasePage {
 		return isDisplayed(driver, goButton, "Visibility", timeOut, "Go Button");
 	} 
 	
-	@FindBy(xpath="//input[@name='new']")
+	@FindBy(xpath="//a[@name='new']")
 	private WebElement newButton;
 
 	/**

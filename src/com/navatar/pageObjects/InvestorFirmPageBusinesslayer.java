@@ -490,7 +490,7 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 			if (!docNames.isEmpty()) {
 				List<WebElement> docUploadedBy = FindElements(driver, docUploadedByXpath, "Document Uploaded By List");
 				List<WebElement> docUploadedOn = FindElements(driver, docUploadedOnXpath, "Document Uploaded On List");
-				if (docUploadedBy.isEmpty()) {
+				if (!docUploadedBy.isEmpty()) {
 				if (docNames.size() == docUploadedBy.size() && docNames.size() == docUploadedOn.size()) {
 					String[] files = filesName.split("<break>");
 					for (int i = 0; i < files.length; i++) {
