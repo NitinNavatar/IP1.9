@@ -104,7 +104,7 @@ public class InstitutionPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, cancelBtn, "Visibility", timeOut, "Cancel Button");
 	}
 	
-	@FindBy(xpath="//span[text()='Legal Name']/..//following-sibling::input")
+	@FindBy(xpath="//label[text()='Legal Name']/..//following-sibling::div//input")
 	private WebElement legalNameTextBox;
 
 
@@ -129,7 +129,7 @@ public class InstitutionPage extends BasePageBusinessLayer{
 	@FindBy(xpath="//div[@id='acc2_ileinner']")
 	private WebElement legalNameLabelTextbox;
 
-	@FindBy(xpath="//*[contains(text(),'Institution')]/..//*[@slot='primaryField']/*")
+	@FindBy(xpath="//div[contains(@class,'outputName')]")
 	private WebElement accountNameInViewMode_Lighting;
 
 	/**

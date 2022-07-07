@@ -2012,7 +2012,7 @@ public class CommonLib implements Comparator<String> {
 		for(int i=0; i < len ; i++){
 			char character = xpath.charAt(i);
 			if(String.valueOf(character).equalsIgnoreCase("'")){
-				if(xpath.charAt(i-1)=='=' || xpath.charAt(i-1)==',' || xpath.charAt(i+1)==')' || xpath.charAt(i+1)==']' || (xpath.charAt(i+1)==' ' && xpath.charAt(i+2)=='o')){
+				if(xpath.charAt(i-1)=='=' || xpath.charAt(i-1)==',' || xpath.charAt(i+1)==')'|| xpath.charAt(i+1)==' ' || xpath.charAt(i+1)==']' || (xpath.charAt(i+1)==' ' && xpath.charAt(i+2)=='o')){
 					str.setCharAt(i, '\"');
 				}
 			}
