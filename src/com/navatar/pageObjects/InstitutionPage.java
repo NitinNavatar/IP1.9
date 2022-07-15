@@ -104,7 +104,7 @@ public class InstitutionPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, cancelBtn, "Visibility", timeOut, "Cancel Button");
 	}
 	
-	@FindBy(xpath="//span[text()='Legal Name']/..//following-sibling::input")
+	@FindBy(xpath="//label[text()='Legal Name']/..//following-sibling::div//input")
 	private WebElement legalNameTextBox;
 
 

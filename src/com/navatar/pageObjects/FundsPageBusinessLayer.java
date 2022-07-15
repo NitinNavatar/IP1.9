@@ -4268,7 +4268,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			ele = FindElement(driver, "//*[contains(text(),'" + emailAddress + "')]", "Watermarking Label",
 					action.BOOLEAN, 0);
 		} else if (labelName.equalsIgnoreCase("IP Address") && !folderType.toString().equalsIgnoreCase(FolderType.Internal.toString())) {
-			ele = FindElement(driver, "//*[contains(text(),'" + getPublicIPAddress() + "')]", "Watermarking Label",
+			ele = FindElement(driver, "//*[contains(text(),'" + ipAddress + "')]", "Watermarking Label",
 					action.BOOLEAN, 0);
 		} else {
 			ele = FindElement(driver, "//*[contains(text(),'" + labelName + "')]", "Watermarking Label",
@@ -4380,12 +4380,12 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @param fileName
 	 * @param folderType
 	 * @param Labels
-	 * @param investorName
 	 * @param fundName
 	 * @param emailAddress
 	 * @param downloadDate
 	 * @param pageName
 	 * @param workspace
+	 * @param investorName
 	 * @return
 	 */
 	public List<String> verifyWatermarkingWithoutAssertion(String fileName, FolderType folderType, String Labels,
@@ -4834,7 +4834,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 							System.out.println("/n/n");
 							if (dcName.equalsIgnoreCase(files[i]) && dcFirmName.equalsIgnoreCase(firmName) && dcFolderPath.equalsIgnoreCase(folderPath)
 									&& dcStatus.equalsIgnoreCase(status) && dcUploadedBy.equalsIgnoreCase(uploadedBy)
-									&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn))) {
+									&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn)||verifyDate(uploadedOn, null, dcUploadedOn))) {
 
 								appLog.info(files[i]+" is present having status "+status+" Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn + " "+ " : "
 										+ workspace.toString());
@@ -4939,7 +4939,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 						System.out.println("/n/n");
 						if (dcName.equalsIgnoreCase(files[i]) && dcFirmName.equalsIgnoreCase(firmName) && dcFolderPath.equalsIgnoreCase(folderPath)
 								&& dcStatus.equalsIgnoreCase(status) && dcUploadedBy.equalsIgnoreCase(uploadedBy)
-								&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn))) {
+								&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn)||verifyDate(uploadedOn, null, dcUploadedOn))) {
 
 							appLog.info(files[i]+" is present having status "+status+" Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn + " "+ " : "
 									+ workspace.toString());

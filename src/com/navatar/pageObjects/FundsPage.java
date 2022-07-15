@@ -77,7 +77,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//div[@id='Name_ileinner']")
 	private WebElement fundNameInViewMode;
 	
-	@FindBy(xpath="//*[contains(text(),'Fund')]/..//*[@slot='primaryField']/*")
+	@FindBy(xpath="//*[contains(text(),'Fund')]/..//*[@slot='primaryField']")
 	private WebElement fundNameInViewModeLightning;
 
 	/**

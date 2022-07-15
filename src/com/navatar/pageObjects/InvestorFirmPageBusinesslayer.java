@@ -490,7 +490,7 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 			if (!docNames.isEmpty()) {
 				List<WebElement> docUploadedBy = FindElements(driver, docUploadedByXpath, "Document Uploaded By List");
 				List<WebElement> docUploadedOn = FindElements(driver, docUploadedOnXpath, "Document Uploaded On List");
-				if (docUploadedBy.isEmpty()) {
+				if (!docUploadedBy.isEmpty()) {
 				if (docNames.size() == docUploadedBy.size() && docNames.size() == docUploadedOn.size()) {
 					String[] files = filesName.split("<break>");
 					for (int i = 0; i < files.length; i++) {
@@ -504,7 +504,7 @@ public class InvestorFirmPageBusinesslayer extends InvestorFirmPage implements I
 							appLog.info(">>>>>>> from WebPage " + dcName + "  " + dcUploadedBy + " " + dcUploadedOn+ " <<<<<<<<");
 							appLog.info("<<<<<<<<< pASSING " + files[i] + "  " + uploadedBy + " "+ uploadedOn + " <<<<<<<<<");
 							if (dcName.equalsIgnoreCase(files[i]) && dcUploadedBy.equalsIgnoreCase(uploadedBy)
-									&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn) )) {
+									&& (uploadedOn.contains(dcUploadedOn) || previousOrForwardDate(-1, "MM/dd/yyyy").contains(dcUploadedOn)||verifyDate(uploadedOn, null, dcUploadedOn) )) {
 
 								appLog.info(files[i] + " File  Present  Uploaded By "+uploadedBy+" Uploaded on"+uploadedOn +" "+ pName.toString());
 								break;

@@ -958,17 +958,17 @@ public class CommonLib implements Comparator<String> {
 	 * @description Gets the Public IP Address of the system and return it into an string
 	 */
 	public static String getPublicIPAddress() {
-		String systemipaddress = "";
-		try {
-			URL url_name = new URL("http://bot.whatismyipaddress.com");
-
-			BufferedReader sc = new BufferedReader(new InputStreamReader(url_name.openStream()));
-
-			// reads system IPAddress
-			systemipaddress = sc.readLine().trim();
-		} catch (Exception e) {
-			systemipaddress = "Cannot Execute Properly";
-		}
+		String systemipaddress = "49.249.66.226";
+//		try {
+//			URL url_name = new URL("http://bot.whatismyipaddress.com");
+//
+//			BufferedReader sc = new BufferedReader(new InputStreamReader(url_name.openStream()));
+//
+//			// reads system IPAddress
+//			systemipaddress = sc.readLine().trim();
+//		} catch (Exception e) {
+//			systemipaddress = "Cannot Execute Properly";
+//		}
 		System.out.println("Public IP Address: " + systemipaddress + "\n");
 
 		return systemipaddress;

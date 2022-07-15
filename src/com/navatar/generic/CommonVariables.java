@@ -430,7 +430,7 @@ public class CommonVariables {
 		public static String M17Commitment1,M17Commitment1ID;
 		public static String M17Commitment2,M17Commitment2ID;
 		public static String M17Commitment3,M17Commitment3ID;
-		public static String environment,mode;
+		public static String environment,mode,ipAddress;
 		
 		
 //	/**
@@ -501,6 +501,7 @@ public class CommonVariables {
 		
 		environment = ExcelUtils.readDataFromPropertyFile("Environment");
 		mode=ExcelUtils.readDataFromPropertyFile("Mode");
+		ipAddress=ExcelUtils.readDataFromPropertyFile("IPAddress");
 
 		
 		//****************Module 1***************************//
