@@ -125,7 +125,7 @@ public abstract class BasePage {
 		return isDisplayed(driver, goButton, "Visibility", timeOut, "Go Button");
 	} 
 	
-	@FindBy(xpath="//input[@name='new']")
+	@FindBy(xpath="//a[@name='new']")
 	private WebElement newButton;
 
 	/**
@@ -496,7 +496,7 @@ public abstract class BasePage {
 		return isDisplayed(driver, navatarInvestorManagerTab, "Visibility", timeOut, "Navatar Investor Manager Tab");
 	}
 
-	@FindBy(xpath="(//div[contains(@class,'uiTooltip')])[7]")
+	@FindBy(xpath="//button[contains(@class,'userProfile')]")
 	private WebElement salesForceLightingIcon;
 
 	/**

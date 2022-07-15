@@ -1917,6 +1917,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		if(verifyFolderPathdummy(path, institutionName, limitedPartner, null, pageName, workspace, timeOut)){
 			for(int z = 0; z == 0; z++)
 			if(click(driver, getUploadIcon(workspace, timeOut), "Upload Icon", action.BOOLEAN)){
+				ThreadSleep(5000);
 				String parentWin = switchOnWindow(driver);
 				if(parentWin!=null && !parentWin.isEmpty()){
 					if(path.contains("(Common)") || path.contains("(Shared)") || path.contains("(Internal)")){

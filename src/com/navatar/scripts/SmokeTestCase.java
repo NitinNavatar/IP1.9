@@ -5725,8 +5725,8 @@ public class SmokeTestCase extends BaseLib {
 							SmokeContact2EmailId, SmokeInstitution1, "Last Invite Date")) {
 						appLog.info("Last invitation date for the contact: " + SmokeContact2FirstName+ " " + SmokeContact2LastName+" is verified ");
 					} else {
-						appLog.info("Last invitation date for the contact: " + SmokeContact2FirstName+ " " + SmokeContact2LastName+" is verified ");
-						sa.assertTrue(false, "Last invitation date for the contact: " + SmokeContact2FirstName+ " " + SmokeContact2LastName+" is verified ");
+						appLog.info("Last invitation date for the contact: " + SmokeContact2FirstName+ " " + SmokeContact2LastName+" is not verified ");
+						sa.assertTrue(false, "Last invitation date for the contact: " + SmokeContact2FirstName+ " " + SmokeContact2LastName+" is not verified ");
 					}
 					if (click(driver, fp.getManageEmailCancelBtn(30), "manage email cancel button", action.SCROLLANDBOOLEAN)) {
 						appLog.error("click on cancel button");
