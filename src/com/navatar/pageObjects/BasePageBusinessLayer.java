@@ -5984,7 +5984,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String xpath="";
 		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
-			xpath="//h1[text()='Activity History']/ancestor::div/div[contains(@class,'slds-grid listDisplays')]//tbody/tr//th//a[contains(text(),'"+activity+"')]";
+//			xpath="//h1[text()='Activity History']/ancestor::div/div[contains(@class,'slds-grid listDisplays')]//tbody/tr//th//a[contains(text(),'"+activity+"')]";
+			xpath="//a[contains(text(),'"+activity+"')]";
 		}else {
 			xpath="//h3[text()='Activity History']/../../../../../following-sibling::div//tr/th/a[text()='"+activity+"']";
 		}
@@ -6017,7 +6018,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}else if(TaskPageLabel.Related_To.toString().equals(label)||(TaskPageLabel.Assigned_To.toString().equals(label))||(TaskPageLabel.Name.toString().equals(label))) {
 			xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span//a"	;
 		}else if(TaskPageLabel.Due_Date.toString().equals(label)) {
-			xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span/span"	;
+			xpath="(//span[text()='"+fieldLabel+"']/../following-sibling::div//span//span)[1]"	;
 		}else {
 			xpath ="//span[text()='"+fieldLabel+"']/../following-sibling::div";
 		} //span/span

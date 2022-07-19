@@ -1933,7 +1933,8 @@ public class FundsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, getManageEmailInvitationMailPreviewHeader, "Visibility", timeOut, "Invitation email template preview header");
 	}
 	
-	@FindBy(id="invitationpreviewID1")
+//	@FindBy(id="invitationpreviewID1")
+	@FindBy(xpath="//*[@id='invitationpreviewID1']")
 	private WebElement manageEmailInvitaionEmailPreviewLink;
 
 	/**
@@ -2263,7 +2264,8 @@ public class FundsPage extends BasePageBusinessLayer {
 	public WebElement getCustomEmailEditLinkInManageEmails(int timeOut) {
 		return isDisplayed(driver, customEmailEditLinkInManageEmails, "Visibility", timeOut, "Custom Email Edit Link In Manage Emails");
 	}
-	@FindBy(id="customPreviewID2")
+/*	@FindBy(id="customPreviewID2")*/
+	@FindBy(xpath="//*[@id='customPreviewID2']")
 	private WebElement manageEmailCustomPreviewLink;
 	
 	/**

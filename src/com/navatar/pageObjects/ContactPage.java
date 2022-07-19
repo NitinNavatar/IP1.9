@@ -32,7 +32,8 @@ public class ContactPage extends BasePageBusinessLayer{
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath="//span[text()='First Name']/..//following-sibling::input")
+	@FindBy(xpath="//label[text()='First Name']/..//following-sibling::div//input")
+//	@FindBy(xpath="//label[text()='First Name']/..//input")
 	private WebElement contactFirstName;
 
 	/**
@@ -42,7 +43,8 @@ public class ContactPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, contactFirstName, "Visibility", timeOut, "Contact First Name");
 	}
 	
-	@FindBy(xpath="//span[text()='Last Name']/..//following-sibling::input")
+	@FindBy(xpath="//label[text()='Last Name']/..//following-sibling::div//input")
+//	@FindBy(xpath="//label[text()='Last Name']/..//input")
 	private WebElement contactLastName;
 
 	/**
