@@ -8705,7 +8705,7 @@ public class Module10 extends BaseLib {
 							sa.assertTrue(false, "Not able to click on cancel button");
 						}
 						ele = FindElement(driver,
-								"//a[text()='" + M10Contact2FirstName+"NUP" + " " + M10Contact2LastName+"NUP" + "']/../..//input",
+								"//a[text()='" + M10Contact2FirstName + " " + M10Contact2LastName + "']/../..//input",
 								"Contact2 checkbox", action.SCROLLANDBOOLEAN, 60);
 						if (click(driver, ele, "Contact2 checkbox", action.SCROLLANDBOOLEAN)) {
 							appLog.info("Clicked on contact2 checkbox");
